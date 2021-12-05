@@ -1,0 +1,18 @@
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 1536px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-color);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.25em;
+}

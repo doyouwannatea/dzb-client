@@ -1,0 +1,23 @@
+:root {
+  --accent-color-1: #3d68ed;
+  --accent-color-2: #ffa500;
+  --gray-color-1: #e7e7e7;
+  --gray-color-2: #a4a4a4;
+  --text-color: #383838;
+}
+
+.c-accent-1 {
+  color: var(--accent-color-1);
+}
+.c-accent-2 {
+  color: var(--accent-color-2);
+}
+.c-gray-1 {
+  color: var(--gray-color-1);
+}
+.c-gray-2 {
+  color: var(--gray-color-2);
+}
+.c-main {
+  color: var(--text-color);
+}
