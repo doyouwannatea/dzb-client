@@ -1,7 +1,16 @@
 <template>
-  <h1>App</h1>
+  <main class="page">
+    <Header />
+  </main>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts">
+  import Header from './components/Header.vue';
+  import { defineComponent } from '@vue/runtime-core';
 
-<style></style>
+  export default defineComponent({
+    components: {
+      Header,
+    },
+  });
+</script>
