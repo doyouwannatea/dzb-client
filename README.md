@@ -4,6 +4,4 @@
 
 ## Стек
 
-- `Vue 3`
-- `Typescript`
-- `Vite`
+`Vue 3`, `Typescript`, `Vite`
