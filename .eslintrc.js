@@ -4,7 +4,6 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
-    'vue/setup-compiler-macros': true,
   },
   extends: [
     'plugin:vue/vue3-recommended',
@@ -15,6 +14,7 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 2021,
+    warnOnUnsupportedTypeScriptVersion: false,
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -26,5 +26,9 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-unused-vars': ['off', { argsIgnorePattern: '^_' }],
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+  },
+  globals: {
+    defineProps: 'readonly',
+    defineEmits: 'readonly',
   },
 };
