@@ -9,6 +9,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@babel/core": "^7.16.0",
     "vue": "^3.0.5"
   },
   "devDependencies": {
