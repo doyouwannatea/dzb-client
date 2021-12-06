@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <div class="container">
+    <Container class="container" size="lg">
       <a class="logo" href="#">
         <svg
           class="logo-icon"
@@ -48,16 +48,18 @@
         >
       </a>
 
-      <nav class="nav">
-        <li class="nav-item active">
-          <a href="#" class="nav-link">Все проекты</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">вопрос-ответ</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">контакты</a>
-        </li>
+      <nav>
+        <ul class="nav-list">
+          <li class="nav-item active">
+            <a href="#" class="nav-link">Все проекты</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">вопрос-ответ</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">контакты</a>
+          </li>
+        </ul>
       </nav>
 
       <div class="actions">
@@ -113,22 +115,20 @@
           <span class="username">Иванов Иван Иванович</span>
         </div>
       </div>
-    </div>
+    </Container>
   </header>
 </template>
+
+<script setup lang="ts">
+  import Container from '../layout/Container.vue';
+</script>
 
 <style scoped>
   /* Container */
   .container {
-    max-width: 1800px;
-    width: 100%;
     height: 7rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
     display: flex;
     justify-content: space-between;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   /* Header */
@@ -149,34 +149,39 @@
     gap: 1.25rem;
     align-items: center;
 
-    font-family: inherit;
+    font-family: 'Geometria';
     font-weight: bold;
-    font-size: 1.375rem;
+    font-size: 23px;
     line-height: 1.75rem;
     text-transform: uppercase;
     text-decoration: none;
   }
   .logo small {
     text-transform: initial;
-    font-size: 1.125em;
-    font-weight: 500;
+    font-size: 0.7826em;
+    font-weight: 600;
     line-height: 1.375em;
   }
 
   /* Navigation */
-  .nav {
+  .nav-list {
     list-style: none;
     display: flex;
     align-items: center;
     z-index: 1;
+    padding-left: 0;
+    height: 100%;
   }
+
   .nav-item {
     height: 100%;
     border-bottom: 0.25em solid transparent;
   }
+
   .nav-item.active {
     border-bottom: 0.25em solid var(--accent-color-2);
   }
+
   .nav-link {
     font-family: inherit;
     text-decoration: none;

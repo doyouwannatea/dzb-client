@@ -1,16 +1,7 @@
 <template>
-  <main class="page">
-    <Header />
-  </main>
+  <HomePage />
 </template>
 
-<script lang="ts">
-  import Header from './components/Header.vue';
-  import { defineComponent } from '@vue/runtime-core';
-
-  export default defineComponent({
-    components: {
-      Header,
-    },
-  });
+<script setup lang="ts">
+  import HomePage from './pages/HomePage.vue';
 </script>
