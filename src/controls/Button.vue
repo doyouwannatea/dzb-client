@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-  import { PropType } from '@vue/runtime-core';
+  import type { PropType } from '@vue/runtime-core';
 
   type variant = 'outlined' | 'link' | 'inline-link';
 
