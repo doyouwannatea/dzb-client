@@ -1,16 +1,35 @@
 <template>
-  <button :disabled="disabled" :class="['btn', type]">
+  <button
+    :disabled="disabled"
+    :class="[
+      'btn',
+      variant,
+      {
+        'full-width': fullWidth,
+      },
+    ]"
+  >
     <slot></slot>
   </button>
 </template>
 
 <script setup lang="ts">
-  interface Props {
-    type?: 'outlined' | 'link';
-    disabled?: boolean;
-  }
+  import { PropType } from '@vue/runtime-core';
 
-  defineProps<Props>();
+  type variant = 'outlined' | 'link' | 'inline-link';
+
+  defineProps({
+    variant: {
+      type: String as PropType<variant>,
+      default: '',
+    },
+    disabled: {
+      type: Boolean,
+    },
+    fullWidth: {
+      type: Boolean,
+    },
+  });
 </script>
 
 <style scoped>
@@ -26,6 +45,10 @@
     white-space: nowrap;
     cursor: pointer;
     transition: background-color 20ms ease, color 20ms ease;
+  }
+
+  .full-width {
+    width: 100%;
   }
 
   .btn:hover {
@@ -63,7 +86,7 @@
     background-color: transparent;
   }
 
-  .link {
+  .inline-link {
     display: inline-block;
     padding: 0;
     font-size: 14px;
@@ -75,19 +98,27 @@
     color: var(--accent-color-1);
   }
 
+  .inline-link:hover,
   .link:hover {
     text-decoration: underline;
     color: var(--accent-color-1);
     background-color: transparent;
   }
 
+  .inline-link:active,
   .link:active {
     color: #3e8bff;
     background-color: transparent;
   }
 
+  .inline-link:disabled,
   .link:disabled {
     background-color: transparent;
     color: #a4a4a4;
+  }
+
+  .link {
+    background-color: transparent;
+    color: var(--accent-color-1);
   }
 </style>

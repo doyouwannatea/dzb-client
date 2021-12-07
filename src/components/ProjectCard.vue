@@ -40,12 +40,12 @@
         <li><Tag>Конференция</Tag></li>
         <li><Tag>Конференция</Tag></li>
         <li class="tag-btn">
-          <Button type="link">+6 тегов</Button>
+          <Button variant="inline-link">+6 тегов</Button>
         </li>
       </ul>
 
       <div class="actions">
-        <Button type="outlined">Подать заявку</Button>
+        <Button variant="outlined">Подать заявку</Button>
         <Button>Подробнее</Button>
       </div>
     </footer>
@@ -54,7 +54,7 @@
 
 <script setup lang="ts">
   import Badge from './Badge.vue';
-  import Button from './Button.vue';
+  import Button from '../controls/Button.vue';
   import Tag from './Tag.vue';
 </script>
 
