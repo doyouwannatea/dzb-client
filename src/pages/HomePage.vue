@@ -24,7 +24,7 @@
   import ProjectList from '@/components/ProjectList.vue';
   import ProjectListFilters from '@/components/ProjectListFilters.vue';
   import ProjectListSort from '@/components/ProjectListSort.vue';
-  import ProjectListSearch from '@/components/ProjectListSearch.vue';
+  import ProjectListSearch from '@/controls/ProjectListSearch.vue';
 </script>
 
 <style scoped>
