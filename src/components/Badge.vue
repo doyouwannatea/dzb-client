@@ -11,7 +11,7 @@
     border-radius: 100px;
     font-weight: 600;
     font-size: 16px;
-    line-height: 20px;
+    line-height: normal;
     text-align: center;
     text-transform: uppercase;
     color: var(--accent-color-1);

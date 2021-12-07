@@ -45,7 +45,7 @@
   .aside {
     background: #ffffff;
     border: 1px solid var(--gray-color-1);
-    border-radius: 5px;
+    border-radius: 10px;
     align-self: flex-start;
   }
 

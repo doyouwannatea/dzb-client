@@ -30,6 +30,14 @@
     font-size: 18px;
     line-height: 23px;
   }
+
+  .sort-input:focus {
+    outline: none;
+  }
+  .sort-input:focus-visible {
+    outline: 1px solid black;
+  }
+
   .sort-input > option {
     color: var(--text-color);
   }
