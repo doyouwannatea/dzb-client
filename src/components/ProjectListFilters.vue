@@ -342,15 +342,15 @@
 
 <style scoped>
   .divider {
-    margin-top: 20px;
-    margin-bottom: 18px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     width: 100%;
     height: 1px;
     background-color: var(--gray-color-1);
   }
 
   .filters {
-    padding-top: 16px;
+    padding-top: 10px;
     padding-bottom: 11px;
   }
 

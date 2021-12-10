@@ -29,6 +29,8 @@
     align-items: center;
     gap: 5px;
     cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   .vcp__header-title {
@@ -47,7 +49,8 @@
   }
 
   .vcp__body-content {
-    margin-top: 16px;
+    margin-top: 6px;
+    padding-bottom: 25px;
   }
 
   .vcp--expanded .vcp__header-icon {
