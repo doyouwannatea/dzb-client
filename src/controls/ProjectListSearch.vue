@@ -13,8 +13,8 @@
     height: 57px;
     padding-left: 17px;
     padding-right: 68px;
-    background: url(/dzb-client/src/assets/search.svg) calc(100% - 17px) center /
-      34px no-repeat #ffffff;
+    background: url('../assets/search.svg') calc(100% - 17px) center / 34px
+      no-repeat #ffffff;
     line-height: 23px;
     font-weight: 400;
   }
