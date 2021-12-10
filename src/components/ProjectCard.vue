@@ -57,7 +57,8 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, PropType, ref } from 'vue';
+  import type { PropType } from 'vue';
+  import { computed, ref } from 'vue';
   import Badge from './Badge.vue';
   import Button from '../controls/Button.vue';
   import Tag from './Tag.vue';
