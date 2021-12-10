@@ -1,10 +1,35 @@
 <template>
   <ul class="project-list">
     <li>
-      <ProjectCard></ProjectCard>
+      <ProjectCard
+        status="new"
+        :tags="['тег', 'другой тег', 'другой тег', 'другой тег', 'другой тег']"
+      ></ProjectCard>
     </li>
     <li>
-      <ProjectCard></ProjectCard>
+      <ProjectCard
+        status="active"
+        :tags="[
+          'JavaScript',
+          'Web',
+          'Конференция',
+          'Конференция',
+          'Web',
+          'Конференция',
+          'Конференция',
+          'JavaScript',
+          'Конференция',
+        ]"
+      ></ProjectCard>
+    </li>
+    <li>
+      <ProjectCard
+        status="recruitment"
+        :tags="['JavaScript', 'Web', 'Конференция', 'Конференция']"
+      ></ProjectCard>
+    </li>
+    <li>
+      <ProjectCard status="closed"></ProjectCard>
     </li>
   </ul>
 </template>

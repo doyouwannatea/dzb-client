@@ -1,11 +1,11 @@
 <template>
-  <article class="card">
+  <article :class="['card', status]">
     <header class="header container">
       <h2 class="title">
         Платформа для размещения вузовских олимпиад lorem ipsum dolor sit amet,
         consectetur adipiscing elit
       </h2>
-      <Badge class="status">новый</Badge>
+      <Badge class="status">{{ statusText }}</Badge>
       <div class="subtitle">Лукьянов Н.Д.</div>
     </header>
     <div class="divider"></div>
@@ -34,13 +34,17 @@
     </div>
     <footer class="footer container">
       <ul class="tag-list">
-        <li><Tag>JavaScript</Tag></li>
-        <li><Tag>Web</Tag></li>
-        <li><Tag>Конференция</Tag></li>
-        <li><Tag>Конференция</Tag></li>
-        <li><Tag>Конференция</Tag></li>
-        <li class="tag-btn">
-          <Button variant="inline-link">+6 тегов</Button>
+        <li v-for="tag of visibleTags" :key="tag">
+          <Tag>{{ tag }}</Tag>
+        </li>
+        <li
+          v-if="tags.length > TAGS_DEFAULT_VISIBLE && !isTagsVisible"
+          class="tag-btn"
+        >
+          <Button variant="inline-link" @click="isTagsVisible = true">
+            +{{ hiddenTagsCount }}
+            {{ declOfNum(hiddenTagsCount, ['тег', 'тега', 'тегов']) }}
+          </Button>
         </li>
       </ul>
 
@@ -53,20 +57,86 @@
 </template>
 
 <script setup lang="ts">
+  import { computed, PropType, ref } from 'vue';
   import Badge from './Badge.vue';
   import Button from '../controls/Button.vue';
   import Tag from './Tag.vue';
+  import { declOfNum } from '@/helpers';
+
+  type status = 'new' | 'active' | 'recruitment' | 'closed';
+  const props = defineProps({
+    status: {
+      type: String as PropType<status>,
+      default: 'new',
+    },
+    tags: {
+      type: Array as PropType<string[]>,
+      default: () => [],
+    },
+  });
+
+  const TAGS_DEFAULT_VISIBLE = 3;
+  const hiddenTagsCount = props.tags.length - TAGS_DEFAULT_VISIBLE;
+  let statusText = '';
+  switch (props.status) {
+    case 'active':
+      statusText = 'Активен';
+      break;
+    case 'closed':
+      statusText = 'Закрыт';
+      break;
+    case 'recruitment':
+      statusText = 'Добор';
+      break;
+    case 'new':
+      statusText = 'Новый';
+      break;
+  }
+
+  const isTagsVisible = ref(false);
+  const visibleTags = computed(() => {
+    if (isTagsVisible.value) {
+      return props.tags;
+    }
+    return props.tags.slice(0, TAGS_DEFAULT_VISIBLE);
+  });
 </script>
 
 <style scoped>
   .card {
+    --status-color: var(--accent-color-1);
+    --border-left-color: var(--accent-color-1);
+    --team-counter-color: var(--accent-color-1);
+    --team-counter-bg: url('../assets/team.svg');
+
     width: 100%;
     background: #ffffff;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.18);
     border-radius: 10px;
-    border-left: 20px solid var(--accent-color-1);
+    border-left: 20px solid var(--border-left-color);
     padding-top: 22px;
     padding-bottom: 22px;
+  }
+
+  .card.active {
+    --status-color: #26ab5b;
+    --border-left-color: #26ab5b;
+    --team-counter-color: #26ab5b;
+    --team-counter-bg: url('../assets/team-active.svg');
+  }
+
+  .card.recruitment {
+    --status-color: #ffa500;
+    --border-left-color: #ffa500;
+    --team-counter-color: #ff7a00;
+    --team-counter-bg: url('../assets/team-recruitment.svg');
+  }
+
+  .card.closed {
+    --status-color: #e24c4c;
+    --border-left-color: #e24c4c;
+    --team-counter-color: #e24c4c;
+    --team-counter-bg: url('../assets/team-closed.svg');
   }
 
   .footer {
@@ -123,7 +193,7 @@
   }
 
   .team-counter {
-    color: var(--accent-color-1);
+    color: var(--team-counter-color);
   }
 
   .icon {
@@ -133,7 +203,7 @@
   }
 
   .team-icon {
-    background-image: url('../assets/team.svg');
+    background-image: var(--team-counter-bg);
   }
 
   .star-icon {
@@ -169,6 +239,8 @@
   .status {
     align-self: baseline;
     justify-self: flex-end;
+    border-color: var(--status-color);
+    color: var(--status-color);
   }
 
   .body {
