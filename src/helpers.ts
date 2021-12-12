@@ -1,8 +1,3 @@
-// Встраивает calc() css функцию в разметку
-export function cssCalc(a: string, sign: '+' | '-', b: string) {
-  return `calc(${a} ${sign} ${b})`;
-}
-
 // Функция для получения правильной формы падежа
 export function declOfNum(number: number, words: string[]) {
   return words[

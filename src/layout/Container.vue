@@ -1,18 +1,19 @@
 <template>
-  <div class="container" :style="{ maxWidth: cssCalc(maxWidth, '+', '1rem') }">
+  <div class="container" :style="{ maxWidth: `calc(${maxWidth}px + 1rem)` }">
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { cssCalc } from '@/helpers';
-
   const props = defineProps<{ size: 'lg' | 'md' }>();
-  let maxWidth = '0px';
-  if (props.size === 'lg') {
-    maxWidth = '1800px';
-  } else if (props.size === 'md') {
-    maxWidth = '1400px';
+  let maxWidth = 0;
+  switch (props.size) {
+    case 'lg':
+      maxWidth = 1800;
+      break;
+    case 'md':
+      maxWidth = 1400;
+      break;
   }
 </script>
 

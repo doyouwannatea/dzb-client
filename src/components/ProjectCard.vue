@@ -34,13 +34,9 @@
         <li v-for="tag of visibleTags" :key="tag">
           <Tag>{{ tag }}</Tag>
         </li>
-        <li
-          v-if="tags.length > TAGS_DEFAULT_VISIBLE && !isTagsVisible"
-          class="tag-btn"
-        >
+        <li v-if="showTagsBtnVisible" class="tag-btn">
           <Button variant="inline-link" @click="isTagsVisible = true">
-            +{{ hiddenTagsCount }}
-            {{ declOfNum(hiddenTagsCount, ['тег', 'тега', 'тегов']) }}
+            {{ showTagsBtnText }}
           </Button>
         </li>
       </ul>
@@ -79,8 +75,14 @@
     },
   });
 
+  // Setup variables
   const TAGS_DEFAULT_VISIBLE = 3;
   const hiddenTagsCount = props.tags.length - TAGS_DEFAULT_VISIBLE;
+  const showTagsBtnText = `+${hiddenTagsCount} ${declOfNum(hiddenTagsCount, [
+    'тег',
+    'тега',
+    'тегов',
+  ])}`;
   let statusText = '';
   switch (props.status) {
     case 'active':
@@ -97,13 +99,16 @@
       break;
   }
 
+  // Reactive variables
   const isTagsVisible = ref(false);
-  const visibleTags = computed(() => {
-    if (isTagsVisible.value) {
-      return props.tags;
-    }
-    return props.tags.slice(0, TAGS_DEFAULT_VISIBLE);
-  });
+  const visibleTags = computed(() =>
+    isTagsVisible.value
+      ? props.tags
+      : props.tags.slice(0, TAGS_DEFAULT_VISIBLE),
+  );
+  const showTagsBtnVisible = computed(
+    () => props.tags.length > TAGS_DEFAULT_VISIBLE && !isTagsVisible.value,
+  );
 </script>
 
 <style scoped>
@@ -111,7 +116,6 @@
     --status-color: var(--accent-color-1);
     --border-left-color: var(--accent-color-1);
     --team-counter-color: var(--accent-color-1);
-    --team-counter-img: url('../assets/team.svg');
 
     width: 100%;
     background: #ffffff;
@@ -126,21 +130,18 @@
     --status-color: #26ab5b;
     --border-left-color: #26ab5b;
     --team-counter-color: #26ab5b;
-    --team-counter-img: url('../assets/team-active.svg');
   }
 
   .card.recruitment {
     --status-color: #ffa500;
     --border-left-color: #ffa500;
     --team-counter-color: #ff7a00;
-    --team-counter-img: url('../assets/team-recruitment.svg');
   }
 
   .card.closed {
     --status-color: #e24c4c;
     --border-left-color: #e24c4c;
     --team-counter-color: #e24c4c;
-    --team-counter-img: url('../assets/team-closed.svg');
   }
 
   .footer {
