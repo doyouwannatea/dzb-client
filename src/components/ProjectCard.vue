@@ -22,10 +22,7 @@
         <li><b>Тип проекта:</b> Проектное обучение</li>
       </ul>
       <div class="info">
-        <div class="team-counter">
-          <span class="icon team-icon"></span>
-          <span>0/13</span>
-        </div>
+        <TeamCounter class="team-counter" :count="0" :total="13" />
         <div class="difficulty">
           <span class="icon star-icon"></span>
           <span>легко</span>
@@ -61,6 +58,7 @@
   import { computed, ref } from 'vue';
   import Badge from './Badge.vue';
   import Button from '../controls/Button.vue';
+  import TeamCounter from './TeamCounter.vue';
   import Tag from './Tag.vue';
   import { declOfNum } from '@/helpers';
 
@@ -108,7 +106,7 @@
     --status-color: var(--accent-color-1);
     --border-left-color: var(--accent-color-1);
     --team-counter-color: var(--accent-color-1);
-    --team-counter-bg: url('../assets/team.svg');
+    --team-counter-img: url('../assets/team.svg');
 
     width: 100%;
     background: #ffffff;
@@ -123,21 +121,21 @@
     --status-color: #26ab5b;
     --border-left-color: #26ab5b;
     --team-counter-color: #26ab5b;
-    --team-counter-bg: url('../assets/team-active.svg');
+    --team-counter-img: url('../assets/team-active.svg');
   }
 
   .card.recruitment {
     --status-color: #ffa500;
     --border-left-color: #ffa500;
     --team-counter-color: #ff7a00;
-    --team-counter-bg: url('../assets/team-recruitment.svg');
+    --team-counter-img: url('../assets/team-recruitment.svg');
   }
 
   .card.closed {
     --status-color: #e24c4c;
     --border-left-color: #e24c4c;
     --team-counter-color: #e24c4c;
-    --team-counter-bg: url('../assets/team-closed.svg');
+    --team-counter-img: url('../assets/team-closed.svg');
   }
 
   .footer {
@@ -182,7 +180,6 @@
     margin-top: 10px;
   }
 
-  .team-counter,
   .difficulty {
     display: flex;
     align-items: center;
@@ -201,10 +198,6 @@
     width: 24px;
     height: 24px;
     background: center / contain no-repeat;
-  }
-
-  .team-icon {
-    background-image: var(--team-counter-bg);
   }
 
   .star-icon {
