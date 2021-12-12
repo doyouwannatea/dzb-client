@@ -31,13 +31,14 @@
     cursor: pointer;
     padding-top: 10px;
     padding-bottom: 10px;
-  }
-
-  .vcp__header-title {
     font-weight: 700;
     font-size: 20px;
     line-height: 26px;
     color: var(--text-color);
+  }
+
+  .vcp__header:hover {
+    color: var(--accent-color-1);
   }
 
   .vcp__header-icon {
