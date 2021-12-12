@@ -36,6 +36,16 @@
     padding: 16px 32px;
     display: inline-block;
   }
+
+  .btn.wrapper[disabled='true'] {
+    pointer-events: none;
+  }
+
+  .btn.wrapper[disabled='true'] > a {
+    pointer-events: none;
+    color: var(--gray-color-2);
+    outline: none;
+  }
 </style>
 
 <style scoped>
@@ -73,7 +83,7 @@
   }
 
   .btn:disabled {
-    background-color: #a4a4a4;
+    background-color: var(--gray-color-2);
     pointer-events: none;
   }
 
@@ -92,8 +102,8 @@
   }
 
   .outlined:disabled {
-    color: #a4a4a4;
-    border-color: #a4a4a4;
+    color: var(--gray-color-2);
+    border-color: var(--gray-color-2);
     background-color: transparent;
   }
 
@@ -125,7 +135,7 @@
   .inline-link:disabled,
   .link:disabled {
     background-color: transparent;
-    color: #a4a4a4;
+    color: var(--gray-color-2);
   }
 
   .link {
