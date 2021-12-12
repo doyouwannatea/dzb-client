@@ -1,8 +1,8 @@
 <template>
   <BasePageLayout>
     <header class="header">
-      <h1 class="title">Все проекты</h1>
-      <p class="subtitle">
+      <h1 class="title page-title">Все проекты</h1>
+      <p class="page-subtitle">
         На этой странице размещены проекты преподавателей и руководителей ИРНИТУ
       </p>
     </header>
@@ -10,12 +10,14 @@
       <ProjectListSearch></ProjectListSearch>
       <ProjectListSort></ProjectListSort>
     </aside>
-    <div class="container">
-      <aside class="aside">
+    <SidebarContainer>
+      <template #sidebar>
         <ProjectListFilters></ProjectListFilters>
-      </aside>
-      <ProjectList></ProjectList>
-    </div>
+      </template>
+      <template #main>
+        <ProjectList></ProjectList>
+      </template>
+    </SidebarContainer>
   </BasePageLayout>
 </template>
 
@@ -25,6 +27,7 @@
   import ProjectListFilters from '@/components/ProjectListFilters.vue';
   import ProjectListSort from '@/components/ProjectListSort.vue';
   import ProjectListSearch from '@/controls/ProjectListSearch.vue';
+  import SidebarContainer from '@/layout/SidebarContainer.vue';
 </script>
 
 <style scoped>
@@ -36,35 +39,12 @@
     margin-bottom: 18px;
   }
 
-  .container {
-    display: grid;
-    grid-template-columns: 382px auto;
-    gap: 34px;
-  }
-
-  .aside {
-    background: #ffffff;
-    border: 1px solid var(--gray-color-1);
-    border-radius: 10px;
-    align-self: flex-start;
-  }
-
   .header {
     margin-top: 76px;
     margin-bottom: 45px;
   }
 
   .title {
-    font-weight: 800;
-    font-size: 40px;
-    line-height: 51px;
-    color: var(--text-color);
     margin-bottom: 11px;
-  }
-
-  .subtitle {
-    font-size: 18px;
-    line-height: 23px;
-    color: #707070;
   }
 </style>

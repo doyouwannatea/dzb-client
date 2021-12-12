@@ -41,6 +41,11 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
+dl,
+ol,
+ul {
+  padding-left: 0;
+}
 #app {
   isolation: isolate;
 }

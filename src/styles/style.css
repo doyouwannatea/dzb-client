@@ -1,8 +1,9 @@
-@import url(../assets/fonts/mont/style.css);
-@import url(../assets/fonts/geometria/style.css);
+@import url(./fonts.css);
 @import url(./custom-css-reset.css);
+@import url(./helpers.css);
 @import url(./vars.css);
 @import url(./input.css);
+@import url(./text.css);
 
 html {
   font-size: 16px;
