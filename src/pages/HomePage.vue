@@ -24,8 +24,8 @@
 <script setup lang="ts">
   import BasePageLayout from '@/layout/BasePageLayout.vue';
   import ProjectList from '@/components/ProjectList.vue';
-  import ProjectListFilters from '@/components/ProjectListFilters.vue';
-  import ProjectListSort from '@/components/ProjectListSort.vue';
+  import ProjectListFilters from '@/controls/ProjectListFilters.vue';
+  import ProjectListSort from '@/controls/ProjectListSort.vue';
   import ProjectListSearch from '@/controls/ProjectListSearch.vue';
   import SidebarContainer from '@/layout/SidebarContainer.vue';
 </script>

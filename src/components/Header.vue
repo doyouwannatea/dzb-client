@@ -15,7 +15,7 @@
   import Container from '../layout/Container.vue';
   import Navigation from './Navigation.vue';
   import Logo from './Logo.vue';
-  import UserActions from './UserActions.vue';
+  import UserActions from '../controls/UserActions.vue';
 </script>
 
 <style scoped>
