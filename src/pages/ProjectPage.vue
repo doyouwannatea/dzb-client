@@ -106,7 +106,9 @@
 
     <div class="d-flex justify-content-center mt-3">
       <Button wrapper variant="link">
-        <RouterLink class="clear-link" to="/">назад к списку</RouterLink>
+        <RouterLink class="clear-link" :to="{ name: 'home' }">
+          назад к списку
+        </RouterLink>
       </Button>
     </div>
   </BasePageLayout>

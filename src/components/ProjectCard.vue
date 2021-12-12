@@ -48,7 +48,9 @@
       <div class="actions">
         <Button variant="outlined">Подать заявку</Button>
         <Button wrapper>
-          <RouterLink class="clear-link" to="/project">Подробнее</RouterLink>
+          <RouterLink class="clear-link" :to="{ name: 'project' }">
+            Подробнее
+          </RouterLink>
         </Button>
       </div>
     </footer>

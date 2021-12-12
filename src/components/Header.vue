@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <Container class="container" size="lg">
-      <RouterLink class="clear-link align-self-center" to="/">
+      <RouterLink class="clear-link align-self-center" :to="{ name: 'home' }">
         <Logo></Logo>
       </RouterLink>
       <Navigation></Navigation>

@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
+import { prodPath } from './helpers';
 import HomePage from './pages/HomePage.vue';
 import ProjectPage from './pages/ProjectPage.vue';
 
@@ -12,12 +13,14 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/',
+      path: prodPath('/'),
       component: HomePage,
+      name: 'home',
     },
     {
-      path: '/project',
+      path: prodPath('/project'),
       component: ProjectPage,
+      name: 'project',
     },
   ],
 });
