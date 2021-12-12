@@ -147,7 +147,7 @@
   }
 
   .badge {
-    width: fit-content;
+    width: max-content;
   }
 
   /* Layout */

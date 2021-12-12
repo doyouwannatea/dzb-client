@@ -237,7 +237,7 @@
   }
 
   .status {
-    align-self: baseline;
+    align-self: flex-start;
     justify-self: flex-end;
     border-color: var(--status-color);
     color: var(--status-color);
