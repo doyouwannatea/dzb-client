@@ -1,5 +1,5 @@
 <template>
-  <a class="logo" href="#">
+  <div class="logo">
     <span
       :style="{
         backgroundImage: logoIcon && `url(${logoIcon})`,
@@ -9,7 +9,7 @@
       class="logo-icon"
     ></span>
     <span>Проектная деятельность <br /><small>в ИРНИТУ</small></span>
-  </a>
+  </div>
 </template>
 
 <script setup lang="ts">
