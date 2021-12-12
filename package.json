@@ -7,7 +7,7 @@
     "format": "prettier -w -u .",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
-    "deploy": "npm run build && cd dist && git init && git add . && git commit -m 'deploy' && git checkout -b gh-pages && git push --force https://github.com/doyouwannatea/dzb-client.git gh-pages && rimraf .git && cd .."
+    "deploy": "node deploy.js"
   },
   "dependencies": {
     "@babel/core": "^7.16.0",
@@ -28,7 +28,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^7.10.0",
     "prettier": "^2.3.0",
-    "rimraf": "^3.0.2",
+    "shelljs": "^0.8.4",
     "typescript": "^4.3.2",
     "vite": "^2.3.4",
     "vue-tsc": "^0.0.24"
