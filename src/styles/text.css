@@ -10,3 +10,9 @@
   line-height: 23px;
   color: #707070;
 }
+
+.clear-link {
+  color: inherit;
+  text-decoration: inherit;
+  user-select: none;
+}

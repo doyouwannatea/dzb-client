@@ -1,16 +1,18 @@
 <template>
-  <button
+  <component
+    :is="wrapper ? 'span' : 'button'"
     :disabled="disabled"
     :class="[
       'btn',
       variant,
       {
         'full-width': fullWidth,
+        wrapper,
       },
     ]"
   >
     <slot></slot>
-  </button>
+  </component>
 </template>
 
 <script setup lang="ts">
@@ -23,17 +25,22 @@
       type: String as PropType<variant>,
       default: '',
     },
-    disabled: {
-      type: Boolean,
-    },
-    fullWidth: {
-      type: Boolean,
-    },
+    disabled: Boolean,
+    fullWidth: Boolean,
+    wrapper: Boolean,
   });
 </script>
 
+<style>
+  .btn.wrapper > * {
+    padding: 16px 32px;
+    display: inline-block;
+  }
+</style>
+
 <style scoped>
   .btn {
+    display: block;
     padding: 16px 32px;
     font-size: 16px;
     border: 0;
@@ -45,6 +52,10 @@
     white-space: nowrap;
     cursor: pointer;
     transition: background-color 20ms ease, color 20ms ease;
+  }
+
+  .btn.wrapper {
+    padding: 0;
   }
 
   .full-width {

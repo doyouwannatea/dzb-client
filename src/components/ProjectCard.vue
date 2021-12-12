@@ -47,7 +47,9 @@
 
       <div class="actions">
         <Button variant="outlined">Подать заявку</Button>
-        <Button>Подробнее</Button>
+        <Button wrapper>
+          <RouterLink class="clear-link" to="/project">Подробнее</RouterLink>
+        </Button>
       </div>
     </footer>
   </article>
@@ -56,6 +58,7 @@
 <script setup lang="ts">
   import type { PropType } from 'vue';
   import { computed, ref } from 'vue';
+  import { RouterLink } from 'vue-router';
   import Badge from './Badge.vue';
   import Button from '../controls/Button.vue';
   import TeamCounter from './TeamCounter.vue';

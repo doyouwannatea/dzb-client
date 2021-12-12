@@ -10,5 +10,4 @@ export default defineConfig({
       '@': join(__dirname, 'src'),
     },
   },
-  base: '/dzb-client/',
 });

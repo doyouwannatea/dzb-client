@@ -105,12 +105,15 @@
     </ProjectPanel>
 
     <div class="d-flex justify-content-center mt-3">
-      <Button variant="link">назад к списку</Button>
+      <Button wrapper variant="link">
+        <RouterLink class="clear-link" to="/">назад к списку</RouterLink>
+      </Button>
     </div>
   </BasePageLayout>
 </template>
 
 <script setup lang="ts">
+  import { RouterLink } from 'vue-router';
   import BasePageLayout from '@/layout/BasePageLayout.vue';
   import Breadcrumbs from '@/components/Breadcrumbs.vue';
   import Tag from '../components/Tag.vue';

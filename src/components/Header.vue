@@ -1,7 +1,9 @@
 <template>
   <header class="header">
     <Container class="container" size="lg">
-      <Logo></Logo>
+      <RouterLink class="clear-link align-self-center" to="/">
+        <Logo></Logo>
+      </RouterLink>
       <Navigation></Navigation>
       <UserActions></UserActions>
     </Container>
@@ -9,6 +11,7 @@
 </template>
 
 <script setup lang="ts">
+  import { RouterLink } from 'vue-router';
   import Container from '../layout/Container.vue';
   import Navigation from './Navigation.vue';
   import Logo from './Logo.vue';
