@@ -1,5 +1,3 @@
-import { PROD_URL } from './constants';
-
 // Встраивает calc() css функцию в разметку
 export function cssCalc(a: string, sign: '+' | '-', b: string) {
   return `calc(${a} ${sign} ${b})`;
@@ -12,14 +10,4 @@ export function declOfNum(number: number, words: string[]) {
       ? 2
       : [2, 0, 1, 1, 1, 2][number % 10 < 5 ? Math.abs(number) % 10 : 5]
   ];
-}
-
-// Меняет роуты для режимов разработки
-// development: / => /
-// production: / => <PROD_URL>/
-export function prodPath(path: string) {
-  if (process.env.NODE_ENV === 'production') {
-    return `${PROD_URL}${path.slice(1)}`;
-  }
-  return path;
 }

@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
-import { prodPath } from './helpers';
+import { BASE_URL } from './constants';
 import HomePage from './pages/HomePage.vue';
 import ProjectPage from './pages/ProjectPage.vue';
 
@@ -10,15 +10,15 @@ const router = createRouter({
     // always scroll to top
     return { top: 0 };
   },
-  history: createWebHistory(),
+  history: createWebHistory(BASE_URL),
   routes: [
     {
-      path: prodPath('/'),
+      path: '/',
       component: HomePage,
       name: 'home',
     },
     {
-      path: prodPath('/project'),
+      path: '/project',
       component: ProjectPage,
       name: 'project',
     },

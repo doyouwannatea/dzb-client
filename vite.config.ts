@@ -1,7 +1,7 @@
 import vue from '@vitejs/plugin-vue';
 import { join } from 'path';
 import { defineConfig } from 'vite';
-import { prodPath } from './src/helpers';
+import { BASE_URL } from './src/constants';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,5 +11,5 @@ export default defineConfig({
       '@': join(__dirname, 'src'),
     },
   },
-  base: prodPath('/'),
+  base: BASE_URL,
 });
