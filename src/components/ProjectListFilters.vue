@@ -147,17 +147,6 @@
       </template>
     </Accordion>
 
-    <div class="divider"></div>
-
-    <div class="filter-wrapper">
-      <div>Tags: {{ tags }}</div>
-      <div>Teacher: {{ teacher }}</div>
-      <div>Type: {{ type }}</div>
-      <div>Statuses: {{ statuses }}</div>
-      <div>date: {{ dateFrom }} - {{ dateTo }}</div>
-      <div>difficulty: {{ difficulty }}</div>
-    </div>
-
     <footer class="filter-wrapper footer">
       <Button full-width>найти</Button>
       <Button full-width variant="link">сбросить фильтр</Button>
@@ -173,7 +162,7 @@
 
   const tags = ref([]);
   const teacher = ref('');
-  const type = ref('');
+  const type = ref('project');
   const statuses = ref(['new']);
   const difficulty = ref([]);
   const dateFrom = ref<Date>();
@@ -385,6 +374,6 @@
     display: flex;
     flex-direction: column;
     gap: 11px;
-    margin-top: 45px;
+    margin-top: 20px;
   }
 </style>
