@@ -197,7 +197,7 @@
   }
 
   .team-counter {
-    color: var(--team-counter-color);
+    color: var(--team-counter-color) !important;
   }
 
   .icon {
@@ -239,8 +239,8 @@
   .status {
     align-self: flex-start;
     justify-self: flex-end;
-    border-color: var(--status-color);
-    color: var(--status-color);
+    border-color: var(--status-color) !important;
+    color: var(--status-color) !important;
   }
 
   .body {
