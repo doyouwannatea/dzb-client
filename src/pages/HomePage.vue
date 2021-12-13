@@ -15,7 +15,7 @@
         <ProjectListFilters></ProjectListFilters>
       </template>
       <template #main>
-        <ProjectList></ProjectList>
+        <ProjectList :project-list="projectList"></ProjectList>
       </template>
     </SidebarContainer>
   </BasePageLayout>
@@ -28,6 +28,15 @@
   import ProjectListSort from '@/controls/ProjectListSort.vue';
   import ProjectListSearch from '@/controls/ProjectListSearch.vue';
   import SidebarContainer from '@/layout/SidebarContainer.vue';
+  import { onBeforeMount, ref } from 'vue';
+  import ProjectApi from '@/api/ProjectApi';
+  import type { Project } from '@/models/Project';
+
+  const projectList = ref<Project[]>([]);
+
+  onBeforeMount(() => {
+    ProjectApi.getProjectList(1).then((list) => (projectList.value = list));
+  });
 </script>
 
 <style scoped>

@@ -1,41 +1,15 @@
 <template>
   <ul class="project-list">
-    <li>
-      <ProjectCard
-        status="new"
-        :tags="['тег', 'другой тег', 'другой тег', 'другой тег', 'другой тег']"
-      ></ProjectCard>
-    </li>
-    <li>
-      <ProjectCard
-        status="active"
-        :tags="[
-          'JavaScript',
-          'Web',
-          'Конференция',
-          'Конференция',
-          'Web',
-          'Конференция',
-          'Конференция',
-          'JavaScript',
-          'Конференция',
-        ]"
-      ></ProjectCard>
-    </li>
-    <li>
-      <ProjectCard
-        status="recruitment"
-        :tags="['JavaScript', 'Web', 'Конференция', 'Конференция']"
-      ></ProjectCard>
-    </li>
-    <li>
-      <ProjectCard status="closed"></ProjectCard>
+    <li v-for="listItem of projectList" :key="listItem.id">
+      {{ listItem.title }}
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
+  import type { Project } from '@/models/Project';
   import ProjectCard from './ProjectCard.vue';
+  defineProps<{ projectList: Project[] }>();
 </script>
 
 <style scoped>
