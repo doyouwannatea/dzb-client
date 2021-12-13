@@ -11,15 +11,15 @@
     <div class="divider"></div>
     <div class="body container">
       <ul class="list">
-        <li>
+        <li class="list-item">
           <b>Цель:</b> Создать платформу (страничку) для рекламы олимпиад.
         </li>
-        <li>
+        <li class="list-item">
           <b>Требования к студентам:</b> Знание основ верстки и дизайна
           веб-страниц.
         </li>
-        <li><b>Сроки реализации:</b> 29.01.21 – 1.06.21</li>
-        <li><b>Тип проекта:</b> Проектное обучение</li>
+        <li class="list-item"><b>Сроки реализации:</b> 29.01.21 – 1.06.21</li>
+        <li class="list-item"><b>Тип проекта:</b> Проектное обучение</li>
       </ul>
       <div class="info">
         <ProjectTeamCounter class="team-counter" :count="0" :total="13" />
@@ -252,14 +252,14 @@
     padding-left: 0;
   }
 
-  .list > li {
+  .list-item {
     font-weight: 600;
     font-size: 16px;
     line-height: 20px;
     color: var(--text-color);
     list-style: none;
   }
-  .list > li:not(:last-child) {
+  .list-item:not(:last-child) {
     margin-bottom: 17px;
   }
 </style>

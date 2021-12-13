@@ -8,19 +8,19 @@
       <div class="row three-cols">
         <div class="col">
           <ul class="info-list">
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Руководитель проекта</h2>
-              <b>Лукьянов Никита Дмитриевич</b>
+              <b class="bold">Лукьянов Никита Дмитриевич</b>
             </li>
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Заказчик</h2>
-              <b>ЦЭО, Лукьянов Н.Д.</b>
+              <b class="bold">ЦЭО, Лукьянов Н.Д.</b>
             </li>
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Сроки реализации</h2>
-              <b>29.01.21 – 1.06.21</b>
+              <b class="bold">29.01.21 – 1.06.21</b>
             </li>
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Требуемые навыки</h2>
               <span class="tags">
                 <VTag>HTML</VTag>
@@ -32,17 +32,19 @@
         </div>
         <div class="col">
           <ul class="info-list">
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Тип проекта</h2>
-              <b>Проектное обучение (Прикладной)</b>
+              <b class="bold">Проектное обучение (Прикладной)</b>
             </li>
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Цель проекта</h2>
-              <b>Создать платформу (страничку) для рекламы олимпиад</b>
+              <b class="bold">
+                Создать платформу (страничку) для рекламы олимпиад
+              </b>
             </li>
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Сложность</h2>
-              <b>Легкая</b>
+              <b class="bold">Легкая</b>
             </li>
           </ul>
         </div>
@@ -59,9 +61,9 @@
       <div class="row two-cols">
         <div class="col">
           <ul class="info-list">
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Ожидаемый результат</h2>
-              <b>
+              <b class="bold">
                 Платформа пригодная для размещения олимпиад, анонса других
                 мероприятий интегрированная с moodle
               </b>
@@ -70,9 +72,9 @@
         </div>
         <div class="col">
           <ul class="info-list">
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Требования к участникам</h2>
-              <b>Знание основ верстки и дизайна веб-страниц</b>
+              <b class="bold">Знание основ верстки и дизайна веб-страниц</b>
             </li>
           </ul>
         </div>
@@ -80,7 +82,7 @@
     </ProjectPanel>
     <ProjectPanel>
       <ul class="info-list">
-        <li class="wide">
+        <li class="info-list-item wide">
           <h2 class="info-list-title">Идея проекта</h2>
           <span>
             В настоящий момент олимпиады проводятся на сайте "Открытые курсы
@@ -90,7 +92,7 @@
             регистрацией на мероприятия и подключением через api к moodle
           </span>
         </li>
-        <li class="wide">
+        <li class="info-list-item wide">
           <h2 class="info-list-title">Теги</h2>
           <span class="tags">
             <VTag>JavaScript</VTag>
@@ -127,9 +129,11 @@
 
 <style scoped>
   /* Text */
-  b {
+  .bold {
     line-height: 23px;
+    font-weight: 700;
   }
+
   .page-title {
     margin-top: 26px;
     margin-bottom: 24px;
@@ -183,14 +187,14 @@
     font-weight: 600;
     line-height: normal;
   }
-  .info-list > li {
+  .info-list-item {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: flex-start;
     line-height: 27px;
   }
 
-  .info-list > li.wide {
+  .info-list-item.wide {
     grid-template-columns: minmax(auto, 230px) auto;
   }
 </style>

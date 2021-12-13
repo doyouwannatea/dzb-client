@@ -8,7 +8,9 @@
       }"
       class="logo-icon"
     ></span>
-    <span>Проектная деятельность <br /><small>в ИРНИТУ</small></span>
+    <span
+      >Проектная деятельность <br /><small class="small">в ИРНИТУ</small></span
+    >
   </div>
 </template>
 
@@ -37,7 +39,7 @@
     background: url('../../assets/icons/logo.svg') center / contain no-repeat;
   }
 
-  .logo small {
+  .small {
     text-transform: initial;
     font-size: 0.7826em;
     font-weight: 600;

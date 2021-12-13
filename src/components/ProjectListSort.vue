@@ -2,9 +2,11 @@
   <fieldset class="sort">
     <label for="project-sort">Сортировка: </label>
     <select id="project-sort" class="sort-input" name="project-sort">
-      <option selected value="По сроку">По сроку</option>
-      <option value="По сложности">По сложности</option>
-      <option value="По кол-ву свободных мест">По кол-ву свободных мест</option>
+      <option class="option" selected value="По сроку">По сроку</option>
+      <option class="option" value="По сложности">По сложности</option>
+      <option class="option" value="По кол-ву свободных мест">
+        По кол-ву свободных мест
+      </option>
     </select>
   </fieldset>
 </template>
@@ -38,7 +40,7 @@
     outline: 1px solid black;
   }
 
-  .sort-input > option {
+  .option {
     color: var(--text-color);
   }
 </style>
