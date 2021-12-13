@@ -1,26 +1,6 @@
 @import url(./fonts.css);
-@import url(./custom-css-reset.css);
 @import url(./helpers.css);
-@import url(./vars.css);
+@import url(./variables.css);
+@import url(./libs/libs.css);
 @import url(./input.css);
-@import url(./text.css);
-
-html {
-  font-size: 16px;
-}
-
-@media (max-width: 1536px) {
-  html {
-    font-size: 14px;
-  }
-}
-
-body {
-  font-family: 'Mont', 'Geometria', Arial, Helvetica, sans-serif;
-  color: var(--text-color);
-  background-color: #f2f2f2;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 1rem;
-  line-height: 1.25em;
-}
+@import url(./global.css);
