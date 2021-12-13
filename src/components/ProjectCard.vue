@@ -61,7 +61,7 @@
   import Button from '../controls/Button.vue';
   import TeamCounter from './TeamCounter.vue';
   import Tag from './Tag.vue';
-  import { declOfNum } from '@/helpers';
+  import { declOfNum } from '@/helpers/string';
 
   type status = 'new' | 'active' | 'recruitment' | 'closed';
   const props = defineProps({

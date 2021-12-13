@@ -1,5 +1,6 @@
+// https://realadmin.ru/coding/sklonenie-na-javascript.html
 // Функция для получения правильной формы падежа
-export function declOfNum(number: number, words: string[]) {
+export function declOfNum(number: number, words: [string, string, string]) {
   return words[
     number % 100 > 4 && number % 100 < 20
       ? 2
