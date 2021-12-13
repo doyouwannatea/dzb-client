@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { BASE_URL } from './constants';
 
-const HomePage = () => import('./pages/HomePage.vue');
-const ProjectPage = () => import('./pages/ProjectPage.vue');
+const HomePage = () => import('./components/pages/HomePage.vue');
+const ProjectPage = () => import('./components/pages/ProjectPage.vue');
 
 export const router = createRouter({
   scrollBehavior(to, from, savedPosition) {

@@ -1,21 +1,21 @@
 <template>
   <header class="header">
-    <Container class="container" size="lg">
+    <VContainer class="container" size="lg">
       <RouterLink class="clear-link align-self-center" :to="{ name: 'home' }">
-        <Logo></Logo>
+        <VLogo></VLogo>
       </RouterLink>
-      <Navigation></Navigation>
-      <UserActions></UserActions>
-    </Container>
+      <TheNavigation></TheNavigation>
+      <NavigationUserActions></NavigationUserActions>
+    </VContainer>
   </header>
 </template>
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import Container from '../layout/Container.vue';
-  import Navigation from './Navigation.vue';
-  import Logo from './Logo.vue';
-  import UserActions from '../controls/UserActions.vue';
+  import VContainer from '../base/VContainer.vue';
+  import TheNavigation from './TheNavigation.vue';
+  import VLogo from '../base/VLogo.vue';
+  import NavigationUserActions from '../NavigationUserActions.vue';
 </script>
 
 <style scoped>

@@ -34,7 +34,7 @@
   .logo-icon {
     min-width: 36px;
     height: 51px;
-    background: url('../assets/logo.svg') center / contain no-repeat;
+    background: url('../../assets/icons/logo.svg') center / contain no-repeat;
   }
 
   .logo small {

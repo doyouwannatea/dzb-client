@@ -1,7 +1,7 @@
 <template>
   <BasePageLayout>
     <header class="header">
-      <Breadcrumbs class="breadcrumbs" />
+      <VBreadcrumbs class="breadcrumbs" />
       <h1 class="page-title">Платформа для размещения вузовских олимпиад</h1>
     </header>
     <ProjectPanel>
@@ -23,9 +23,9 @@
             <li>
               <h2 class="info-list-title">Требуемые навыки</h2>
               <span class="tags">
-                <Tag>HTML</Tag>
-                <Tag>CSS</Tag>
-                <Tag>PHP</Tag>
+                <VTag>HTML</VTag>
+                <VTag>CSS</VTag>
+                <VTag>PHP</VTag>
               </span>
             </li>
           </ul>
@@ -48,10 +48,10 @@
         </div>
         <div class="col">
           <h2 class="info-list-title">Статус проекта</h2>
-          <Badge class="badge mt-2">новый</Badge>
+          <VBadge class="badge mt-2">новый</VBadge>
           <h2 class="info-list-title mt-4">Кол-во участников</h2>
-          <TeamCounter class="mt-2" :count="0" :total="13" />
-          <Button class="mt-4">Подать заявку</Button>
+          <ProjectTeamCounter class="mt-2" :count="0" :total="13" />
+          <BaseButton class="mt-4">Подать заявку</BaseButton>
         </div>
       </div>
     </ProjectPanel>
@@ -93,36 +93,36 @@
         <li class="wide">
           <h2 class="info-list-title">Теги</h2>
           <span class="tags">
-            <Tag>JavaScript</Tag>
-            <Tag>WEB</Tag>
-            <Tag>Конференция</Tag>
-            <Tag>Обучение</Tag>
-            <Tag>Конференция</Tag>
-            <Tag>Конференция</Tag>
+            <VTag>JavaScript</VTag>
+            <VTag>WEB</VTag>
+            <VTag>Конференция</VTag>
+            <VTag>Обучение</VTag>
+            <VTag>Конференция</VTag>
+            <VTag>Конференция</VTag>
           </span>
         </li>
       </ul>
     </ProjectPanel>
 
     <div class="d-flex justify-content-center mt-3">
-      <Button wrapper variant="link">
+      <BaseButton wrapper variant="link">
         <RouterLink class="clear-link" :to="{ name: 'home' }">
           назад к списку
         </RouterLink>
-      </Button>
+      </BaseButton>
     </div>
   </BasePageLayout>
 </template>
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import BasePageLayout from '@/layout/BasePageLayout.vue';
-  import Breadcrumbs from '@/components/Breadcrumbs.vue';
-  import Tag from '../components/Tag.vue';
-  import Badge from '../components/Badge.vue';
-  import TeamCounter from '../components/TeamCounter.vue';
-  import Button from '../controls/Button.vue';
-  import ProjectPanel from '@/layout/ProjectPanel.vue';
+  import BasePageLayout from '@/components/base/BasePageLayout.vue';
+  import VBreadcrumbs from '@/components/base/VBreadcrumbs.vue';
+  import VTag from '@/components/base/VTag.vue';
+  import VBadge from '@/components/base/VBadge.vue';
+  import ProjectTeamCounter from '@/components/ProjectTeamCounter.vue';
+  import BaseButton from '@/components/base/BaseButton.vue';
+  import ProjectPanel from '@/components/ProjectPanel.vue';
 </script>
 
 <style scoped>

@@ -22,12 +22,12 @@
 </template>
 
 <script setup lang="ts">
-  import BasePageLayout from '@/layout/BasePageLayout.vue';
+  import BasePageLayout from '@/components/base/BasePageLayout.vue';
   import ProjectList from '@/components/ProjectList.vue';
-  import ProjectListFilters from '@/controls/ProjectListFilters.vue';
-  import ProjectListSort from '@/controls/ProjectListSort.vue';
-  import ProjectListSearch from '@/controls/ProjectListSearch.vue';
-  import SidebarContainer from '@/layout/SidebarContainer.vue';
+  import ProjectListFilters from '@/components/ProjectListFilters.vue';
+  import ProjectListSort from '@/components/ProjectListSort.vue';
+  import ProjectListSearch from '@/components/ProjectListSearch.vue';
+  import SidebarContainer from '@/components/SidebarContainer.vue';
 </script>
 
 <style scoped>

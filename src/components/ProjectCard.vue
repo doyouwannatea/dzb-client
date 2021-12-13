@@ -5,7 +5,7 @@
         Платформа для размещения вузовских олимпиад lorem ipsum dolor sit amet,
         consectetur adipiscing elit
       </h2>
-      <Badge class="status">{{ statusText }}</Badge>
+      <VBadge class="status">{{ statusText }}</VBadge>
       <div class="subtitle">Лукьянов Н.Д.</div>
     </header>
     <div class="divider"></div>
@@ -22,7 +22,7 @@
         <li><b>Тип проекта:</b> Проектное обучение</li>
       </ul>
       <div class="info">
-        <TeamCounter class="team-counter" :count="0" :total="13" />
+        <ProjectTeamCounter class="team-counter" :count="0" :total="13" />
         <div class="difficulty">
           <span class="icon star-icon"></span>
           <span>легко</span>
@@ -32,22 +32,22 @@
     <footer class="footer container">
       <ul class="tag-list">
         <li v-for="tag of visibleTags" :key="tag">
-          <Tag>{{ tag }}</Tag>
+          <VTag>{{ tag }}</VTag>
         </li>
         <li v-if="showTagsBtnVisible" class="tag-btn">
-          <Button variant="inline-link" @click="isTagsVisible = true">
+          <BaseButton variant="inline-link" @click="isTagsVisible = true">
             {{ showTagsBtnText }}
-          </Button>
+          </BaseButton>
         </li>
       </ul>
 
       <div class="actions">
-        <Button variant="outlined">Подать заявку</Button>
-        <Button wrapper>
+        <BaseButton variant="outlined">Подать заявку</BaseButton>
+        <BaseButton wrapper>
           <RouterLink class="clear-link" :to="{ name: 'project' }">
             Подробнее
           </RouterLink>
-        </Button>
+        </BaseButton>
       </div>
     </footer>
   </article>
@@ -57,10 +57,10 @@
   import type { PropType } from 'vue';
   import { computed, ref } from 'vue';
   import { RouterLink } from 'vue-router';
-  import Badge from './Badge.vue';
-  import Button from '../controls/Button.vue';
-  import TeamCounter from './TeamCounter.vue';
-  import Tag from './Tag.vue';
+  import VBadge from './base/VBadge.vue';
+  import BaseButton from './base/BaseButton.vue';
+  import ProjectTeamCounter from './ProjectTeamCounter.vue';
+  import VTag from './base/VTag.vue';
   import { declOfNum } from '@/helpers/string';
 
   type status = 'new' | 'active' | 'recruitment' | 'closed';
@@ -207,7 +207,7 @@
   }
 
   .star-icon {
-    background-image: url('../assets/star.svg');
+    background-image: url('../assets/icons/star.svg');
   }
 
   .container {
