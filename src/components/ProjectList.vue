@@ -4,7 +4,7 @@
       <ProjectCard
         status="new"
         :tags="['тег', 'другой тег', 'другой тег', 'другой тег', 'другой тег']"
-      ></ProjectCard>
+      />
     </li>
     <li>
       <ProjectCard
@@ -20,16 +20,16 @@
           'JavaScript',
           'Конференция',
         ]"
-      ></ProjectCard>
+      />
     </li>
     <li>
       <ProjectCard
         status="recruitment"
         :tags="['JavaScript', 'Web', 'Конференция', 'Конференция']"
-      ></ProjectCard>
+      />
     </li>
     <li>
-      <ProjectCard status="closed"></ProjectCard>
+      <ProjectCard status="closed" />
     </li>
   </ul>
 </template>

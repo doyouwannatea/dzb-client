@@ -2,10 +2,10 @@
   <header class="header">
     <VContainer class="container" size="lg">
       <RouterLink class="clear-link align-self-center" :to="{ name: 'home' }">
-        <VLogo></VLogo>
+        <VLogo />
       </RouterLink>
-      <TheNavigation></TheNavigation>
-      <NavigationUserActions></NavigationUserActions>
+      <TheNavigation />
+      <NavigationUserActions />
     </VContainer>
   </header>
 </template>

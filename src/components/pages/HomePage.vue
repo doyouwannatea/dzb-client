@@ -7,15 +7,15 @@
       </p>
     </header>
     <aside class="top-filters">
-      <ProjectListSearch></ProjectListSearch>
-      <ProjectListSort></ProjectListSort>
+      <ProjectListSearch />
+      <ProjectListSort />
     </aside>
     <SidebarContainer>
       <template #sidebar>
-        <ProjectListFilters></ProjectListFilters>
+        <ProjectListFilters />
       </template>
       <template #main>
-        <ProjectList></ProjectList>
+        <ProjectList />
       </template>
     </SidebarContainer>
   </BasePageLayout>

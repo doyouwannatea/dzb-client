@@ -1,7 +1,7 @@
 <template>
   <BaseLayout>
     <template #header>
-      <TheHeader></TheHeader>
+      <TheHeader />
     </template>
     <template #content>
       <VContainer size="md">
@@ -9,7 +9,7 @@
       </VContainer>
     </template>
     <template #footer>
-      <TheFooter></TheFooter>
+      <TheFooter />
     </template>
   </BaseLayout>
 </template>
