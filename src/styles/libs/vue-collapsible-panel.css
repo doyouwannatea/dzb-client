@@ -1,3 +1,7 @@
+.vcp {
+  --side-padding: 22px;
+}
+
 .vcp__header {
   display: flex;
   flex-flow: row-reverse;
@@ -5,8 +9,7 @@
   align-items: center;
   gap: 5px;
   cursor: pointer;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 17px var(--side-padding);
   font-weight: 700;
   font-size: 20px;
   line-height: 26px;
@@ -27,7 +30,9 @@
 
 .vcp__body-content {
   margin-top: 6px;
-  padding-bottom: 25px;
+  padding-bottom: 29px;
+  padding-left: var(--side-padding);
+  padding-right: var(--side-padding);
 }
 
 .vcp--expanded .vcp__header-icon {

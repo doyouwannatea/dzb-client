@@ -1,6 +1,6 @@
 <template>
   <form class="filters" @submit.prevent>
-    <AppAccordion class="filter-wrapper">
+    <AppAccordion>
       <template #title>Статус проекта</template>
       <template #content>
         <label class="label">
@@ -44,7 +44,7 @@
 
     <div class="divider"></div>
 
-    <AppAccordion class="filter-wrapper">
+    <AppAccordion>
       <template #title>Тип проекта</template>
       <template #content>
         <label class="label">
@@ -72,7 +72,7 @@
 
     <div class="divider"></div>
 
-    <AppAccordion class="filter-wrapper">
+    <AppAccordion>
       <template #title>Руководитель проекта</template>
       <template #content>
         <VMultiselect
@@ -87,7 +87,7 @@
 
     <div class="divider"></div>
 
-    <AppAccordion class="filter-wrapper">
+    <AppAccordion>
       <template #title>Теги</template>
       <template #content>
         <VMultiselect
@@ -102,7 +102,7 @@
 
     <div class="divider"></div>
 
-    <AppAccordion class="filter-wrapper">
+    <AppAccordion>
       <template #title>Сроки реализации</template>
       <template #content>
         <div class="date">
@@ -114,7 +114,7 @@
 
     <div class="divider"></div>
 
-    <AppAccordion class="filter-wrapper">
+    <AppAccordion>
       <template #title>Уровни сложности</template>
       <template #content>
         <label class="label">
@@ -147,7 +147,7 @@
       </template>
     </AppAccordion>
 
-    <footer class="filter-wrapper footer">
+    <footer class="footer">
       <BaseButton full-width>найти</BaseButton>
       <BaseButton full-width variant="link">сбросить фильтр</BaseButton>
     </footer>
@@ -203,8 +203,6 @@
 
 <style scoped>
   .divider {
-    margin-top: 8px;
-    margin-bottom: 8px;
     width: 100%;
     height: 1px;
     background-color: var(--gray-color-1);
@@ -213,12 +211,6 @@
   .filters {
     padding-top: 10px;
     padding-bottom: 11px;
-  }
-
-  .filter-wrapper {
-    margin-top: 18px;
-    padding-left: 22px;
-    padding-right: 22px;
   }
 
   .label {
@@ -247,5 +239,7 @@
     flex-direction: column;
     gap: 11px;
     margin-top: 20px;
+    padding-left: 22px;
+    padding-right: 22px;
   }
 </style>
