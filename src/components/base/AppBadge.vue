@@ -1,6 +1,6 @@
 <template>
   <div class="badge">
-    <slot>новый</slot>
+    <slot></slot>
   </div>
 </template>
 

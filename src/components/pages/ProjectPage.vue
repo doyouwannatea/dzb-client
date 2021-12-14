@@ -1,57 +1,59 @@
 <template>
-  <BasePageLayout>
+  <PageLayout>
     <header class="header">
-      <Breadcrumbs class="breadcrumbs" />
+      <AppBreadcrumbs class="breadcrumbs" />
       <h1 class="page-title">Платформа для размещения вузовских олимпиад</h1>
     </header>
     <ProjectPanel>
       <div class="row three-cols">
         <div class="col">
           <ul class="info-list">
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Руководитель проекта</h2>
-              <b>Лукьянов Никита Дмитриевич</b>
+              <b class="bold">Лукьянов Никита Дмитриевич</b>
             </li>
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Заказчик</h2>
-              <b>ЦЭО, Лукьянов Н.Д.</b>
+              <b class="bold">ЦЭО, Лукьянов Н.Д.</b>
             </li>
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Сроки реализации</h2>
-              <b>29.01.21 – 1.06.21</b>
+              <b class="bold">29.01.21 – 1.06.21</b>
             </li>
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Требуемые навыки</h2>
               <span class="tags">
-                <Tag>HTML</Tag>
-                <Tag>CSS</Tag>
-                <Tag>PHP</Tag>
+                <AppTag>HTML</AppTag>
+                <AppTag>CSS</AppTag>
+                <AppTag>PHP</AppTag>
               </span>
             </li>
           </ul>
         </div>
         <div class="col">
           <ul class="info-list">
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Тип проекта</h2>
-              <b>Проектное обучение (Прикладной)</b>
+              <b class="bold">Проектное обучение (Прикладной)</b>
             </li>
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Цель проекта</h2>
-              <b>Создать платформу (страничку) для рекламы олимпиад</b>
+              <b class="bold">
+                Создать платформу (страничку) для рекламы олимпиад
+              </b>
             </li>
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Сложность</h2>
-              <b>Легкая</b>
+              <b class="bold">Легкая</b>
             </li>
           </ul>
         </div>
         <div class="col">
           <h2 class="info-list-title">Статус проекта</h2>
-          <Badge class="badge mt-2">новый</Badge>
+          <AppBadge class="badge mt-2">новый</AppBadge>
           <h2 class="info-list-title mt-4">Кол-во участников</h2>
-          <TeamCounter class="mt-2" :count="0" :total="13" />
-          <Button class="mt-4">Подать заявку</Button>
+          <ProjectTeamCounter class="mt-2" :count="0" :total="13" />
+          <AppButton class="mt-4">Подать заявку</AppButton>
         </div>
       </div>
     </ProjectPanel>
@@ -59,9 +61,9 @@
       <div class="row two-cols">
         <div class="col">
           <ul class="info-list">
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Ожидаемый результат</h2>
-              <b>
+              <b class="bold">
                 Платформа пригодная для размещения олимпиад, анонса других
                 мероприятий интегрированная с moodle
               </b>
@@ -70,9 +72,9 @@
         </div>
         <div class="col">
           <ul class="info-list">
-            <li>
+            <li class="info-list-item">
               <h2 class="info-list-title">Требования к участникам</h2>
-              <b>Знание основ верстки и дизайна веб-страниц</b>
+              <b class="bold">Знание основ верстки и дизайна веб-страниц</b>
             </li>
           </ul>
         </div>
@@ -80,7 +82,7 @@
     </ProjectPanel>
     <ProjectPanel>
       <ul class="info-list">
-        <li class="wide">
+        <li class="info-list-item wide">
           <h2 class="info-list-title">Идея проекта</h2>
           <span>
             В настоящий момент олимпиады проводятся на сайте "Открытые курсы
@@ -90,46 +92,48 @@
             регистрацией на мероприятия и подключением через api к moodle
           </span>
         </li>
-        <li class="wide">
+        <li class="info-list-item wide">
           <h2 class="info-list-title">Теги</h2>
           <span class="tags">
-            <Tag>JavaScript</Tag>
-            <Tag>WEB</Tag>
-            <Tag>Конференция</Tag>
-            <Tag>Обучение</Tag>
-            <Tag>Конференция</Tag>
-            <Tag>Конференция</Tag>
+            <AppTag>JavaScript</AppTag>
+            <AppTag>WEB</AppTag>
+            <AppTag>Конференция</AppTag>
+            <AppTag>Обучение</AppTag>
+            <AppTag>Конференция</AppTag>
+            <AppTag>Конференция</AppTag>
           </span>
         </li>
       </ul>
     </ProjectPanel>
 
     <div class="d-flex justify-content-center mt-3">
-      <Button wrapper variant="link">
+      <AppButton wrapper variant="link">
         <RouterLink class="clear-link" :to="{ name: 'home' }">
           назад к списку
         </RouterLink>
-      </Button>
+      </AppButton>
     </div>
-  </BasePageLayout>
+  </PageLayout>
 </template>
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import BasePageLayout from '@/layout/BasePageLayout.vue';
-  import Breadcrumbs from '@/components/Breadcrumbs.vue';
-  import Tag from '../components/Tag.vue';
-  import Badge from '../components/Badge.vue';
-  import TeamCounter from '../components/TeamCounter.vue';
-  import Button from '../controls/Button.vue';
-  import ProjectPanel from '@/layout/ProjectPanel.vue';
+  import PageLayout from '@/components/base/PageLayout.vue';
+  import AppBreadcrumbs from '@/components/base/AppBreadcrumbs.vue';
+  import AppTag from '@/components/base/AppTag.vue';
+  import AppBadge from '@/components/base/AppBadge.vue';
+  import ProjectTeamCounter from '@/components/ProjectTeamCounter.vue';
+  import AppButton from '@/components/base/AppButton.vue';
+  import ProjectPanel from '@/components/ProjectPanel.vue';
 </script>
 
 <style scoped>
   /* Text */
-  b {
+  .bold {
     line-height: 23px;
+    font-weight: 700;
   }
+
   .page-title {
     margin-top: 26px;
     margin-bottom: 24px;
@@ -183,14 +187,14 @@
     font-weight: 600;
     line-height: normal;
   }
-  .info-list > li {
+  .info-list-item {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: flex-start;
     line-height: 27px;
   }
 
-  .info-list > li.wide {
+  .info-list-item.wide {
     grid-template-columns: minmax(auto, 230px) auto;
   }
 </style>

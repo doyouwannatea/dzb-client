@@ -5,24 +5,24 @@
         Платформа для размещения вузовских олимпиад lorem ipsum dolor sit amet,
         consectetur adipiscing elit
       </h2>
-      <Badge class="status">{{ statusText }}</Badge>
+      <AppBadge class="status">{{ statusText }}</AppBadge>
       <div class="subtitle">Лукьянов Н.Д.</div>
     </header>
     <div class="divider"></div>
     <div class="body container">
       <ul class="list">
-        <li>
+        <li class="list-item">
           <b>Цель:</b> Создать платформу (страничку) для рекламы олимпиад.
         </li>
-        <li>
+        <li class="list-item">
           <b>Требования к студентам:</b> Знание основ верстки и дизайна
           веб-страниц.
         </li>
-        <li><b>Сроки реализации:</b> 29.01.21 – 1.06.21</li>
-        <li><b>Тип проекта:</b> Проектное обучение</li>
+        <li class="list-item"><b>Сроки реализации:</b> 29.01.21 – 1.06.21</li>
+        <li class="list-item"><b>Тип проекта:</b> Проектное обучение</li>
       </ul>
       <div class="info">
-        <TeamCounter class="team-counter" :count="0" :total="13" />
+        <ProjectTeamCounter class="team-counter" :count="0" :total="13" />
         <div class="difficulty">
           <span class="icon star-icon"></span>
           <span>легко</span>
@@ -32,22 +32,22 @@
     <footer class="footer container">
       <ul class="tag-list">
         <li v-for="tag of visibleTags" :key="tag">
-          <Tag>{{ tag }}</Tag>
+          <AppTag>{{ tag }}</AppTag>
         </li>
         <li v-if="showTagsBtnVisible" class="tag-btn">
-          <Button variant="inline-link" @click="isTagsVisible = true">
+          <AppButton variant="inline-link" @click="isTagsVisible = true">
             {{ showTagsBtnText }}
-          </Button>
+          </AppButton>
         </li>
       </ul>
 
       <div class="actions">
-        <Button variant="outlined">Подать заявку</Button>
-        <Button wrapper>
+        <AppButton variant="outlined">Подать заявку</AppButton>
+        <AppButton wrapper>
           <RouterLink class="clear-link" :to="{ name: 'project' }">
             Подробнее
           </RouterLink>
-        </Button>
+        </AppButton>
       </div>
     </footer>
   </article>
@@ -57,10 +57,10 @@
   import type { PropType } from 'vue';
   import { computed, ref } from 'vue';
   import { RouterLink } from 'vue-router';
-  import Badge from './Badge.vue';
-  import Button from '../controls/Button.vue';
-  import TeamCounter from './TeamCounter.vue';
-  import Tag from './Tag.vue';
+  import AppBadge from './base/AppBadge.vue';
+  import AppButton from './base/AppButton.vue';
+  import ProjectTeamCounter from './ProjectTeamCounter.vue';
+  import AppTag from './base/AppTag.vue';
   import { declOfNum } from '@/helpers/string';
 
   type status = 'new' | 'active' | 'recruitment' | 'closed';
@@ -207,7 +207,7 @@
   }
 
   .star-icon {
-    background-image: url('../assets/star.svg');
+    background-image: url('../assets/icons/star.svg');
   }
 
   .container {
@@ -252,14 +252,14 @@
     padding-left: 0;
   }
 
-  .list > li {
+  .list-item {
     font-weight: 600;
     font-size: 16px;
     line-height: 20px;
     color: var(--text-color);
     list-style: none;
   }
-  .list > li:not(:last-child) {
+  .list-item:not(:last-child) {
     margin-bottom: 17px;
   }
 </style>
