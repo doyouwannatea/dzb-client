@@ -36,10 +36,10 @@ export interface Project {
   requirements: string;
   customer: string;
   expected_result: string;
-  additional_inf: string;
-  result: string;
+  additional_inf: string | null;
+  result: string | null;
   updated_at: string;
-  deleted_at: string;
+  deleted_at: string | null;
   type_name: string;
   supervisor_name: string;
   vacant_places: number;
