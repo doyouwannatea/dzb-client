@@ -4,9 +4,9 @@
       <TheHeader />
     </template>
     <template #content>
-      <VContainer size="md">
+      <AppContainer size="md">
         <slot></slot>
-      </VContainer>
+      </AppContainer>
     </template>
     <template #footer>
       <TheFooter />
@@ -18,5 +18,5 @@
   import TheFooter from '@/components/unique/TheFooter.vue';
   import TheHeader from '@/components/unique/TheHeader.vue';
   import BaseLayout from './BaseLayout.vue';
-  import VContainer from './VContainer.vue';
+  import AppContainer from './AppContainer.vue';
 </script>

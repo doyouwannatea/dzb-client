@@ -1,7 +1,7 @@
 <template>
-  <BasePageLayout>
+  <PageLayout>
     <header class="header">
-      <VBreadcrumbs class="breadcrumbs" />
+      <AppBreadcrumbs class="breadcrumbs" />
       <h1 class="page-title">Платформа для размещения вузовских олимпиад</h1>
     </header>
     <ProjectPanel>
@@ -23,9 +23,9 @@
             <li class="info-list-item">
               <h2 class="info-list-title">Требуемые навыки</h2>
               <span class="tags">
-                <VTag>HTML</VTag>
-                <VTag>CSS</VTag>
-                <VTag>PHP</VTag>
+                <AppTag>HTML</AppTag>
+                <AppTag>CSS</AppTag>
+                <AppTag>PHP</AppTag>
               </span>
             </li>
           </ul>
@@ -50,10 +50,10 @@
         </div>
         <div class="col">
           <h2 class="info-list-title">Статус проекта</h2>
-          <VBadge class="badge mt-2">новый</VBadge>
+          <AppBadge class="badge mt-2">новый</AppBadge>
           <h2 class="info-list-title mt-4">Кол-во участников</h2>
           <ProjectTeamCounter class="mt-2" :count="0" :total="13" />
-          <BaseButton class="mt-4">Подать заявку</BaseButton>
+          <AppButton class="mt-4">Подать заявку</AppButton>
         </div>
       </div>
     </ProjectPanel>
@@ -95,35 +95,35 @@
         <li class="info-list-item wide">
           <h2 class="info-list-title">Теги</h2>
           <span class="tags">
-            <VTag>JavaScript</VTag>
-            <VTag>WEB</VTag>
-            <VTag>Конференция</VTag>
-            <VTag>Обучение</VTag>
-            <VTag>Конференция</VTag>
-            <VTag>Конференция</VTag>
+            <AppTag>JavaScript</AppTag>
+            <AppTag>WEB</AppTag>
+            <AppTag>Конференция</AppTag>
+            <AppTag>Обучение</AppTag>
+            <AppTag>Конференция</AppTag>
+            <AppTag>Конференция</AppTag>
           </span>
         </li>
       </ul>
     </ProjectPanel>
 
     <div class="d-flex justify-content-center mt-3">
-      <BaseButton wrapper variant="link">
+      <AppButton wrapper variant="link">
         <RouterLink class="clear-link" :to="{ name: 'home' }">
           назад к списку
         </RouterLink>
-      </BaseButton>
+      </AppButton>
     </div>
-  </BasePageLayout>
+  </PageLayout>
 </template>
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import BasePageLayout from '@/components/base/BasePageLayout.vue';
-  import VBreadcrumbs from '@/components/base/VBreadcrumbs.vue';
-  import VTag from '@/components/base/VTag.vue';
-  import VBadge from '@/components/base/VBadge.vue';
+  import PageLayout from '@/components/base/PageLayout.vue';
+  import AppBreadcrumbs from '@/components/base/AppBreadcrumbs.vue';
+  import AppTag from '@/components/base/AppTag.vue';
+  import AppBadge from '@/components/base/AppBadge.vue';
   import ProjectTeamCounter from '@/components/ProjectTeamCounter.vue';
-  import BaseButton from '@/components/base/BaseButton.vue';
+  import AppButton from '@/components/base/AppButton.vue';
   import ProjectPanel from '@/components/ProjectPanel.vue';
 </script>
 

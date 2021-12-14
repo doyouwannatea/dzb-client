@@ -5,7 +5,7 @@
         Платформа для размещения вузовских олимпиад lorem ipsum dolor sit amet,
         consectetur adipiscing elit
       </h2>
-      <VBadge class="status">{{ statusText }}</VBadge>
+      <AppBadge class="status">{{ statusText }}</AppBadge>
       <div class="subtitle">Лукьянов Н.Д.</div>
     </header>
     <div class="divider"></div>
@@ -32,22 +32,22 @@
     <footer class="footer container">
       <ul class="tag-list">
         <li v-for="tag of visibleTags" :key="tag">
-          <VTag>{{ tag }}</VTag>
+          <AppTag>{{ tag }}</AppTag>
         </li>
         <li v-if="showTagsBtnVisible" class="tag-btn">
-          <BaseButton variant="inline-link" @click="isTagsVisible = true">
+          <AppButton variant="inline-link" @click="isTagsVisible = true">
             {{ showTagsBtnText }}
-          </BaseButton>
+          </AppButton>
         </li>
       </ul>
 
       <div class="actions">
-        <BaseButton variant="outlined">Подать заявку</BaseButton>
-        <BaseButton wrapper>
+        <AppButton variant="outlined">Подать заявку</AppButton>
+        <AppButton wrapper>
           <RouterLink class="clear-link" :to="{ name: 'project' }">
             Подробнее
           </RouterLink>
-        </BaseButton>
+        </AppButton>
       </div>
     </footer>
   </article>
@@ -57,10 +57,10 @@
   import type { PropType } from 'vue';
   import { computed, ref } from 'vue';
   import { RouterLink } from 'vue-router';
-  import VBadge from './base/VBadge.vue';
-  import BaseButton from './base/BaseButton.vue';
+  import AppBadge from './base/AppBadge.vue';
+  import AppButton from './base/AppButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
-  import VTag from './base/VTag.vue';
+  import AppTag from './base/AppTag.vue';
   import { declOfNum } from '@/helpers/string';
 
   type status = 'new' | 'active' | 'recruitment' | 'closed';

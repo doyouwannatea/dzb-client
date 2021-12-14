@@ -1,6 +1,6 @@
 <template>
   <form class="filters" @submit.prevent>
-    <VAccordion class="filter-wrapper">
+    <AppAccordion class="filter-wrapper">
       <template #title>Статус проекта</template>
       <template #content>
         <label class="label">
@@ -40,11 +40,11 @@
           Закрыт для записи
         </label>
       </template>
-    </VAccordion>
+    </AppAccordion>
 
     <div class="divider"></div>
 
-    <VAccordion class="filter-wrapper">
+    <AppAccordion class="filter-wrapper">
       <template #title>Тип проекта</template>
       <template #content>
         <label class="label">
@@ -68,11 +68,11 @@
           Научная деятельность
         </label>
       </template>
-    </VAccordion>
+    </AppAccordion>
 
     <div class="divider"></div>
 
-    <VAccordion class="filter-wrapper">
+    <AppAccordion class="filter-wrapper">
       <template #title>Руководитель проекта</template>
       <template #content>
         <VMultiselect
@@ -83,11 +83,11 @@
           :options="options"
         />
       </template>
-    </VAccordion>
+    </AppAccordion>
 
     <div class="divider"></div>
 
-    <VAccordion class="filter-wrapper">
+    <AppAccordion class="filter-wrapper">
       <template #title>Теги</template>
       <template #content>
         <VMultiselect
@@ -98,11 +98,11 @@
           :options="options"
         />
       </template>
-    </VAccordion>
+    </AppAccordion>
 
     <div class="divider"></div>
 
-    <VAccordion class="filter-wrapper">
+    <AppAccordion class="filter-wrapper">
       <template #title>Сроки реализации</template>
       <template #content>
         <div class="date">
@@ -110,11 +110,11 @@
           <input v-model="dateTo" class="input" type="date" />
         </div>
       </template>
-    </VAccordion>
+    </AppAccordion>
 
     <div class="divider"></div>
 
-    <VAccordion class="filter-wrapper">
+    <AppAccordion class="filter-wrapper">
       <template #title>Уровни сложности</template>
       <template #content>
         <label class="label">
@@ -145,7 +145,7 @@
           Сложно
         </label>
       </template>
-    </VAccordion>
+    </AppAccordion>
 
     <footer class="filter-wrapper footer">
       <BaseButton full-width>найти</BaseButton>
@@ -156,9 +156,9 @@
 
 <script setup lang="ts">
   import { ref } from '@vue/reactivity';
-  import VAccordion from './base/VAccordion.vue';
+  import AppAccordion from './base/AppAccordion.vue';
   import VMultiselect from '@vueform/multiselect';
-  import BaseButton from './base/BaseButton.vue';
+  import BaseButton from './base/AppButton.vue';
 
   const tags = ref([]);
   const teacher = ref('');

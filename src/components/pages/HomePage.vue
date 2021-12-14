@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-  import BasePageLayout from '@/components/base/BasePageLayout.vue';
+  import BasePageLayout from '@/components/base/PageLayout.vue';
   import ProjectList from '@/components/ProjectList.vue';
   import ProjectListFilters from '@/components/ProjectListFilters.vue';
   import ProjectListSort from '@/components/ProjectListSort.vue';
