@@ -1,15 +1,18 @@
 import vue from '@vitejs/plugin-vue';
 import { join } from 'path';
-import { defineConfig } from 'vite';
-import { BASE_URL } from './src/constants';
+import { defineConfig, loadEnv } from 'vite';
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue()],
-  resolve: {
-    alias: {
-      '@': join(__dirname, 'src'),
+export default ({ mode }) => {
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+
+  return defineConfig({
+    plugins: [vue()],
+    resolve: {
+      alias: {
+        '@': join(__dirname, 'src'),
+      },
     },
-  },
-  base: BASE_URL,
-});
+    base: process.env.VITE_BASE_URL,
+  });
+};

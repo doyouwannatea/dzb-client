@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { BASE_URL } from './constants';
 
 const HomePage = () => import('./components/pages/HomePage.vue');
 const ProjectPage = () => import('./components/pages/ProjectPage.vue');
@@ -11,7 +10,7 @@ export const router = createRouter({
     }
     return { top: 0 };
   },
-  history: createWebHistory(BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [
     {
       path: '/',
