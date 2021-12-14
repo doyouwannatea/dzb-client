@@ -18,8 +18,9 @@
   }
   .sort-input {
     display: inline-block;
-    width: 200px;
+    width: 150px;
     padding: 0.2rem;
+    padding-right: 1.5em;
     border: 0;
     background-color: transparent;
 
@@ -31,6 +32,9 @@
     color: #485ea4;
     font-size: 18px;
     line-height: 23px;
+
+    appearance: none;
+    background: url(../assets/icons/arrow.svg) right / contain no-repeat;
   }
 
   .sort-input:focus {
