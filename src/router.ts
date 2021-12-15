@@ -17,11 +17,30 @@ export const router = createRouter({
       path: '/',
       component: HomePage,
       name: 'home',
+      meta: {
+        nav: 'Все проекты',
+      },
     },
     {
       path: '/project',
       component: ProjectPage,
       name: 'project',
+    },
+    {
+      path: '/faq',
+      redirect: { name: 'home' },
+      name: 'faq',
+      meta: {
+        nav: 'вопрос-ответ',
+      },
+    },
+    {
+      path: '/contacts',
+      name: 'contacts',
+      redirect: { name: 'home' },
+      meta: {
+        nav: 'контакты',
+      },
     },
   ],
 });
