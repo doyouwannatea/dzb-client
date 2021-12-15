@@ -1,7 +1,7 @@
 <template>
   <ul class="project-list">
-    <li v-for="listItem of projectList" :key="listItem.id">
-      {{ listItem.title }}
+    <li v-for="project of projectList" :key="project.id">
+      <ProjectCard :project="project" />
     </li>
   </ul>
 </template>

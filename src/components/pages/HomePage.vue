@@ -15,7 +15,9 @@
         <ProjectListFilters />
       </template>
       <template #main>
-        <ProjectList :project-list="projectList"></ProjectList>
+        <div v-if="loading">loading...</div>
+        <div v-if="error">{{ error }}</div>
+        <ProjectList v-if="!loading && !error" :project-list="projectList" />
       </template>
     </SidebarContainer>
   </BasePageLayout>
@@ -32,10 +34,21 @@
   import ProjectApi from '@/api/ProjectApi';
   import type { Project } from '@/models/Project';
 
+  const loading = ref(false);
+  const error = ref('');
   const projectList = ref<Project[]>([]);
 
-  onBeforeMount(() => {
-    ProjectApi.getProjectList(1).then((list) => (projectList.value = list));
+  onBeforeMount(async () => {
+    loading.value = true;
+    error.value = '';
+    try {
+      const list = await ProjectApi.getProjectList(1);
+      projectList.value = list;
+    } catch (projectApiError) {
+      error.value = String(projectApiError);
+    } finally {
+      loading.value = false;
+    }
   });
 </script>
 

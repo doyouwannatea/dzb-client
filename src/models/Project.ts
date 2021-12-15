@@ -18,10 +18,15 @@ export interface SupervisorName {
   fio: string;
 }
 
+// TODO: дополнить типы
+export type StateName = 'Открытый';
+
 export interface State {
   id: number;
-  state: string;
+  state: StateName;
 }
+
+export type Difficulty = 1 | 2 | 3;
 
 export interface Project {
   id: number;
@@ -30,7 +35,7 @@ export interface Project {
   tags: Tag[];
   goal: string;
   idea: string;
-  difficulty: number;
+  difficulty: Difficulty;
   date_start: string;
   date_end: string;
   requirements: string;
@@ -43,5 +48,5 @@ export interface Project {
   type_name: string;
   supervisor_name: string;
   vacant_places: number;
-  state_name: string;
+  state_name: StateName;
 }
