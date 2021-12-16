@@ -8,4 +8,7 @@ export default abstract class ProjectApiType {
   static async getProjectList(page: number): Promise<Project[]> {
     return [];
   }
+  static async getSingleProject(projectId: number): Promise<Project> {
+    return {} as Project;
+  }
 }

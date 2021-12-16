@@ -17,7 +17,10 @@
       <template #main>
         <div v-if="loading">loading...</div>
         <div v-if="error">{{ error }}</div>
-        <ProjectList v-if="!loading && !error" :project-list="projectList" />
+        <ProjectList
+          v-if="!loading && !error && projectList"
+          :project-list="projectList"
+        />
       </template>
     </SidebarContainer>
   </BasePageLayout>
@@ -30,26 +33,9 @@
   import ProjectListSort from '@/components/ProjectListSort.vue';
   import ProjectListSearch from '@/components/ProjectListSearch.vue';
   import SidebarContainer from '@/components/SidebarContainer.vue';
-  import { onBeforeMount, ref } from 'vue';
-  import ProjectApi from '@/api/ProjectApi';
-  import type { Project } from '@/models/Project';
+  import useProjectList from '@/hooks/useProjectList';
 
-  const loading = ref(false);
-  const error = ref('');
-  const projectList = ref<Project[]>([]);
-
-  onBeforeMount(async () => {
-    loading.value = true;
-    error.value = '';
-    try {
-      const list = await ProjectApi.getProjectList(1);
-      projectList.value = list;
-    } catch (projectApiError) {
-      error.value = String(projectApiError);
-    } finally {
-      loading.value = false;
-    }
-  });
+  const { loading, error, data: projectList } = useProjectList(1);
 </script>
 
 <style scoped>
