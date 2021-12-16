@@ -1,15 +1,8 @@
 <template>
   <component
-    :is="wrapper ? 'span' : 'button'"
+    :is="is"
     :disabled="disabled"
-    :class="[
-      'btn',
-      variant,
-      {
-        'full-width': fullWidth,
-        wrapper,
-      },
-    ]"
+    :class="['btn', variant, { 'full-width': fullWidth }]"
   >
     <slot></slot>
   </component>
@@ -18,35 +11,22 @@
 <script setup lang="ts">
   import type { PropType } from '@vue/runtime-core';
 
-  type variant = 'outlined' | 'link' | 'inline-link';
+  type Variant = 'outlined' | 'link' | 'inline-link';
+  type Is = 'button' | 'router-link';
 
   defineProps({
     variant: {
-      type: String as PropType<variant>,
-      default: '',
+      type: String as PropType<Variant>,
+      default: '' as Variant,
+    },
+    is: {
+      type: String as PropType<Is>,
+      default: 'button' as Is,
     },
     disabled: Boolean,
     fullWidth: Boolean,
-    wrapper: Boolean,
   });
 </script>
-
-<style>
-  .btn.wrapper > * {
-    padding: 16px 32px;
-    display: inline-block;
-  }
-
-  .btn.wrapper[disabled='true'] {
-    pointer-events: none;
-  }
-
-  .btn.wrapper[disabled='true'] > a {
-    pointer-events: none;
-    color: var(--gray-color-2);
-    outline: none;
-  }
-</style>
 
 <style scoped>
   .btn {
@@ -62,6 +42,7 @@
     white-space: nowrap;
     cursor: pointer;
     transition: background-color 20ms ease, color 20ms ease;
+    text-decoration: none;
   }
 
   .btn.wrapper {

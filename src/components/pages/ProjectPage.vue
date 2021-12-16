@@ -8,17 +8,15 @@
     <div v-if="error">{{ error }}</div>
     <ProjectDetails v-if="project && !loading && !error" :project="project" />
     <div class="d-flex justify-content-center mt-3">
-      <AppButton wrapper variant="link">
-        <RouterLink class="clear-link" :to="{ name: 'home' }">
-          назад к списку
-        </RouterLink>
+      <AppButton is="router-link" variant="link" :to="{ name: 'home' }">
+        назад к списку
       </AppButton>
     </div>
   </PageLayout>
 </template>
 
 <script setup lang="ts">
-  import { RouterLink } from 'vue-router';
+  import { useRoute } from 'vue-router';
   import PageLayout from '@/components/base/PageLayout.vue';
   import AppBreadcrumbs from '@/components/base/AppBreadcrumbs.vue';
   import AppButton from '@/components/base/AppButton.vue';

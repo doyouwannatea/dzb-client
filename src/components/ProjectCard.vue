@@ -50,10 +50,11 @@
 
       <div class="actions">
         <AppButton variant="outlined">Подать заявку</AppButton>
-        <AppButton wrapper>
-          <RouterLink class="clear-link" :to="{ name: 'project' }">
-            Подробнее
-          </RouterLink>
+        <AppButton
+          is="router-link"
+          :to="{ name: 'project', params: { id: project.id } }"
+        >
+          Подробнее
         </AppButton>
       </div>
     </footer>
@@ -62,7 +63,6 @@
 
 <script setup lang="ts">
   import { computed, ref } from 'vue';
-  import { RouterLink } from 'vue-router';
   import AppBadge from './base/AppBadge.vue';
   import AppButton from './base/AppButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
