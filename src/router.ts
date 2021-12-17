@@ -14,7 +14,7 @@ export const router = createRouter({
   history: createWebHistory(BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/:page?',
       component: HomePage,
       name: 'home',
       meta: {

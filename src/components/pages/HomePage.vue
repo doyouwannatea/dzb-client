@@ -16,6 +16,11 @@
       </template>
       <template #main>
         <ProjectList />
+        <ProjectListPagination
+          :page-size="10"
+          :pages-visible="7"
+          :total-items="154"
+        />
       </template>
     </SidebarContainer>
   </BasePageLayout>
@@ -28,6 +33,7 @@
   import ProjectListSort from '@/components/ProjectListSort.vue';
   import ProjectListSearch from '@/components/ProjectListSearch.vue';
   import SidebarContainer from '@/components/SidebarContainer.vue';
+  import ProjectListPagination from '@/components/ProjectListPagination.vue';
 </script>
 
 <style scoped>
