@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="container"
-    :style="{ maxWidth: `calc(${maxWidth}px + var(--side-padding) * 2)` }"
-  >
+  <div class="container" :style="{ maxWidth: `${maxWidth}px` }">
     <slot></slot>
   </div>
 </template>
@@ -22,11 +19,10 @@
 
 <style scoped>
   .container {
-    --side-padding: 1rem;
-
     width: 100%;
-    padding-left: var(--side-padding);
-    padding-right: var(--side-padding);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-sizing: content-box;
     margin-left: auto;
     margin-right: auto;
   }
