@@ -1,15 +1,19 @@
 <template>
   <nav class="nav">
     <ul class="nav-list">
-      <li class="nav-item active">
-        <a href="#" class="nav-link">Все проекты</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">вопрос-ответ</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">контакты</a>
-      </li>
+      <template
+        v-for="link in $router.options.routes"
+        :key="link.name || link.path"
+      >
+        <li
+          v-if="link.meta?.nav"
+          :class="['nav-item', { active: link.path === $route.path }]"
+        >
+          <RouterLink class="nav-link" :to="link.path">
+            {{ link.meta?.nav }}
+          </RouterLink>
+        </li>
+      </template>
     </ul>
   </nav>
 </template>
@@ -34,6 +38,10 @@
 
   .nav-item.active {
     border-bottom: 0.25em solid var(--accent-color-2);
+  }
+
+  .nav-item:hover {
+    border-bottom-color: var(--accent-color-2);
   }
 
   .nav-link {
