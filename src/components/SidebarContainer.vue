@@ -3,7 +3,9 @@
     <aside class="aside">
       <slot name="sidebar"></slot>
     </aside>
-    <slot name="main"></slot>
+    <div>
+      <slot name="main"></slot>
+    </div>
   </div>
 </template>
 

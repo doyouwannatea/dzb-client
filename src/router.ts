@@ -13,7 +13,7 @@ export const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/:page?',
       component: HomePage,
       name: 'home',
       meta: {
