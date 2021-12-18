@@ -1,4 +1,46 @@
-import { Project } from '../Project';
+import { Project, Tag, Type } from '../Project';
+
+export const types: Type[] = [
+  {
+    id: 2,
+    type: 'Проектное обучение',
+  },
+  {
+    id: 3,
+    type: 'Научная деятельность',
+  },
+];
+
+export const tags: Tag[] = [
+  {
+    id: 1,
+    tag: 'Web',
+  },
+  {
+    id: 2,
+    tag: 'Mobile',
+  },
+  {
+    id: 3,
+    tag: 'Конференция',
+  },
+  {
+    id: 4,
+    tag: 'Обучение',
+  },
+  {
+    id: 5,
+    tag: 'Коммерческий',
+  },
+  {
+    id: 6,
+    tag: 'Долгосрочный',
+  },
+  {
+    id: 7,
+    tag: 'Неординарный',
+  },
+];
 
 export const projects: Project[] = [
   {
@@ -53,7 +95,7 @@ export const projects: Project[] = [
     type_name: 'Прикладной',
     supervisor_name: 'Лукьянов Никита Дмитриевич',
     vacant_places: 2,
-    state_name: 'Открытый',
+    state_name: 'Добор',
   },
   {
     id: 12,
@@ -80,7 +122,7 @@ export const projects: Project[] = [
     type_name: 'Прикладной',
     supervisor_name: 'Лукьянов Никита Дмитриевич',
     vacant_places: 2,
-    state_name: 'Открытый',
+    state_name: 'Активный',
   },
   {
     id: 13,
@@ -107,7 +149,7 @@ export const projects: Project[] = [
     type_name: 'Прикладной',
     supervisor_name: 'Лукьянов Никита Дмитриевич',
     vacant_places: 2,
-    state_name: 'Открытый',
+    state_name: 'Закрыт',
   },
   {
     id: 14,

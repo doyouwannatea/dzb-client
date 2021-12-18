@@ -1,7 +1,8 @@
-import { Project } from '@/models/Project';
-import { projects } from '@/models/mock/project';
-import { delayRes } from '@/helpers/promise';
 import ProjectApiType from './ProjectApiType';
+import type { Project, SupervisorName, Tag, Type } from '@/models/Project';
+import { projects, tags, types } from '@/models/mock/project';
+import { delayRes } from '@/helpers/promise';
+import { supervisorNames } from '@/models/mock/supervisor';
 
 export default class ProjectApiMock extends ProjectApiType {
   static async getProjectList(page: number): Promise<Project[]> {
@@ -14,5 +15,17 @@ export default class ProjectApiMock extends ProjectApiType {
     );
     if (!project) throw new Error('проект не найден');
     return delayRes(project, 400);
+  }
+
+  static async getAllTags(): Promise<Tag[]> {
+    return delayRes(tags, 300);
+  }
+
+  static async getAllSupervisorNames(): Promise<SupervisorName[]> {
+    return delayRes(supervisorNames, 400);
+  }
+
+  static async getAllProjectTypes(): Promise<Type[]> {
+    return delayRes(types, 300);
   }
 }

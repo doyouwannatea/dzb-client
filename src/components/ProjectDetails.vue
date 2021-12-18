@@ -101,7 +101,7 @@
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
   import AppButton from './base/AppButton.vue';
   import { Project } from '@/models/Project';
-  import { DIFFICULTY_TEXT } from '@/models/constants';
+  import { DIFFICULTY_TEXT } from '@/models/enums';
 
   defineProps<{ project: Project }>();
 </script>

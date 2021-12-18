@@ -18,8 +18,7 @@ export interface SupervisorName {
   fio: string;
 }
 
-// TODO: дополнить типы
-export type StateName = 'Открытый';
+export type StateName = 'Открытый' | 'Активный' | 'Добор' | 'Закрыт';
 
 export interface State {
   id: number;

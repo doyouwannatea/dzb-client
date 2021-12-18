@@ -69,10 +69,13 @@
   import AppTag from './base/AppTag.vue';
   import { declOfNum } from '@/helpers/string';
   import { StateName, Project } from '@/models/Project';
-  import { DIFFICULTY_TEXT } from '@/models/constants';
+  import { DIFFICULTY_TEXT } from '@/models/enums';
 
   const STATE_CLASS: Record<StateName, string> = {
     Открытый: 'new',
+    Активный: 'active',
+    Добор: 'recruitment',
+    Закрыт: 'closed',
   };
 
   const props = defineProps<{ project: Project }>();

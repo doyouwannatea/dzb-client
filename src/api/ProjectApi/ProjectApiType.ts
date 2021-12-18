@@ -1,5 +1,5 @@
 import ky from 'ky';
-import type { Project } from '@/models/Project';
+import type { Project, SupervisorName, Tag, Type } from '@/models/Project';
 
 export default abstract class ProjectApiType {
   protected static BASE_URL = 'https://projects.tw1.ru/api';
@@ -10,5 +10,14 @@ export default abstract class ProjectApiType {
   }
   static async getSingleProject(projectId: number): Promise<Project> {
     return {} as Project;
+  }
+  static async getAllTags(): Promise<Tag[]> {
+    return [];
+  }
+  static async getAllSupervisorNames(): Promise<SupervisorName[]> {
+    return [];
+  }
+  static async getAllProjectTypes(): Promise<Type[]> {
+    return [];
   }
 }
