@@ -5,7 +5,7 @@
       <template #content>
         <label class="label">
           <input
-            v-model="statuses"
+            v-model="states"
             class="checkbox"
             type="checkbox"
             value="new"
@@ -14,7 +14,7 @@
         </label>
         <label class="label">
           <input
-            v-model="statuses"
+            v-model="states"
             class="checkbox"
             type="checkbox"
             value="open"
@@ -23,7 +23,7 @@
         </label>
         <label class="label">
           <input
-            v-model="statuses"
+            v-model="states"
             class="checkbox"
             type="checkbox"
             value="addition"
@@ -32,7 +32,7 @@
         </label>
         <label class="label">
           <input
-            v-model="statuses"
+            v-model="states"
             class="checkbox"
             type="checkbox"
             value="close"
@@ -45,28 +45,26 @@
     <div class="divider"></div>
 
     <AppAccordion>
-      <template #title>Тип проекта</template>
+      <template #title>
+        <span v-if="loading" class="multiselect-spinner"></span>
+        <span>Тип проекта</span>
+      </template>
       <template #content>
-        <label class="label">
+        <label
+          v-for="projectType in allTypes.options"
+          :key="projectType"
+          class="label"
+        >
           <input
             v-model="type"
             class="radio"
             type="radio"
-            value="project"
+            :value="projectType"
             name="project-type"
           />
-          Проектное обучение
+          {{ projectType }}
         </label>
-        <label class="label">
-          <input
-            v-model="type"
-            class="radio"
-            type="radio"
-            value="science"
-            name="project-type"
-          />
-          Научная деятельность
-        </label>
+        <div v-if="allTypes.error" class="mt-2">{{ allTypes.error }}</div>
       </template>
     </AppAccordion>
 
@@ -80,14 +78,19 @@
           class="input"
           placeholder="Куцый Н.Н."
           :searchable="true"
-          :options="options"
+          :options="allSupervisorNames.options"
+          :loading="loading"
         />
+
+        <div v-if="allSupervisorNames.error" class="mt-2">
+          {{ allSupervisorNames.error }}
+        </div>
       </template>
     </AppAccordion>
 
     <div class="divider"></div>
 
-    <AppAccordion>
+    <AppAccordion class="loading">
       <template #title>Теги</template>
       <template #content>
         <VMultiselect
@@ -95,8 +98,10 @@
           mode="tags"
           placeholder="Data Science"
           :searchable="true"
-          :options="options"
+          :options="allTags.options"
+          :loading="loading"
         />
+        <div v-if="allTags.error" class="mt-2">{{ allTags.error }}</div>
       </template>
     </AppAccordion>
 
@@ -155,50 +160,23 @@
 </template>
 
 <script setup lang="ts">
+  import type { StateName } from '@/models/Project';
   import { ref } from '@vue/reactivity';
   import AppAccordion from './base/AppAccordion.vue';
   import VMultiselect from '@vueform/multiselect';
   import BaseButton from './base/AppButton.vue';
+  import { useProjectFiltersOptions } from '@/hooks/useProjectFiltersOptions';
 
-  const tags = ref([]);
+  const tags = ref<string[]>([]);
   const teacher = ref('');
-  const type = ref('project');
-  const statuses = ref(['new']);
-  const difficulty = ref([]);
+  const type = ref('');
+  const states = ref<StateName[]>([]);
+  const difficulty = ref<number[]>([]);
   const dateFrom = ref<Date>();
   const dateTo = ref<Date>();
 
-  const options = [
-    'Далеко-далеко',
-    'за',
-    'словесными',
-    'горами',
-    'в',
-    'стране',
-    'гласных',
-    'и',
-    'согласных',
-    'живут',
-    'рыбные',
-    'тексты.',
-    'Запятых',
-    'выйти',
-    'лучше',
-    'не',
-    'проектах',
-    'текста',
-    'по',
-    'всей',
-    'своих',
-    'прямо',
-    'рукопись',
-    'вдали',
-    'оксмокс',
-    'эта',
-    'залетают',
-    'назад,',
-    'толку',
-  ];
+  const { allSupervisorNames, allTags, allTypes, loading } =
+    useProjectFiltersOptions();
 </script>
 
 <style scoped>
