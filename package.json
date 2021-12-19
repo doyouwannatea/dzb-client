@@ -17,7 +17,8 @@
     "@vueform/multiselect": "^2.2.1",
     "ky": "^0.28.7",
     "vue": "^3.0.5",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@types/node": "^16.11.11",
