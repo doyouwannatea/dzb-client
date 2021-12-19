@@ -26,6 +26,10 @@
   border-radius: 50%;
 }
 
+.multiselect-tags {
+  padding-right: 0.5em;
+}
+
 .multiselect-tags-search-copy {
   overflow-wrap: anywhere;
 }

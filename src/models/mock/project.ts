@@ -1,4 +1,23 @@
-import { Project, Tag, Type } from '../Project';
+import { Project, State, Tag, Type } from '../Project';
+
+export const states: State[] = [
+  {
+    id: 1,
+    state: 'Обработка',
+  },
+  {
+    id: 2,
+    state: 'Открытый',
+  },
+  {
+    id: 3,
+    state: 'Активный',
+  },
+  {
+    id: 4,
+    state: 'Закрытый',
+  },
+];
 
 export const types: Type[] = [
   {
@@ -95,7 +114,7 @@ export const projects: Project[] = [
     type_name: 'Прикладной',
     supervisor_name: 'Лукьянов Никита Дмитриевич',
     vacant_places: 2,
-    state_name: 'Добор',
+    state_name: 'Активный',
   },
   {
     id: 12,
@@ -149,7 +168,7 @@ export const projects: Project[] = [
     type_name: 'Прикладной',
     supervisor_name: 'Лукьянов Никита Дмитриевич',
     vacant_places: 2,
-    state_name: 'Закрыт',
+    state_name: 'Закрытый',
   },
   {
     id: 14,

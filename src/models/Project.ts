@@ -18,7 +18,7 @@ export interface SupervisorName {
   fio: string;
 }
 
-export type StateName = 'Открытый' | 'Активный' | 'Добор' | 'Закрыт';
+export type StateName = 'Открытый' | 'Активный' | 'Обработка' | 'Закрытый';
 
 export interface State {
   id: number;

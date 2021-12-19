@@ -68,15 +68,8 @@
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
   import AppTag from './base/AppTag.vue';
   import { declOfNum } from '@/helpers/string';
-  import { StateName, Project } from '@/models/Project';
-  import { DIFFICULTY_TEXT } from '@/models/enums';
-
-  const STATE_CLASS: Record<StateName, string> = {
-    Открытый: 'new',
-    Активный: 'active',
-    Добор: 'recruitment',
-    Закрыт: 'closed',
-  };
+  import { Project } from '@/models/Project';
+  import { DIFFICULTY_TEXT, STATE_CLASS } from '@/models/enums';
 
   const props = defineProps<{ project: Project }>();
 
