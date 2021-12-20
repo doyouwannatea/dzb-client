@@ -38,7 +38,7 @@
             </li>
             <li class="info-list-item">
               <h2 class="info-list-title">Сложность</h2>
-              <b class="bold">{{ DIFFICULTY_TEXT[project.difficulty] }}</b>
+              <b class="bold">{{ DifficultyText[project.difficulty] }}</b>
             </li>
           </ul>
         </div>
@@ -101,7 +101,7 @@
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
   import AppButton from './base/AppButton.vue';
   import type { Project } from '@/models/Project';
-  import { DIFFICULTY_TEXT } from '@/models/enums';
+  import { DifficultyText } from '@/models/enums/difficulty-text';
 
   defineProps<{ project: Project }>();
 </script>

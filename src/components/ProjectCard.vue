@@ -69,8 +69,9 @@
   import AppTag from './base/AppTag.vue';
   import { declOfNum } from '@/helpers/string';
   import type { Project } from '@/models/Project';
-  import { DIFFICULTY_TEXT, STATE_CLASS } from '@/models/enums';
   import { RouteNames } from '@/router/types/route-names';
+  import { DifficultyText } from '@/models/enums/difficulty-text';
+  import { StateClass } from '@/models/enums/state-class';
 
   const props = defineProps<{ project: Project }>();
 
@@ -82,8 +83,8 @@
     'тега',
     'тегов',
   ])}`;
-  const stateClass = STATE_CLASS[props.project.state_name];
-  const difficultyText = DIFFICULTY_TEXT[props.project.difficulty];
+  const stateClass = StateClass[props.project.state_name];
+  const difficultyText = DifficultyText[props.project.difficulty];
 
   // Reactive variables
   const isTagsVisible = ref(false);
