@@ -9,7 +9,6 @@ export interface State {
   error: string;
   page: number;
   filters: ProjectFilters;
-  filterOptionsFetched: boolean;
 }
 
 export const state = (): State => ({
@@ -27,5 +26,4 @@ export const state = (): State => ({
     date_start: '',
     title: '',
   },
-  filterOptionsFetched: false,
 });
