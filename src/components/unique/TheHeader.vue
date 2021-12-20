@@ -1,7 +1,10 @@
 <template>
   <header class="header">
     <AppContainer class="container" size="lg">
-      <RouterLink class="clear-link align-self-center" :to="{ name: 'home' }">
+      <RouterLink
+        class="clear-link align-self-center"
+        :to="{ name: RouteNames.HOME }"
+      >
         <AppLogo />
       </RouterLink>
       <TheNavigation />
@@ -16,6 +19,7 @@
   import TheNavigation from './TheNavigation.vue';
   import AppLogo from '../base/AppLogo.vue';
   import NavigationUserActions from '../NavigationUserActions.vue';
+  import { RouteNames } from '@/router/types/route-names';
 </script>
 
 <style scoped>

@@ -8,7 +8,7 @@
       >
         <RouterLink
           class="pagination-link"
-          :to="{ name: 'home', params: { page: i } }"
+          :to="{ name: RouteNames.HOME, params: { page: i } }"
         >
           {{ i }}
         </RouterLink>
@@ -18,8 +18,7 @@
 </template>
 
 <script setup lang="ts">
-  import { useStore } from '@/store/store';
-  import { ActionTypes } from '@/store/types/action-types';
+  import { RouteNames } from '@/router/types/route-names';
   import { computed, ref, watch } from 'vue';
   import { RouterLink, useRoute } from 'vue-router';
   const route = useRoute();

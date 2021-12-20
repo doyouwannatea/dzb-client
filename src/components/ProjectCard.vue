@@ -52,7 +52,7 @@
         <AppButton variant="outlined">Подать заявку</AppButton>
         <AppButton
           is="router-link"
-          :to="{ name: 'project', params: { id: project.id } }"
+          :to="{ name: RouteNames.PROJECT, params: { id: project.id } }"
         >
           Подробнее
         </AppButton>
@@ -70,6 +70,7 @@
   import { declOfNum } from '@/helpers/string';
   import type { Project } from '@/models/Project';
   import { DIFFICULTY_TEXT, STATE_CLASS } from '@/models/enums';
+  import { RouteNames } from '@/router/types/route-names';
 
   const props = defineProps<{ project: Project }>();
 

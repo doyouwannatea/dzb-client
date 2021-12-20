@@ -8,7 +8,11 @@
     <div v-if="error">{{ error }}</div>
     <ProjectDetails v-if="project && !loading && !error" :project="project" />
     <div class="d-flex justify-content-center mt-3">
-      <AppButton is="router-link" variant="link" :to="{ name: 'home' }">
+      <AppButton
+        is="router-link"
+        variant="link"
+        :to="{ name: RouteNames.HOME }"
+      >
         назад к списку
       </AppButton>
     </div>
@@ -22,6 +26,7 @@
   import AppButton from '@/components/base/AppButton.vue';
   import ProjectDetails from '../ProjectDetails.vue';
   import useSingleProject from '@/hooks/useSingleProject';
+  import { RouteNames } from '@/router/types/route-names';
 
   const route = useRoute();
 
