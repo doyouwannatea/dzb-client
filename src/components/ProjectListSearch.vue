@@ -15,7 +15,7 @@
   import { ActionTypes } from '@/store/types/action-types';
   import { ref } from 'vue';
   const store = useStore();
-  const term = ref('');
+  const term = ref(store.state.filters.title || '');
 
   function search() {
     const title = term.value.trim();
