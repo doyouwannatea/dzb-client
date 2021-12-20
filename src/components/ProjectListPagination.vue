@@ -23,7 +23,6 @@
   import { computed, ref, watch } from 'vue';
   import { RouterLink, useRoute } from 'vue-router';
   const route = useRoute();
-  const store = useStore();
   const props = defineProps({
     totalItems: { type: Number, required: true },
     pageSize: { type: Number, required: true },
@@ -32,7 +31,6 @@
   });
 
   // Computed
-  const storePage = computed(() => store.state.page);
   const routePage = computed(() => route.params.page);
   const totalPages = computed(() =>
     Math.ceil(props.totalItems / props.pageSize),
@@ -42,14 +40,7 @@
   const startPage = ref(1);
   const endPage = ref(1);
 
-  watch(
-    () => routePage.value,
-    (page) => {
-      updatePages(Number(page));
-      updateProjectList();
-    },
-    { immediate: true },
-  );
+  watch(() => routePage.value, updatePages, { immediate: true });
 
   // генерирует видимые ссылки пагинации
   function genPages() {
@@ -60,21 +51,9 @@
     return pages;
   }
 
-  // обновляет состояние списка
-  function updateProjectList() {
-    if (
-      storePage.value !== currentPage.value &&
-      route.matched[0].name === 'home'
-    ) {
-      store.dispatch(ActionTypes.FILTER_PROJECT_LIST, {
-        page: currentPage.value,
-      });
-    }
-  }
-
   // обновляет состояние компонента
-  function updatePages(page: number) {
-    currentPage.value = isNaN(page) ? props.defaultPage : page;
+  function updatePages(page: string | string[]) {
+    currentPage.value = isNaN(Number(page)) ? props.defaultPage : Number(page);
     if (currentPage.value < 1) {
       currentPage.value = 1;
     } else if (currentPage.value > totalPages.value) {

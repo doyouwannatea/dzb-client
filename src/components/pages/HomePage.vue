@@ -41,14 +41,26 @@
   import ProjectListPagination from '@/components/ProjectListPagination.vue';
   import { useStore } from '@/store/store';
   import { ActionTypes } from '@/store/types/action-types';
-  import { computed } from 'vue';
+  import { computed, watch } from 'vue';
+  import { useRoute } from 'vue-router';
   const store = useStore();
+  const route = useRoute();
 
   const error = computed(() => store.state.error);
   const loading = computed(() => store.state.loading);
   const projectList = computed(() => store.state.projectList);
-  if (projectList.value === null) {
-    store.dispatch(ActionTypes.GET_PROJECT_LIST, undefined);
+
+  watch(() => route.params.page, updateProjectPage, {
+    immediate: true,
+  });
+
+  function updateProjectPage(page: string | string[]) {
+    const isPageChanged = page && Number(page) !== store.state.page;
+    if (isPageChanged || !projectList.value) {
+      store.dispatch(ActionTypes.FILTER_PROJECT_LIST, {
+        page: Number(page),
+      });
+    }
   }
 </script>
 
