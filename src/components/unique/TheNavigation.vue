@@ -7,10 +7,13 @@
       >
         <li
           v-if="link.meta?.nav"
-          :class="['nav-item', { active: link.path === $route.path }]"
+          :class="[
+            'nav-item',
+            { active: link.meta.nav === $route.matched[0].meta.nav },
+          ]"
         >
-          <RouterLink class="nav-link" :to="link.path">
-            {{ link.meta?.nav }}
+          <RouterLink class="nav-link" :to="{ name: link.name }">
+            {{ link.meta.nav }}
           </RouterLink>
         </li>
       </template>
