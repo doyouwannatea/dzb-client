@@ -17,15 +17,15 @@
       <template #main>
         <div v-if="loading">loading...</div>
         <div v-if="error">{{ error }}</div>
-        <ProjectList
-          v-if="!loading && !error && projectList"
-          :project-list="projectList"
-        />
-        <ProjectListPagination
-          :page-size="10"
-          :pages-visible="7"
-          :total-items="154"
-        />
+        <div v-if="projectList && !projectList.length">ничего не найдено</div>
+        <template v-if="!loading && !error && projectList">
+          <ProjectList :project-list="projectList" />
+          <ProjectListPagination
+            :page-size="10"
+            :pages-visible="7"
+            :total-items="154"
+          />
+        </template>
       </template>
     </SidebarContainer>
   </BasePageLayout>
@@ -39,9 +39,17 @@
   import ProjectListSearch from '@/components/ProjectListSearch.vue';
   import SidebarContainer from '@/components/SidebarContainer.vue';
   import ProjectListPagination from '@/components/ProjectListPagination.vue';
-  import useProjectList from '@/hooks/useProjectList';
+  import { useStore } from '@/store/store';
+  import { ActionTypes } from '@/store/types/action-types';
+  import { computed } from 'vue';
+  const store = useStore();
 
-  const { loading, error, data: projectList } = useProjectList(1);
+  const error = computed(() => store.state.error);
+  const loading = computed(() => store.state.loading);
+  const projectList = computed(() => store.state.projectList);
+  if (projectList.value === null) {
+    store.dispatch(ActionTypes.GET_PROJECT_LIST, undefined);
+  }
 </script>
 
 <style scoped>

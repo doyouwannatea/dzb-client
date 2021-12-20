@@ -18,16 +18,22 @@
 </template>
 
 <script setup lang="ts">
+  import { useStore } from '@/store/store';
+  import { ActionTypes } from '@/store/types/action-types';
   import { computed, ref, watch } from 'vue';
   import { RouterLink, useRoute } from 'vue-router';
   const route = useRoute();
-  const props = defineProps<{
-    totalItems: number;
-    pageSize: number;
-    pagesVisible: number;
-  }>();
+  const store = useStore();
+  const props = defineProps({
+    totalItems: { type: Number, required: true },
+    pageSize: { type: Number, required: true },
+    pagesVisible: { type: Number, required: true },
+    defaultPage: { type: Number, default: 1 },
+  });
 
   // Computed
+  const storePage = computed(() => store.state.page);
+  const routePage = computed(() => route.params.page);
   const totalPages = computed(() =>
     Math.ceil(props.totalItems / props.pageSize),
   );
@@ -37,29 +43,10 @@
   const endPage = ref(1);
 
   watch(
-    () => route.params.page,
-    (value) => {
-      const routePage = Number(value);
-      currentPage.value = isNaN(routePage) ? 1 : routePage;
-      if (routePage < 1) {
-        currentPage.value = 1;
-      } else if (routePage > totalPages.value) {
-        currentPage.value = totalPages.value - 1;
-      }
-      startPage.value = currentPage.value - Math.ceil(props.pagesVisible / 2);
-      endPage.value = currentPage.value + Math.floor(props.pagesVisible / 2);
-
-      if (startPage.value <= 0) {
-        endPage.value -= startPage.value - 1;
-        startPage.value = 1;
-      }
-
-      if (endPage.value > totalPages.value) {
-        endPage.value = totalPages.value;
-        if (endPage.value > props.pageSize) {
-          startPage.value = endPage.value - props.pagesVisible;
-        }
-      }
+    () => routePage.value,
+    (page) => {
+      updatePages(Number(page));
+      updateProjectList();
     },
     { immediate: true },
   );
@@ -71,6 +58,42 @@
       pages.push(i);
     }
     return pages;
+  }
+
+  // обновляет состояние списка
+  function updateProjectList() {
+    if (
+      storePage.value !== currentPage.value &&
+      route.matched[0].name === 'home'
+    ) {
+      store.dispatch(ActionTypes.FILTER_PROJECT_LIST, {
+        page: currentPage.value,
+      });
+    }
+  }
+
+  // обновляет состояние компонента
+  function updatePages(page: number) {
+    currentPage.value = isNaN(page) ? props.defaultPage : page;
+    if (currentPage.value < 1) {
+      currentPage.value = 1;
+    } else if (currentPage.value > totalPages.value) {
+      currentPage.value = totalPages.value - 1;
+    }
+    startPage.value = currentPage.value - Math.ceil(props.pagesVisible / 2);
+    endPage.value = currentPage.value + Math.floor(props.pagesVisible / 2);
+
+    if (startPage.value <= 0) {
+      endPage.value -= startPage.value - 1;
+      startPage.value = 1;
+    }
+
+    if (endPage.value > totalPages.value) {
+      endPage.value = totalPages.value;
+      if (endPage.value > props.pageSize) {
+        startPage.value = endPage.value - props.pagesVisible;
+      }
+    }
   }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <form class="filters" @submit.prevent>
+  <form class="filters" @submit.prevent="filter">
     <AppAccordion>
       <template #title>
         <span v-if="loading" class="multiselect-spinner"></span>
@@ -136,7 +136,9 @@
 
     <footer class="footer">
       <BaseButton full-width>найти</BaseButton>
-      <BaseButton full-width variant="link">сбросить фильтр</BaseButton>
+      <BaseButton type="button" full-width variant="link" @click="clearFilter">
+        сбросить фильтр
+      </BaseButton>
     </footer>
   </form>
 </template>
@@ -147,18 +149,63 @@
   import VMultiselect from '@vueform/multiselect';
   import BaseButton from './base/AppButton.vue';
   import { useProjectFiltersOptions } from '@/hooks/useProjectFiltersOptions/useProjectFiltersOptions';
+  import { useStore } from '@/store/store';
+  import { ActionTypes } from '@/store/types/action-types';
+  import { toJSONLocal } from '@/helpers/string';
+  const store = useStore();
+  const filters = store.state.filters;
 
-  const tags = ref<number[]>([]);
-  const supervisors = ref<number[]>([]);
-  const type = ref<number>();
+  const tags = ref<number[]>(filters.tags || []);
+  const supervisors = ref<number[]>(filters.supervisor || []);
+  const type = ref<number>(filters.type ? filters.type[0] : 0);
 
-  const states = ref<number[]>([]);
-  const difficulty = ref<number[]>([]);
-  const dateStart = ref<Date>();
-  const dateEnd = ref<Date>();
+  const states = ref<number[]>(filters.state || []);
+  const difficulty = ref<number[]>(filters.difficulty || []);
+  const dateStart = ref<string | null>(
+    filters.date_start ? toJSONLocal(new Date(filters.date_start)) : null,
+  );
+  const dateEnd = ref<string | null>(
+    filters.date_end ? toJSONLocal(new Date(filters.date_end)) : null,
+  );
 
   const { allSupervisorNames, allTags, allTypes, allStates, loading } =
     useProjectFiltersOptions();
+
+  function filter() {
+    store.dispatch(ActionTypes.FILTER_PROJECT_LIST, {
+      filters: {
+        tags: tags.value,
+        difficulty: difficulty.value,
+        state: states.value,
+        supervisor: supervisors.value,
+        type: type.value ? [type.value] : [],
+        date_end: dateEnd.value ? String(dateEnd.value) : '',
+        date_start: dateStart.value ? String(dateStart.value) : '',
+      },
+    });
+  }
+
+  function clearFilter() {
+    tags.value = [];
+    difficulty.value = [];
+    states.value = [];
+    supervisors.value = [];
+    type.value = 0;
+    dateEnd.value = '';
+    dateStart.value = '';
+
+    store.dispatch(ActionTypes.FILTER_PROJECT_LIST, {
+      filters: {
+        tags: tags.value,
+        difficulty: difficulty.value,
+        state: states.value,
+        supervisor: supervisors.value,
+        type: type.value ? [type.value] : [],
+        date_end: dateEnd.value ? String(dateEnd.value) : '',
+        date_start: dateStart.value ? String(dateStart.value) : '',
+      },
+    });
+  }
 </script>
 
 <style scoped>

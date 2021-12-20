@@ -68,7 +68,7 @@
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
   import AppTag from './base/AppTag.vue';
   import { declOfNum } from '@/helpers/string';
-  import { Project } from '@/models/Project';
+  import type { Project } from '@/models/Project';
   import { DIFFICULTY_TEXT, STATE_CLASS } from '@/models/enums';
 
   const props = defineProps<{ project: Project }>();

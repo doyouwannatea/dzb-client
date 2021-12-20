@@ -1,21 +1,37 @@
 import { MutationTree } from 'vuex';
 import { MutationTypes } from './types/mutation-types';
-import { State } from './state';
+import { ProjectFilters, State } from './state';
+import { Project } from '@/models/Project';
 
 export type Mutations<S = State> = {
-  [MutationTypes.SET_COUNTER](state: S, payload: number): void;
-  [MutationTypes.RESET_COUNTER](state: S): void;
-  [MutationTypes.INC_COUNTER](state: S): void;
+  [MutationTypes.SET_PROJECT_LIST](
+    state: S,
+    projectList: Project[] | null,
+  ): void;
+  [MutationTypes.SET_LOADING](state: S, loading: boolean): void;
+  [MutationTypes.SET_ERROR](state: S, error: string): void;
+  [MutationTypes.SET_PAGE](state: S, page?: number): void;
+  [MutationTypes.SET_FILTERS](state: S, filters?: ProjectFilters): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
-  [MutationTypes.SET_COUNTER](state, payload: number) {
-    state.count = payload;
+  [MutationTypes.SET_PROJECT_LIST](state, projectList) {
+    state.projectList = projectList;
   },
-  [MutationTypes.RESET_COUNTER](state) {
-    state.count = 0;
+  [MutationTypes.SET_LOADING](state, loading) {
+    state.loading = loading;
   },
-  [MutationTypes.INC_COUNTER](state) {
-    state.count += 1;
+  [MutationTypes.SET_ERROR](state, error) {
+    state.error = error;
+  },
+  [MutationTypes.SET_PAGE](state, page) {
+    if (page) {
+      state.page = page;
+    }
+  },
+  [MutationTypes.SET_FILTERS](state, filters) {
+    if (filters) {
+      state.filters = { ...state.filters, ...filters };
+    }
   },
 };

@@ -19,6 +19,13 @@ export const router = createRouter({
       meta: {
         nav: 'Все проекты',
       },
+      beforeEnter(to, from, next) {
+        const page = Number(to.params.page);
+        if (isNaN(page) || page < 1) {
+          return next({ name: 'home', params: { page: '1' } });
+        }
+        return next();
+      },
     },
     {
       path: '/project/:id',

@@ -2,7 +2,8 @@ import { ActionContext, ActionTree } from 'vuex';
 import { ActionTypes } from './types/action-types';
 import { MutationTypes } from './types/mutation-types';
 import { Mutations } from './mutations';
-import { State } from './state';
+import { ProjectFilters, State } from './state';
+import ProjectApi from '@/api/ProjectApi';
 
 type AugmentedActionContext = {
   commit<K extends keyof Mutations>(
@@ -12,20 +13,42 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<State, State>, 'commit'>;
 
 export interface Actions {
-  [ActionTypes.GET_COUTNER](
+  // GET_PROJECT_LIST
+  [ActionTypes.GET_PROJECT_LIST]({ commit }: AugmentedActionContext): void;
+  // FILTER_PROJECT_LIST
+  [ActionTypes.FILTER_PROJECT_LIST](
     { commit }: AugmentedActionContext,
-    payload: number,
-  ): Promise<number>;
+    { page }: { page?: number; filters?: ProjectFilters },
+  ): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
-  [ActionTypes.GET_COUTNER]({ commit }) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const data = 256;
-        commit(MutationTypes.SET_COUNTER, data);
-        resolve(data);
-      }, 500);
-    });
+  // GET_PROJECT_LIST
+  async [ActionTypes.GET_PROJECT_LIST]({ commit, state }) {
+    const filters = state.filters;
+    const page = state.page;
+    commit(MutationTypes.SET_PROJECT_LIST, null);
+    commit(MutationTypes.SET_LOADING, true);
+    commit(MutationTypes.SET_ERROR, '');
+    try {
+      const projectList = await ProjectApi.filterProjectList({
+        ...filters,
+        page,
+      });
+      commit(MutationTypes.SET_PROJECT_LIST, projectList);
+    } catch (error) {
+      commit(MutationTypes.SET_ERROR, String(error));
+    } finally {
+      commit(MutationTypes.SET_LOADING, false);
+    }
+  },
+  // FILTER_PROJECT_LIST
+  async [ActionTypes.FILTER_PROJECT_LIST](
+    { commit, dispatch },
+    { page, filters },
+  ) {
+    commit(MutationTypes.SET_FILTERS, filters);
+    commit(MutationTypes.SET_PAGE, page);
+    await dispatch(ActionTypes.GET_PROJECT_LIST);
   },
 };

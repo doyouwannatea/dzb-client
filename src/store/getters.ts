@@ -1,12 +1,15 @@
-import { GetterTree } from 'vuex';
-import { State } from './state';
+// Раскомментировать если геттеры будут использоваться
+// ----------------------------------------------------------------------------
 
-export type Getters = {
-  doubledCounter(state: State): number;
-};
+// import { GetterTree } from 'vuex';
+// import { State } from './state';
 
-export const getters: GetterTree<State, State> & Getters = {
-  doubledCounter: (state) => {
-    return state.count * 2;
-  },
-};
+// export type Getters = {
+//   doubledCounter(state: State): number;
+// };
+
+// export const getters: GetterTree<State, State> & Getters = {
+//   doubledCounter: (state) => {
+//     return state.count * 2;
+//   },
+// };

@@ -100,7 +100,7 @@
   import AppBadge from './base/AppBadge.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
   import AppButton from './base/AppButton.vue';
-  import { Project } from '@/models/Project';
+  import type { Project } from '@/models/Project';
   import { DIFFICULTY_TEXT } from '@/models/enums';
 
   defineProps<{ project: Project }>();
