@@ -1,51 +1,53 @@
 <template>
   <section>
-    <ProjectPanel>
-      <div class="row three-cols">
-        <div class="col">
-          <ul class="info-list">
-            <li class="info-list-item">
-              <h2 class="info-list-title">Руководитель проекта</h2>
-              <b class="bold">{{ project.supervisor_name }}</b>
-            </li>
-            <li class="info-list-item">
-              <h2 class="info-list-title">Заказчик</h2>
-              <b class="bold">{{ project.customer }}</b>
-            </li>
-            <li class="info-list-item">
-              <h2 class="info-list-title">Сроки реализации</h2>
-              <b class="bold">
-                {{ project.date_start }} – {{ project.date_end }}
-              </b>
-            </li>
-            <li class="info-list-item">
-              <h2 class="info-list-title">Требуемые навыки</h2>
-              <span class="tags">
-                <h1>у нас есть только теги проекта</h1>
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div class="col">
-          <ul class="info-list">
-            <li class="info-list-item">
-              <h2 class="info-list-title">Тип проекта</h2>
-              <b class="bold">{{ project.type_name }}</b>
-            </li>
-            <li class="info-list-item">
-              <h2 class="info-list-title">Цель проекта</h2>
-              <b class="bold">{{ project.goal }}</b>
-            </li>
-            <li class="info-list-item">
-              <h2 class="info-list-title">Сложность</h2>
-              <b class="bold">{{ DifficultyText[project.difficulty] }}</b>
-            </li>
-          </ul>
-        </div>
-        <div class="col">
-          <h2 class="info-list-title">Статус проекта</h2>
+    <!-- Panel -->
+    <ProjectPanel :cols="3">
+      <!-- Column -->
+      <ProjectPanelCol>
+        <!-- Information list -->
+        <ProjectInformationList
+          :items="[
+            {
+              title: 'Руководитель проекта',
+              value: project.supervisor_name,
+            },
+            {
+              title: 'Заказчик',
+              value: project.customer,
+            },
+            {
+              title: 'Сроки реализации',
+              value: `${project.date_start} - ${project.date_end}`,
+            },
+            {
+              title: 'Сложность',
+              value: DifficultyText[project.difficulty],
+            },
+          ]"
+        />
+      </ProjectPanelCol>
+      <!-- Column -->
+      <ProjectPanelCol>
+        <!-- Information list -->
+        <ProjectInformationList
+          :items="[
+            {
+              title: 'Тип проекта',
+              value: project.type_name,
+            },
+            {
+              title: 'Цель проекта',
+              value: project.goal,
+            },
+          ]"
+        />
+      </ProjectPanelCol>
+      <!-- Column -->
+      <ProjectPanelCol>
+        <div>
+          <h2 class="info-title">Статус проекта</h2>
           <AppBadge class="badge mt-2">{{ project.state_name }}</AppBadge>
-          <h2 class="info-list-title mt-4">Кол-во участников</h2>
+          <h2 class="info-title mt-4">Кол-во участников</h2>
           <ProjectTeamCounter
             class="mt-2"
             :count="project.vacant_places"
@@ -53,43 +55,57 @@
           />
           <AppButton class="mt-4">Подать заявку</AppButton>
         </div>
-      </div>
+      </ProjectPanelCol>
     </ProjectPanel>
-    <ProjectPanel>
-      <div class="row two-cols">
-        <div class="col">
-          <ul class="info-list">
-            <li class="info-list-item">
-              <h2 class="info-list-title">Ожидаемый результат</h2>
-              <b class="bold">{{ project.expected_result }}</b>
-            </li>
-          </ul>
-        </div>
-        <div class="col">
-          <ul class="info-list">
-            <li class="info-list-item">
-              <h2 class="info-list-title">Требования к участникам</h2>
-              <b class="bold">{{ project.requirements }}</b>
-            </li>
-          </ul>
-        </div>
-      </div>
+
+    <!-- Panel -->
+    <ProjectPanel :cols="2">
+      <!-- Column -->
+      <ProjectPanelCol>
+        <!-- Information list -->
+        <ProjectInformationList
+          :items="[
+            {
+              title: 'Ожидаемый результат',
+              value: project.expected_result,
+            },
+          ]"
+        />
+      </ProjectPanelCol>
+      <!-- Column -->
+      <ProjectPanelCol>
+        <!-- Information list -->
+        <ProjectInformationList
+          :items="[
+            {
+              title: 'Требования к участникам',
+              value: project.requirements,
+            },
+          ]"
+        />
+      </ProjectPanelCol>
     </ProjectPanel>
-    <ProjectPanel>
-      <ul class="info-list">
-        <li class="info-list-item wide">
-          <h2 class="info-list-title">Идея проекта</h2>
-          <span>{{ project.idea }}</span>
-        </li>
-        <li class="info-list-item wide">
-          <h2 class="info-list-title">Теги</h2>
+
+    <!-- Panel -->
+    <ProjectPanel :cols="1">
+      <!-- Information list -->
+      <ProjectInformationList>
+        <ProjectInformationListItem
+          title="Идея проекта"
+          :bold="false"
+          :wide="true"
+        >
+          {{ project.idea }}
+        </ProjectInformationListItem>
+
+        <ProjectInformationListItem title="Теги" :bold="false" :wide="true">
           <span class="tags">
             <AppTag v-for="tag in project.tags" :key="tag.id">
               {{ tag.tag }}
             </AppTag>
           </span>
-        </li>
-      </ul>
+        </ProjectInformationListItem>
+      </ProjectInformationList>
     </ProjectPanel>
   </section>
 </template>
@@ -102,17 +118,14 @@
   import AppButton from './base/AppButton.vue';
   import type { Project } from '@/models/Project';
   import { DifficultyText } from '@/models/enums/difficulty-text';
+  import ProjectInformationList from './ProjectInformationList.vue';
+  import ProjectInformationListItem from './ProjectInformationListItem.vue';
+  import ProjectPanelCol from './ProjectPanelCol.vue';
 
   defineProps<{ project: Project }>();
 </script>
 
 <style scoped>
-  /* Text */
-  .bold {
-    line-height: 23px;
-    font-weight: 700;
-  }
-
   /* Components */
   .tags {
     display: flex;
@@ -124,47 +137,9 @@
     width: max-content;
   }
 
-  /* Layout */
-  .row {
-    display: grid;
-    row-gap: 30px;
-  }
-
-  .row.three-cols {
-    grid-template-columns: 4fr 4fr 2fr;
-  }
-
-  .row.two-cols {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .col:not(:last-child) {
-    padding-right: 30px;
-    margin-right: 30px;
-    border-right: 1px solid var(--gray-color-1);
-  }
-
-  .info-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    row-gap: 45px;
-    font-size: 1.13rem;
-  }
-
-  .info-list-title {
+  .info-title {
     font-size: inherit;
     font-weight: 600;
     line-height: normal;
-  }
-  .info-list-item {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: flex-start;
-    line-height: 27px;
-  }
-
-  .info-list-item.wide {
-    grid-template-columns: minmax(auto, 230px) auto;
   }
 </style>

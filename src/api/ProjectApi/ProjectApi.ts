@@ -6,6 +6,10 @@ export default class ProjectApi extends ProjectApiType {
     return this.ky.get('api/projects', { searchParams: { page } }).json();
   }
 
+  static async getSingleProject(projectId: number): Promise<Project> {
+    return this.ky.get(`api/projects/${projectId}`).json();
+  }
+
   static async filterProjectList(
     searchParams: FilterParams,
   ): Promise<Project[]> {

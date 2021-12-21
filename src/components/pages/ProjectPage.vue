@@ -1,18 +1,27 @@
 <template>
   <PageLayout>
     <header class="header">
-      <AppBreadcrumbs class="breadcrumbs" />
-      <h1 class="page-title">{{ project?.title || 'загрузка' }}</h1>
+      <AppBreadcrumbs
+        class="breadcrumbs"
+        :breadcrumbs="[
+          {
+            title: 'Все проекты',
+            back: true,
+          },
+          {
+            title: project?.title || '',
+          },
+        ]"
+      />
+      <h1 class="page-title">
+        <span v-if="loading">загрузка...</span>
+        <span v-if="error">{{ error }}</span>
+        <span v-if="project">{{ project.title }}</span>
+      </h1>
     </header>
-    <div v-if="loading">loading...</div>
-    <div v-if="error">{{ error }}</div>
     <ProjectDetails v-if="project && !loading && !error" :project="project" />
     <div class="d-flex justify-content-center mt-3">
-      <AppButton
-        is="router-link"
-        variant="link"
-        :to="{ name: RouteNames.HOME }"
-      >
+      <AppButton variant="link" @click="$router.back()">
         назад к списку
       </AppButton>
     </div>
@@ -38,13 +47,11 @@
 </script>
 
 <style scoped>
-  /* Text */
   .page-title {
     margin-top: 26px;
     margin-bottom: 24px;
   }
 
-  /* Components */
   .breadcrumbs {
     margin-top: 32px;
   }

@@ -1,13 +1,32 @@
 <template>
   <ul class="breadcrumbs">
-    <li class="breadcrumbs-item">
-      <a class="breadcrumbs-link" href="#">Все проекты</a>
-    </li>
-    <li class="breadcrumbs-item">
-      Платформа для размещения вузовских олимпиад
+    <li
+      v-for="({ to, title, back }, index) in breadcrumbs"
+      :key="index"
+      class="breadcrumbs-item"
+    >
+      <button v-if="back" class="breadcrumbs-link" @click="$router.back()">
+        {{ title }}
+      </button>
+      <RouterLink v-else-if="to" :to="to" class="breadcrumbs-link">
+        {{ title }}
+      </RouterLink>
+      <span v-else>{{ title }}</span>
     </li>
   </ul>
 </template>
+
+<script setup lang="ts">
+  import type { RouteLocationRaw } from 'vue-router';
+  import { RouterLink } from 'vue-router';
+  defineProps<{
+    breadcrumbs: {
+      to?: RouteLocationRaw;
+      back?: boolean;
+      title: string;
+    }[];
+  }>();
+</script>
 
 <style scoped>
   .breadcrumbs {
@@ -32,6 +51,9 @@
   .breadcrumbs-link {
     color: var(--text-color);
     text-decoration: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
   }
   .breadcrumbs-link:hover {
     text-decoration: underline;
