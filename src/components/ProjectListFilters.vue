@@ -58,7 +58,6 @@
           v-model="supervisors"
           mode="tags"
           placeholder="Ф.И.О."
-          :close-on-select="false"
           :searchable="true"
           :options="allSupervisorNames.options"
           :loading="loading"
@@ -229,6 +228,11 @@
 
     color: var(--text-color);
     gap: 15px;
+  }
+
+  .label:hover {
+    color: var(--accent-color-1);
+    cursor: pointer;
   }
 
   .label:not(:last-child) {
