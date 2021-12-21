@@ -3,7 +3,14 @@ export interface Option {
   label: string;
 }
 
-export interface FilterOption {
+export interface FilterOptions {
   error: string;
   options: Option[];
+}
+
+export interface AllFilterOptions {
+  allTags: FilterOptions;
+  allTypes: FilterOptions;
+  allSupervisorNames: FilterOptions;
+  allStates: FilterOptions;
 }

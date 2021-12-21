@@ -4,4 +4,5 @@ export enum MutationTypes {
   SET_ERROR = 'SET_ERROR',
   SET_PAGE = 'SET_PAGE',
   SET_FILTERS = 'SET_FILTERS',
+  SET_FILTER_OPTIONS = 'SET_FILTER_OPTIONS',
 }

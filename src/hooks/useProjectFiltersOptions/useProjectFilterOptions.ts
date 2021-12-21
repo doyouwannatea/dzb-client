@@ -1,16 +1,31 @@
 import { ref, onBeforeMount } from 'vue';
 import ProjectApi from '@/api/ProjectApi';
 import { makeOption } from './makeOption';
-import { FilterOption } from './types';
+import { FilterOptions } from './types';
+import { useStore } from '@/store/store';
+import { MutationTypes } from '@/store/types/mutation-types';
 
-export function useProjectFiltersOptions() {
+export function useProjectFilterOptions() {
+  const store = useStore();
+  const { filterOptions } = store.state;
   const loading = ref(false);
-  const allTags = ref<FilterOption>({ error: '', options: [] });
-  const allTypes = ref<FilterOption>({ error: '', options: [] });
-  const allStates = ref<FilterOption>({ error: '', options: [] });
-  const allSupervisorNames = ref<FilterOption>({ error: '', options: [] });
+  const allTags = ref<FilterOptions>(
+    filterOptions ? filterOptions.allTags : { error: '', options: [] },
+  );
+  const allTypes = ref<FilterOptions>(
+    filterOptions ? filterOptions.allTypes : { error: '', options: [] },
+  );
+  const allStates = ref<FilterOptions>(
+    filterOptions ? filterOptions.allStates : { error: '', options: [] },
+  );
+  const allSupervisorNames = ref<FilterOptions>(
+    filterOptions
+      ? filterOptions.allSupervisorNames
+      : { error: '', options: [] },
+  );
 
   onBeforeMount(async () => {
+    if (store.state.filterOptions) return;
     loading.value = true;
     const options = await Promise.allSettled([
       ProjectApi.getAllTags(),
@@ -38,6 +53,12 @@ export function useProjectFiltersOptions() {
     } else allStates.value.error = options[3].reason;
 
     loading.value = false;
+    store.commit(MutationTypes.SET_FILTER_OPTIONS, {
+      allStates: allStates.value,
+      allSupervisorNames: allSupervisorNames.value,
+      allTags: allTags.value,
+      allTypes: allTypes.value,
+    });
   });
 
   return {

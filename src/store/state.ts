@@ -1,4 +1,5 @@
 import { FilterParams } from '@/api/ProjectApi/ProjectApiType';
+import { AllFilterOptions } from '@/hooks/useProjectFiltersOptions/types';
 import { Project } from '@/models/Project';
 
 export type ProjectFilters = Omit<FilterParams, 'page'>;
@@ -9,6 +10,7 @@ export interface State {
   error: string;
   page: number;
   filters: ProjectFilters;
+  filterOptions: AllFilterOptions | null;
 }
 
 export const state = (): State => ({
@@ -26,4 +28,5 @@ export const state = (): State => ({
     date_start: '',
     title: '',
   },
+  filterOptions: null,
 });

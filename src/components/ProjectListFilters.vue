@@ -148,7 +148,7 @@
   import AppAccordion from './base/AppAccordion.vue';
   import VMultiselect from '@vueform/multiselect';
   import BaseButton from './base/AppButton.vue';
-  import { useProjectFiltersOptions } from '@/hooks/useProjectFiltersOptions/useProjectFiltersOptions';
+  import { useProjectFilterOptions } from '@/hooks/useProjectFiltersOptions/useProjectFilterOptions';
   import { useStore } from '@/store/store';
   import { ActionTypes } from '@/store/types/action-types';
   import { toJSONLocal } from '@/helpers/string';
@@ -169,7 +169,7 @@
   );
 
   const { allSupervisorNames, allTags, allTypes, allStates, loading } =
-    useProjectFiltersOptions();
+    useProjectFilterOptions();
 
   function filter() {
     store.dispatch(ActionTypes.FILTER_PROJECT_LIST, {
