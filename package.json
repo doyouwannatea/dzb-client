@@ -16,11 +16,13 @@
     "@dafcoe/vue-collapsible-panel": "^0.2.0",
     "@vueform/multiselect": "^2.2.1",
     "ky": "^0.28.7",
+    "lodash.debounce": "^4.0.8",
     "vue": "^3.0.5",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.6",
     "@types/node": "^16.11.11",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
