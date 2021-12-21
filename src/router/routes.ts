@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 import { validateProjectPage } from './guards/validateProjectPage';
 import { RouteNames } from './types/route-names';
+import { updateProjectPage } from './guards/updateProjectPage';
 
 const HomePage = () => import('../components/pages/HomePage.vue');
 const ProjectPage = () => import('../components/pages/ProjectPage.vue');
@@ -13,7 +14,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       nav: 'Все проекты',
     },
-    beforeEnter: validateProjectPage,
+    beforeEnter: [validateProjectPage, updateProjectPage],
   },
   {
     path: '/project/:id',

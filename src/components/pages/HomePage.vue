@@ -40,28 +40,16 @@
   import SidebarContainer from '@/components/SidebarContainer.vue';
   import ProjectListPagination from '@/components/ProjectListPagination.vue';
   import { useStore } from '@/store/store';
-  import { ActionTypes } from '@/store/types/action-types';
-  import { computed, watch } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { computed } from 'vue';
+  import { updateProjectPage } from '@/router/guards/updateProjectPage';
+  import { onBeforeRouteUpdate } from 'vue-router';
   const store = useStore();
-  const route = useRoute();
 
   const error = computed(() => store.state.error);
   const loading = computed(() => store.state.loading);
   const projectList = computed(() => store.state.projectList);
 
-  watch(() => route.params.page, updateProjectPage, {
-    immediate: true,
-  });
-
-  function updateProjectPage(page: string | string[]) {
-    const isPageChanged = page && Number(page) !== store.state.page;
-    if (isPageChanged || !projectList.value) {
-      store.dispatch(ActionTypes.FILTER_PROJECT_LIST, {
-        page: Number(page),
-      });
-    }
-  }
+  onBeforeRouteUpdate(updateProjectPage);
 </script>
 
 <style scoped>
