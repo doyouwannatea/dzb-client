@@ -9,23 +9,28 @@ import type {
   Tag,
   Type,
 } from '@/models/Project';
-import { projects, states, tags, types } from '@/models/mock/project';
+import {
+  projectListResponse,
+  states,
+  tags,
+  types,
+} from '@/models/mock/project';
 import { delayRes } from '@/helpers/promise';
 import { supervisorNames } from '@/models/mock/supervisor';
 
 export default class ProjectApiMock extends ProjectApiType {
   static async getProjectList(page: number): Promise<ProjectListResponse> {
-    return delayRes({ data: projects, projectCount: projects.length }, 400);
+    return delayRes(projectListResponse, 400);
   }
 
   static async filterProjectList(
     searchParams: FilterParams,
   ): Promise<ProjectListResponse> {
-    return delayRes({ data: projects, projectCount: projects.length }, 400);
+    return delayRes(projectListResponse, 400);
   }
 
   static async getSingleProject(projectId: number): Promise<Project> {
-    const project = projects.find(
+    const project = projectListResponse.data.find(
       (singleProject) => singleProject.id === projectId,
     );
     if (!project) throw new Error('проект не найден');
