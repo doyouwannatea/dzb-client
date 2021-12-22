@@ -1,4 +1,7 @@
-import ProjectApiType, { FilterParams } from './ProjectApiType';
+import ProjectApiType, {
+  FilterParams,
+  ProjectListResponse,
+} from './ProjectApiType';
 import type {
   Project,
   State,
@@ -11,14 +14,14 @@ import { delayRes } from '@/helpers/promise';
 import { supervisorNames } from '@/models/mock/supervisor';
 
 export default class ProjectApiMock extends ProjectApiType {
-  static async getProjectList(page: number): Promise<Project[]> {
-    return delayRes(projects, 400);
+  static async getProjectList(page: number): Promise<ProjectListResponse> {
+    return delayRes({ data: projects, projectCount: projects.length }, 400);
   }
 
   static async filterProjectList(
     searchParams: FilterParams,
-  ): Promise<Project[]> {
-    return delayRes(projects, 400);
+  ): Promise<ProjectListResponse> {
+    return delayRes({ data: projects, projectCount: projects.length }, 400);
   }
 
   static async getSingleProject(projectId: number): Promise<Project> {

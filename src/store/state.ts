@@ -6,6 +6,7 @@ export type ProjectFilters = Omit<FilterParams, 'page'>;
 
 export interface State {
   projectList: Project[] | null;
+  projectCount: number;
   loading: boolean;
   error: string;
   page: number;
@@ -15,6 +16,7 @@ export interface State {
 
 export const state = (): State => ({
   projectList: null,
+  projectCount: 0,
   loading: false,
   error: '',
   page: 1,

@@ -27,15 +27,21 @@ export const actions: ActionTree<State, State> & Actions = {
   async [ActionTypes.GET_PROJECT_LIST]({ commit, state }) {
     const filters = state.filters;
     const page = state.page;
-    commit(MutationTypes.SET_PROJECT_LIST, null);
+    commit(MutationTypes.SET_PROJECT_LIST, {
+      projectCount: 0,
+      projectList: null,
+    });
     commit(MutationTypes.SET_LOADING, true);
     commit(MutationTypes.SET_ERROR, '');
     try {
-      const projectList = await ProjectApi.filterProjectList({
+      const { data, projectCount } = await ProjectApi.filterProjectList({
         ...filters,
         page,
       });
-      commit(MutationTypes.SET_PROJECT_LIST, projectList);
+      commit(MutationTypes.SET_PROJECT_LIST, {
+        projectList: data,
+        projectCount,
+      });
     } catch (error) {
       commit(MutationTypes.SET_ERROR, String(error));
     } finally {

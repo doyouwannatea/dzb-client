@@ -1,8 +1,11 @@
 import { Project, State, SupervisorName, Tag, Type } from '@/models/Project';
-import ProjectApiType, { FilterParams } from './ProjectApiType';
+import ProjectApiType, {
+  FilterParams,
+  ProjectListResponse,
+} from './ProjectApiType';
 
 export default class ProjectApi extends ProjectApiType {
-  static async getProjectList(page: number): Promise<Project[]> {
+  static async getProjectList(page: number): Promise<ProjectListResponse> {
     return this.ky.get('api/projects', { searchParams: { page } }).json();
   }
 
@@ -12,7 +15,7 @@ export default class ProjectApi extends ProjectApiType {
 
   static async filterProjectList(
     searchParams: FilterParams,
-  ): Promise<Project[]> {
+  ): Promise<ProjectListResponse> {
     const params = {
       type: JSON.stringify(searchParams.type) || '',
       state: JSON.stringify(searchParams.state) || '',

@@ -21,9 +21,9 @@
         <template v-if="!loading && !error && projectList">
           <ProjectList :project-list="projectList" />
           <ProjectListPagination
-            :page-size="10"
+            :page-size="7"
             :pages-visible="7"
-            :total-items="154"
+            :total-items="projectCount"
           />
         </template>
       </template>
@@ -48,6 +48,7 @@
   const error = computed(() => store.state.error);
   const loading = computed(() => store.state.loading);
   const projectList = computed(() => store.state.projectList);
+  const projectCount = computed(() => store.state.projectCount);
 
   onBeforeRouteUpdate(updateProjectPage);
 </script>

@@ -7,7 +7,10 @@ import { AllFilterOptions } from '@/hooks/useProjectFiltersOptions/types';
 export type Mutations<S = State> = {
   [MutationTypes.SET_PROJECT_LIST](
     state: S,
-    projectList: Project[] | null,
+    {
+      projectList,
+      projectCount,
+    }: { projectList: Project[] | null; projectCount: number },
   ): void;
   [MutationTypes.SET_LOADING](state: S, loading: boolean): void;
   [MutationTypes.SET_ERROR](state: S, error: string): void;
@@ -17,8 +20,9 @@ export type Mutations<S = State> = {
 };
 
 export const mutations: MutationTree<State> & Mutations = {
-  [MutationTypes.SET_PROJECT_LIST](state, projectList) {
+  [MutationTypes.SET_PROJECT_LIST](state, { projectList, projectCount }) {
     state.projectList = projectList;
+    state.projectCount = projectCount;
   },
   [MutationTypes.SET_LOADING](state, loading) {
     state.loading = loading;

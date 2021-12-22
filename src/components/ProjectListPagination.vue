@@ -44,7 +44,7 @@
   // генерирует видимые ссылки пагинации
   function genPages() {
     const pages = [];
-    for (let i = startPage.value; i < endPage.value; i++) {
+    for (let i = startPage.value; i <= endPage.value; i++) {
       pages.push(i);
     }
     return pages;
@@ -55,8 +55,6 @@
     currentPage.value = isNaN(Number(page)) ? props.defaultPage : Number(page);
     if (currentPage.value < 1) {
       currentPage.value = 1;
-    } else if (currentPage.value > totalPages.value) {
-      currentPage.value = totalPages.value - 1;
     }
     startPage.value = currentPage.value - Math.ceil(props.pagesVisible / 2);
     endPage.value = currentPage.value + Math.floor(props.pagesVisible / 2);
