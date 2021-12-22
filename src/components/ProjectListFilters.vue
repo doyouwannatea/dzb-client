@@ -1,120 +1,106 @@
 <template>
-  <form class="filters" @submit.prevent>
-    <Accordion class="filter-wrapper">
-      <template #title>Статус проекта</template>
-      <template #content>
-        <label class="label">
-          <input
-            v-model="statuses"
-            class="checkbox"
-            type="checkbox"
-            value="new"
-          />
-          Новый проект
-        </label>
-        <label class="label">
-          <input
-            v-model="statuses"
-            class="checkbox"
-            type="checkbox"
-            value="open"
-          />
-          Открыт для записи
-        </label>
-        <label class="label">
-          <input
-            v-model="statuses"
-            class="checkbox"
-            type="checkbox"
-            value="addition"
-          />
-          Добор участников
-        </label>
-        <label class="label">
-          <input
-            v-model="statuses"
-            class="checkbox"
-            type="checkbox"
-            value="close"
-          />
-          Закрыт для записи
-        </label>
+  <form class="filters" @submit.prevent="filter">
+    <AppAccordion>
+      <template #title>
+        <span v-if="loading" class="multiselect-spinner"></span>
+        <span>Статус проекта</span>
       </template>
-    </Accordion>
+      <template #content>
+        <label
+          v-for="state in allStates.options"
+          :key="state.value"
+          class="label"
+        >
+          <input
+            v-model="states"
+            class="checkbox"
+            type="checkbox"
+            :value="state.value"
+          />
+          {{ state.label }}
+        </label>
+        <div v-if="allStates.error" class="mt-2">{{ allStates.error }}</div>
+      </template>
+    </AppAccordion>
 
     <div class="divider"></div>
 
-    <Accordion class="filter-wrapper">
-      <template #title>Тип проекта</template>
+    <AppAccordion>
+      <template #title>
+        <span v-if="loading" class="multiselect-spinner"></span>
+        <span>Тип проекта</span>
+      </template>
       <template #content>
-        <label class="label">
+        <label
+          v-for="projectType in allTypes.options"
+          :key="projectType.value"
+          class="label"
+        >
           <input
             v-model="type"
             class="radio"
             type="radio"
-            value="project"
+            :value="projectType.value"
             name="project-type"
           />
-          Проектное обучение
+          {{ projectType.label }}
         </label>
-        <label class="label">
-          <input
-            v-model="type"
-            class="radio"
-            type="radio"
-            value="science"
-            name="project-type"
-          />
-          Научная деятельность
-        </label>
+        <div v-if="allTypes.error" class="mt-2">{{ allTypes.error }}</div>
       </template>
-    </Accordion>
+    </AppAccordion>
 
     <div class="divider"></div>
 
-    <Accordion class="filter-wrapper">
+    <AppAccordion>
       <template #title>Руководитель проекта</template>
       <template #content>
-        <Multiselect
-          v-model="teacher"
-          class="input"
-          placeholder="Куцый Н.Н."
+        <VMultiselect
+          v-model="supervisors"
+          mode="tags"
+          placeholder="Ф.И.О."
           :searchable="true"
-          :options="options"
+          :options="allSupervisorNames.options"
+          :loading="loading"
         />
+        <div v-if="allSupervisorNames.error" class="mt-2">
+          {{ allSupervisorNames.error }}
+        </div>
       </template>
-    </Accordion>
+    </AppAccordion>
 
     <div class="divider"></div>
 
-    <Accordion class="filter-wrapper">
+    <AppAccordion class="loading">
       <template #title>Теги</template>
       <template #content>
-        <Multiselect
+        <VMultiselect
           v-model="tags"
           mode="tags"
           placeholder="Data Science"
+          :close-on-select="false"
           :searchable="true"
-          :options="options"
+          :options="allTags.options"
+          :loading="loading"
         />
+        <div v-if="allTags.error" class="mt-2">{{ allTags.error }}</div>
       </template>
-    </Accordion>
+    </AppAccordion>
 
     <div class="divider"></div>
 
-    <Accordion class="filter-wrapper">
+    <AppAccordion>
       <template #title>Сроки реализации</template>
       <template #content>
         <div class="date">
-          <input v-model="dateFrom" class="input" type="date" />
-          <input v-model="dateTo" class="input" type="date" />
+          <input v-model="dateStart" class="input" type="date" />
+          <input v-model="dateEnd" class="input" type="date" />
         </div>
       </template>
-    </Accordion>
+    </AppAccordion>
 
     <div class="divider"></div>
 
-    <Accordion class="filter-wrapper">
+    <AppAccordion>
       <template #title>Уровни сложности</template>
       <template #content>
         <label class="label">
@@ -122,7 +108,7 @@
             v-model="difficulty"
             class="checkbox"
             type="checkbox"
-            value="easy"
+            value="1"
           />
           Легко
         </label>
@@ -131,7 +117,7 @@
             v-model="difficulty"
             class="checkbox"
             type="checkbox"
-            value="medium"
+            value="2"
           />
           Средне
         </label>
@@ -140,210 +126,89 @@
             v-model="difficulty"
             class="checkbox"
             type="checkbox"
-            value="hard"
+            value="3"
           />
           Сложно
         </label>
       </template>
-    </Accordion>
+    </AppAccordion>
 
-    <div class="divider"></div>
-
-    <div class="filter-wrapper">
-      <div>Tags: {{ tags }}</div>
-      <div>Teacher: {{ teacher }}</div>
-      <div>Type: {{ type }}</div>
-      <div>Statuses: {{ statuses }}</div>
-      <div>date: {{ dateFrom }} - {{ dateTo }}</div>
-      <div>difficulty: {{ difficulty }}</div>
-    </div>
-
-    <footer class="filter-wrapper footer">
-      <Button full-width>найти</Button>
-      <Button full-width variant="link">сбросить фильтр</Button>
+    <footer class="footer">
+      <BaseButton full-width>найти</BaseButton>
+      <BaseButton type="button" full-width variant="link" @click="clearFilter">
+        сбросить фильтр
+      </BaseButton>
     </footer>
   </form>
 </template>
 
 <script setup lang="ts">
-  import Accordion from './Accordion.vue';
-  import Multiselect from './Multiselect.vue';
   import { ref } from '@vue/reactivity';
-  import Button from '@/controls/Button.vue';
+  import AppAccordion from './base/AppAccordion.vue';
+  import VMultiselect from '@vueform/multiselect';
+  import BaseButton from './base/AppButton.vue';
+  import { useProjectFilterOptions } from '@/hooks/useProjectFiltersOptions/useProjectFilterOptions';
+  import { useStore } from '@/store/store';
+  import { ActionTypes } from '@/store/types/action-types';
+  import { toJSONLocal } from '@/helpers/string';
+  const store = useStore();
+  const filters = store.state.filters;
 
-  const tags = ref([]);
-  const teacher = ref('');
-  const type = ref('');
-  const statuses = ref(['new']);
-  const difficulty = ref([]);
-  const dateFrom = ref<Date>();
-  const dateTo = ref<Date>();
+  const tags = ref<number[]>(filters.tags || []);
+  const supervisors = ref<number[]>(filters.supervisor || []);
+  const type = ref<number>(filters.type ? filters.type[0] : 0);
 
-  const options = [
-    'Далеко-далеко',
-    'за',
-    'словесными',
-    'горами',
-    'в',
-    'стране',
-    'гласных',
-    'и',
-    'согласных',
-    'живут',
-    'рыбные',
-    'тексты.',
-    'Запятых',
-    'выйти',
-    'лучше',
-    'не',
-    'проектах',
-    'текста',
-    'по',
-    'всей',
-    'своих',
-    'прямо',
-    'рукопись',
-    'вдали',
-    'оксмокс',
-    'эта',
-    'залетают',
-    'назад,',
-    'толку',
-    'предупреждал',
-    'она',
-    'коварных',
-    'несколько,',
-    'ручеек',
-    'даже',
-    'путь',
-    'безорфографичный',
-    'букв.',
-    'Оксмокс',
-    'свой',
-    'безорфографичный',
-    'рукопись',
-    'над',
-    'курсивных',
-    'сих',
-    'снова',
-    'рекламных,',
-    'предупреждал',
-    'решила',
-    'путь',
-    'грустный',
-    'составитель',
-    'по',
-    'всей',
-    'раз',
-    'вскоре,',
-    'своих',
-    'первую',
-    'заголовок,',
-    'собрал',
-    'которое',
-    'грамматики',
-    'которой?',
-    'Моей,',
-    'ipsum',
-    'до',
-    'эта',
-    'о',
-    'власти',
-    'он',
-    'буквоград',
-    'однажды',
-    'букв',
-    'агентство',
-    'они',
-    'рыбного',
-    'единственное',
-    'ее',
-    'безорфографичный',
-    'напоивший',
-    'то?',
-    'Дороге',
-    'возвращайся',
-    'своих,',
-    'великий',
-    'большой',
-    'правилами',
-    'они',
-    'на',
-    'берегу.',
-    'Переписали',
-    'текста',
-    'пустился',
-    'бросил',
-    'что',
-    'даль',
-    'свою',
-    'вопроса',
-    'языком',
-    'текст',
-    'прямо',
-    'коварных',
-    'приставка',
-    'рукопись',
-    'текстов',
-    'текстами,',
-    'дороге',
-    'решила',
-    'диких',
-    'своего',
-    'рот',
-    'сих,',
-    'предупредила',
-    'рыбного',
-    'жаренные',
-    'толку.',
-    'До,',
-    'снова',
-    'моей',
-    'проектах',
-    'подзаголовок',
-    'оксмокс',
-    'вершину',
-    'запятых?',
-    'Собрал',
-    'она',
-    'буквенных',
-    'решила',
-    'языкового',
-    'lorem',
-    'лучше',
-    'путь',
-    'по',
-    'всей',
-    'если',
-    'проектах',
-    'языком',
-    'переписали',
-    'безопасную,',
-    'оксмокс',
-    'маленькая',
-    'послушавшись',
-    'текст',
-    'великий',
-    'однажды',
-    'гор.',
-    'Однажды',
-    'путь',
-    'что',
-    'от',
-    'всех',
-    'большой',
-    'ручеек',
-    'парадигматическая',
-    'подпоясал',
-    'составитель',
-    'эта.',
-  ];
+  const states = ref<number[]>(filters.state || []);
+  const difficulty = ref<number[]>(filters.difficulty || []);
+  const dateStart = ref<string | null>(
+    filters.date_start ? toJSONLocal(new Date(filters.date_start)) : null,
+  );
+  const dateEnd = ref<string | null>(
+    filters.date_end ? toJSONLocal(new Date(filters.date_end)) : null,
+  );
+
+  const { allSupervisorNames, allTags, allTypes, allStates, loading } =
+    useProjectFilterOptions();
+
+  function filter() {
+    store.dispatch(ActionTypes.FILTER_PROJECT_LIST, {
+      filters: {
+        tags: tags.value,
+        difficulty: difficulty.value,
+        state: states.value,
+        supervisor: supervisors.value,
+        type: type.value ? [type.value] : [],
+        date_end: dateEnd.value ? String(dateEnd.value) : '',
+        date_start: dateStart.value ? String(dateStart.value) : '',
+      },
+    });
+  }
+
+  function clearFilter() {
+    tags.value = [];
+    difficulty.value = [];
+    states.value = [];
+    supervisors.value = [];
+    type.value = 0;
+    dateEnd.value = '';
+    dateStart.value = '';
+
+    store.dispatch(ActionTypes.FILTER_PROJECT_LIST, {
+      filters: {
+        tags: tags.value,
+        difficulty: difficulty.value,
+        state: states.value,
+        supervisor: supervisors.value,
+        type: type.value ? [type.value] : [],
+        date_end: dateEnd.value ? String(dateEnd.value) : '',
+        date_start: dateStart.value ? String(dateStart.value) : '',
+      },
+    });
+  }
 </script>
 
 <style scoped>
   .divider {
-    margin-top: 8px;
-    margin-bottom: 8px;
     width: 100%;
     height: 1px;
     background-color: var(--gray-color-1);
@@ -352,12 +217,6 @@
   .filters {
     padding-top: 10px;
     padding-bottom: 11px;
-  }
-
-  .filter-wrapper {
-    margin-top: 18px;
-    padding-left: 22px;
-    padding-right: 22px;
   }
 
   .label {
@@ -369,6 +228,11 @@
 
     color: var(--text-color);
     gap: 15px;
+  }
+
+  .label:hover {
+    color: var(--accent-color-1);
+    cursor: pointer;
   }
 
   .label:not(:last-child) {
@@ -385,6 +249,8 @@
     display: flex;
     flex-direction: column;
     gap: 11px;
-    margin-top: 45px;
+    margin-top: 20px;
+    padding-left: 22px;
+    padding-right: 22px;
   }
 </style>

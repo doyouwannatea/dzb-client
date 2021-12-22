@@ -1,106 +1,102 @@
 <template>
-  <article :class="['card', status]">
+  <article :class="['card', stateClass]">
     <header class="header container">
       <h2 class="title">
-        Платформа для размещения вузовских олимпиад lorem ipsum dolor sit amet,
-        consectetur adipiscing elit
+        {{ project.title }}
       </h2>
-      <Badge class="status">{{ statusText }}</Badge>
-      <div class="subtitle">Лукьянов Н.Д.</div>
+      <AppBadge class="status">{{ project.state_name }}</AppBadge>
+      <div class="subtitle">{{ project.customer }}</div>
     </header>
     <div class="divider"></div>
     <div class="body container">
       <ul class="list">
-        <li>
-          <b>Цель:</b> Создать платформу (страничку) для рекламы олимпиад.
+        <li class="list-item">
+          <b>Цель:</b>
+          {{ project.goal }}
         </li>
-        <li>
-          <b>Требования к студентам:</b> Знание основ верстки и дизайна
-          веб-страниц.
+        <li class="list-item">
+          <b>Требования к студентам:</b>
+          {{ project.requirements }}
         </li>
-        <li><b>Сроки реализации:</b> 29.01.21 – 1.06.21</li>
-        <li><b>Тип проекта:</b> Проектное обучение</li>
+        <li class="list-item">
+          <b>Сроки реализации:</b> {{ project.date_start }} –
+          {{ project.date_end }}
+        </li>
+        <li class="list-item"><b>Тип проекта:</b> {{ project.type_name }}</li>
       </ul>
       <div class="info">
-        <div class="team-counter">
-          <span class="icon team-icon"></span>
-          <span>0/13</span>
-        </div>
+        <ProjectTeamCounter
+          class="team-counter"
+          :count="project.vacant_places"
+          :total="project.places"
+        />
         <div class="difficulty">
           <span class="icon star-icon"></span>
-          <span>легко</span>
+          <span>{{ difficultyText }}</span>
         </div>
       </div>
     </div>
     <footer class="footer container">
       <ul class="tag-list">
-        <li v-for="tag of visibleTags" :key="tag">
-          <Tag>{{ tag }}</Tag>
+        <li v-for="tag of visibleTags" :key="tag.id">
+          <AppTag>{{ tag.tag }}</AppTag>
         </li>
-        <li
-          v-if="tags.length > TAGS_DEFAULT_VISIBLE && !isTagsVisible"
-          class="tag-btn"
-        >
-          <Button variant="inline-link" @click="isTagsVisible = true">
-            +{{ hiddenTagsCount }}
-            {{ declOfNum(hiddenTagsCount, ['тег', 'тега', 'тегов']) }}
-          </Button>
+        <li v-if="showTagsBtnVisible" class="tag-btn">
+          <AppButton variant="inline-link" @click="isTagsVisible = true">
+            {{ showTagsBtnText }}
+          </AppButton>
         </li>
       </ul>
 
       <div class="actions">
-        <Button variant="outlined">Подать заявку</Button>
-        <Button>Подробнее</Button>
+        <AppButton variant="outlined">Подать заявку</AppButton>
+        <AppButton
+          is="router-link"
+          :to="{ name: RouteNames.PROJECT, params: { id: project.id } }"
+        >
+          Подробнее
+        </AppButton>
       </div>
     </footer>
   </article>
 </template>
 
 <script setup lang="ts">
-  import type { PropType } from 'vue';
   import { computed, ref } from 'vue';
-  import Badge from './Badge.vue';
-  import Button from '../controls/Button.vue';
-  import Tag from './Tag.vue';
-  import { declOfNum } from '@/helpers';
+  import AppBadge from './base/AppBadge.vue';
+  import AppButton from './base/AppButton.vue';
+  import ProjectTeamCounter from './ProjectTeamCounter.vue';
+  import AppTag from './base/AppTag.vue';
+  import { declOfNum } from '@/helpers/string';
+  import type { Project } from '@/models/Project';
+  import { RouteNames } from '@/router/types/route-names';
+  import { DifficultyText } from '@/models/enums/difficulty-text';
+  import { StateClass } from '@/models/enums/state-class';
 
-  type status = 'new' | 'active' | 'recruitment' | 'closed';
-  const props = defineProps({
-    status: {
-      type: String as PropType<status>,
-      default: 'new',
-    },
-    tags: {
-      type: Array as PropType<string[]>,
-      default: () => [],
-    },
-  });
+  const props = defineProps<{ project: Project }>();
 
+  // Setup variables
   const TAGS_DEFAULT_VISIBLE = 3;
-  const hiddenTagsCount = props.tags.length - TAGS_DEFAULT_VISIBLE;
-  let statusText = '';
-  switch (props.status) {
-    case 'active':
-      statusText = 'Активен';
-      break;
-    case 'closed':
-      statusText = 'Закрыт';
-      break;
-    case 'recruitment':
-      statusText = 'Добор';
-      break;
-    case 'new':
-      statusText = 'Новый';
-      break;
-  }
+  const hiddenTagsCount = props.project.tags.length - TAGS_DEFAULT_VISIBLE;
+  const showTagsBtnText = `+${hiddenTagsCount} ${declOfNum(hiddenTagsCount, [
+    'тег',
+    'тега',
+    'тегов',
+  ])}`;
+  const stateClass = StateClass[props.project.state_name];
+  const difficultyText = DifficultyText[props.project.difficulty];
 
+  // Reactive variables
   const isTagsVisible = ref(false);
-  const visibleTags = computed(() => {
-    if (isTagsVisible.value) {
-      return props.tags;
-    }
-    return props.tags.slice(0, TAGS_DEFAULT_VISIBLE);
-  });
+  const visibleTags = computed(() =>
+    isTagsVisible.value
+      ? props.project.tags
+      : props.project.tags.slice(0, TAGS_DEFAULT_VISIBLE),
+  );
+  const showTagsBtnVisible = computed(
+    () =>
+      props.project.tags.length > TAGS_DEFAULT_VISIBLE && !isTagsVisible.value,
+  );
 </script>
 
 <style scoped>
@@ -108,7 +104,6 @@
     --status-color: var(--accent-color-1);
     --border-left-color: var(--accent-color-1);
     --team-counter-color: var(--accent-color-1);
-    --team-counter-bg: url('../assets/team.svg');
 
     width: 100%;
     background: #ffffff;
@@ -123,21 +118,18 @@
     --status-color: #26ab5b;
     --border-left-color: #26ab5b;
     --team-counter-color: #26ab5b;
-    --team-counter-bg: url('../assets/team-active.svg');
   }
 
   .card.recruitment {
     --status-color: #ffa500;
     --border-left-color: #ffa500;
     --team-counter-color: #ff7a00;
-    --team-counter-bg: url('../assets/team-recruitment.svg');
   }
 
   .card.closed {
     --status-color: #e24c4c;
     --border-left-color: #e24c4c;
     --team-counter-color: #e24c4c;
-    --team-counter-bg: url('../assets/team-closed.svg');
   }
 
   .footer {
@@ -182,7 +174,6 @@
     margin-top: 10px;
   }
 
-  .team-counter,
   .difficulty {
     display: flex;
     align-items: center;
@@ -194,7 +185,7 @@
   }
 
   .team-counter {
-    color: var(--team-counter-color);
+    color: var(--team-counter-color) !important;
   }
 
   .icon {
@@ -203,12 +194,8 @@
     background: center / contain no-repeat;
   }
 
-  .team-icon {
-    background-image: var(--team-counter-bg);
-  }
-
   .star-icon {
-    background-image: url('../assets/star.svg');
+    background-image: url('../assets/icons/star.svg');
   }
 
   .container {
@@ -238,10 +225,10 @@
   }
 
   .status {
-    align-self: baseline;
+    align-self: flex-start;
     justify-self: flex-end;
-    border-color: var(--status-color);
-    color: var(--status-color);
+    border-color: var(--status-color) !important;
+    color: var(--status-color) !important;
   }
 
   .body {
@@ -253,14 +240,14 @@
     padding-left: 0;
   }
 
-  .list > li {
+  .list-item {
     font-weight: 600;
     font-size: 16px;
     line-height: 20px;
     color: var(--text-color);
     list-style: none;
   }
-  .list > li:not(:last-child) {
+  .list-item:not(:last-child) {
     margin-bottom: 17px;
   }
 </style>

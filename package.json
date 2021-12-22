@@ -3,19 +3,26 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "dev:mock": "vite --mode mock",
     "lint": "eslint --ext .ts,vue --ignore-path .gitignore . --fix",
     "format": "prettier -w -u .",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
-    "deploy": "npm run build && cd dist && git init && git add . && git commit -m 'deploy' && git checkout -b gh-pages && git push --force https://github.com/doyouwannatea/dzb-client.git gh-pages && rimraf .git && cd .."
+    "deploy": "node deploy.js",
+    "prebuild": "npm run lint && npm run format"
   },
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@dafcoe/vue-collapsible-panel": "^0.2.0",
     "@vueform/multiselect": "^2.2.1",
-    "vue": "^3.0.5"
+    "ky": "^0.28.7",
+    "lodash.debounce": "^4.0.8",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.12",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.6",
     "@types/node": "^16.11.11",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
@@ -27,7 +34,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^7.10.0",
     "prettier": "^2.3.0",
-    "rimraf": "^3.0.2",
+    "shelljs": "^0.8.4",
     "typescript": "^4.3.2",
     "vite": "^2.3.4",
     "vue-tsc": "^0.0.24"
