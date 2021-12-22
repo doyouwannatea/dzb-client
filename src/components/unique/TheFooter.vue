@@ -1,72 +1,101 @@
 <template>
   <footer class="footer">
-    <Container size="lg" class="container">
-      <Logo
-        class="logo"
-        :logo-icon="logoImage"
-        :logo-width="50"
-        :logo-height="73"
-      ></Logo>
+    <AppContainer size="lg" class="container">
+      <div>
+        <RouterLink class="clear-link" :to="{ name: RouteNames.HOME }">
+          <AppLogo
+            class="logo"
+            :logo-icon="logoImage"
+            :logo-width="50"
+            :logo-height="73"
+          />
+        </RouterLink>
+
+        <p class="initials">
+          <span class="thin">
+            Федеральное Государственное Бюджетное Образовательное Учреждение
+            высшего образования
+          </span>
+          <br />
+          <span>
+            "Иркутский Национальный Исследовательский Технический Университет"
+          </span>
+        </p>
+      </div>
 
       <nav>
         <ul class="nav-list">
-          <li>
-            <a class="title nav-link" href="#">Все проекты</a>
-          </li>
-          <li>
-            <a class="title nav-link" href="#">вопрос-ответ</a>
-          </li>
-          <li>
-            <a class="title nav-link" href="#">контакты</a>
-          </li>
+          <template
+            v-for="link in $router.options.routes"
+            :key="link.name || link.path"
+          >
+            <li v-if="link.meta?.nav">
+              <RouterLink class="title link nav-link" :to="{ name: link.name }">
+                {{ link.meta.nav }}
+              </RouterLink>
+            </li>
+          </template>
         </ul>
       </nav>
 
-      <div class="info-block">
+      <section class="info-block">
         <h3 class="title info-title">Личный кабиент</h3>
         <ul class="info-list">
-          <li class="info-item">Мои проекты</li>
-          <li class="info-item">Мои заявки</li>
+          <li class="info-item">
+            <RouterLink class="link" :to="{ name: RouteNames.HOME }">
+              Мои проекты
+            </RouterLink>
+          </li>
+          <li class="info-item">
+            <RouterLink class="link" :to="{ name: RouteNames.HOME }">
+              Мои заявки
+            </RouterLink>
+          </li>
         </ul>
-      </div>
+      </section>
 
-      <p class="initials">
-        <span class="thin">
-          Федеральное Государственное Бюджетное Образовательное Учреждение
-          высшего образования
-        </span>
-        <br />
-        <span>
-          "Иркутский Национальный Исследовательский Технический Университет"
-        </span>
-      </p>
+      <div class="divider"></div>
 
-      <div class="info-block">
+      <section class="info-block">
         <h3 class="title info-title">Контакты администратора:</h3>
         <ul class="info-list">
-          <li class="info-item">Телефон: +7 (3952) 999-999</li>
-          <li class="info-item">E-mail: admin@admin.ru</li>
+          <li class="info-item">
+            Телефон: <a class="link" href="#">+7 (3952) 999-999</a>
+          </li>
+          <li class="info-item">
+            E-mail: <a class="link" href="#">admin@admin.ru</a>
+          </li>
         </ul>
-      </div>
+      </section>
 
-      <div class="info-block">
+      <section class="info-block">
         <h3 class="title info-title">Контакты организации:</h3>
         <ul class="info-list">
           <li class="info-item">664074, г. Иркутск ул. Лермонтова 83</li>
-          <li class="info-item">Телефон: +7 (3952) 405-000</li>
-          <li class="info-item">Факс: +7 (3952) 405-100</li>
-          <li class="info-item">Справочная: +7 (3952) 405-009</li>
-          <li class="info-item">E-mail: info@istu.edu</li>
+          <li class="info-item">
+            Телефон: <a class="link" href="#">+7 (3952) 405-000</a>
+          </li>
+          <li class="info-item">
+            Факс: <a class="link" href="#">+7 (3952) 405-100</a>
+          </li>
+          <li class="info-item">
+            Справочная: <a class="link" href="#">+7 (3952) 405-009</a>
+          </li>
+          <li class="info-item">
+            E-mail: <a class="link" href="#">info@istu.edu</a>
+          </li>
         </ul>
-      </div>
-    </Container>
+      </section>
+    </AppContainer>
   </footer>
 </template>
 
 <script setup lang="ts">
-  import Logo from './Logo.vue';
-  import Container from '../layout/Container.vue';
-  import logoImage from '../assets/logo-lg.svg';
+  import { RouterLink } from 'vue-router';
+  import AppLogo from '../base/AppLogo.vue';
+  import AppContainer from '../base/AppContainer.vue';
+  import logoImage from '../../assets/icons/logo-white.svg';
+  import { RouteNames } from '@/router/types/route-names';
 </script>
 
 <style scoped>
@@ -75,26 +104,29 @@
     color: #fff;
     padding-top: 56px;
     padding-bottom: 36px;
+    margin-top: auto;
   }
 
   .title {
+    font-size: 1rem;
     line-height: 20px;
     font-weight: 600;
     color: #fff;
   }
 
   .logo {
+    max-width: 270px;
     color: #fff;
     grid-column: span 2;
   }
 
   .initials {
     font-weight: 300;
-    font-size: 14px;
+    font-size: 0.88rem;
     line-height: 155.3%;
-
     text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
-    grid-column: span 2;
+    margin-top: 7em;
+    max-width: 30em;
   }
 
   .initials .thin {
@@ -102,19 +134,15 @@
   }
 
   .container {
-  }
-  /* .col {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    align-items: flex-start;
-    row-gap: 40px;
+    grid-template-columns: 1fr repeat(5, auto);
+    column-gap: 70px;
   }
-  .col-left {
-  } */
-  .col-right {
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 68px;
-    justify-items: center;
+
+  .divider {
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 1px;
+    height: 100%;
   }
 
   /* Info block */
@@ -122,12 +150,12 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
     padding-left: 0;
   }
 
   .info-item {
-    font-size: 14px;
+    font-size: 0.88rem;
     line-height: 18px;
     font-weight: 400;
     text-transform: uppercase;
@@ -135,7 +163,7 @@
   }
 
   .info-title {
-    margin-bottom: 17px;
+    margin-bottom: 20px;
   }
 
   /* Nav */
@@ -144,15 +172,22 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
   }
 
   .nav-link {
     display: inline-block;
     width: 100%;
     text-transform: uppercase;
-    text-decoration: none;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
+  }
+
+  .link {
+    text-decoration: none;
+    color: inherit;
+  }
+  .link:hover {
+    text-decoration: underline;
   }
 </style>
