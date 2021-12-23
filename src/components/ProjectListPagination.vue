@@ -1,6 +1,19 @@
 <template>
   <nav class="pagination">
     <ul class="pagination-list">
+      <li :class="['pagination-item', { 'disabled-item': currentPage <= 1 }]">
+        <RouterLink
+          :class="['pagination-link', 'pagination-arrow']"
+          :tabindex="currentPage <= 1 ? -1 : 0"
+          :to="{
+            name: RouteNames.HOME,
+            params: { page: currentPage - 1 },
+            query: $route.query,
+          }"
+        >
+          &lt;
+        </RouterLink>
+      </li>
       <li
         v-for="i in genPages()"
         :key="i"
@@ -15,6 +28,24 @@
           }"
         >
           {{ i }}
+        </RouterLink>
+      </li>
+      <li
+        :class="[
+          'pagination-item',
+          { 'disabled-item': currentPage >= totalPages },
+        ]"
+      >
+        <RouterLink
+          :class="['pagination-link', 'pagination-arrow']"
+          :tabindex="currentPage >= totalPages ? -1 : 0"
+          :to="{
+            name: RouteNames.HOME,
+            params: { page: currentPage + 1 },
+            query: $route.query,
+          }"
+        >
+          &gt;
         </RouterLink>
       </li>
     </ul>
@@ -98,6 +129,11 @@
     height: 53px;
   }
 
+  .disabled-item {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
   .pagination-link {
     font-family: inherit;
     font-weight: 600;
@@ -115,8 +151,13 @@
     align-items: center;
   }
 
-  .pagination-item:hover .pagination-link,
+  .pagination-link:hover,
   .pagination-item.active .pagination-link {
     border-bottom-color: var(--accent-color-2);
+  }
+
+  .pagination-arrow:hover {
+    color: var(--accent-color-2);
+    border-bottom-color: transparent;
   }
 </style>
