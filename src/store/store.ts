@@ -6,18 +6,14 @@ import {
 } from 'vuex';
 import { Mutations, mutations } from './mutations';
 import { Actions, actions } from './actions';
-// Раскомментировать если геттеры будут использоваться
-// import { Getters, getters } from './getters';
-// ----------------------------------------------------------------------------
+import { Getters, getters } from './getters';
 import { State, state } from './state';
 
 const store = createStore<State>({
   state,
   mutations,
   actions,
-  // Раскомментировать если геттеры будут использоваться
-  // getters,
-  // ----------------------------------------------------------------------------
+  getters,
   strict: !import.meta.env.PROD,
 });
 
@@ -38,11 +34,9 @@ export type Store = Omit<
     options?: DispatchOptions,
   ): ReturnType<Actions[K]>;
 } & {
-  // Раскомментировать если геттеры будут использоваться
-  //   getters: {
-  //     [K in keyof Getters]: ReturnType<Getters[K]>;
-  //   };
-  // ----------------------------------------------------------------------------
+  getters: {
+    [K in keyof Getters]: ReturnType<Getters[K]>;
+  };
 };
 
 // define your own `useStore` composition function

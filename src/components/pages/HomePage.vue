@@ -32,6 +32,8 @@
 </template>
 
 <script setup lang="ts">
+  import { computed } from 'vue';
+  import { onBeforeRouteUpdate } from 'vue-router';
   import BasePageLayout from '@/components/base/PageLayout.vue';
   import ProjectList from '@/components/ProjectList.vue';
   import ProjectListFilters from '@/components/ProjectListFilters.vue';
@@ -40,9 +42,8 @@
   import SidebarContainer from '@/components/SidebarContainer.vue';
   import ProjectListPagination from '@/components/ProjectListPagination.vue';
   import { useStore } from '@/store/store';
-  import { computed } from 'vue';
   import { updateProjectPage } from '@/router/guards/updateProjectPage';
-  import { onBeforeRouteUpdate } from 'vue-router';
+  import { validateProjectPage } from '@/router/guards/validateProjectPage';
   const store = useStore();
 
   const error = computed(() => store.state.error);
@@ -50,6 +51,7 @@
   const projectList = computed(() => store.state.projectList);
   const projectCount = computed(() => store.state.projectCount);
 
+  onBeforeRouteUpdate(validateProjectPage);
   onBeforeRouteUpdate(updateProjectPage);
 </script>
 

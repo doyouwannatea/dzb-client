@@ -8,7 +8,11 @@
       >
         <RouterLink
           class="pagination-link"
-          :to="{ name: RouteNames.HOME, params: { page: i } }"
+          :to="{
+            name: RouteNames.HOME,
+            params: { page: i },
+            query: $route.query,
+          }"
         >
           {{ i }}
         </RouterLink>

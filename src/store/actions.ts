@@ -15,11 +15,6 @@ type AugmentedActionContext = {
 export interface Actions {
   // GET_PROJECT_LIST
   [ActionTypes.GET_PROJECT_LIST]({ commit }: AugmentedActionContext): void;
-  // FILTER_PROJECT_LIST
-  [ActionTypes.FILTER_PROJECT_LIST](
-    { commit }: AugmentedActionContext,
-    { page }: { page?: number; filters?: ProjectFilters },
-  ): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -47,14 +42,5 @@ export const actions: ActionTree<State, State> & Actions = {
     } finally {
       commit(MutationTypes.SET_LOADING, false);
     }
-  },
-  // FILTER_PROJECT_LIST
-  async [ActionTypes.FILTER_PROJECT_LIST](
-    { commit, dispatch },
-    { page, filters },
-  ) {
-    commit(MutationTypes.SET_FILTERS, filters);
-    commit(MutationTypes.SET_PAGE, page);
-    await dispatch(ActionTypes.GET_PROJECT_LIST);
   },
 };

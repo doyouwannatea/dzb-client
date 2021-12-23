@@ -134,8 +134,14 @@
     </AppAccordion>
 
     <footer class="footer">
-      <BaseButton full-width>найти</BaseButton>
-      <BaseButton type="button" full-width variant="link" @click="clearFilter">
+      <BaseButton full-width :disabled="globalLoading">найти</BaseButton>
+      <BaseButton
+        type="button"
+        full-width
+        variant="link"
+        :disabled="globalLoading"
+        @click="clearFilter"
+      >
         сбросить фильтр
       </BaseButton>
     </footer>
@@ -143,16 +149,21 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from '@vue/reactivity';
-  import AppAccordion from './base/AppAccordion.vue';
+  import { ref, computed } from '@vue/reactivity';
+  import { useRouter } from 'vue-router';
   import VMultiselect from '@vueform/multiselect';
+  import AppAccordion from './base/AppAccordion.vue';
   import BaseButton from './base/AppButton.vue';
   import { useProjectFilterOptions } from '@/hooks/useProjectFiltersOptions/useProjectFilterOptions';
   import { useStore } from '@/store/store';
-  import { ActionTypes } from '@/store/types/action-types';
   import { toJSONLocal } from '@/helpers/string';
+  import { RouteNames } from '@/router/types/route-names';
+  import { encodeFilterQueries } from '@/helpers/query';
+
   const store = useStore();
+  const router = useRouter();
   const filters = store.state.filters;
+  const globalLoading = computed(() => store.state.loading);
 
   const tags = ref<number[]>(filters.tags || []);
   const supervisors = ref<number[]>(filters.supervisor || []);
@@ -171,20 +182,12 @@
     useProjectFilterOptions();
 
   function filter() {
-    store.dispatch(ActionTypes.FILTER_PROJECT_LIST, {
-      filters: {
-        tags: tags.value,
-        difficulty: difficulty.value,
-        state: states.value,
-        supervisor: supervisors.value,
-        type: type.value ? [type.value] : [],
-        date_end: dateEnd.value ? String(dateEnd.value) : '',
-        date_start: dateStart.value ? String(dateStart.value) : '',
-      },
-    });
+    if (globalLoading.value) return;
+    saveFiltersToStore();
   }
 
   function clearFilter() {
+    if (globalLoading.value) return;
     tags.value = [];
     difficulty.value = [];
     states.value = [];
@@ -192,16 +195,24 @@
     type.value = 0;
     dateEnd.value = '';
     dateStart.value = '';
+    saveFiltersToStore();
+  }
 
-    store.dispatch(ActionTypes.FILTER_PROJECT_LIST, {
-      filters: {
-        tags: tags.value,
-        difficulty: difficulty.value,
-        state: states.value,
-        supervisor: supervisors.value,
-        type: type.value ? [type.value] : [],
-        date_end: dateEnd.value ? String(dateEnd.value) : '',
-        date_start: dateStart.value ? String(dateStart.value) : '',
+  function saveFiltersToStore() {
+    router.push({
+      name: RouteNames.HOME,
+      params: { page: 1 },
+      query: {
+        ...encodeFilterQueries({
+          tags: tags.value,
+          difficulty: difficulty.value,
+          state: states.value,
+          supervisor: supervisors.value,
+          type: type.value ? [type.value] : [],
+          date_end: dateEnd.value || '',
+          date_start: dateStart.value || '',
+        }),
+        title: router.currentRoute.value.query.title,
       },
     });
   }

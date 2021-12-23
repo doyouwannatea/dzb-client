@@ -14,18 +14,27 @@
 <script setup lang="ts">
   import _debounce from 'lodash.debounce';
   import { useStore } from '@/store/store';
-  import { ActionTypes } from '@/store/types/action-types';
   import { ref } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { RouteNames } from '@/router/types/route-names';
+  const router = useRouter();
   const store = useStore();
   const term = ref(store.state.filters.title || '');
 
   function search() {
     const title = term.value.trim();
-    store.dispatch(ActionTypes.FILTER_PROJECT_LIST, { filters: { title } });
+    router.push({
+      name: RouteNames.HOME,
+      params: { page: 1 },
+      query: {
+        ...router.currentRoute.value.query,
+        title,
+      },
+    });
   }
 
   const debouncedInput = _debounce(search, 600);
-  const debouncedSubmit = _debounce(search, 150);
+  const debouncedSubmit = _debounce(search, 50);
 </script>
 
 <style scoped>
