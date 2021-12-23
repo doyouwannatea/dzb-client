@@ -65,7 +65,6 @@
   });
 
   // Computed
-  const routePage = computed(() => route.params.page);
   const totalPages = computed(() =>
     Math.ceil(props.totalItems / props.pageSize),
   );
@@ -74,14 +73,20 @@
   const startPage = ref(1);
   const endPage = ref(1);
 
-  watch(() => routePage.value, updatePages, { immediate: true });
+  watch(() => route.params.page, updatePages, { immediate: true });
 
   // генерирует видимые ссылки пагинации
   function genPages() {
-    const pages = [];
-    for (let i = startPage.value; i <= endPage.value; i++) {
+    const pages = [1];
+
+    for (let i = startPage.value + 1; i <= endPage.value - 1; i++) {
       pages.push(i);
     }
+
+    if (totalPages.value !== 1) {
+      pages.push(totalPages.value);
+    }
+
     return pages;
   }
 
@@ -92,7 +97,7 @@
       currentPage.value = 1;
     }
     startPage.value = currentPage.value - Math.ceil(props.pagesVisible / 2);
-    endPage.value = currentPage.value + Math.floor(props.pagesVisible / 2);
+    endPage.value = currentPage.value + Math.floor(props.pagesVisible / 2) - 1;
 
     if (startPage.value <= 0) {
       endPage.value -= startPage.value - 1;
@@ -102,7 +107,7 @@
     if (endPage.value > totalPages.value) {
       endPage.value = totalPages.value;
       if (endPage.value > props.pageSize) {
-        startPage.value = endPage.value - props.pagesVisible;
+        startPage.value = endPage.value - props.pagesVisible + 1;
       }
     }
   }
