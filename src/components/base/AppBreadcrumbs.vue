@@ -5,7 +5,15 @@
       :key="index"
       class="breadcrumbs-item"
     >
-      <button v-if="back" class="breadcrumbs-link" @click="$router.back()">
+      <button
+        v-if="back"
+        class="breadcrumbs-link"
+        @click="
+          hasHistory()
+            ? $router.back()
+            : $router.push({ name: RouteNames.HOME })
+        "
+      >
         {{ title }}
       </button>
       <RouterLink v-else-if="to" :to="to" class="breadcrumbs-link">
@@ -19,6 +27,8 @@
 <script setup lang="ts">
   import type { RouteLocationRaw } from 'vue-router';
   import { RouterLink } from 'vue-router';
+  import { hasHistory } from '@/helpers/history';
+  import { RouteNames } from '@/router/types/route-names';
   defineProps<{
     breadcrumbs: {
       to?: RouteLocationRaw;

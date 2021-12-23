@@ -21,7 +21,14 @@
     </header>
     <ProjectDetails v-if="project && !loading && !error" :project="project" />
     <div class="d-flex justify-content-center mt-3">
-      <AppButton variant="link" @click="$router.back()">
+      <AppButton
+        variant="link"
+        @click="
+          hasHistory()
+            ? $router.back()
+            : $router.push({ name: RouteNames.HOME })
+        "
+      >
         назад к списку
       </AppButton>
     </div>
@@ -36,6 +43,7 @@
   import ProjectDetails from '../ProjectDetails.vue';
   import useSingleProject from '@/hooks/useSingleProject';
   import { RouteNames } from '@/router/types/route-names';
+  import { hasHistory } from '@/helpers/history';
 
   const route = useRoute();
 
