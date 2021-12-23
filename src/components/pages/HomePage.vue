@@ -21,6 +21,7 @@
         <template v-if="!loading && !error && projectList">
           <ProjectList :project-list="projectList" />
           <ProjectListPagination
+            v-if="projectList && projectList.length"
             :page-size="7"
             :pages-visible="7"
             :total-items="projectCount"
