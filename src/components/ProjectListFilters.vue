@@ -149,6 +149,7 @@
 </template>
 
 <script setup lang="ts">
+  import { watch } from 'vue';
   import { ref, computed } from '@vue/reactivity';
   import { useRouter } from 'vue-router';
   import VMultiselect from '@vueform/multiselect';
@@ -162,28 +163,41 @@
 
   const store = useStore();
   const router = useRouter();
-  const filters = store.state.filters;
   const globalLoading = computed(() => store.state.loading);
-
-  const tags = ref<number[]>(filters.tags || []);
-  const supervisors = ref<number[]>(filters.supervisor || []);
-  const type = ref<number>(filters.type ? filters.type[0] : 0);
-
-  const states = ref<number[]>(filters.state || []);
-  const difficulty = ref<number[]>(filters.difficulty || []);
-  const dateStart = ref<string | null>(
-    filters.date_start ? toJSONLocal(new Date(filters.date_start)) : null,
-  );
-  const dateEnd = ref<string | null>(
-    filters.date_end ? toJSONLocal(new Date(filters.date_end)) : null,
-  );
-
   const { allSupervisorNames, allTags, allTypes, allStates, loading } =
     useProjectFilterOptions();
 
+  const tags = ref<number[]>([]);
+  const supervisors = ref<number[]>([]);
+  const type = ref<number>(0);
+  const states = ref<number[]>([]);
+  const difficulty = ref<number[]>([]);
+  const dateStart = ref<string | null>(null);
+  const dateEnd = ref<string | null>(null);
+
+  // наблюдаем за состоянием хранилища
+  // обновляем локальное состояние если что-то поменялось
+  watch(
+    () => store.state.filters,
+    (filters) => {
+      tags.value = filters.tags || [];
+      supervisors.value = filters.supervisor || [];
+      type.value = filters.type ? filters.type[0] : 0;
+      states.value = filters.state || [];
+      difficulty.value = filters.difficulty || [];
+      dateStart.value = filters.date_start
+        ? toJSONLocal(new Date(filters.date_start))
+        : null;
+      dateEnd.value = filters.date_end
+        ? toJSONLocal(new Date(filters.date_end))
+        : null;
+    },
+    { immediate: true },
+  );
+
   function filter() {
     if (globalLoading.value) return;
-    saveFiltersToStore();
+    updateFilters();
   }
 
   function clearFilter() {
@@ -195,10 +209,10 @@
     type.value = 0;
     dateEnd.value = '';
     dateStart.value = '';
-    saveFiltersToStore();
+    updateFilters();
   }
 
-  function saveFiltersToStore() {
+  function updateFilters() {
     router.push({
       name: RouteNames.HOME,
       params: { page: 1 },

@@ -14,12 +14,20 @@
 <script setup lang="ts">
   import _debounce from 'lodash.debounce';
   import { useStore } from '@/store/store';
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { RouteNames } from '@/router/types/route-names';
   const router = useRouter();
   const store = useStore();
-  const term = ref(store.state.filters.title || '');
+  const term = ref('');
+
+  watch(
+    () => store.state.filters.title,
+    (title) => {
+      term.value = title || '';
+    },
+    { immediate: true },
+  );
 
   function search() {
     const title = term.value.trim();
