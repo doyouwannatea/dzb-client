@@ -159,7 +159,7 @@
   import { useStore } from '@/store/store';
   import { toJSONLocal } from '@/helpers/string';
   import { RouteNames } from '@/router/types/route-names';
-  import { encodeFilterQueries } from '@/helpers/query';
+  import { encodeFilterParams } from '@/helpers/query';
 
   const store = useStore();
   const router = useRouter();
@@ -217,7 +217,7 @@
       name: RouteNames.HOME,
       params: { page: 1 },
       query: {
-        ...encodeFilterQueries({
+        ...encodeFilterParams({
           tags: tags.value,
           difficulty: difficulty.value,
           state: states.value,

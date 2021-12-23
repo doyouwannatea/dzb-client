@@ -1,11 +1,12 @@
+import { FilterParams } from '@/api/ProjectApi/ProjectApiType';
 import { ProjectFilters } from '@/store/state';
 import { LocationQuery, LocationQueryValue } from 'vue-router';
 import { removeDuplicates } from './array';
 
 // кодирует поля объекта в строку для передачи в search params
-export function encodeFilterQueries(
-  searchParams: ProjectFilters,
-): Record<keyof ProjectFilters, string> {
+export function encodeFilterParams(
+  searchParams: FilterParams,
+): Record<keyof FilterParams, string> {
   return {
     type: JSON.stringify(searchParams.type) || '',
     state: JSON.stringify(searchParams.state) || '',
@@ -15,11 +16,12 @@ export function encodeFilterQueries(
     date_end: searchParams.date_end || '',
     difficulty: JSON.stringify(searchParams.difficulty) || '',
     title: searchParams.title || '',
+    page: searchParams.page?.toString() || '1',
   };
 }
 
 // декодирует ProjectFilters из search params
-export function decodeFilterQueries(query: LocationQuery): ProjectFilters {
+export function decodeFilterParams(query: LocationQuery): ProjectFilters {
   return {
     title: query.title?.toString(),
     date_end: query.date_end?.toString(),
