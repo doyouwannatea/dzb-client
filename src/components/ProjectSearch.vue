@@ -33,9 +33,9 @@
     const title = term.value.trim();
     router.push({
       name: RouteNames.HOME,
-      params: { page: 1 },
       query: {
         ...router.currentRoute.value.query,
+        page: 1,
         title,
       },
     });

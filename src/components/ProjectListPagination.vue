@@ -7,8 +7,7 @@
           :tabindex="currentPage <= 1 ? -1 : 0"
           :to="{
             name: RouteNames.HOME,
-            params: { page: currentPage - 1 },
-            query: $route.query,
+            query: { ...$route.query, page: currentPage - 1 },
           }"
         >
           &lt;
@@ -23,8 +22,7 @@
           class="pagination-link"
           :to="{
             name: RouteNames.HOME,
-            params: { page: i },
-            query: $route.query,
+            query: { ...$route.query, page: i },
           }"
         >
           {{ i }}
@@ -41,8 +39,7 @@
           :tabindex="currentPage >= totalPages ? -1 : 0"
           :to="{
             name: RouteNames.HOME,
-            params: { page: currentPage + 1 },
-            query: $route.query,
+            query: { ...$route.query, page: currentPage + 1 },
           }"
         >
           &gt;
@@ -53,9 +50,10 @@
 </template>
 
 <script setup lang="ts">
-  import { RouteNames } from '@/router/types/route-names';
+  import type { LocationQuery } from 'vue-router';
   import { computed, ref, watch } from 'vue';
   import { RouterLink, useRoute } from 'vue-router';
+  import { RouteNames } from '@/router/types/route-names';
   const route = useRoute();
   const props = defineProps({
     totalItems: { type: Number, required: true },
@@ -73,7 +71,7 @@
   const startPage = ref(1);
   const endPage = ref(1);
 
-  watch(() => route.params.page, updatePages, { immediate: true });
+  watch(() => route.query, updatePages, { immediate: true });
 
   // генерирует видимые ссылки пагинации
   function genPages() {
@@ -91,8 +89,10 @@
   }
 
   // обновляет состояние компонента
-  function updatePages(page: string | string[]) {
-    currentPage.value = isNaN(Number(page)) ? props.defaultPage : Number(page);
+  function updatePages(query: LocationQuery) {
+    currentPage.value = isNaN(Number(query.page))
+      ? props.defaultPage
+      : Number(query.page);
     if (currentPage.value < 1) {
       currentPage.value = 1;
     }

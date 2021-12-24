@@ -1,7 +1,8 @@
-import { encodeFilterParams } from '@/helpers/query';
+import { encodeProjectFiltersToQueries } from '@/helpers/query';
 import { Project, State, SupervisorName, Tag, Type } from '@/models/Project';
+
 import ProjectApiType, {
-  FilterParams,
+  ProjectFilters,
   ProjectListResponse,
 } from './ProjectApiType';
 
@@ -15,10 +16,10 @@ export default class ProjectApi extends ProjectApiType {
   }
 
   static async filterProjectList(
-    searchParams: FilterParams,
+    filters: ProjectFilters,
   ): Promise<ProjectListResponse> {
-    const params = encodeFilterParams(searchParams);
-    return this.ky.get('api/projects/filter', { searchParams: params }).json();
+    const searchParams = encodeProjectFiltersToQueries(filters);
+    return this.ky.get('api/projects/filter', { searchParams }).json();
   }
 
   static async getAllTags(): Promise<Tag[]> {

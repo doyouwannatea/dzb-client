@@ -2,7 +2,7 @@ import { ActionContext, ActionTree } from 'vuex';
 import { ActionTypes } from './types/action-types';
 import { MutationTypes } from './types/mutation-types';
 import { Mutations } from './mutations';
-import { ProjectFilters, State } from './state';
+import { State } from './state';
 import ProjectApi from '@/api/ProjectApi';
 
 type AugmentedActionContext = {
@@ -21,7 +21,6 @@ export const actions: ActionTree<State, State> & Actions = {
   // GET_PROJECT_LIST
   async [ActionTypes.GET_PROJECT_LIST]({ commit, state }) {
     const filters = state.filters;
-    const page = state.page;
     commit(MutationTypes.SET_PROJECT_LIST, {
       projectCount: 0,
       projectList: null,
@@ -29,10 +28,9 @@ export const actions: ActionTree<State, State> & Actions = {
     commit(MutationTypes.SET_LOADING, true);
     commit(MutationTypes.SET_ERROR, '');
     try {
-      const { data, projectCount } = await ProjectApi.filterProjectList({
-        ...filters,
-        page,
-      });
+      const { data, projectCount } = await ProjectApi.filterProjectList(
+        filters,
+      );
       commit(MutationTypes.SET_PROJECT_LIST, {
         projectList: data,
         projectCount,

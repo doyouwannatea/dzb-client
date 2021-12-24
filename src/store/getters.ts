@@ -1,6 +1,7 @@
+import { ProjectFilters } from '@/api/ProjectApi/ProjectApiType';
 import { compareArrays } from '@/helpers/array';
 import { GetterTree } from 'vuex';
-import { ProjectFilters, State } from './state';
+import { State } from './state';
 
 export type Getters = {
   isPageChanged(state: State): (routerPage: string) => boolean;
@@ -9,7 +10,7 @@ export type Getters = {
 
 export const getters: GetterTree<State, State> & Getters = {
   isPageChanged: (state) => (routerPage) => {
-    return Boolean(routerPage && Number(routerPage) !== state.page);
+    return Boolean(routerPage && Number(routerPage) !== state.filters.page);
   },
   isFiltersChanged: (state) => (queryFilters) => {
     const {

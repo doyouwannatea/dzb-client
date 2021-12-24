@@ -7,12 +7,12 @@
       </p>
     </header>
     <aside class="top-filters">
-      <ProjectListSearch />
+      <ProjectSearch />
       <ProjectListSort />
     </aside>
     <SidebarContainer>
       <template #sidebar>
-        <ProjectListFilters />
+        <ProjectListFilter />
       </template>
       <template #main>
         <div v-if="loading">loading...</div>
@@ -34,17 +34,15 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { onBeforeRouteUpdate } from 'vue-router';
   import BasePageLayout from '@/components/base/PageLayout.vue';
   import ProjectList from '@/components/ProjectList.vue';
-  import ProjectListFilters from '@/components/ProjectListFilters.vue';
+  import ProjectListFilter from '@/components/ProjectListFilter.vue';
   import ProjectListSort from '@/components/ProjectListSort.vue';
-  import ProjectListSearch from '@/components/ProjectListSearch.vue';
+  import ProjectSearch from '@/components/ProjectSearch.vue';
   import SidebarContainer from '@/components/SidebarContainer.vue';
   import ProjectListPagination from '@/components/ProjectListPagination.vue';
   import { useStore } from '@/store/store';
-  import { updateProjectPage } from '@/router/guards/updateProjectPage';
-  import { validateProjectPage } from '@/router/guards/validateProjectPage';
+  import { useUpdateProjectList } from '@/hooks/useUpdateProjectList';
   const store = useStore();
 
   const error = computed(() => store.state.error);
@@ -52,8 +50,7 @@
   const projectList = computed(() => store.state.projectList);
   const projectCount = computed(() => store.state.projectCount);
 
-  onBeforeRouteUpdate(validateProjectPage);
-  onBeforeRouteUpdate(updateProjectPage);
+  useUpdateProjectList();
 </script>
 
 <style scoped>

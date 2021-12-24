@@ -15,14 +15,8 @@
   type Is = 'button' | 'router-link';
 
   defineProps({
-    variant: {
-      type: String as PropType<Variant>,
-      default: '' as Variant,
-    },
-    is: {
-      type: String as PropType<Is>,
-      default: 'button' as Is,
-    },
+    variant: { type: String as PropType<Variant>, default: '' as Variant },
+    is: { type: String as PropType<Is>, default: 'button' as Is },
     disabled: Boolean,
     fullWidth: Boolean,
   });

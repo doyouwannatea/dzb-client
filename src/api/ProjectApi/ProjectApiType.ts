@@ -7,7 +7,7 @@ import type {
   Type,
 } from '@/models/Project';
 
-export interface FilterParams {
+export interface ProjectFilters {
   type?: number[];
   state?: number[]; // массив id
   supervisor?: number[]; // массив id
@@ -32,7 +32,7 @@ export default abstract class ProjectApiType {
     return { data: [], projectCount: 0 };
   }
   static async filterProjectList(
-    searchParams: FilterParams,
+    filters: ProjectFilters,
   ): Promise<ProjectListResponse> {
     return { data: [], projectCount: 0 };
   }

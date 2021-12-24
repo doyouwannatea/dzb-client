@@ -1,8 +1,9 @@
 import { MutationTree } from 'vuex';
 import { MutationTypes } from './types/mutation-types';
-import { ProjectFilters, State } from './state';
+import { State } from './state';
 import { Project } from '@/models/Project';
 import { AllFilterOptions } from '@/hooks/useProjectFiltersOptions/types';
+import { ProjectFilters } from '@/api/ProjectApi/ProjectApiType';
 
 export type Mutations<S = State> = {
   [MutationTypes.SET_PROJECT_LIST](
@@ -14,7 +15,6 @@ export type Mutations<S = State> = {
   ): void;
   [MutationTypes.SET_LOADING](state: S, loading: boolean): void;
   [MutationTypes.SET_ERROR](state: S, error: string): void;
-  [MutationTypes.SET_PAGE](state: S, page?: number): void;
   [MutationTypes.SET_FILTERS](state: S, filters?: ProjectFilters): void;
   [MutationTypes.SET_FILTER_OPTIONS](state: S, options: AllFilterOptions): void;
 };
@@ -29,11 +29,6 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [MutationTypes.SET_ERROR](state, error) {
     state.error = error;
-  },
-  [MutationTypes.SET_PAGE](state, page) {
-    if (page) {
-      state.page = page;
-    }
   },
   [MutationTypes.SET_FILTERS](state, filters) {
     if (filters) {

@@ -159,7 +159,7 @@
   import { useStore } from '@/store/store';
   import { toJSONLocal } from '@/helpers/string';
   import { RouteNames } from '@/router/types/route-names';
-  import { encodeFilterParams } from '@/helpers/query';
+  import { encodeProjectFiltersToQueries } from '@/helpers/query';
 
   const store = useStore();
   const router = useRouter();
@@ -215,9 +215,8 @@
   function updateFilters() {
     router.push({
       name: RouteNames.HOME,
-      params: { page: 1 },
       query: {
-        ...encodeFilterParams({
+        ...encodeProjectFiltersToQueries({
           tags: tags.value,
           difficulty: difficulty.value,
           state: states.value,
@@ -225,8 +224,9 @@
           type: type.value ? [type.value] : [],
           date_end: dateEnd.value || '',
           date_start: dateStart.value || '',
+          page: 1,
+          title: router.currentRoute.value.query.title?.toString() || '',
         }),
-        title: router.currentRoute.value.query.title,
       },
     });
   }

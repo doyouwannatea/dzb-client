@@ -1,5 +1,5 @@
 import ProjectApiType, {
-  FilterParams,
+  ProjectFilters,
   ProjectListResponse,
 } from './ProjectApiType';
 import type {
@@ -24,7 +24,7 @@ export default class ProjectApiMock extends ProjectApiType {
   }
 
   static async filterProjectList(
-    searchParams: FilterParams,
+    filters: ProjectFilters,
   ): Promise<ProjectListResponse> {
     return delayRes(projectListResponse, 400);
   }
