@@ -1,6 +1,11 @@
+html,
+body,
+#app {
+  height: 100%;
+}
+
 html {
   font-size: 16px;
-  height: 100%;
 }
 
 @media (max-width: 1536px) {
@@ -17,17 +22,6 @@ body {
   font-weight: 600;
   font-size: 1rem;
   line-height: 1.25em;
-  height: 100%;
-}
-
-#app {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-main {
-  margin-bottom: 140px;
 }
 
 .page-title {

@@ -100,11 +100,14 @@
 
 <style scoped>
   .footer {
+    position: sticky;
+    top: 100vh;
+
     background-color: var(--text-color);
     color: #fff;
     padding-top: 56px;
     padding-bottom: 36px;
-    margin-top: auto;
+    margin-top: 140px;
   }
 
   .title {
