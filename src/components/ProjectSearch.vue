@@ -6,17 +6,22 @@
       type="text"
       name="search"
       placeholder="Введите название проекта для поиска..."
-      @input="debouncedInput"
+      @input="
+        debouncedInput();
+        setLoading();
+      "
     />
   </form>
 </template>
 
 <script setup lang="ts">
-  import _debounce from 'lodash.debounce';
-  import { useStore } from '@/store/store';
   import { ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
+  import { debounce } from 'lodash';
+  import { useStore } from '@/store/store';
   import { RouteNames } from '@/router/types/route-names';
+  import { MutationTypes } from '@/store/types/mutation-types';
+
   const router = useRouter();
   const store = useStore();
   const term = ref('');
@@ -29,20 +34,24 @@
     { immediate: true },
   );
 
+  const setLoading = () => store.commit(MutationTypes.SET_LOADING, true);
+
   function search() {
-    const title = term.value.trim();
+    term.value = term.value.trim();
+
     router.push({
       name: RouteNames.HOME,
       query: {
         ...router.currentRoute.value.query,
         page: 1,
-        title,
+        title: term.value,
       },
+      force: true,
     });
   }
 
-  const debouncedInput = _debounce(search, 600);
-  const debouncedSubmit = _debounce(search, 50);
+  const debouncedInput = debounce(search, 600);
+  const debouncedSubmit = debounce(search, 50);
 </script>
 
 <style scoped>

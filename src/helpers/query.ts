@@ -1,16 +1,20 @@
-import { ProjectFilters } from '@/api/ProjectApi/ProjectApiType';
+import { uniq, toArray, pipe, toNumber, toString } from 'lodash/fp';
 import { LocationQuery, LocationQueryValue } from 'vue-router';
-import { removeDuplicates } from './array';
+import { ProjectFilters } from '@/api/ProjectApi/ProjectApiType';
+import { mapNumber } from './array';
+
+const parseQueryArray = pipe(parseLocationQueryValue, toArray, uniq);
+const queryArrayToNumber = pipe(parseQueryArray, mapNumber);
 
 // кодирует поля объекта в строку для передачи в search params
 export function encodeProjectFiltersToQueries(
   filters: ProjectFilters,
 ): Record<keyof ProjectFilters, string> {
   return {
-    title: filters.title?.toString() || '',
-    date_end: filters.date_end?.toString() || '',
-    date_start: filters.date_start?.toString() || '',
-    page: filters.page?.toString() || '',
+    title: toString(filters.title),
+    date_end: toString(filters.date_end),
+    date_start: toString(filters.date_start),
+    page: toString(filters.page),
     type: JSON.stringify(filters.type),
     state: JSON.stringify(filters.state),
     supervisor: JSON.stringify(filters.supervisor),
@@ -22,25 +26,15 @@ export function encodeProjectFiltersToQueries(
 // декодирует ProjectFilters из search params
 export function decodeFiltersFromQueries(query: LocationQuery): ProjectFilters {
   return {
-    title: query.title?.toString() || '',
-    date_end: query.date_end?.toString() || '',
-    date_start: query.date_start?.toString() || '',
-    page: Number(query.page),
-    type: removeDuplicates(
-      Array.from(parseLocationQueryValue(query.type)).map(Number),
-    ),
-    state: removeDuplicates(
-      Array.from(parseLocationQueryValue(query.state)).map(Number),
-    ),
-    supervisor: removeDuplicates(
-      Array.from(parseLocationQueryValue(query.supervisor)).map(Number),
-    ),
-    tags: removeDuplicates(
-      Array.from(parseLocationQueryValue(query.tags)).map(Number),
-    ),
-    difficulty: removeDuplicates(
-      Array.from(parseLocationQueryValue(query.difficulty)).map(Number),
-    ),
+    title: toString(query.title),
+    date_end: toString(query.date_end),
+    date_start: toString(query.date_start),
+    page: toNumber(query.page),
+    type: queryArrayToNumber(query.type),
+    state: queryArrayToNumber(query.state),
+    supervisor: queryArrayToNumber(query.supervisor),
+    tags: queryArrayToNumber(query.tags),
+    difficulty: queryArrayToNumber(query.difficulty),
   };
 }
 
