@@ -1,4 +1,3 @@
-import ky from 'ky';
 import type {
   Project,
   State,
@@ -25,9 +24,6 @@ export interface ProjectListResponse {
 }
 
 export default abstract class ProjectApiType {
-  protected static BASE_URL = 'https://projects.tw1.ru';
-  protected static ky = ky.create({ prefixUrl: ProjectApiType.BASE_URL });
-
   static async getProjectList(page: number): Promise<ProjectListResponse> {
     return { data: [], projectCount: 0 };
   }

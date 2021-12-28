@@ -1,3 +1,4 @@
+import ky from 'ky';
 import { encodeProjectFiltersToQueries } from '@/helpers/query';
 import { Project, State, SupervisorName, Tag, Type } from '@/models/Project';
 
@@ -7,6 +8,12 @@ import ProjectApiType, {
 } from './ProjectApiType';
 
 export default class ProjectApi extends ProjectApiType {
+  private static BASE_URL = 'https://projects.tw1.ru';
+  private static ky = ky.create({
+    prefixUrl: ProjectApi.BASE_URL,
+    retry: { limit: 5 },
+  });
+
   static async getProjectList(page: number): Promise<ProjectListResponse> {
     return this.ky.get('api/projects', { searchParams: { page } }).json();
   }
