@@ -8,7 +8,7 @@
     "format": "prettier -w -u .",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
-    "deploy": "node deploy.js",
+    "deploy": "bash gh-pages-deploy.sh",
     "prebuild": "npm run lint && npm run format"
   },
   "dependencies": {
@@ -34,7 +34,6 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^7.10.0",
     "prettier": "^2.3.0",
-    "shelljs": "^0.8.4",
     "typescript": "^4.3.2",
     "vite": "^2.3.4",
     "vue-tsc": "^0.0.24"
