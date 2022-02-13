@@ -1,8 +1,7 @@
 import { MutationTree } from 'vuex';
 import { MutationTypes } from './types/mutation-types';
 import { ProjectFilterOptions, State } from './state';
-import { Project } from '@/models/Project';
-import { ProjectFilters } from '@/api/ProjectApi/ProjectApiType';
+import { Project, ProjectFilters } from '@/models/Project';
 
 export type Mutations<S = State> = {
   [MutationTypes.SET_PROJECT_LIST](

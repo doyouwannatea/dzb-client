@@ -1,9 +1,7 @@
-import ProjectApiType, {
-  ProjectFilters,
-  ProjectListResponse,
-} from './ProjectApiType';
+import ProjectApiType, { ProjectListResponse } from './ProjectApiType';
 import type {
   Project,
+  ProjectFilters,
   State,
   SupervisorName,
   Tag,

@@ -1,6 +1,6 @@
+import { ProjectFilters } from '@/models/Project';
 import { uniq, toArray, pipe, toNumber, toString } from 'lodash/fp';
 import { LocationQuery, LocationQueryValue } from 'vue-router';
-import { ProjectFilters } from '@/api/ProjectApi/ProjectApiType';
 import { mapNumber } from './array';
 
 const parseQueryArray = pipe(parseLocationQueryValue, toArray, uniq);

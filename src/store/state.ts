@@ -1,10 +1,10 @@
-import { ProjectFilters } from '@/api/ProjectApi/ProjectApiType';
 import {
   Project,
   SupervisorName,
   Tag,
   Type,
   State as ProjectState,
+  ProjectFilters,
 } from '@/models/Project';
 
 export interface ProjectFilterOptions {

@@ -1,22 +1,11 @@
 import type {
   Project,
+  ProjectFilters,
   State,
   SupervisorName,
   Tag,
   Type,
 } from '@/models/Project';
-
-export interface ProjectFilters {
-  type?: number[];
-  state?: number[]; // массив id
-  supervisor?: number[]; // массив id
-  tags?: number[]; // массив id
-  date_start?: string;
-  date_end?: string;
-  difficulty?: number[]; // Массив сложностей
-  title?: string; // Поиск по подстроке в названии
-  page?: number;
-}
 
 export interface ProjectListResponse {
   data: Project[];

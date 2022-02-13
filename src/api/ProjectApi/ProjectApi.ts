@@ -1,11 +1,15 @@
 import ky from 'ky';
 import { encodeProjectFiltersToQueries } from '@/helpers/query';
-import { Project, State, SupervisorName, Tag, Type } from '@/models/Project';
-
-import ProjectApiType, {
+import {
+  Project,
   ProjectFilters,
-  ProjectListResponse,
-} from './ProjectApiType';
+  State,
+  SupervisorName,
+  Tag,
+  Type,
+} from '@/models/Project';
+
+import ProjectApiType, { ProjectListResponse } from './ProjectApiType';
 
 export default class ProjectApi extends ProjectApiType {
   private static BASE_URL = 'https://projects.tw1.ru';
