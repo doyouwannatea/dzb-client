@@ -2,24 +2,26 @@
   <form class="filters" @submit.prevent="filter">
     <AppAccordion>
       <template #title>
-        <span v-if="loading" class="multiselect-spinner"></span>
+        <span v-if="allStates.loading.value" class="multiselect-spinner"></span>
         <span>Статус проекта</span>
       </template>
       <template #content>
         <label
-          v-for="state in allStates.options"
-          :key="state.value"
+          v-for="state in allStates.data.value"
+          :key="state.id"
           class="label"
         >
           <input
             v-model="states"
             class="checkbox"
             type="checkbox"
-            :value="state.value"
+            :value="state.id"
           />
-          {{ state.label }}
+          {{ state.state }}
         </label>
-        <div v-if="allStates.error" class="mt-2">{{ allStates.error }}</div>
+        <div v-if="allStates.error.value" class="mt-2">
+          {{ allStates.error.value }}
+        </div>
       </template>
     </AppAccordion>
 
@@ -27,25 +29,27 @@
 
     <AppAccordion>
       <template #title>
-        <span v-if="loading" class="multiselect-spinner"></span>
+        <span v-if="allTypes.loading.value" class="multiselect-spinner"></span>
         <span>Тип проекта</span>
       </template>
       <template #content>
         <label
-          v-for="projectType in allTypes.options"
-          :key="projectType.value"
+          v-for="projectType in allTypes.data.value"
+          :key="projectType.id"
           class="label"
         >
           <input
             v-model="type"
             class="radio"
             type="radio"
-            :value="projectType.value"
+            :value="projectType.id"
             name="project-type"
           />
-          {{ projectType.label }}
+          {{ projectType.type }}
         </label>
-        <div v-if="allTypes.error" class="mt-2">{{ allTypes.error }}</div>
+        <div v-if="allTypes.error.value" class="mt-2">
+          {{ allTypes.error.value }}
+        </div>
       </template>
     </AppAccordion>
 
@@ -59,11 +63,14 @@
           mode="tags"
           placeholder="Ф.И.О."
           :searchable="true"
-          :options="allSupervisorNames.options"
-          :loading="loading"
+          :options="allSupervisorNames.data.value"
+          :loading="allSupervisorNames.loading.value"
+          :label="SupervisorNameKeys.fio"
+          :track-by="SupervisorNameKeys.id"
+          :value-prop="SupervisorNameKeys.id"
         />
-        <div v-if="allSupervisorNames.error" class="mt-2">
-          {{ allSupervisorNames.error }}
+        <div v-if="allSupervisorNames.error.value" class="mt-2">
+          {{ allSupervisorNames.error.value }}
         </div>
       </template>
     </AppAccordion>
@@ -79,10 +86,15 @@
           placeholder="Data Science"
           :close-on-select="false"
           :searchable="true"
-          :options="allTags.options"
-          :loading="loading"
+          :options="allTags.data.value"
+          :loading="allTags.loading.value"
+          :label="TagKeys.tag"
+          :track-by="TagKeys.id"
+          :value-prop="TagKeys.id"
         />
-        <div v-if="allTags.error" class="mt-2">{{ allTags.error }}</div>
+        <div v-if="allTags.error.value" class="mt-2">
+          {{ allTags.error.value }}
+        </div>
       </template>
     </AppAccordion>
 
@@ -153,9 +165,10 @@
   import { ref, computed } from '@vue/reactivity';
   import { useRouter } from 'vue-router';
   import VMultiselect from '@vueform/multiselect';
+  import { SupervisorNameKeys, TagKeys } from '@/models/enums/keys';
   import AppAccordion from './base/AppAccordion.vue';
   import BaseButton from './base/AppButton.vue';
-  import { useProjectFilterOptions } from '@/hooks/useProjectFiltersOptions/useProjectFilterOptions';
+  import { useProjectFilterOptions } from '@/hooks/useProjectFilterOptions';
   import { useStore } from '@/store/store';
   import { toJSONLocal } from '@/helpers/string';
   import { RouteNames } from '@/router/types/route-names';
@@ -164,7 +177,7 @@
   const store = useStore();
   const router = useRouter();
   const globalLoading = computed(() => store.state.loading);
-  const { allSupervisorNames, allTags, allTypes, allStates, loading } =
+  const { allSupervisorNames, allTags, allTypes, allStates } =
     useProjectFilterOptions();
 
   const tags = ref<number[]>([]);

@@ -1,8 +1,7 @@
 import { MutationTree } from 'vuex';
 import { MutationTypes } from './types/mutation-types';
-import { State } from './state';
+import { ProjectFilterOptions, State } from './state';
 import { Project } from '@/models/Project';
-import { AllFilterOptions } from '@/hooks/useProjectFiltersOptions/types';
 import { ProjectFilters } from '@/api/ProjectApi/ProjectApiType';
 
 export type Mutations<S = State> = {
@@ -16,7 +15,10 @@ export type Mutations<S = State> = {
   [MutationTypes.SET_LOADING](state: S, loading: boolean): void;
   [MutationTypes.SET_ERROR](state: S, error: string): void;
   [MutationTypes.SET_FILTERS](state: S, filters?: ProjectFilters): void;
-  [MutationTypes.SET_FILTER_OPTIONS](state: S, options: AllFilterOptions): void;
+  [MutationTypes.SET_FILTER_OPTIONS](
+    state: S,
+    options: ProjectFilterOptions,
+  ): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {

@@ -1,6 +1,18 @@
 import { ProjectFilters } from '@/api/ProjectApi/ProjectApiType';
-import { AllFilterOptions } from '@/hooks/useProjectFiltersOptions/types';
-import { Project } from '@/models/Project';
+import {
+  Project,
+  SupervisorName,
+  Tag,
+  Type,
+  State as ProjectState,
+} from '@/models/Project';
+
+export interface ProjectFilterOptions {
+  allTags: Tag[] | null;
+  allTypes: Type[] | null;
+  allSupervisorNames: SupervisorName[] | null;
+  allStates: ProjectState[] | null;
+}
 
 export interface State {
   projectList: Project[] | null;
@@ -8,7 +20,7 @@ export interface State {
   loading: boolean;
   error: string;
   filters: ProjectFilters;
-  filterOptions: AllFilterOptions | null;
+  filterOptions: ProjectFilterOptions;
 }
 
 export const state = (): State => ({
@@ -27,5 +39,10 @@ export const state = (): State => ({
     title: '',
     page: 1,
   },
-  filterOptions: null,
+  filterOptions: {
+    allStates: null,
+    allSupervisorNames: null,
+    allTags: null,
+    allTypes: null,
+  },
 });
