@@ -8,7 +8,7 @@
         <AppLogo />
       </RouterLink>
       <TheNavigation />
-      <NavigationUserActions />
+      <HeaderUserActions />
     </AppContainer>
   </header>
 </template>
@@ -18,7 +18,7 @@
   import AppContainer from '../base/AppContainer.vue';
   import TheNavigation from './TheNavigation.vue';
   import AppLogo from '../base/AppLogo.vue';
-  import NavigationUserActions from '../NavigationUserActions.vue';
+  import HeaderUserActions from '../HeaderUserActions.vue';
   import { RouteNames } from '@/router/types/route-names';
 </script>
 
