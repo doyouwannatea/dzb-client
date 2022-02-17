@@ -1,18 +1,29 @@
 <template>
   <div class="actions">
-    <button class="ring-btn">
-      <RingIcon />
-    </button>
-    <div class="user">
-      <UserPicture />
-      <span class="username">Иванов Иван Иванович</span>
-    </div>
+    <template v-if="authStore.isAuth && authStore.userData">
+      <button class="ring-btn">
+        <RingIcon />
+      </button>
+      <div class="user">
+        <UserPicture />
+        <span class="username">{{ authStore.userData.fio }}</span>
+      </div>
+    </template>
+
+    <template v-else>
+      <AppButton :disabled="authStore.loading" @click="authStore.auth()">
+        авторизоваться
+      </AppButton>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
+  import { useAuthStore } from '@/stores/auth';
   import RingIcon from '../assets/icons/ring.svg';
   import UserPicture from '../assets/icons/user-picture.svg';
+  import AppButton from './base/AppButton.vue';
+  const authStore = useAuthStore();
 </script>
 
 <style scoped>
