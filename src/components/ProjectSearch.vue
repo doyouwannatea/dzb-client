@@ -18,23 +18,22 @@
   import { ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { debounce } from 'lodash';
-  import { useStore } from '@/store/store';
   import { RouteNames } from '@/router/types/route-names';
-  import { MutationTypes } from '@/store/types/mutation-types';
+  import { useProjectsStore } from '@/stores/projects';
 
   const router = useRouter();
-  const store = useStore();
+  const store = useProjectsStore();
   const term = ref('');
 
   watch(
-    () => store.state.filters.title,
+    () => store.filters.title,
     (title) => {
       term.value = title || '';
     },
     { immediate: true },
   );
 
-  const setLoading = () => store.commit(MutationTypes.SET_LOADING, true);
+  const setLoading = () => (store.loading = true);
 
   function search() {
     term.value = term.value.trim();

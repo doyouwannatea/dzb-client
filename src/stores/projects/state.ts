@@ -14,8 +14,8 @@ export interface ProjectFilterOptions {
   allStates: ProjectState[] | null;
 }
 
-export interface State {
-  projectList: Project[] | null;
+interface State {
+  projectList?: Project[];
   projectCount: number;
   loading: boolean;
   error: string;
@@ -24,7 +24,7 @@ export interface State {
 }
 
 export const state = (): State => ({
-  projectList: null,
+  projectList: undefined,
   projectCount: 0,
   loading: false,
   error: '',

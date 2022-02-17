@@ -169,14 +169,14 @@
   import AppAccordion from './base/AppAccordion.vue';
   import BaseButton from './base/AppButton.vue';
   import { useProjectFilterOptions } from '@/hooks/useProjectFilterOptions';
-  import { useStore } from '@/store/store';
   import { toJSONLocal } from '@/helpers/string';
   import { RouteNames } from '@/router/types/route-names';
   import { encodeProjectFiltersToQueries } from '@/helpers/query';
+  import { useProjectsStore } from '@/stores/projects';
 
-  const store = useStore();
+  const store = useProjectsStore();
   const router = useRouter();
-  const globalLoading = computed(() => store.state.loading);
+  const globalLoading = computed(() => store.loading);
   const { allSupervisorNames, allTags, allTypes, allStates } =
     useProjectFilterOptions();
 
@@ -191,7 +191,7 @@
   // наблюдаем за состоянием хранилища
   // обновляем локальное состояние если что-то поменялось
   watch(
-    () => store.state.filters,
+    () => store.filters,
     (filters) => {
       tags.value = filters.tags || [];
       supervisors.value = filters.supervisor || [];

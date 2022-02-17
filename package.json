@@ -17,9 +17,9 @@
     "@vueform/multiselect": "^2.2.1",
     "ky": "^0.28.7",
     "lodash": "^4.17.21",
+    "pinia": "^2.0.11",
     "vue": "^3.0.5",
-    "vue-router": "^4.0.12",
-    "vuex": "^4.0.2"
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.178",

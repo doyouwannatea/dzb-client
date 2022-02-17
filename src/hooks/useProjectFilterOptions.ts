@@ -1,36 +1,34 @@
 import { watch } from 'vue';
 import ProjectApi from '@/api/ProjectApi';
-import { useStore } from '@/store/store';
-import { MutationTypes } from '@/store/types/mutation-types';
 import useAsyncData from './useAsyncData';
-import { ProjectFilterOptions } from '@/store/state';
+import { ProjectFilterOptions } from '@/stores/projects/state';
+import { useProjectsStore } from '@/stores/projects';
 
 const isProjectOptionsEmpty = (options: ProjectFilterOptions) => {
   return Object.values(options).every((val) => val === null);
 };
 
 export function useProjectFilterOptions() {
-  const store = useStore();
-  const { filterOptions } = store.state;
+  const store = useProjectsStore();
 
   const cancelRequest = () => {
-    return !isProjectOptionsEmpty(store.state.filterOptions);
+    return !isProjectOptionsEmpty(store.filterOptions);
   };
 
   const allTags = useAsyncData(ProjectApi.getAllTags(), {
-    defaultValue: filterOptions?.allTags,
+    defaultValue: store.filterOptions?.allTags,
     cancelRequest,
   });
   const allTypes = useAsyncData(ProjectApi.getAllProjectTypes(), {
-    defaultValue: filterOptions?.allTypes,
+    defaultValue: store.filterOptions?.allTypes,
     cancelRequest,
   });
   const allStates = useAsyncData(ProjectApi.getAllProjectStates(), {
-    defaultValue: filterOptions?.allStates,
+    defaultValue: store.filterOptions?.allStates,
     cancelRequest,
   });
   const allSupervisorNames = useAsyncData(ProjectApi.getAllSupervisorNames(), {
-    defaultValue: filterOptions?.allSupervisorNames,
+    defaultValue: store.filterOptions?.allSupervisorNames,
     cancelRequest,
   });
 
@@ -44,7 +42,7 @@ export function useProjectFilterOptions() {
         allSupervisorNames: data[3],
       };
       if (!isProjectOptionsEmpty(options)) {
-        store.commit(MutationTypes.SET_FILTER_OPTIONS, options);
+        store.setFilterOptions(options);
       }
     },
     { immediate: true },
