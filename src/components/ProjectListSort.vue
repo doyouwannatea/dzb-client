@@ -30,8 +30,8 @@
     font-style: normal;
     font-weight: 400;
     color: #485ea4;
-    font-size: 18px;
-    line-height: 23px;
+    font-size: 1.125rem;
+    line-height: 1.4375rem;
 
     appearance: none;
     background: url(../assets/icons/arrow.svg) right / contain no-repeat;

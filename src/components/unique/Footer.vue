@@ -105,20 +105,20 @@
 
     background-color: var(--text-color);
     color: #fff;
-    padding-top: 56px;
-    padding-bottom: 36px;
-    margin-top: 140px;
+    padding-top: 3.5rem;
+    padding-bottom: 2.25rem;
+    margin-top: 8.75rem;
   }
 
   .title {
     font-size: 1rem;
-    line-height: 20px;
+    line-height: 1.25rem;
     font-weight: 600;
     color: #fff;
   }
 
   .logo {
-    max-width: 270px;
+    max-width: 16.875rem;
     color: #fff;
     grid-column: span 2;
   }
@@ -139,7 +139,7 @@
   .container {
     display: grid;
     grid-template-columns: 1fr repeat(5, auto);
-    column-gap: 70px;
+    column-gap: 4.375rem;
   }
 
   .divider {
@@ -153,20 +153,20 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0.625rem;
     padding-left: 0;
   }
 
   .info-item {
     font-size: 0.88rem;
-    line-height: 18px;
+    line-height: 1.125rem;
     font-weight: 400;
     text-transform: uppercase;
     color: var(--gray-color-2);
   }
 
   .info-title {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
   }
 
   /* Nav */
@@ -175,7 +175,7 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1.25rem;
   }
 
   .nav-link {

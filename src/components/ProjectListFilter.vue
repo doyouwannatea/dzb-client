@@ -253,19 +253,19 @@
   }
 
   .filters {
-    padding-top: 10px;
-    padding-bottom: 11px;
+    padding-top: 0.625rem;
+    padding-bottom: 0.6875rem;
   }
 
   .label {
     font-weight: 400;
-    font-size: 18px;
+    font-size: 1.125rem;
     line-height: normal;
     display: flex;
     align-items: center;
 
     color: var(--text-color);
-    gap: 15px;
+    gap: 0.9375rem;
   }
 
   .label:hover {
@@ -274,21 +274,21 @@
   }
 
   .label:not(:last-child) {
-    margin-bottom: 13px;
+    margin-bottom: 0.8125rem;
   }
 
   .date {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 1.25rem;
   }
 
   .footer {
     display: flex;
     flex-direction: column;
-    gap: 11px;
-    margin-top: 20px;
-    padding-left: 22px;
-    padding-right: 22px;
+    gap: 0.6875rem;
+    margin-top: 1.25rem;
+    padding-left: 1.375rem;
+    padding-right: 1.375rem;
   }
 </style>

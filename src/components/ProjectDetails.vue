@@ -130,7 +130,7 @@
   .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 0.3125rem;
   }
 
   .badge {

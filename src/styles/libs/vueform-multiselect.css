@@ -2,12 +2,12 @@
 
 .multiselect {
   --ms-border-color: var(--gray-color-1);
-  --ms-py: 17px;
-  --ms-px: 17px;
-  --ms-radius: 5px;
-  --ms-option-font-size: 18px;
-  --ms-font-size: 18px;
-  min-height: 57px;
+  --ms-py: 1.0625rem;
+  --ms-px: 1.0625rem;
+  --ms-radius: 0.3125rem;
+  --ms-option-font-size: 1.125rem;
+  --ms-font-size: 1.125rem;
+  min-height: 3.5625rem;
   padding-bottom: 0.5em;
   padding-top: 0.5em;
 }
@@ -39,12 +39,12 @@
 }
 
 .multiselect-tag {
-  padding: 7px 20px;
+  padding: 0.4375rem 1.25rem;
   background: #f1f4fe;
-  border-radius: 30px;
+  border-radius: 1.875rem;
 
-  font-size: 14px;
-  line-height: 18px;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
 
   color: var(--accent-color-1);
 }
@@ -56,7 +56,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  line-height: 57px;
+  line-height: 3.5625rem;
 }
 
 .multiselect-search {

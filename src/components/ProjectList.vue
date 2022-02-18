@@ -18,6 +18,6 @@
     flex-direction: column;
     list-style: none;
     padding-left: 0;
-    gap: 15px;
+    gap: 0.9375rem;
   }
 </style>

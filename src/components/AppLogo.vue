@@ -26,7 +26,7 @@
 
     font-family: 'Geometria';
     font-weight: bold;
-    font-size: 23px;
+    font-size: 1.4375rem;
     line-height: 1em;
     text-transform: uppercase;
     text-decoration: none;
@@ -34,8 +34,8 @@
   }
 
   .logo-icon {
-    min-width: 36px;
-    height: 51px;
+    min-width: 2.25rem;
+    height: 3.1875rem;
     background: url('../assets/icons/logo.svg') center / contain no-repeat;
   }
 

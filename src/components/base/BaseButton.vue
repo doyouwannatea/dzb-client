@@ -25,10 +25,10 @@
 <style scoped>
   .btn {
     display: block;
-    padding: 16px 32px;
-    font-size: 16px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
     border: 0;
-    border-radius: 5px;
+    border-radius: 0.3125rem;
     background-color: var(--accent-color-1);
     color: #ffffff;
     line-height: normal;
@@ -63,7 +63,7 @@
   }
 
   .outlined {
-    border: 2px solid var(--accent-color-1);
+    border: 0.125rem solid var(--accent-color-1);
     background-color: #fff;
     color: var(--accent-color-1);
   }
@@ -85,10 +85,10 @@
   .inline-link {
     display: inline-block;
     padding: 0;
-    font-size: 14px;
+    font-size: 0.875rem;
     background-color: transparent;
     border-radius: 0;
-    line-height: 18px;
+    line-height: 1.125rem;
     text-align: initial;
     text-transform: initial;
     color: var(--accent-color-1);

@@ -41,13 +41,13 @@
   .team-counter {
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 0.5625rem;
     color: var(--accent-color-1);
   }
 
   .icon {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .icon-path {

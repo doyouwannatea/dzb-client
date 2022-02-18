@@ -46,7 +46,7 @@
   }
   .breadcrumbs-item {
     font-family: 'Montserrat';
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 400;
     line-height: normal;
 
@@ -54,8 +54,8 @@
   }
   .breadcrumbs-item:not(:last-child)::after {
     content: '/';
-    margin-left: 6px;
-    margin-right: 6px;
+    margin-left: 0.375rem;
+    margin-right: 0.375rem;
     color: var(--text-color);
   }
   .breadcrumbs-link {

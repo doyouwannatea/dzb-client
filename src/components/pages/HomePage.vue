@@ -59,16 +59,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 35px;
-    margin-bottom: 18px;
+    gap: 2.1875rem;
+    margin-bottom: 1.125rem;
   }
 
   .header {
-    margin-top: 76px;
-    margin-bottom: 45px;
+    margin-top: 4.75rem;
+    margin-bottom: 2.8125rem;
   }
 
   .title {
-    margin-bottom: 11px;
+    margin-bottom: 0.6875rem;
   }
 </style>

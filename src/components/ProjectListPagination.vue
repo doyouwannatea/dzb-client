@@ -116,22 +116,22 @@
 <style scoped>
   .pagination {
     background: #ffffff;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.18);
-    border-radius: 10px;
-    margin-bottom: 15px;
-    margin-top: 15px;
+    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
+    border-radius: 0.625rem;
+    margin-bottom: 0.9375rem;
+    margin-top: 0.9375rem;
   }
 
   .pagination-list {
     list-style: none;
     display: flex;
     justify-content: center;
-    gap: 36px;
+    gap: 2.25rem;
   }
 
   .pagination-item {
-    width: 41px;
-    height: 53px;
+    width: 2.5625rem;
+    height: 3.3125rem;
   }
 
   .disabled-item {
@@ -142,15 +142,15 @@
   .pagination-link {
     font-family: inherit;
     font-weight: 600;
-    font-size: 20px;
-    line-height: 26px;
+    font-size: 1.25rem;
+    line-height: 1.625rem;
     text-transform: uppercase;
     color: var(--gray-color-2);
     text-decoration: none;
     display: inline-block;
     width: 100%;
     height: 100%;
-    border-bottom: 4px solid transparent;
+    border-bottom: 0.25rem solid transparent;
     display: flex;
     justify-content: center;
     align-items: center;

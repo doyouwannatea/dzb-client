@@ -13,13 +13,13 @@
   .container {
     display: grid;
     grid-template-columns: 382px auto;
-    gap: 34px;
+    gap: 2.125rem;
   }
 
   .aside {
     background: #ffffff;
     border: 1px solid var(--gray-color-1);
-    border-radius: 10px;
+    border-radius: 0.625rem;
     align-self: flex-start;
   }
 </style>

@@ -56,11 +56,11 @@
 
 <style scoped>
   .page-title {
-    margin-top: 26px;
-    margin-bottom: 24px;
+    margin-top: 1.625rem;
+    margin-bottom: 1.5rem;
   }
 
   .breadcrumbs {
-    margin-top: 32px;
+    margin-top: 2rem;
   }
 </style>

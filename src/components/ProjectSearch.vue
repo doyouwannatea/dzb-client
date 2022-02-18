@@ -56,16 +56,16 @@
 <style scoped>
   .search-form {
     width: 100%;
-    max-width: 694px;
+    max-width: 43.375rem;
   }
 
   .search-input {
-    height: 57px;
-    padding-left: 17px;
-    padding-right: 68px;
-    background: url('../assets/icons/search.svg') calc(100% - 17px) center /
-      34px no-repeat #ffffff;
-    line-height: 23px;
+    height: 3.5625rem;
+    padding-left: 1.0625rem;
+    padding-right: 4.25rem;
+    background: url('../assets/icons/search.svg') calc(100% - 1.0625rem) center /
+      2.125rem no-repeat #ffffff;
+    line-height: 1.4375rem;
     font-weight: 400;
   }
 </style>

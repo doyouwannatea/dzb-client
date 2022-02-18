@@ -17,7 +17,7 @@
 
 <style scoped>
   .bold {
-    line-height: 23px;
+    line-height: 1.4375rem;
     font-weight: 700;
   }
 
@@ -30,7 +30,7 @@
     display: grid;
     grid-template-columns: 5fr 6fr;
     align-items: flex-start;
-    line-height: 27px;
+    line-height: 1.6875rem;
   }
 
   .info-list-value {
@@ -38,6 +38,6 @@
   }
 
   .info-list-item.wide {
-    grid-template-columns: minmax(auto, 230px) auto;
+    grid-template-columns: minmax(auto, 14.375rem) auto;
   }
 </style>

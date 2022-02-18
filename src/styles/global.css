@@ -26,13 +26,13 @@ body {
 
 .page-title {
   font-weight: 800;
-  font-size: 40px;
-  line-height: 51px;
+  font-size: 2.5rem;
+  line-height: 3.1875rem;
   color: var(--text-color);
 }
 
 .page-subtitle {
-  font-size: 18px;
-  line-height: 23px;
+  font-size: 1.125rem;
+  line-height: 1.4375rem;
   color: #707070;
 }

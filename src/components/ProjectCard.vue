@@ -107,11 +107,11 @@
 
     width: 100%;
     background: #ffffff;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.18);
-    border-radius: 10px;
-    border-left: 20px solid var(--border-left-color);
-    padding-top: 22px;
-    padding-bottom: 22px;
+    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
+    border-radius: 0.625rem;
+    border-left: 1.25rem solid var(--border-left-color);
+    padding-top: 1.375rem;
+    padding-bottom: 1.375rem;
   }
 
   .card.active {
@@ -136,14 +136,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 54px;
+    gap: 3.375rem;
   }
 
   .header {
-    padding-bottom: 20px;
+    padding-bottom: 1.25rem;
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 13px;
+    gap: 0.8125rem;
   }
 
   .tag-list {
@@ -151,7 +151,7 @@
     padding-left: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 0.5rem;
   }
 
   .tag-btn {
@@ -161,23 +161,23 @@
 
   .actions {
     display: flex;
-    gap: 12px;
+    gap: 0.75rem;
     align-self: flex-end;
   }
 
   .info {
     display: flex;
     justify-content: flex-end;
-    font-size: 18px;
-    line-height: 23px;
-    gap: 22px;
-    margin-top: 10px;
+    font-size: 1.125rem;
+    line-height: 1.4375rem;
+    gap: 1.375rem;
+    margin-top: 0.625rem;
   }
 
   .difficulty {
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 0.5625rem;
   }
 
   .difficulty {
@@ -189,8 +189,8 @@
   }
 
   .icon {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
     background: center / contain no-repeat;
   }
 
@@ -199,8 +199,8 @@
   }
 
   .container {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   .divider {
@@ -211,16 +211,16 @@
 
   .title {
     font-weight: 600;
-    font-size: 24px;
-    line-height: 31px;
+    font-size: 1.5rem;
+    line-height: 1.9375rem;
     color: #4f5569;
-    max-width: 705px;
+    max-width: 44.0625rem;
   }
 
   .subtitle {
     font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 1rem;
+    line-height: 1.25rem;
     color: #4f5569;
   }
 
@@ -232,8 +232,8 @@
   }
 
   .body {
-    padding-top: 37px;
-    padding-bottom: 26px;
+    padding-top: 2.3125rem;
+    padding-bottom: 1.625rem;
   }
 
   .list {
@@ -242,12 +242,12 @@
 
   .list-item {
     font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 1rem;
+    line-height: 1.25rem;
     color: var(--text-color);
     list-style: none;
   }
   .list-item:not(:last-child) {
-    margin-bottom: 17px;
+    margin-bottom: 1.0625rem;
   }
 </style>

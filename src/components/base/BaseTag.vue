@@ -7,12 +7,12 @@
 <style scoped>
   .tag {
     display: inline-block;
-    padding: 7px 20px;
+    padding: 0.4375rem 1.25rem;
     background: #f1f4fe;
-    border-radius: 30px;
+    border-radius: 1.875rem;
 
-    font-size: 14px;
-    line-height: 18px;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
 
     color: var(--accent-color-1);
   }

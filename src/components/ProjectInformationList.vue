@@ -37,7 +37,7 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    row-gap: 45px;
+    row-gap: 2.8125rem;
     font-size: 1.13rem;
   }
 </style>
