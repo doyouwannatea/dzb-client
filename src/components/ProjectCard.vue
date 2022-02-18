@@ -4,7 +4,7 @@
       <h2 class="title">
         {{ project.title }}
       </h2>
-      <AppBadge class="status">{{ project.state_name }}</AppBadge>
+      <BaseBadge class="status">{{ project.state_name }}</BaseBadge>
       <div class="subtitle">{{ project.customer }}</div>
     </header>
     <div class="divider"></div>
@@ -39,23 +39,23 @@
     <footer class="footer container">
       <ul class="tag-list">
         <li v-for="tag of visibleTags" :key="tag.id">
-          <AppTag>{{ tag.tag }}</AppTag>
+          <BaseTag>{{ tag.tag }}</BaseTag>
         </li>
         <li v-if="showTagsBtnVisible" class="tag-btn">
-          <AppButton variant="inline-link" @click="isTagsVisible = true">
+          <BaseButton variant="inline-link" @click="isTagsVisible = true">
             {{ showTagsBtnText }}
-          </AppButton>
+          </BaseButton>
         </li>
       </ul>
 
       <div class="actions">
-        <AppButton variant="outlined">Подать заявку</AppButton>
-        <AppButton
+        <BaseButton variant="outlined">Подать заявку</BaseButton>
+        <BaseButton
           is="router-link"
           :to="{ name: RouteNames.PROJECT, params: { id: project.id } }"
         >
           Подробнее
-        </AppButton>
+        </BaseButton>
       </div>
     </footer>
   </article>
@@ -63,10 +63,10 @@
 
 <script setup lang="ts">
   import { computed, ref } from 'vue';
-  import AppBadge from './base/AppBadge.vue';
-  import AppButton from './base/AppButton.vue';
+  import BaseBadge from './base/BaseBadge.vue';
+  import BaseButton from './base/BaseButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
-  import AppTag from './base/AppTag.vue';
+  import BaseTag from './base/BaseTag.vue';
   import { declOfNum } from '@/helpers/string';
   import type { Project } from '@/models/Project';
   import { RouteNames } from '@/router/types/route-names';

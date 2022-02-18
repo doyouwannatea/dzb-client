@@ -11,18 +11,18 @@
     </template>
 
     <template v-else>
-      <AppButton :disabled="authStore.loading" @click="authStore.auth()">
+      <BaseButton :disabled="authStore.loading" @click="authStore.auth()">
         авторизоваться
-      </AppButton>
+      </BaseButton>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
   import { useAuthStore } from '@/stores/auth';
-  import RingIcon from '../assets/icons/ring.svg';
-  import UserPicture from '../assets/icons/user-picture.svg';
-  import AppButton from './base/AppButton.vue';
+  import RingIcon from '../assets/icons/ring.svg?component';
+  import UserPicture from '../assets/icons/user-picture.svg?component';
+  import BaseButton from './base/BaseButton.vue';
   const authStore = useAuthStore();
 </script>
 

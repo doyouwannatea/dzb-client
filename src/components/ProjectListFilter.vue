@@ -1,6 +1,6 @@
 <template>
   <form class="filters" @submit.prevent="filter">
-    <AppAccordion>
+    <BaseAccordion>
       <template #title>
         <span v-if="allStates.loading.value" class="multiselect-spinner"></span>
         <span>Статус проекта</span>
@@ -23,11 +23,11 @@
           {{ allStates.error.value }}
         </div>
       </template>
-    </AppAccordion>
+    </BaseAccordion>
 
     <div class="divider"></div>
 
-    <AppAccordion>
+    <BaseAccordion>
       <template #title>
         <span v-if="allTypes.loading.value" class="multiselect-spinner"></span>
         <span>Тип проекта</span>
@@ -51,11 +51,11 @@
           {{ allTypes.error.value }}
         </div>
       </template>
-    </AppAccordion>
+    </BaseAccordion>
 
     <div class="divider"></div>
 
-    <AppAccordion>
+    <BaseAccordion>
       <template #title>Руководитель проекта</template>
       <template #content>
         <VMultiselect
@@ -73,11 +73,11 @@
           {{ allSupervisorNames.error.value }}
         </div>
       </template>
-    </AppAccordion>
+    </BaseAccordion>
 
     <div class="divider"></div>
 
-    <AppAccordion class="loading">
+    <BaseAccordion class="loading">
       <template #title>Теги</template>
       <template #content>
         <VMultiselect
@@ -96,11 +96,11 @@
           {{ allTags.error.value }}
         </div>
       </template>
-    </AppAccordion>
+    </BaseAccordion>
 
     <div class="divider"></div>
 
-    <AppAccordion>
+    <BaseAccordion>
       <template #title>Сроки реализации</template>
       <template #content>
         <div class="date">
@@ -108,11 +108,11 @@
           <input v-model="dateEnd" class="input" type="date" />
         </div>
       </template>
-    </AppAccordion>
+    </BaseAccordion>
 
     <div class="divider"></div>
 
-    <AppAccordion>
+    <BaseAccordion>
       <template #title>Уровни сложности</template>
       <template #content>
         <label class="label">
@@ -143,7 +143,7 @@
           Сложно
         </label>
       </template>
-    </AppAccordion>
+    </BaseAccordion>
 
     <footer class="footer">
       <BaseButton full-width :disabled="globalLoading">найти</BaseButton>
@@ -166,8 +166,8 @@
   import { useRouter } from 'vue-router';
   import VMultiselect from '@vueform/multiselect';
   import { SupervisorNameKeys, TagKeys } from '@/models/enums/keys';
-  import AppAccordion from './base/AppAccordion.vue';
-  import BaseButton from './base/AppButton.vue';
+  import BaseAccordion from './base/BaseAccordion.vue';
+  import BaseButton from './base/BaseButton.vue';
   import { useProjectFilterOptions } from '@/hooks/useProjectFilterOptions';
   import { toJSONLocal } from '@/helpers/string';
   import { RouteNames } from '@/router/types/route-names';

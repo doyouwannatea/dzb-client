@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  import BasePageLayout from '@/components/base/PageLayout.vue';
+  import BasePageLayout from '@/components/unique/PageLayout.vue';
   import ProjectList from '@/components/ProjectList.vue';
   import ProjectListFilter from '@/components/ProjectListFilter.vue';
   import ProjectListSort from '@/components/ProjectListSort.vue';

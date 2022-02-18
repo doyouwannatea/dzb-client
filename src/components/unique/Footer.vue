@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <AppContainer size="lg" class="container">
+    <BaseContainer size="lg" class="container">
       <div>
         <RouterLink class="clear-link" :to="{ name: RouteNames.HOME }">
           <AppLogo
@@ -86,15 +86,15 @@
           </li>
         </ul>
       </section>
-    </AppContainer>
+    </BaseContainer>
   </footer>
 </template>
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import AppLogo from '../base/AppLogo.vue';
-  import AppContainer from '../base/AppContainer.vue';
-  import logoImage from '../../assets/icons/logo-white.svg';
+  import AppLogo from '../AppLogo.vue';
+  import BaseContainer from '../base/BaseContainer.vue';
+  import logoImage from '../../assets/icons/logo-white.svg?url';
   import { RouteNames } from '@/router/types/route-names';
 </script>
 

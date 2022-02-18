@@ -1,7 +1,7 @@
 <template>
   <PageLayout>
     <header class="header">
-      <AppBreadcrumbs
+      <BaseBreadcrumbs
         class="breadcrumbs"
         :breadcrumbs="[
           {
@@ -21,7 +21,7 @@
     </header>
     <ProjectDetails v-if="project && !loading && !error" :project="project" />
     <div class="d-flex justify-content-center mt-3">
-      <AppButton
+      <BaseButton
         variant="link"
         @click="
           hasHistory()
@@ -30,16 +30,16 @@
         "
       >
         назад к списку
-      </AppButton>
+      </BaseButton>
     </div>
   </PageLayout>
 </template>
 
 <script setup lang="ts">
   import { useRoute } from 'vue-router';
-  import PageLayout from '@/components/base/PageLayout.vue';
-  import AppBreadcrumbs from '@/components/base/AppBreadcrumbs.vue';
-  import AppButton from '@/components/base/AppButton.vue';
+  import PageLayout from '@/components/unique/PageLayout.vue';
+  import BaseBreadcrumbs from '@/components/base/BaseBreadcrumbs.vue';
+  import BaseButton from '@/components/base/BaseButton.vue';
   import ProjectDetails from '../ProjectDetails.vue';
   import useSingleProject from '@/hooks/useSingleProject';
   import { RouteNames } from '@/router/types/route-names';

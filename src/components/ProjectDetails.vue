@@ -46,14 +46,14 @@
       <ProjectPanelCol>
         <div>
           <h2 class="info-title">Статус проекта</h2>
-          <AppBadge class="badge mt-2">{{ project.state_name }}</AppBadge>
+          <BaseBadge class="badge mt-2">{{ project.state_name }}</BaseBadge>
           <h2 class="info-title mt-4">Кол-во участников</h2>
           <ProjectTeamCounter
             class="mt-2"
             :count="project.vacant_places"
             :total="project.places"
           />
-          <AppButton class="mt-4">Подать заявку</AppButton>
+          <BaseButton class="mt-4">Подать заявку</BaseButton>
         </div>
       </ProjectPanelCol>
     </ProjectPanel>
@@ -100,9 +100,9 @@
 
         <ProjectInformationListItem title="Теги" :bold="false" :wide="true">
           <span class="tags">
-            <AppTag v-for="tag in project.tags" :key="tag.id">
+            <BaseTag v-for="tag in project.tags" :key="tag.id">
               {{ tag.tag }}
-            </AppTag>
+            </BaseTag>
           </span>
         </ProjectInformationListItem>
       </ProjectInformationList>
@@ -112,10 +112,10 @@
 
 <script setup lang="ts">
   import ProjectPanel from './ProjectPanel.vue';
-  import AppTag from './base/AppTag.vue';
-  import AppBadge from './base/AppBadge.vue';
+  import BaseTag from './base/BaseTag.vue';
+  import BaseBadge from './base/BaseBadge.vue';
+  import BaseButton from './base/BaseButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
-  import AppButton from './base/AppButton.vue';
   import type { Project } from '@/models/Project';
   import { DifficultyText } from '@/models/enums/difficulty-text';
   import ProjectInformationList from './ProjectInformationList.vue';
