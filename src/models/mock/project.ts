@@ -1,4 +1,4 @@
-import { ProjectListResponse } from '@/api/ProjectApi/ProjectApiType';
+import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
 import { Project, State, Tag, Type } from '../Project';
 
 export const states: State[] = [

@@ -8,44 +8,52 @@ import {
   Tag,
   Type,
 } from '@/models/Project';
+import IProjectApi, { ProjectListResponse } from './IProjectApi';
 
-import ProjectApiType, { ProjectListResponse } from './ProjectApiType';
-
-export default class ProjectApi extends ProjectApiType {
-  private static BASE_URL = 'https://projects.tw1.ru';
-  private static ky = ky.create({
-    prefixUrl: ProjectApi.BASE_URL,
+export class ProjectApi extends IProjectApi {
+  private ky = ky.create({
+    prefixUrl: 'https://projects.tw1.ru',
     retry: { limit: 5 },
   });
 
-  static async getProjectList(page: number): Promise<ProjectListResponse> {
+  private constructor() {
+    super();
+  }
+
+  public static get instance() {
+    return this._instance || (this._instance = new this());
+  }
+
+  async getProjectList(page: number): Promise<ProjectListResponse> {
     return this.ky.get('api/projects', { searchParams: { page } }).json();
   }
 
-  static async getSingleProject(projectId: number): Promise<Project> {
+  async getSingleProject(projectId: number): Promise<Project> {
     return this.ky.get(`api/projects/${projectId}`).json();
   }
 
-  static async filterProjectList(
+  async filterProjectList(
     filters: ProjectFilters,
   ): Promise<ProjectListResponse> {
     const searchParams = encodeProjectFiltersToQueries(filters);
     return this.ky.get('api/projects/filter', { searchParams }).json();
   }
 
-  static async getAllTags(): Promise<Tag[]> {
+  async getAllTags(): Promise<Tag[]> {
     return this.ky.get('api/tags').json();
   }
 
-  static async getAllSupervisorNames(): Promise<SupervisorName[]> {
+  async getAllSupervisorNames(): Promise<SupervisorName[]> {
     return this.ky.get('api/supervisors/names').json();
   }
 
-  static async getAllProjectTypes(): Promise<Type[]> {
+  async getAllProjectTypes(): Promise<Type[]> {
     return this.ky.get('api/types').json();
   }
 
-  static async getAllProjectStates(): Promise<State[]> {
+  async getAllProjectStates(): Promise<State[]> {
     return this.ky.get('api/states').json();
   }
 }
+
+export default ProjectApi.instance;

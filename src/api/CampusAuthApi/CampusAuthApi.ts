@@ -1,24 +1,33 @@
 import ky from 'ky';
 import { Student } from '@/models/Student';
-import CampusAuthApiType from './CampusAuthApiType';
 import { AuthToken } from '@/models/CampusAuth';
+import ICampusAuthApi from './ICampusAuthApi';
 
-export default class CampusAuthApi extends CampusAuthApiType {
-  private static BASE_URL = 'https://projects.tw1.ru';
-  private static ky = ky.create({
-    prefixUrl: CampusAuthApi.BASE_URL,
+export class CampusAuthApi extends ICampusAuthApi {
+  ky = ky.create({
+    prefixUrl: 'https://projects.tw1.ru',
     retry: { limit: 5 },
   });
 
-  static async auth(): Promise<AuthToken> {
+  private constructor() {
+    super();
+  }
+
+  public static get instance() {
+    return this._instance || (this._instance = new this());
+  }
+
+  async auth(): Promise<AuthToken> {
     const authToken: AuthToken = await this.ky.get('campus_auth').json();
     this.setToken(authToken.token);
     return authToken;
   }
 
-  static async getStudentInfo(): Promise<Student> {
+  async getStudentInfo(): Promise<Student> {
     return this.ky
       .get('api/candidate', { headers: { 'x-api-key': this.getToken() } })
       .json();
   }
 }
+
+export default CampusAuthApi.instance;

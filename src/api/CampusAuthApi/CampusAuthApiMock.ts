@@ -3,17 +3,27 @@ import { AuthToken } from '@/models/CampusAuth';
 import { Student } from '@/models/Student';
 import { authToken } from '@/models/mock/campusAuth';
 import { student } from '@/models/mock/student';
-import CampusAuthApiType from './CampusAuthApiType';
+import ICampusAuthApi from './ICampusAuthApi';
 
-export default class CampusAuthApiMock extends CampusAuthApiType {
-  static async auth(): Promise<AuthToken> {
+export class CampusAuthApiMock extends ICampusAuthApi {
+  private constructor() {
+    super();
+  }
+
+  public static get instance() {
+    return this._instance || (this._instance = new this());
+  }
+
+  async auth(): Promise<AuthToken> {
     this.setToken(authToken.token);
     return delayRes(authToken, 300);
   }
 
-  static async getStudentInfo(): Promise<Student> {
+  async getStudentInfo(): Promise<Student> {
     const authToken = this.getToken();
     if (!authToken) throw new Error('Auth token required!');
     return delayRes(student, 300);
   }
 }
+
+export default CampusAuthApiMock.instance;

@@ -1,4 +1,4 @@
-import ProjectApiType, { ProjectListResponse } from './ProjectApiType';
+import { ProjectListResponse } from './IProjectApi';
 import type {
   Project,
   ProjectFilters,
@@ -15,19 +15,28 @@ import {
 } from '@/models/mock/project';
 import { delayRes } from '@/helpers/promise';
 import { supervisorNames } from '@/models/mock/supervisor';
+import IProjectApi from './IProjectApi';
 
-export default class ProjectApiMock extends ProjectApiType {
-  static async getProjectList(page: number): Promise<ProjectListResponse> {
+export class ProjectApiMock extends IProjectApi {
+  private constructor() {
+    super();
+  }
+
+  public static get instance() {
+    return this._instance || (this._instance = new this());
+  }
+
+  async getProjectList(page: number): Promise<ProjectListResponse> {
     return delayRes(projectListResponse, 400);
   }
 
-  static async filterProjectList(
+  async filterProjectList(
     filters: ProjectFilters,
   ): Promise<ProjectListResponse> {
     return delayRes(projectListResponse, 400);
   }
 
-  static async getSingleProject(projectId: number): Promise<Project> {
+  async getSingleProject(projectId: number): Promise<Project> {
     const project = projectListResponse.data.find(
       (singleProject) => singleProject.id === projectId,
     );
@@ -35,19 +44,21 @@ export default class ProjectApiMock extends ProjectApiType {
     return delayRes(project, 400);
   }
 
-  static async getAllTags(): Promise<Tag[]> {
+  async getAllTags(): Promise<Tag[]> {
     return delayRes(tags, 300);
   }
 
-  static async getAllSupervisorNames(): Promise<SupervisorName[]> {
+  async getAllSupervisorNames(): Promise<SupervisorName[]> {
     return delayRes(supervisorNames, 400);
   }
 
-  static async getAllProjectTypes(): Promise<Type[]> {
+  async getAllProjectTypes(): Promise<Type[]> {
     return delayRes(types, 300);
   }
 
-  static async getAllProjectStates(): Promise<State[]> {
+  async getAllProjectStates(): Promise<State[]> {
     return delayRes(states, 300);
   }
 }
+
+export default ProjectApiMock.instance;
