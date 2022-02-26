@@ -1,19 +1,27 @@
 <template>
   <ul v-if="props.isOpen" ref="root" class="dropdown">
     <li v-for="item in props.itemsList" :key="item.content" class="item">
+      <!-- if item is a link -->
       <template v-if="item.type === 'link'">
-        <template v-if="item.routeName">
-          <RouterLink class="action" :to="{ name: item.routeName }">
-            {{ item.content }}
-          </RouterLink>
-        </template>
-        <template v-else>
-          <a :href="item.href" class="action">{{ item.content }}</a>
-        </template>
+        <!-- if item is a ROUTER link -->
+        <RouterLink
+          v-if="item.routeName"
+          class="action"
+          :to="{ name: item.routeName }"
+        >
+          {{ item.content }}
+        </RouterLink>
+        <!-- if item is a COMMON link -->
+        <a v-else :href="item.href" class="action">{{ item.content }}</a>
       </template>
-      <template v-if="item.type === 'button'">
-        <button class="action" @click="item.action">{{ item.content }}</button>
-      </template>
+      <!-- if item is a button -->
+      <button
+        v-else-if="item.type === 'button'"
+        class="action"
+        @click="item.action"
+      >
+        {{ item.content }}
+      </button>
     </li>
   </ul>
 </template>
@@ -33,22 +41,25 @@
         routeName?: RouteNames;
       }
     | { content: string; type: 'button'; action: () => void };
-
-  const root = ref(null);
-  const props = withDefaults(
-    defineProps<{
-      isOpen: boolean;
-      itemsList: DropdownItem[];
-      hadleNode?: HTMLElement | null;
-    }>(),
-    { isOpen: false, hadleNode: null, itemsList: () => [] },
-  );
-  const emit = defineEmits<{
+  type DropdownProps = {
+    isOpen: boolean;
+    itemsList: DropdownItem[];
+    handleNode?: HTMLElement;
+  };
+  type DropdownEmits = {
     (e: 'close'): void;
-  }>();
+  };
+
+  const props = withDefaults(defineProps<DropdownProps>(), {
+    isOpen: false,
+    handleNode: undefined,
+    itemsList: () => [],
+  });
+  const emit = defineEmits<DropdownEmits>();
+  const root = ref(null);
 
   onClickOutside(root, (evt) => {
-    if (isPartOfNode(evt.target as HTMLElement, props.hadleNode)) return;
+    if (isPartOfNode(evt.target as HTMLElement, props.handleNode)) return;
     emit('close');
   });
 </script>
