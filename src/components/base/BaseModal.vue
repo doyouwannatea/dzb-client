@@ -30,17 +30,12 @@
   import { UseFocusTrap } from '@vueuse/integrations/useFocusTrap/component';
   import { disableScroll, enableScroll } from '@/helpers/dom';
 
-  type Props = {
-    isShow: boolean;
-  };
-  type Emits = {
-    (e: 'close'): void;
-  };
+  type Props = { isShow: boolean };
+  type Emits = { (e: 'close'): void };
 
   const emit = defineEmits<Emits>();
-  const props = withDefaults(defineProps<Props>(), {
-    isShow: false,
-  });
+  const props = withDefaults(defineProps<Props>(), { isShow: false });
+
   const modalRef = ref<HTMLElement | null>(null);
 
   onClickOutside(modalRef, () => emit('close'));
@@ -83,6 +78,7 @@
   /* common content styles */
 
   .modal-background {
+    z-index: 100000;
     position: fixed;
     left: 0;
     top: 0;

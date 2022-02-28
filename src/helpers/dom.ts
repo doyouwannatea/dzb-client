@@ -24,11 +24,17 @@ export function getScrollBarWidth(): number {
 }
 
 export function disableScroll() {
+  if (isBodyScroll()) {
+    document.body.style.paddingRight = getScrollBarWidth() + 'px';
+  }
   document.body.style.overflow = 'hidden';
-  document.body.style.paddingRight = getScrollBarWidth() + 'px';
 }
 
 export function enableScroll() {
   document.body.style.overflow = '';
   document.body.style.paddingRight = '';
+}
+
+export function isBodyScroll() {
+  return window.innerWidth > document.body.clientWidth;
 }
