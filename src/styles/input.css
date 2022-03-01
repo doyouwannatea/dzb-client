@@ -19,6 +19,12 @@
   outline: none;
 }
 
+label[data-disabled='true'],
+.input:disabled {
+  color: var(--gray-color-2);
+  cursor: default;
+}
+
 .input:focus-visible {
   outline: 1px solid black;
 }
@@ -37,7 +43,6 @@
   width: 1.25rem;
   height: 1.25rem;
   border-radius: 0.1875rem;
-  cursor: pointer;
   position: relative;
 }
 

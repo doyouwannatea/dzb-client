@@ -1,23 +1,30 @@
 <template>
   <UseFocusTrap v-if="props.isShow">
     <div class="modal-background">
-      <section ref="modalRef" class="modal">
-        <!-- close btn -->
+      <section ref="modalRef" :class="['modal', props.size]">
+        <!-- CLOSE BUTTON -->
         <button class="close-btn" @click="emit('close')">
           <img :src="closeIconUrl" alt="close button" class="close-icon" />
         </button>
-        <!-- header -->
+        <!-- CLOSE BUTTON -->
+
+        <!-- HEADER -->
         <header v-if="$slots['header']" class="modal-header">
           <slot name="header"></slot>
         </header>
-        <!-- content -->
+        <!-- HEADER -->
+
+        <!-- MAIN CONTENT -->
         <div class="modal-content">
           <slot name="default"></slot>
         </div>
-        <!-- actions -->
+        <!-- MAIN CONTENT -->
+
+        <!-- ACTIONS -->
         <footer v-if="$slots['actions']" class="modal-actions">
           <slot name="actions"></slot>
         </footer>
+        <!-- ACTIONS -->
       </section>
     </div>
   </UseFocusTrap>
@@ -30,11 +37,14 @@
   import { UseFocusTrap } from '@vueuse/integrations/useFocusTrap/component';
   import { disableScroll, enableScroll } from '@/helpers/dom';
 
-  type Props = { isShow: boolean };
+  type Props = { isShow: boolean; size?: 's' | 'm' };
   type Emits = { (e: 'close'): void };
 
   const emit = defineEmits<Emits>();
-  const props = withDefaults(defineProps<Props>(), { isShow: false });
+  const props = withDefaults(defineProps<Props>(), {
+    isShow: false,
+    size: 's',
+  });
 
   const modalRef = ref<HTMLElement | null>(null);
 
@@ -79,6 +89,7 @@
 
   .modal-background {
     z-index: 100000;
+    overflow: auto;
     position: fixed;
     left: 0;
     top: 0;
@@ -102,7 +113,14 @@
     padding-top: var(--top-p);
     padding-bottom: var(--bottom-p);
     width: 100%;
+  }
+
+  .modal.s {
     max-width: 43.125rem;
+  }
+
+  .modal.m {
+    max-width: 60rem;
   }
 
   .close-icon {
