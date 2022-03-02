@@ -1,15 +1,10 @@
 <template>
   <form class="search-form" @submit.prevent="debouncedSubmit">
-    <input
+    <BaseInput
       v-model="term"
-      class="input search-input"
-      type="text"
-      name="search"
+      :icon="searchIconUrl"
       placeholder="Введите название проекта для поиска..."
-      @input="
-        debouncedInput();
-        setLoading();
-      "
+      class="search-input"
     />
   </form>
 </template>
@@ -18,19 +13,21 @@
   import { ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { debounce } from 'lodash';
+  import searchIconUrl from '@/assets/icons/search.svg?url';
   import { RouteNames } from '@/router/types/route-names';
   import { useProjectsStore } from '@/stores/projects';
+  import BaseInput from './base/BaseInput.vue';
 
   const router = useRouter();
   const store = useProjectsStore();
-  const term = ref('');
+  const term = ref(store.filters.title || '');
 
   watch(
-    () => store.filters.title,
-    (title) => {
-      term.value = title || '';
+    () => term.value,
+    () => {
+      setLoading();
+      debouncedInput();
     },
-    { immediate: true },
   );
 
   const setLoading = () => (store.loading = true);
@@ -62,10 +59,6 @@
   .search-input {
     height: 3.5625rem;
     padding-left: 1.0625rem;
-    padding-right: 4.25rem;
-    background: url('../assets/icons/search.svg') calc(100% - 1.0625rem) center /
-      2.125rem no-repeat #ffffff;
-    line-height: 1.4375rem;
     font-weight: 400;
   }
 </style>

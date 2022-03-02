@@ -6,19 +6,15 @@
         <span>Статус проекта</span>
       </template>
       <template #content>
-        <label
+        <BaseCheckbox
           v-for="state in allStates.data.value"
           :key="state.id"
+          v-model="states"
+          :value="state.id"
           class="label"
         >
-          <input
-            v-model="states"
-            class="checkbox"
-            type="checkbox"
-            :value="state.id"
-          />
           {{ state.state }}
-        </label>
+        </BaseCheckbox>
         <div v-if="allStates.error.value" class="mt-2">
           {{ allStates.error.value }}
         </div>
@@ -33,20 +29,15 @@
         <span>Тип проекта</span>
       </template>
       <template #content>
-        <label
+        <BaseRadioButton
           v-for="projectType in allTypes.data.value"
           :key="projectType.id"
+          v-model="type"
+          :value="projectType.id"
           class="label"
         >
-          <input
-            v-model="type"
-            class="radio"
-            type="radio"
-            :value="projectType.id"
-            name="project-type"
-          />
           {{ projectType.type }}
-        </label>
+        </BaseRadioButton>
         <div v-if="allTypes.error.value" class="mt-2">
           {{ allTypes.error.value }}
         </div>
@@ -104,8 +95,8 @@
       <template #title>Сроки реализации</template>
       <template #content>
         <div class="date">
-          <input v-model="dateStart" class="input" type="date" />
-          <input v-model="dateEnd" class="input" type="date" />
+          <BaseInput v-model="dateStart" class="input" type="date" />
+          <BaseInput v-model="dateEnd" class="input" type="date" />
         </div>
       </template>
     </BaseAccordion>
@@ -115,33 +106,15 @@
     <BaseAccordion>
       <template #title>Уровни сложности</template>
       <template #content>
-        <label class="label">
-          <input
-            v-model="difficulty"
-            class="checkbox"
-            type="checkbox"
-            value="1"
-          />
+        <BaseCheckbox v-model="difficulty" class="label" value="1">
           Легко
-        </label>
-        <label class="label">
-          <input
-            v-model="difficulty"
-            class="checkbox"
-            type="checkbox"
-            value="2"
-          />
+        </BaseCheckbox>
+        <BaseCheckbox v-model="difficulty" class="label" value="2">
           Средне
-        </label>
-        <label class="label">
-          <input
-            v-model="difficulty"
-            class="checkbox"
-            type="checkbox"
-            value="3"
-          />
+        </BaseCheckbox>
+        <BaseCheckbox v-model="difficulty" class="label" value="3">
           Сложно
-        </label>
+        </BaseCheckbox>
       </template>
     </BaseAccordion>
 
@@ -173,6 +146,9 @@
   import { RouteNames } from '@/router/types/route-names';
   import { encodeProjectFiltersToQueries } from '@/helpers/query';
   import { useProjectsStore } from '@/stores/projects';
+  import BaseCheckbox from './base/BaseCheckbox.vue';
+  import BaseRadioButton from './base/BaseRadioButton.vue';
+  import BaseInput from './base/BaseInput.vue';
 
   const store = useProjectsStore();
   const router = useRouter();
@@ -184,9 +160,9 @@
   const supervisors = ref<number[]>([]);
   const type = ref<number>(0);
   const states = ref<number[]>([]);
-  const difficulty = ref<number[]>([]);
-  const dateStart = ref<string | null>(null);
-  const dateEnd = ref<string | null>(null);
+  const difficulty = ref<string[]>([]);
+  const dateStart = ref<string | undefined>(undefined);
+  const dateEnd = ref<string | undefined>(undefined);
 
   // наблюдаем за состоянием хранилища
   // обновляем локальное состояние если что-то поменялось
@@ -197,13 +173,13 @@
       supervisors.value = filters.supervisor || [];
       type.value = filters.type ? filters.type[0] : 0;
       states.value = filters.state || [];
-      difficulty.value = filters.difficulty || [];
+      difficulty.value = filters.difficulty?.map(String) || [];
       dateStart.value = filters.date_start
         ? toJSONLocal(new Date(filters.date_start))
-        : null;
+        : undefined;
       dateEnd.value = filters.date_end
         ? toJSONLocal(new Date(filters.date_end))
-        : null;
+        : undefined;
     },
     { immediate: true },
   );
@@ -231,7 +207,7 @@
       query: {
         ...encodeProjectFiltersToQueries({
           tags: tags.value,
-          difficulty: difficulty.value,
+          difficulty: difficulty.value.map(Number),
           state: states.value,
           supervisor: supervisors.value,
           type: type.value ? [type.value] : [],
@@ -246,6 +222,10 @@
 </script>
 
 <style scoped>
+  .input {
+    background-color: #f9f9f9;
+  }
+
   .divider {
     width: 100%;
     height: 1px;
@@ -255,22 +235,6 @@
   .filters {
     padding-top: 0.625rem;
     padding-bottom: 0.6875rem;
-  }
-
-  .label {
-    font-weight: 400;
-    font-size: 1.125rem;
-    line-height: normal;
-    display: flex;
-    align-items: center;
-
-    color: var(--text-color);
-    gap: 0.9375rem;
-  }
-
-  .label:hover {
-    color: var(--accent-color-1);
-    cursor: pointer;
   }
 
   .label:not(:last-child) {
