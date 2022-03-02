@@ -4,12 +4,14 @@
       <button class="ring-btn">
         <RingIcon />
       </button>
-      <div ref="handleMenuNode" class="user" @click="toggleMenu">
-        <UserPicture />
-        <span class="username">{{ authStore.userData.fio }}</span>
-        <button :class="['menu-btn', { active: isMenuOpen }]">
-          <ArrowIcon />
-        </button>
+      <div class="dropdown-container">
+        <div ref="handleMenuNode" class="user" @click="toggleMenu">
+          <UserPicture />
+          <span class="username">{{ authStore.userData.fio }}</span>
+          <button :class="['menu-btn', { active: isMenuOpen }]">
+            <ArrowIcon />
+          </button>
+        </div>
         <HeaderUserDropdown
           :handle-node="handleMenuNode"
           :is-open="isMenuOpen"
@@ -76,10 +78,14 @@
   }
 
   .user {
-    position: relative;
     display: flex;
     align-items: center;
     gap: 0.8125rem;
+    cursor: default;
+  }
+
+  .dropdown-container {
+    position: relative;
   }
 
   .username {
@@ -87,5 +93,6 @@
     font-size: 1.125rem;
     line-height: 1.4375em;
     color: var(--accent-color-1);
+    user-select: none;
   }
 </style>
