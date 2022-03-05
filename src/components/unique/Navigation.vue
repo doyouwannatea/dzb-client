@@ -1,19 +1,10 @@
 <template>
   <nav class="nav">
     <ul class="nav-list">
-      <template
-        v-for="link in $router.options.routes"
-        :key="link.name || link.path"
-      >
-        <li
-          v-if="link.meta?.nav"
-          :class="[
-            'nav-item',
-            { active: link.meta.nav === $route.matched[0].meta.nav },
-          ]"
-        >
+      <template v-for="link in $router.options.routes" :key="link.name">
+        <li v-if="link.meta?.nav" class="nav-item">
           <RouterLink class="nav-link" :to="{ name: link.name }">
-            {{ link.meta.nav }}
+            {{ link.meta.title }}
           </RouterLink>
         </li>
       </template>
@@ -36,15 +27,6 @@
 
   .nav-item {
     height: 100%;
-    border-bottom: 0.25em solid transparent;
-  }
-
-  .nav-item.active {
-    border-bottom: 0.25em solid var(--accent-color-2);
-  }
-
-  .nav-item:hover {
-    border-bottom-color: var(--accent-color-2);
   }
 
   .nav-link {
@@ -62,5 +44,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    border-bottom: 0.25rem solid transparent;
+  }
+
+  .nav-link.router-link-exact-active {
+    border-bottom-color: var(--accent-color-2);
+  }
+
+  .nav-link:hover {
+    border-bottom-color: var(--accent-color-2);
   }
 </style>

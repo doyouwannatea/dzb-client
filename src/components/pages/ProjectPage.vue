@@ -6,7 +6,7 @@
         :breadcrumbs="[
           {
             title: 'Все проекты',
-            back: true,
+            to: { name: RouteNames.HOME },
           },
           {
             title: project?.title || '',
@@ -23,11 +23,7 @@
     <div class="d-flex justify-content-center mt-3">
       <BaseButton
         variant="link"
-        @click="
-          hasHistory()
-            ? $router.back()
-            : $router.push({ name: RouteNames.HOME })
-        "
+        @click="$router.push({ name: RouteNames.HOME })"
       >
         назад к списку
       </BaseButton>

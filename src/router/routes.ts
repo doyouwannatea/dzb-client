@@ -1,6 +1,8 @@
 import { RouteRecordRaw } from 'vue-router';
 import { RouteNames } from './types/route-names';
 import { validatePage } from './guards/validatePage';
+import ProjectDetails from '@/components/ProjectDetails.vue';
+import ProjectRequestsList from '@/components/ProjectRequestsList.vue';
 
 const HomePage = () => import('../components/pages/HomePage.vue');
 const ProjectPage = () => import('../components/pages/ProjectPage.vue');
@@ -11,7 +13,8 @@ export const routes: RouteRecordRaw[] = [
     component: HomePage,
     name: RouteNames.HOME,
     meta: {
-      nav: 'Все проекты',
+      nav: true,
+      title: 'Все проекты',
     },
     beforeEnter: [validatePage],
   },
@@ -25,7 +28,8 @@ export const routes: RouteRecordRaw[] = [
     redirect: { name: RouteNames.HOME },
     name: RouteNames.FAQ,
     meta: {
-      nav: 'вопрос-ответ',
+      nav: true,
+      title: 'вопрос-ответ',
     },
   },
   {
@@ -33,7 +37,8 @@ export const routes: RouteRecordRaw[] = [
     name: RouteNames.CONTACTS,
     redirect: { name: RouteNames.HOME },
     meta: {
-      nav: 'контакты',
+      nav: true,
+      title: 'контакты',
     },
   },
 ];

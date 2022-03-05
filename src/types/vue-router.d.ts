@@ -2,6 +2,7 @@ import 'vue-router';
 
 declare module 'vue-router' {
   interface RouteMeta {
-    nav?: string;
+    nav?: boolean;
+    title: string;
   }
 }

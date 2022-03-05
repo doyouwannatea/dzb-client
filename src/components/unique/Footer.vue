@@ -25,13 +25,10 @@
 
       <nav>
         <ul class="nav-list">
-          <template
-            v-for="link in $router.options.routes"
-            :key="link.name || link.path"
-          >
+          <template v-for="link in $router.options.routes" :key="link.name">
             <li v-if="link.meta?.nav">
               <RouterLink class="title link nav-link" :to="{ name: link.name }">
-                {{ link.meta.nav }}
+                {{ link.meta.title }}
               </RouterLink>
             </li>
           </template>
