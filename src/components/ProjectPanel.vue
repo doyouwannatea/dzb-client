@@ -7,13 +7,10 @@
 </template>
 
 <script setup lang="ts">
-  import type { PropType } from 'vue';
+  import { withDefaults } from 'vue';
 
-  defineProps({
-    cols: {
-      type: Number as PropType<1 | 2 | 3>,
-      default: 1,
-    },
+  withDefaults(defineProps<{ cols: 1 | 2 | 3 }>(), {
+    cols: 1,
   });
 </script>
 
@@ -23,7 +20,7 @@
     box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
     border-radius: 0.625rem;
     padding: 2rem;
-    margin-top: 0.9375rem;
+    margin-bottom: 0.9375rem;
   }
 
   .row {
@@ -37,5 +34,11 @@
 
   .row.row-3 {
     grid-template-columns: 4fr 4fr 2fr;
+  }
+
+  .project-panel:deep(.row > *:not(:last-child)) {
+    padding-right: 1.875rem;
+    margin-right: 1.875rem;
+    border-right: 1px solid var(--gray-color-1);
   }
 </style>

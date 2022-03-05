@@ -8,11 +8,19 @@
 </template>
 
 <script setup lang="ts">
-  defineProps({
-    title: { type: String, required: true },
-    bold: { type: Boolean, default: true },
-    wide: Boolean,
-  });
+  import { withDefaults } from 'vue';
+
+  withDefaults(
+    defineProps<{
+      title: string;
+      bold?: boolean;
+      wide?: boolean;
+    }>(),
+    {
+      bold: true,
+      wide: false,
+    },
+  );
 </script>
 
 <style scoped>

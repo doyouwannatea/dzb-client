@@ -1,111 +1,94 @@
 <template>
-  <section>
+  <section v-if="project && !loading && !error">
     <!-- Panel -->
     <ProjectPanel :cols="3">
-      <!-- Column -->
-      <ProjectPanelCol>
-        <!-- Information list -->
-        <ProjectInformationList
-          :items="[
-            {
-              title: 'Руководитель проекта',
-              value: project.supervisor_name,
-            },
-            {
-              title: 'Заказчик',
-              value: project.customer,
-            },
-            {
-              title: 'Сроки реализации',
-              value: `${project.date_start} - ${project.date_end}`,
-            },
-            {
-              title: 'Сложность',
-              value: DifficultyText[project.difficulty],
-            },
-          ]"
+      <!-- Information list -->
+      <ProjectDetailsList
+        :items="[
+          {
+            title: 'Руководитель проекта',
+            content: project.supervisor_name,
+          },
+          {
+            title: 'Заказчик',
+            content: project.customer,
+          },
+          {
+            title: 'Сроки реализации',
+            content: `${project.date_start} - ${project.date_end}`,
+          },
+          {
+            title: 'Сложность',
+            content: DifficultyText[project.difficulty],
+          },
+        ]"
+      />
+      <!-- Information list -->
+      <ProjectDetailsList
+        :items="[
+          {
+            title: 'Тип проекта',
+            content: project.type_name,
+          },
+          {
+            title: 'Цель проекта',
+            content: project.goal,
+          },
+        ]"
+      />
+
+      <div>
+        <h2 class="info-title">Статус проекта</h2>
+        <BaseBadge class="badge mt-2">{{ project.state_name }}</BaseBadge>
+        <h2 class="info-title mt-4">Кол-во участников</h2>
+        <ProjectTeamCounter
+          class="mt-2"
+          :count="project.vacant_places"
+          :total="project.places"
         />
-      </ProjectPanelCol>
-      <!-- Column -->
-      <ProjectPanelCol>
-        <!-- Information list -->
-        <ProjectInformationList
-          :items="[
-            {
-              title: 'Тип проекта',
-              value: project.type_name,
-            },
-            {
-              title: 'Цель проекта',
-              value: project.goal,
-            },
-          ]"
-        />
-      </ProjectPanelCol>
-      <!-- Column -->
-      <ProjectPanelCol>
-        <div>
-          <h2 class="info-title">Статус проекта</h2>
-          <BaseBadge class="badge mt-2">{{ project.state_name }}</BaseBadge>
-          <h2 class="info-title mt-4">Кол-во участников</h2>
-          <ProjectTeamCounter
-            class="mt-2"
-            :count="project.vacant_places"
-            :total="project.places"
-          />
-          <BaseButton class="mt-4">Подать заявку</BaseButton>
-        </div>
-      </ProjectPanelCol>
+        <BaseButton class="mt-4">Подать заявку</BaseButton>
+      </div>
     </ProjectPanel>
 
     <!-- Panel -->
     <ProjectPanel :cols="2">
-      <!-- Column -->
-      <ProjectPanelCol>
-        <!-- Information list -->
-        <ProjectInformationList
-          :items="[
-            {
-              title: 'Ожидаемый результат',
-              value: project.expected_result,
-            },
-          ]"
-        />
-      </ProjectPanelCol>
-      <!-- Column -->
-      <ProjectPanelCol>
-        <!-- Information list -->
-        <ProjectInformationList
-          :items="[
-            {
-              title: 'Требования к участникам',
-              value: project.requirements,
-            },
-          ]"
-        />
-      </ProjectPanelCol>
+      <!-- Information list -->
+      <ProjectDetailsList
+        :items="[
+          {
+            title: 'Ожидаемый результат',
+            content: project.expected_result,
+          },
+        ]"
+      />
+
+      <!-- Information list -->
+      <ProjectDetailsList
+        :items="[
+          {
+            title: 'Требования к участникам',
+            content: project.requirements,
+          },
+        ]"
+      />
     </ProjectPanel>
 
     <!-- Panel -->
     <ProjectPanel :cols="1">
       <!-- Information list -->
-      <ProjectInformationList>
-        <ProjectInformationListItem
-          title="Идея проекта"
-          :bold="false"
-          :wide="true"
-        >
+      <ProjectDetailsList>
+        <ProjectDetailsListItem title="Идея проекта" :bold="false" :wide="true">
           {{ project.idea }}
-        </ProjectInformationListItem>
+        </ProjectDetailsListItem>
 
-        <ProjectInformationListItem title="Теги" :bold="false" :wide="true">
+        <ProjectDetailsListItem title="Теги" :bold="false" :wide="true">
           <span class="tags">
             <BaseTag v-for="tag in project.tags" :key="tag.id">
               {{ tag.tag }}
             </BaseTag>
           </span>
-        </ProjectInformationListItem>
-      </ProjectInformationList>
+        </ProjectDetailsListItem>
+      </ProjectDetailsList>
     </ProjectPanel>
   </section>
 </template>
