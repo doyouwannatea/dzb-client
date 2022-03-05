@@ -35,5 +35,18 @@ export const useProjectsStore = defineStore('projects', {
         this.loading = false;
       }
     },
+    async getSingleProject(projectId: number) {
+      this.openedProject = undefined;
+      this.loading = true;
+      this.error = '';
+      try {
+        const project = await ProjectApi.getSingleProject(projectId);
+        this.openedProject = project;
+      } catch (error) {
+        this.error = String(error);
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 });

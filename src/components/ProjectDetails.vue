@@ -99,13 +99,17 @@
   import BaseBadge from './base/BaseBadge.vue';
   import BaseButton from './base/BaseButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
-  import type { Project } from '@/models/Project';
   import { DifficultyText } from '@/models/enums/difficulty-text';
-  import ProjectInformationList from './ProjectInformationList.vue';
-  import ProjectInformationListItem from './ProjectInformationListItem.vue';
-  import ProjectPanelCol from './ProjectPanelCol.vue';
+  import ProjectDetailsList from './ProjectDetailsList.vue';
+  import ProjectDetailsListItem from './ProjectDetailsListItem.vue';
+  import { useProjectsStore } from '@/stores/projects';
+  import { storeToRefs } from 'pinia';
 
-  defineProps<{ project: Project }>();
+  const {
+    openedProject: project,
+    loading,
+    error,
+  } = storeToRefs(useProjectsStore());
 </script>
 
 <style scoped>

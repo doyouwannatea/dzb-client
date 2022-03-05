@@ -19,7 +19,8 @@
         <span v-if="project">{{ project.title }}</span>
       </h1>
     </header>
-    <ProjectDetails v-if="project && !loading && !error" :project="project" />
+    <ProjectTabs v-if="!error && !loading" />
+    <RouterView></RouterView>
     <div class="d-flex justify-content-center mt-3">
       <BaseButton
         variant="link"
@@ -36,18 +37,20 @@
   import PageLayout from '@/components/unique/PageLayout.vue';
   import BaseBreadcrumbs from '@/components/base/BaseBreadcrumbs.vue';
   import BaseButton from '@/components/base/BaseButton.vue';
-  import ProjectDetails from '../ProjectDetails.vue';
-  import useSingleProject from '@/hooks/useSingleProject';
   import { RouteNames } from '@/router/types/route-names';
-  import { hasHistory } from '@/helpers/history';
+  import { RouterView } from 'vue-router';
+  import { onBeforeMount } from 'vue';
+  import { useProjectsStore } from '@/stores/projects';
+  import { storeToRefs } from 'pinia';
+  import ProjectTabs from '../ProjectTabs.vue';
 
   const route = useRoute();
+  const projectsStore = useProjectsStore();
+  const { loading, error, openedProject: project } = storeToRefs(projectsStore);
 
-  const {
-    error,
-    loading,
-    data: project,
-  } = useSingleProject(Number(route.params.id));
+  onBeforeMount(() => {
+    projectsStore.getSingleProject(Number(route.params.id));
+  });
 </script>
 
 <style scoped>

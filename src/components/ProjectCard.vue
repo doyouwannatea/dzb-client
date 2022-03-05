@@ -52,7 +52,7 @@
         <BaseButton variant="outlined">Подать заявку</BaseButton>
         <BaseButton
           is="router-link"
-          :to="{ name: RouteNames.PROJECT, params: { id: project.id } }"
+          :to="{ name: RouteNames.PROJECT_DETAILS, params: { id: project.id } }"
         >
           Подробнее
         </BaseButton>

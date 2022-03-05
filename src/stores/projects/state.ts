@@ -21,9 +21,11 @@ interface State {
   error: string;
   filters: ProjectFilters;
   filterOptions: ProjectFilterOptions;
+  openedProject?: Project;
 }
 
 export const state = (): State => ({
+  openedProject: undefined,
   projectList: undefined,
   projectCount: 0,
   loading: false,

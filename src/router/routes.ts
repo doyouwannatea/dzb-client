@@ -22,6 +22,24 @@ export const routes: RouteRecordRaw[] = [
     path: '/project/:id',
     component: ProjectPage,
     name: RouteNames.PROJECT,
+    children: [
+      {
+        path: '',
+        name: RouteNames.PROJECT_DETAILS,
+        component: ProjectDetails,
+        meta: {
+          title: 'О проекте',
+        },
+      },
+      {
+        path: 'requests',
+        name: RouteNames.PROJECT_REQUESTS_LIST,
+        component: ProjectRequestsList,
+        meta: {
+          title: 'Список заявок',
+        },
+      },
+    ],
   },
   {
     path: '/faq',
