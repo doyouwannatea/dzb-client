@@ -5,7 +5,7 @@ import ICampusAuthApi from './ICampusAuthApi';
 
 export class CampusAuthApi extends ICampusAuthApi {
   ky = ky.create({
-    prefixUrl: 'https://projects.tw1.ru',
+    prefixUrl: 'http://824781-ci84782.tmweb.ru',
     retry: { limit: 5 },
   });
 

@@ -12,7 +12,7 @@ import IProjectApi, { ProjectListResponse } from './IProjectApi';
 
 export class ProjectApi extends IProjectApi {
   private ky = ky.create({
-    prefixUrl: 'https://projects.tw1.ru',
+    prefixUrl: 'http://824781-ci84782.tmweb.ru',
     retry: { limit: 5 },
   });
 
