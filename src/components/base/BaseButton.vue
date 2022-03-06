@@ -1,65 +1,95 @@
 <template>
   <component
-    :is="is"
-    :disabled="disabled"
-    :class="['btn', variant, { 'full-width': fullWidth }]"
+    :is="props.is"
+    :disabled="props.disabled"
+    :class="[
+      'btn',
+      props.variant,
+      props.case,
+      { 'full-width': props.fullWidth },
+    ]"
   >
     <slot></slot>
   </component>
 </template>
 
 <script setup lang="ts">
-  import type { PropType } from '@vue/runtime-core';
+  import { withDefaults } from '@vue/runtime-core';
 
-  type Variant = 'outlined' | 'link' | 'inline-link';
+  type Variant = 'outlined' | 'link' | 'inline-link' | 'primary';
   type Is = 'button' | 'router-link';
+  type Case = 'uppercase' | 'lowercase';
 
-  defineProps({
-    variant: { type: String as PropType<Variant>, default: '' as Variant },
-    is: { type: String as PropType<Is>, default: 'button' as Is },
-    disabled: Boolean,
-    fullWidth: Boolean,
+  type Props = {
+    variant?: Variant;
+    is?: Is;
+    disabled?: boolean;
+    fullWidth?: boolean;
+    case?: Case;
+  };
+
+  const props = withDefaults(defineProps<Props>(), {
+    is: 'button',
+    variant: 'primary',
+    disabled: false,
+    fullWidth: false,
+    case: undefined,
   });
 </script>
 
 <style scoped>
   .btn {
-    display: block;
+    --hover-color: #2248bb;
+    --active-color: #3e8bff;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8125rem;
+    color: #ffffff;
     padding: 1rem 2rem;
     font-size: 1rem;
+    font-weight: 600;
     border: 0;
-    border-radius: 0.3125rem;
-    background-color: var(--accent-color-1);
-    color: #ffffff;
     line-height: normal;
-    text-transform: uppercase;
+    border-radius: 0.3125rem;
     white-space: nowrap;
     cursor: pointer;
+    background-color: transparent;
     transition: background-color 20ms ease, color 20ms ease;
     text-decoration: none;
   }
 
-  .btn.wrapper {
-    padding: 0;
+  .btn:disabled {
+    pointer-events: none;
   }
 
   .full-width {
     width: 100%;
   }
 
-  .btn:hover {
-    background-color: #2248bb;
+  .uppercase {
+    text-transform: uppercase;
+  }
+  .lowercase {
+    text-transform: lowercase;
+  }
+
+  .primary {
+    background-color: var(--accent-color-1);
+  }
+
+  .primary:hover {
+    background-color: var(--hover-color);
     color: #fff;
   }
 
-  .btn:active {
-    background-color: #3e8bff;
+  .primary:active {
+    background-color: var(--active-color);
     color: #fff;
   }
 
-  .btn:disabled {
+  .primary:disabled {
     background-color: var(--gray-color-2);
-    pointer-events: none;
   }
 
   .outlined {
@@ -69,11 +99,15 @@
   }
 
   .outlined:hover {
-    border-color: #2248bb;
+    border-color: var(--hover-color);
+    background-color: var(--hover-color);
+    color: #fff;
   }
 
   .outlined:active {
-    border-color: #3e8bff;
+    border-color: var(--active-color);
+    background-color: var(--active-color);
+    color: #fff;
   }
 
   .outlined:disabled {
@@ -83,14 +117,9 @@
   }
 
   .inline-link {
-    display: inline-block;
     padding: 0;
     font-size: 0.875rem;
-    background-color: transparent;
     border-radius: 0;
-    line-height: 1.125rem;
-    text-align: initial;
-    text-transform: initial;
     color: var(--accent-color-1);
   }
 
@@ -98,23 +127,19 @@
   .link:hover {
     text-decoration: underline;
     color: var(--accent-color-1);
-    background-color: transparent;
   }
 
   .inline-link:active,
   .link:active {
-    color: #3e8bff;
-    background-color: transparent;
+    color: var(--active-color);
   }
 
   .inline-link:disabled,
   .link:disabled {
-    background-color: transparent;
     color: var(--gray-color-2);
   }
 
   .link {
-    background-color: transparent;
     color: var(--accent-color-1);
   }
 </style>
