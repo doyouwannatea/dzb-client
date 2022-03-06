@@ -1,6 +1,6 @@
 deployURL="https://github.com/doyouwannatea/dzb-client.git"
 
-npm run build
+vite build --mode gh-pages
 cd dist
 cp index.html 404.html
 git init 

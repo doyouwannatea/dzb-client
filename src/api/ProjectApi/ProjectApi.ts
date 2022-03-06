@@ -12,7 +12,7 @@ import IProjectApi, { ProjectListResponse } from './IProjectApi';
 
 export class ProjectApi extends IProjectApi {
   private ky = ky.create({
-    prefixUrl: 'http://824781-ci84782.tmweb.ru',
+    prefixUrl: import.meta.env.VITE_PROJECT_API_URL,
     retry: { limit: 5 },
   });
 
