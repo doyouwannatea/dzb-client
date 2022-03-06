@@ -22,10 +22,16 @@
 
     <template v-else>
       <BaseButton
-        variant="outlined"
+        class="auth-btn"
+        variant="link"
         :disabled="authStore.loading"
         @click="authStore.auth()"
       >
+        <img
+          :src="authStore.loading ? userPictureGrayUrl : userPictureUrl"
+          alt=""
+          class="user-icon"
+        />
         Войти
       </BaseButton>
     </template>
@@ -33,13 +39,14 @@
 </template>
 
 <script setup lang="ts">
-  import ArrowIcon from '@/assets/icons/dropdown-arrow.svg?component';
-  import { useAuthStore } from '@/stores/auth';
   import { ref } from 'vue';
-  import ringIconUrl from '../assets/icons/ring.svg?url';
-  import userPictureUrl from '../assets/icons/user-picture.svg?url';
+  import { useAuthStore } from '@/stores/auth';
   import BaseButton from './base/BaseButton.vue';
   import HeaderUserDropdown from './HeaderUserDropdown.vue';
+  import ArrowIcon from '@/assets/icons/dropdown-arrow.svg?component';
+  import ringIconUrl from '../assets/icons/ring.svg?url';
+  import userPictureUrl from '../assets/icons/user-picture.svg?url';
+  import userPictureGrayUrl from '../assets/icons/user-picture-gray.svg?url';
 
   const authStore = useAuthStore();
   const handleMenuNode = ref(undefined);
@@ -49,6 +56,10 @@
 </script>
 
 <style scoped>
+  .auth-btn {
+    font-size: 1.125rem;
+  }
+
   .icon {
     width: 2rem;
     height: 2rem;
