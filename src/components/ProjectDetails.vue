@@ -46,7 +46,7 @@
           :count="project.vacant_places"
           :total="project.places"
         />
-        <BaseButton class="mt-4">Подать заявку</BaseButton>
+        <BaseButton case="uppercase" class="mt-4">Подать заявку</BaseButton>
       </div>
     </ProjectPanel>
 

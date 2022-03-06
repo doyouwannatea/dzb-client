@@ -50,7 +50,7 @@
         Пока на этот проект ещё не подали ни одной заявки, так что ты можешь
         стать первым!
       </p>
-      <BaseButton :disabled="loading" class="request-btn">
+      <BaseButton case="uppercase" :disabled="loading" class="request-btn">
         подать заявку
       </BaseButton>
     </section>

@@ -119,8 +119,11 @@
     </BaseAccordion>
 
     <footer class="footer">
-      <BaseButton full-width :disabled="globalLoading">найти</BaseButton>
+      <BaseButton case="uppercase" full-width :disabled="globalLoading">
+        найти
+      </BaseButton>
       <BaseButton
+        case="uppercase"
         type="button"
         full-width
         variant="link"

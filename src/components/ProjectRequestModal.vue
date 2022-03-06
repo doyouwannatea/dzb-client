@@ -79,7 +79,9 @@
           </BaseRadioButton>
           <!-- 3 (LOW) -->
         </div>
-        <BaseButton class="request-btn">Подать заявку</BaseButton>
+        <BaseButton case="uppercase" class="request-btn">
+          Подать заявку
+        </BaseButton>
       </div>
     </template>
     <!-- ACTIONS -->

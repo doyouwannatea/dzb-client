@@ -49,9 +49,12 @@
       </ul>
 
       <div class="actions">
-        <BaseButton variant="outlined">Подать заявку</BaseButton>
+        <BaseButton case="uppercase" variant="outlined">
+          Подать заявку
+        </BaseButton>
         <BaseButton
           is="router-link"
+          case="uppercase"
           :to="{ name: RouteNames.PROJECT_DETAILS, params: { id: project.id } }"
         >
           Подробнее

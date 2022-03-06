@@ -9,7 +9,7 @@
         через систему “Кампус”.
       </p>
       <div class="modal-buttons">
-        <BaseButton>войти через кампус</BaseButton>
+        <BaseButton case="uppercase">войти через кампус</BaseButton>
       </div>
     </div>
     <!-- MAIN CONTENT -->

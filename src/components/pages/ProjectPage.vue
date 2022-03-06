@@ -23,6 +23,7 @@
     <RouterView></RouterView>
     <div class="d-flex justify-content-center mt-3">
       <BaseButton
+        case="uppercase"
         variant="link"
         @click="$router.push({ name: RouteNames.HOME })"
       >

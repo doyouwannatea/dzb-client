@@ -65,6 +65,8 @@
 
   .full-width {
     width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 
   .uppercase {

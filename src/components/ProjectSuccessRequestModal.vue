@@ -16,8 +16,8 @@
         >.
       </p>
       <div class="modal-buttons">
-        <BaseButton>назад к списку</BaseButton>
-        <BaseButton variant="link">Мои заявки</BaseButton>
+        <BaseButton case="uppercase">назад к списку</BaseButton>
+        <BaseButton case="uppercase" variant="link">Мои заявки</BaseButton>
       </div>
     </div>
     <!-- MAIN CONTENT -->
