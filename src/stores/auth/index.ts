@@ -7,17 +7,23 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async auth() {
       try {
-        this.isAuth = false;
         this.loading = true;
         this.error = '';
         await CampusAuthApi.auth();
         this.userData = await CampusAuthApi.getStudentInfo();
-        this.isAuth = true;
       } catch (error) {
         this.error = String(error);
       } finally {
         this.loading = false;
       }
+    },
+    exit() {
+      this.userData = undefined;
+    },
+  },
+  getters: {
+    isAuth: (state) => {
+      return Boolean(state.userData);
     },
   },
 });

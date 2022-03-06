@@ -8,6 +8,7 @@
 </template>
 
 <script setup lang="ts">
+  import { useAuthStore } from '@/stores/auth';
   import BaseDropdown, { DropdownItem } from './base/BaseDropdown.vue';
 
   type Props = {
@@ -21,11 +22,20 @@
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
 
+  const authStore = useAuthStore();
+
   const items: DropdownItem[] = [
     { content: 'Мой профиль', type: 'link', href: '#' },
     { content: 'Мои заявки', type: 'link', href: '#' },
     { content: 'Мои проекты', type: 'link', href: '#' },
     { content: 'Навыки', type: 'link', href: '#' },
-    { content: 'Выйти', type: 'button', action: () => console.log('выйти') },
+    {
+      content: 'Выйти',
+      type: 'button',
+      action: () => {
+        authStore.exit();
+        emit('close');
+      },
+    },
   ];
 </script>
