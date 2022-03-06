@@ -1,6 +1,7 @@
 import ProjectApi from '@/api/ProjectApi';
 import { Project, ProjectFilters } from '@/models/Project';
 import { defineStore } from 'pinia';
+import { useAuthStore } from '../auth';
 import { ProjectFilterOptions, state } from './state';
 
 export const useProjectsStore = defineStore('projects', {
@@ -18,6 +19,15 @@ export const useProjectsStore = defineStore('projects', {
     },
     setFilterOptions(options: ProjectFilterOptions) {
       this.filterOptions = options;
+    },
+    openRequestModal(project: Project) {
+      const authStore = useAuthStore();
+      if (authStore.isAuth) {
+        this.openedProject = project;
+        this.requestModalShow = true;
+        return;
+      }
+      authStore.authModalShow = true;
     },
     // ASYNC ACTIONS
     async getProjectList() {

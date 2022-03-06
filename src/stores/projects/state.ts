@@ -22,9 +22,11 @@ interface State {
   filters: ProjectFilters;
   filterOptions: ProjectFilterOptions;
   openedProject?: Project;
+  requestModalShow: boolean;
 }
 
 export const state = (): State => ({
+  requestModalShow: false,
   openedProject: undefined,
   projectList: undefined,
   projectCount: 0,

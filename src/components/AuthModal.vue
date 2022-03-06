@@ -1,6 +1,9 @@
 <template>
   <!-- auth modal -->
-  <BaseModal :is-show="props.isShow" @close="emit('close')">
+  <BaseModal
+    :is-show="authStore.authModalShow"
+    @close="authStore.authModalShow = false"
+  >
     <!-- MAIN CONTENT -->
     <div class="success-modal">
       <h1 class="title">Вы не авторизованы</h1>
@@ -9,7 +12,15 @@
         через систему “Кампус”.
       </p>
       <div class="modal-buttons">
-        <BaseButton case="uppercase">войти через кампус</BaseButton>
+        <BaseButton
+          case="uppercase"
+          @click="
+            authStore.auth();
+            authStore.authModalShow = false;
+          "
+        >
+          войти через кампус
+        </BaseButton>
       </div>
     </div>
     <!-- MAIN CONTENT -->
@@ -17,15 +28,11 @@
 </template>
 
 <script setup lang="ts">
-  import { withDefaults } from 'vue';
   import BaseModal from './base/BaseModal.vue';
   import BaseButton from './base/BaseButton.vue';
+  import { useAuthStore } from '@/stores/auth';
 
-  type Props = { isShow: boolean };
-  type Emits = { (e: 'close'): void };
-
-  const props = withDefaults(defineProps<Props>(), { isShow: false });
-  const emit = defineEmits<Emits>();
+  const authStore = useAuthStore();
 </script>
 
 <style scoped>

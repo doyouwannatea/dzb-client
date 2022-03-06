@@ -49,7 +49,11 @@
       </ul>
 
       <div class="actions">
-        <BaseButton case="uppercase" variant="outlined">
+        <BaseButton
+          case="uppercase"
+          variant="outlined"
+          @click="projectsStore.openRequestModal(props.project)"
+        >
           Подать заявку
         </BaseButton>
         <BaseButton
@@ -75,8 +79,11 @@
   import { RouteNames } from '@/router/types/route-names';
   import { DifficultyText } from '@/models/enums/difficulty-text';
   import { StateClass } from '@/models/enums/state-class';
+  import { useProjectsStore } from '@/stores/projects';
 
   const props = defineProps<{ project: Project }>();
+
+  const projectsStore = useProjectsStore();
 
   // Setup variables
   const TAGS_DEFAULT_VISIBLE = 3;

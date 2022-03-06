@@ -46,7 +46,13 @@
           :count="project.vacant_places"
           :total="project.places"
         />
-        <BaseButton case="uppercase" class="mt-4">Подать заявку</BaseButton>
+        <BaseButton
+          case="uppercase"
+          class="mt-4"
+          @click="projectsStore.openRequestModal(project!)"
+        >
+          Подать заявку
+        </BaseButton>
       </div>
     </ProjectPanel>
 
@@ -105,11 +111,8 @@
   import { useProjectsStore } from '@/stores/projects';
   import { storeToRefs } from 'pinia';
 
-  const {
-    openedProject: project,
-    loading,
-    error,
-  } = storeToRefs(useProjectsStore());
+  const projectsStore = useProjectsStore();
+  const { openedProject: project, loading, error } = storeToRefs(projectsStore);
 </script>
 
 <style scoped>

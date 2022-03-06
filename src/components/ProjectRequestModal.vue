@@ -1,10 +1,14 @@
 <template>
   <!-- project request modal -->
-  <BaseModal size="m" :is-show="props.isShow" @close="emit('close')">
+  <BaseModal
+    size="m"
+    :is-show="projectsStore.requestModalShow"
+    @close="projectsStore.requestModalShow = false"
+  >
     <!-- HEADER -->
     <template #header>
       <h1 class="title">Подача заявки на проект</h1>
-      <h2>Платформа для размещения вузовских олимпиад</h2>
+      <h2>{{ projectsStore.openedProject?.title }}</h2>
     </template>
     <!-- HEADER -->
 
@@ -89,21 +93,16 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, withDefaults } from 'vue';
+  import { ref } from 'vue';
   import BaseModal from './base/BaseModal.vue';
   import BaseButton from './base/BaseButton.vue';
   import BaseTooltip from './base/BaseTooltip.vue';
   import BaseInput from './base/BaseInput.vue';
   import BaseRadioButton from './base/BaseRadioButton.vue';
+  import { useProjectsStore } from '@/stores/projects';
 
-  type Props = { isShow: boolean };
-  type Emits = { (e: 'close'): void };
-
-  const props = withDefaults(defineProps<Props>(), { isShow: false });
-  const emit = defineEmits<Emits>();
-
+  const projectsStore = useProjectsStore();
   const priorityValue = ref('');
-
   const priorityTooltipMsg =
     'Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас распределить в проект, в который вы хотите попасть с большей вероятностью, вы ставите ему больший приоритет.';
 </script>
