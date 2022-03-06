@@ -1,13 +1,13 @@
 <template>
   <div class="actions">
-    <template v-if="authStore.isAuth && authStore.userData">
+    <template v-if="authStore.isAuth">
       <button class="ring-btn">
-        <RingIcon />
+        <img :src="ringIconUrl" alt="уведомления" class="icon" />
       </button>
       <div class="dropdown-container">
         <div ref="handleMenuNode" class="user" @click="toggleMenu">
-          <UserPicture />
-          <span class="username">{{ authStore.userData.fio }}</span>
+          <img :src="userPictureUrl" alt="" class="user-icon" />
+          <span class="username">{{ authStore.userData?.fio }}</span>
           <button :class="['menu-btn', { active: isMenuOpen }]">
             <ArrowIcon />
           </button>
@@ -21,8 +21,12 @@
     </template>
 
     <template v-else>
-      <BaseButton :disabled="authStore.loading" @click="authStore.auth()">
-        авторизоваться
+      <BaseButton
+        variant="outlined"
+        :disabled="authStore.loading"
+        @click="authStore.auth()"
+      >
+        Войти
       </BaseButton>
     </template>
   </div>
@@ -32,8 +36,8 @@
   import ArrowIcon from '@/assets/icons/dropdown-arrow.svg?component';
   import { useAuthStore } from '@/stores/auth';
   import { ref } from 'vue';
-  import RingIcon from '../assets/icons/ring.svg?component';
-  import UserPicture from '../assets/icons/user-picture.svg?component';
+  import ringIconUrl from '../assets/icons/ring.svg?url';
+  import userPictureUrl from '../assets/icons/user-picture.svg?url';
   import BaseButton from './base/BaseButton.vue';
   import HeaderUserDropdown from './HeaderUserDropdown.vue';
 
@@ -45,6 +49,11 @@
 </script>
 
 <style scoped>
+  .icon {
+    width: 2rem;
+    height: 2rem;
+  }
+
   .actions {
     display: flex;
     align-items: center;
@@ -82,6 +91,7 @@
     align-items: center;
     gap: 0.8125rem;
     cursor: default;
+    max-width: 16.375rem;
   }
 
   .dropdown-container {
