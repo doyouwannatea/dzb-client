@@ -44,6 +44,8 @@
 
     display: inline-flex;
     align-items: center;
+    text-align: center;
+    justify-content: center;
     gap: 0.8125rem;
     color: #ffffff;
     padding: 1rem 2rem;
@@ -65,8 +67,6 @@
 
   .full-width {
     width: 100%;
-    text-align: center;
-    justify-content: center;
   }
 
   .uppercase {
