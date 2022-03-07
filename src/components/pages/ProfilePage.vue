@@ -1,0 +1,34 @@
+<template>
+  <BasePageLayout>
+    <header class="header">
+      <h1 class="title page-title">Профиль пользователя</h1>
+    </header>
+    <SidebarContainer>
+      <template #sidebar>
+        <ProfileNavigation />
+      </template>
+
+      <template #main>
+        <RouterView></RouterView>
+      </template>
+    </SidebarContainer>
+  </BasePageLayout>
+</template>
+
+<script setup lang="ts">
+  import { RouterView } from 'vue-router';
+  import BasePageLayout from '@/components/unique/PageLayout.vue';
+  import SidebarContainer from '@/components/SidebarContainer.vue';
+  import ProfileNavigation from '../unique/ProfileNavigation.vue';
+</script>
+
+<style scoped>
+  .header {
+    margin-top: 4.75rem;
+    margin-bottom: 2.8125rem;
+  }
+
+  .title {
+    margin-bottom: 0.6875rem;
+  }
+</style>
