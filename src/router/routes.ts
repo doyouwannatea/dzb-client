@@ -3,9 +3,11 @@ import { RouteNames } from './types/route-names';
 import { validatePage } from './guards/validatePage';
 import ProjectDetails from '@/components/ProjectDetails.vue';
 import ProjectRequestsList from '@/components/ProjectRequestsList.vue';
+import ProfileUserInformation from '@/components/ProfileUserInformation.vue';
 
 const HomePage = () => import('../components/pages/HomePage.vue');
 const ProjectPage = () => import('../components/pages/ProjectPage.vue');
+const Profile = () => import('../components/pages/ProfilePage.vue');
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -13,7 +15,8 @@ export const routes: RouteRecordRaw[] = [
     component: HomePage,
     name: RouteNames.HOME,
     meta: {
-      nav: true,
+      type: 'main-nav',
+      index: 0,
       title: 'Все проекты',
     },
     beforeEnter: [validatePage],
@@ -42,11 +45,62 @@ export const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/profile',
+    name: RouteNames.PROFILE,
+    component: Profile,
+    meta: {
+      title: 'Профиль пользователя',
+    },
+    children: [
+      {
+        path: '',
+        name: RouteNames.USER_INFO,
+        component: ProfileUserInformation,
+        meta: {
+          type: 'user-nav',
+          index: 0,
+          title: 'Мой профиль',
+        },
+      },
+      {
+        path: 'requests',
+        name: RouteNames.USER_REQUESTS,
+        redirect: { name: RouteNames.USER_INFO },
+        meta: {
+          type: 'user-nav',
+          index: 1,
+          title: 'Мои заявки',
+        },
+      },
+      {
+        path: 'projects',
+        name: RouteNames.USER_PROJECTS,
+        redirect: { name: RouteNames.USER_INFO },
+        meta: {
+          type: 'user-nav',
+          index: 2,
+          title: 'Мои проекты',
+        },
+      },
+      {
+        path: 'skills',
+        name: RouteNames.USER_SKILLS,
+        redirect: { name: RouteNames.USER_INFO },
+        meta: {
+          type: 'user-nav',
+          index: 3,
+          title: 'Навыки',
+        },
+      },
+    ],
+  },
+  {
     path: '/faq',
     redirect: { name: RouteNames.HOME },
     name: RouteNames.FAQ,
     meta: {
-      nav: true,
+      type: 'main-nav',
+      index: 1,
       title: 'вопрос-ответ',
     },
   },
@@ -55,7 +109,8 @@ export const routes: RouteRecordRaw[] = [
     name: RouteNames.CONTACTS,
     redirect: { name: RouteNames.HOME },
     meta: {
-      nav: true,
+      type: 'main-nav',
+      index: 2,
       title: 'контакты',
     },
   },

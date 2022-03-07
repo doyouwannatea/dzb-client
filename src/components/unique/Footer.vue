@@ -25,27 +25,20 @@
 
       <nav>
         <ul class="nav-list">
-          <template v-for="link in $router.options.routes" :key="link.name">
-            <li v-if="link.meta?.nav">
-              <RouterLink class="title link nav-link" :to="{ name: link.name }">
-                {{ link.meta.title }}
-              </RouterLink>
-            </li>
-          </template>
+          <li v-for="link in mainRoutes" :key="link.name">
+            <RouterLink class="title link nav-link" :to="{ name: link.name }">
+              {{ link.meta.title }}
+            </RouterLink>
+          </li>
         </ul>
       </nav>
 
       <section class="info-block">
         <h3 class="title info-title">Личный кабиент</h3>
         <ul class="info-list">
-          <li class="info-item">
-            <RouterLink class="link" :to="{ name: RouteNames.HOME }">
-              Мои проекты
-            </RouterLink>
-          </li>
-          <li class="info-item">
-            <RouterLink class="link" :to="{ name: RouteNames.HOME }">
-              Мои заявки
+          <li v-for="link in userRoutes" :key="link.name" class="info-item">
+            <RouterLink class="link" :to="{ name: link.name }">
+              {{ link.meta.title }}
             </RouterLink>
           </li>
         </ul>
@@ -93,6 +86,13 @@
   import BaseContainer from '../base/BaseContainer.vue';
   import logoImage from '../../assets/icons/logo-white.svg?url';
   import { RouteNames } from '@/router/types/route-names';
+  import {
+    useMainNavigationRoutes,
+    useUserNavigationRoutes,
+  } from '@/hooks/useRoutes';
+
+  const mainRoutes = useMainNavigationRoutes();
+  const userRoutes = useUserNavigationRoutes();
 </script>
 
 <style scoped>

@@ -1,8 +1,8 @@
 <template>
   <nav class="nav">
     <ul class="nav-list">
-      <template v-for="link in $router.options.routes" :key="link.name">
-        <li v-if="link.meta?.nav" class="nav-item">
+      <template v-for="link in routes" :key="link.name">
+        <li class="nav-item">
           <RouterLink class="nav-link" :to="{ name: link.name }">
             {{ link.meta.title }}
           </RouterLink>
@@ -11,6 +11,13 @@
     </ul>
   </nav>
 </template>
+
+<script setup lang="ts">
+  import { RouterLink } from 'vue-router';
+  import { useMainNavigationRoutes } from '@/hooks/useRoutes';
+
+  const routes = useMainNavigationRoutes();
+</script>
 
 <style scoped>
   .nav {

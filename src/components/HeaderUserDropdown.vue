@@ -8,7 +8,9 @@
 </template>
 
 <script setup lang="ts">
+  import { RouteNames } from '@/router/types/route-names';
   import { useAuthStore } from '@/stores/auth';
+  import { useUserNavigationRoutes } from '@/hooks/useRoutes';
   import BaseDropdown, { DropdownItem } from './base/BaseDropdown.vue';
 
   type Props = {
@@ -23,19 +25,20 @@
   const emit = defineEmits<Emits>();
 
   const authStore = useAuthStore();
+  const routes = useUserNavigationRoutes();
 
-  const items: DropdownItem[] = [
-    { content: 'Мой профиль', type: 'link', href: '#' },
-    { content: 'Мои заявки', type: 'link', href: '#' },
-    { content: 'Мои проекты', type: 'link', href: '#' },
-    { content: 'Навыки', type: 'link', href: '#' },
-    {
-      content: 'Выйти',
-      type: 'button',
-      action: () => {
-        authStore.exit();
-        emit('close');
-      },
+  const items = routes.map<DropdownItem>((route) => ({
+    content: route.meta.title,
+    routeName: route.name as RouteNames,
+    type: 'link',
+  }));
+
+  items.push({
+    content: 'Выйти',
+    type: 'button',
+    action: () => {
+      authStore.exit();
+      emit('close');
     },
-  ];
+  });
 </script>
