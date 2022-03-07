@@ -37,17 +37,7 @@
       </div>
     </div>
     <footer class="footer container">
-      <ul class="tag-list">
-        <li v-for="tag of visibleTags" :key="tag.id">
-          <BaseTag>{{ tag.tag }}</BaseTag>
-        </li>
-        <li v-if="showTagsBtnVisible" class="tag-btn">
-          <BaseButton variant="inline-link" @click="isTagsVisible = true">
-            {{ showTagsBtnText }}
-          </BaseButton>
-        </li>
-      </ul>
-
+      <TagsList :tags="props.project.tags" />
       <div class="actions">
         <BaseButton
           case="uppercase"
@@ -69,44 +59,21 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref } from 'vue';
   import BaseBadge from './base/BaseBadge.vue';
   import BaseButton from './base/BaseButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
-  import BaseTag from './base/BaseTag.vue';
-  import { declOfNum } from '@/helpers/string';
   import type { Project } from '@/models/Project';
   import { RouteNames } from '@/router/types/route-names';
   import { DifficultyText } from '@/models/enums/difficulty-text';
   import { StateClass } from '@/models/enums/state-class';
   import { useProjectsStore } from '@/stores/projects';
+  import TagsList from './TagsList.vue';
 
   const props = defineProps<{ project: Project }>();
-
   const projectsStore = useProjectsStore();
 
-  // Setup variables
-  const TAGS_DEFAULT_VISIBLE = 3;
-  const hiddenTagsCount = props.project.tags.length - TAGS_DEFAULT_VISIBLE;
-  const showTagsBtnText = `+${hiddenTagsCount} ${declOfNum(hiddenTagsCount, [
-    'тег',
-    'тега',
-    'тегов',
-  ])}`;
   const stateClass = StateClass[props.project.state_name];
   const difficultyText = DifficultyText[props.project.difficulty];
-
-  // Reactive variables
-  const isTagsVisible = ref(false);
-  const visibleTags = computed(() =>
-    isTagsVisible.value
-      ? props.project.tags
-      : props.project.tags.slice(0, TAGS_DEFAULT_VISIBLE),
-  );
-  const showTagsBtnVisible = computed(
-    () =>
-      props.project.tags.length > TAGS_DEFAULT_VISIBLE && !isTagsVisible.value,
-  );
 </script>
 
 <style scoped>
@@ -154,19 +121,6 @@
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 0.8125rem;
-  }
-
-  .tag-list {
-    list-style: none;
-    padding-left: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .tag-btn {
-    display: flex;
-    align-items: center;
   }
 
   .actions {
