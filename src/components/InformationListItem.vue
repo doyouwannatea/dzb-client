@@ -1,6 +1,8 @@
 <template>
   <li :class="['info-list-item', { wide }]">
-    <h2 class="info-list-title">{{ title }}</h2>
+    <h2 class="info-list-title">
+      <slot name="title"></slot>
+    </h2>
     <span :class="['info-list-value', { bold }]">
       <slot></slot>
     </span>
@@ -12,7 +14,6 @@
 
   withDefaults(
     defineProps<{
-      title: string;
       bold?: boolean;
       wide?: boolean;
     }>(),

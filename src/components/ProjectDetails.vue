@@ -1,9 +1,9 @@
 <template>
   <section v-if="project && !loading && !error">
     <!-- Panel -->
-    <ProjectPanel :cols="3">
+    <BasePanel :cols="3">
       <!-- Information list -->
-      <ProjectDetailsList
+      <InformationList
         :items="[
           {
             title: 'Руководитель проекта',
@@ -24,7 +24,7 @@
         ]"
       />
       <!-- Information list -->
-      <ProjectDetailsList
+      <InformationList
         :items="[
           {
             title: 'Тип проекта',
@@ -54,12 +54,12 @@
           Подать заявку
         </BaseButton>
       </div>
-    </ProjectPanel>
+    </BasePanel>
 
     <!-- Panel -->
-    <ProjectPanel :cols="2">
+    <BasePanel :cols="2">
       <!-- Information list -->
-      <ProjectDetailsList
+      <InformationList
         :items="[
           {
             title: 'Ожидаемый результат',
@@ -69,7 +69,7 @@
       />
 
       <!-- Information list -->
-      <ProjectDetailsList
+      <InformationList
         :items="[
           {
             title: 'Требования к участникам',
@@ -77,37 +77,43 @@
           },
         ]"
       />
-    </ProjectPanel>
+    </BasePanel>
 
     <!-- Panel -->
-    <ProjectPanel :cols="1">
+    <BasePanel :cols="1">
       <!-- Information list -->
-      <ProjectDetailsList>
-        <ProjectDetailsListItem title="Идея проекта" :bold="false" :wide="true">
-          {{ project.idea }}
-        </ProjectDetailsListItem>
+      <InformationList>
+        <InformationListItem :bold="false" :wide="true">
+          <template #title>Идея проекта</template>
+          <template #default>
+            {{ project.idea }}
+          </template>
+        </InformationListItem>
 
-        <ProjectDetailsListItem title="Теги" :bold="false" :wide="true">
-          <span class="tags">
-            <BaseTag v-for="tag in project.tags" :key="tag.id">
-              {{ tag.tag }}
-            </BaseTag>
-          </span>
-        </ProjectDetailsListItem>
-      </ProjectDetailsList>
-    </ProjectPanel>
+        <InformationListItem :bold="false" :wide="true">
+          <template #title>Теги</template>
+          <template #default>
+            <span class="tags">
+              <BaseTag v-for="tag in project.tags" :key="tag.id">
+                {{ tag.tag }}
+              </BaseTag>
+            </span>
+          </template>
+        </InformationListItem>
+      </InformationList>
+    </BasePanel>
   </section>
 </template>
 
 <script setup lang="ts">
-  import ProjectPanel from './ProjectPanel.vue';
+  import BasePanel from './base/BasePanel.vue';
   import BaseTag from './base/BaseTag.vue';
   import BaseBadge from './base/BaseBadge.vue';
   import BaseButton from './base/BaseButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
   import { DifficultyText } from '@/models/enums/difficulty-text';
-  import ProjectDetailsList from './ProjectDetailsList.vue';
-  import ProjectDetailsListItem from './ProjectDetailsListItem.vue';
+  import InformationList from './InformationList.vue';
+  import InformationListItem from './InformationListItem.vue';
   import { useProjectsStore } from '@/stores/projects';
   import { storeToRefs } from 'pinia';
 

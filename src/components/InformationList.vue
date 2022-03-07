@@ -1,13 +1,16 @@
 <template>
-  <ul class="info-list">
+  <ul :class="['info-list', `gap-${rowGap}`]">
     <slot>
       <template
         v-for="{ title, content, bold, wide } in items"
         :key="title + content"
       >
-        <ProjectDetailsListItem :title="title" :bold="bold" :wide="wide">
-          {{ content }}
-        </ProjectDetailsListItem>
+        <InformationListItem :bold="bold" :wide="wide">
+          <template #title>{{ title }}</template>
+          <template #default>
+            {{ content }}
+          </template>
+        </InformationListItem>
       </template>
     </slot>
   </ul>
@@ -15,7 +18,7 @@
 
 <script setup lang="ts">
   import { withDefaults } from 'vue';
-  import ProjectDetailsListItem from './ProjectDetailsListItem.vue';
+  import InformationListItem from './InformationListItem.vue';
 
   interface Item {
     title: string;
@@ -27,9 +30,11 @@
   withDefaults(
     defineProps<{
       items?: Item[];
+      rowGap?: 'm' | 'l';
     }>(),
     {
       items: () => [],
+      rowGap: 'l',
     },
   );
 </script>
@@ -39,7 +44,13 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    row-gap: 2.8125rem;
     font-size: 1.13rem;
+  }
+
+  .gap-m {
+    row-gap: 1.0625rem;
+  }
+  .gap-l {
+    row-gap: 2.8125rem;
   }
 </style>

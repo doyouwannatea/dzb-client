@@ -1,9 +1,5 @@
 <template>
-  <ProjectPanel
-    v-if="project && !loading && !error"
-    :cols="1"
-    class="list-panel"
-  >
+  <BasePanel v-if="project && !loading && !error" :cols="1" class="list-panel">
     <table>
       <tr>
         <th>№</th>
@@ -42,8 +38,8 @@
         <td>2</td>
       </tr>
     </table>
-  </ProjectPanel>
-  <ProjectPanel v-else :cols="1" class="empty-list-panel">
+  </BasePanel>
+  <BasePanel v-else :cols="1" class="empty-list-panel">
     <section>
       <h1 class="empty-title">Ни одной заявки :(</h1>
       <p class="empty-subtitle">
@@ -54,11 +50,11 @@
         подать заявку
       </BaseButton>
     </section>
-  </ProjectPanel>
+  </BasePanel>
 </template>
 
 <script setup lang="ts">
-  import ProjectPanel from './ProjectPanel.vue';
+  import BasePanel from './base/BasePanel.vue';
   import BaseButton from './base/BaseButton.vue';
   import { useProjectsStore } from '@/stores/projects';
   import { storeToRefs } from 'pinia';
