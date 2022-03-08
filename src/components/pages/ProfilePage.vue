@@ -17,11 +17,28 @@
 </template>
 
 <script setup lang="ts">
-  import { RouterView } from 'vue-router';
+  import { RouterView, useRouter } from 'vue-router';
   import BasePageLayout from '@/components/unique/PageLayout.vue';
   import SidebarContainer from '@/components/SidebarContainer.vue';
   import ProfileNavigation from '../unique/ProfileNavigation.vue';
   import DeadlineTimer from '../DeadlineTimer.vue';
+  import { watch } from 'vue';
+  import { useAuthStore } from '@/stores/auth';
+  import { RouteNames } from '@/router/types/route-names';
+
+  const authStore = useAuthStore();
+  const router = useRouter();
+
+  watch(
+    () => authStore.isAuth,
+    (isAuth) => {
+      if (!isAuth) {
+        router.push({
+          name: RouteNames.HOME,
+        });
+      }
+    },
+  );
 </script>
 
 <style scoped>

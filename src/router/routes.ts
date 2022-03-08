@@ -52,6 +52,7 @@ export const routes: RouteRecordRaw[] = [
     component: Profile,
     meta: {
       title: 'Профиль пользователя',
+      requiresAuth: true,
     },
     children: [
       {
