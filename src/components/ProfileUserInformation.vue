@@ -1,8 +1,8 @@
 <template>
-  <BasePanel :cols="2">
+  <BasePanel class="panel" :cols="2">
     <!-- USER INFORMATION -->
     <div>
-      <h1 class="name">Иванов Иван Иванович</h1>
+      <h1 class="title">Иванов Иван Иванович</h1>
       <h2 class="subtitle">Контактная информация</h2>
       <!-- CONTACT INFO -->
       <InformationList class="margin-b" row-gap="m">
@@ -66,7 +66,7 @@
     <div class="right-col">
       <h2 class="subtitle">Навыки</h2>
       <TagsList :tags="tags" :default-visible="7" />
-      <BaseButton class="edit-btn" variant="outlined">
+      <BaseButton class="edit-btn" case="uppercase" variant="outlined">
         Редактировать профиль
       </BaseButton>
     </div>
@@ -84,6 +84,10 @@
 </script>
 
 <style scoped>
+  .panel {
+    min-height: 100%;
+  }
+
   .label {
     color: var(--gray-color-2);
   }
@@ -95,11 +99,7 @@
     margin-bottom: 1.0625rem;
   }
 
-  .margin-b {
-    margin-bottom: 3.125rem;
-  }
-
-  .name {
+  .title {
     line-height: 2.375rem;
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
@@ -114,5 +114,9 @@
   .right-col {
     display: flex;
     flex-direction: column;
+  }
+
+  .margin-b {
+    margin-bottom: 3.125rem;
   }
 </style>
