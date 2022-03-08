@@ -1,8 +1,15 @@
 <template>
-  <span class="tag">
+  <span :class="['tag', { disabled }]">
     <slot></slot>
   </span>
 </template>
+
+<script setup lang="ts">
+  import { withDefaults } from 'vue';
+
+  type Props = { disabled?: boolean };
+  withDefaults(defineProps<Props>(), { disabled: false });
+</script>
 
 <style scoped>
   .tag {
@@ -15,5 +22,10 @@
     line-height: 1.125rem;
 
     color: var(--accent-color-1);
+  }
+
+  .tag.disabled {
+    background: var(--gray-color-1);
+    color: var(--gray-color-2);
   }
 </style>

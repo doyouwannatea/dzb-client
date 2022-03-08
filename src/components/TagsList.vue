@@ -1,7 +1,7 @@
 <template>
   <ul class="tag-list">
     <li v-for="tag of visibleTags" :key="tag.id">
-      <BaseTag>{{ tag.tag }}</BaseTag>
+      <BaseTag :disabled="disableAll">{{ tag.tag }}</BaseTag>
     </li>
     <li v-if="showTagsBtnVisible" class="tag-btn">
       <BaseButton variant="inline-link" @click="isTagsVisible = true">
@@ -22,12 +22,14 @@
     tags: Tag[];
     showAll?: boolean;
     defaultVisible?: number;
+    disableAll?: boolean;
   };
 
   const props = withDefaults(defineProps<Props>(), {
     tags: () => [],
     showAll: false,
     defaultVisible: 3,
+    disableAll: false,
   });
 
   // Setup variables
