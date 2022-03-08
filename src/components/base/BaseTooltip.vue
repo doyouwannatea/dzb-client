@@ -2,14 +2,14 @@
   <div class="tooltip-container">
     <slot></slot>
     <button class="btn">
-      <QuestionIcon />
+      <img class="icon" :src="questionIconUrl" alt="«?»" />
       <div class="tooltip-msg">{{ message }}</div>
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-  import QuestionIcon from '@/assets/icons/question.svg?component';
+  import questionIconUrl from '@/assets/icons/question.svg?url';
   type Props = { message: string };
   defineProps<Props>();
 </script>
@@ -21,6 +21,8 @@
   }
 
   .btn {
+    width: 1.5rem;
+    height: 1.5rem;
     margin-left: 0.4375rem;
     padding: 0;
     border: none;
@@ -34,6 +36,11 @@
     display: block;
   }
 
+  .icon {
+    width: 100%;
+    height: 100%;
+  }
+
   .tooltip-msg {
     background: #ffffff;
     border: 1px solid var(--gray-color-1);
@@ -43,8 +50,8 @@
     max-width: 22.25rem;
     width: 3000%;
     position: absolute;
-    left: 25px;
-    bottom: 25px;
+    left: 100%;
+    bottom: 100%;
     text-align: left;
     font-size: 0.9375rem;
     line-height: 180%;
