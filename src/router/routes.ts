@@ -4,6 +4,8 @@ import { validatePage } from './guards/validatePage';
 import ProjectDetails from '@/components/ProjectDetails.vue';
 import ProjectRequestsList from '@/components/ProjectRequestsList.vue';
 import ProfileUserInformation from '@/components/ProfileUserInformation.vue';
+import UserProjects from '@/components/UserProjects.vue';
+import UserSkills from '@/components/UserSkills.vue';
 
 const HomePage = () => import('../components/pages/HomePage.vue');
 const ProjectPage = () => import('../components/pages/ProjectPage.vue');
@@ -75,7 +77,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: 'projects',
         name: RouteNames.USER_PROJECTS,
-        redirect: { name: RouteNames.USER_INFO },
+        component: UserProjects,
         meta: {
           type: 'user-nav',
           index: 2,
@@ -85,7 +87,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: 'skills',
         name: RouteNames.USER_SKILLS,
-        redirect: { name: RouteNames.USER_INFO },
+        component: UserSkills,
         meta: {
           type: 'user-nav',
           index: 3,
