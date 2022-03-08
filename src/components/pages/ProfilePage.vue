@@ -6,6 +6,7 @@
     <SidebarContainer>
       <template #sidebar>
         <ProfileNavigation />
+        <DeadlineTimer />
       </template>
 
       <template #main>
@@ -20,6 +21,7 @@
   import BasePageLayout from '@/components/unique/PageLayout.vue';
   import SidebarContainer from '@/components/SidebarContainer.vue';
   import ProfileNavigation from '../unique/ProfileNavigation.vue';
+  import DeadlineTimer from '../DeadlineTimer.vue';
 </script>
 
 <style scoped>

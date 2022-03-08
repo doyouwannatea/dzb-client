@@ -236,6 +236,9 @@
   }
 
   .filters {
+    background: #ffffff;
+    border: 1px solid var(--gray-color-1);
+    border-radius: 0.625rem;
     padding-top: 0.625rem;
     padding-bottom: 0.6875rem;
   }

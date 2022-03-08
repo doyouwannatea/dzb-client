@@ -26,6 +26,9 @@
 <style scoped>
   .list {
     padding: 0 1.375rem;
+    background: #ffffff;
+    border: 1px solid var(--gray-color-1);
+    border-radius: 0.625rem;
   }
   .item {
     list-style: none;
