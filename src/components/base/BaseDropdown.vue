@@ -66,7 +66,7 @@
 
 <style scoped>
   .dropdown {
-    top: 3.125rem;
+    top: 80%;
     right: 0;
     position: absolute;
     background: #ffffff;
