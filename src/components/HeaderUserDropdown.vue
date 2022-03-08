@@ -12,6 +12,8 @@
   import { useAuthStore } from '@/stores/auth';
   import { useUserNavigationRoutes } from '@/hooks/useRoutes';
   import BaseDropdown, { DropdownItem } from './base/BaseDropdown.vue';
+  import { watch } from 'vue';
+  import { useRoute } from 'vue-router';
 
   type Props = {
     isOpen: boolean;
@@ -24,8 +26,14 @@
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
 
+  const route = useRoute();
   const authStore = useAuthStore();
   const routes = useUserNavigationRoutes();
+
+  watch(
+    () => route.path,
+    () => emit('close'),
+  );
 
   const items = routes.map<DropdownItem>((route) => ({
     content: route.meta.title,
