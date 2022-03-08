@@ -4,12 +4,12 @@ interface State {
   authModalShow: boolean;
   loading: boolean;
   error: string;
-  userData?: Student;
+  profileData?: Student;
 }
 
 export const state = (): State => ({
   authModalShow: false,
-  userData: undefined,
+  profileData: undefined,
   error: '',
   loading: false,
 });

@@ -7,7 +7,7 @@
       <div class="dropdown-container">
         <div ref="handleMenuNode" class="user" @click="toggleMenu">
           <img :src="userPictureUrl" alt="" class="user-icon" />
-          <span class="username">{{ authStore.userData?.fio }}</span>
+          <span class="username">{{ authStore.profileData?.fio }}</span>
           <button :class="['menu-btn', { active: isMenuOpen }]">
             <ArrowIcon />
           </button>

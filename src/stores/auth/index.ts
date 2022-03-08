@@ -10,7 +10,7 @@ export const useAuthStore = defineStore('auth', {
         this.loading = true;
         this.error = '';
         await CampusAuthApi.auth();
-        this.userData = await CampusAuthApi.getStudentInfo();
+        this.profileData = await CampusAuthApi.getStudentInfo();
       } catch (error) {
         this.error = String(error);
       } finally {
@@ -18,12 +18,13 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     exit() {
-      this.userData = undefined;
+      this.profileData = undefined;
     },
   },
   getters: {
     isAuth: (state) => {
-      return Boolean(state.userData);
+      return Boolean(state.profileData);
     },
   },
+  persist: true,
 });
