@@ -57,7 +57,7 @@
           :options="allSupervisorNames.data.value"
           :loading="allSupervisorNames.loading.value"
           :label="SupervisorNameKeys.fio"
-          :track-by="SupervisorNameKeys.id"
+          :track-by="SupervisorNameKeys.fio"
           :value-prop="SupervisorNameKeys.id"
         />
         <div v-if="allSupervisorNames.error.value" class="mt-2">
@@ -80,7 +80,7 @@
           :options="allTags.data.value"
           :loading="allTags.loading.value"
           :label="TagKeys.tag"
-          :track-by="TagKeys.id"
+          :track-by="TagKeys.tag"
           :value-prop="TagKeys.id"
         />
         <div v-if="allTags.error.value" class="mt-2">
