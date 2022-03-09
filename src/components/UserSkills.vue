@@ -21,6 +21,7 @@
       </BaseButton>
     </div>
   </BasePanel>
+  <EditSkillsModal />
 </template>
 
 <script setup lang="ts">
@@ -29,6 +30,7 @@
   import BaseTooltip from './base/BaseTooltip.vue';
   import TagsList from './TagsList.vue';
   import BaseButton from './base/BaseButton.vue';
+  import EditSkillsModal from './EditSkillsModal.vue';
 
   const academicSkillsMsg = `Академические навыки - это набор практических умений студентов, 
   которые позволяют им быстрее и лучше усваивать новый материал в университете, 
