@@ -9,7 +9,7 @@
           <img :src="userPictureUrl" alt="" class="user-icon" />
           <span class="username">{{ authStore.profileData?.fio }}</span>
           <button :class="['menu-btn', { active: isMenuOpen }]">
-            <ArrowIcon />
+            <img :src="arrowIconUrl" alt="↓" />
           </button>
         </div>
         <HeaderUserDropdown
@@ -28,10 +28,12 @@
         @click="authStore.auth()"
       >
         <img
-          :src="authStore.loading ? userPictureGrayUrl : userPictureUrl"
+          v-if="authStore.loading"
+          :src="userPictureGrayUrl"
           alt=""
           class="user-icon"
         />
+        <img v-else :src="userPictureUrl" alt="" class="user-icon" />
         Войти
       </BaseButton>
     </template>
@@ -43,7 +45,7 @@
   import { useAuthStore } from '@/stores/auth';
   import BaseButton from './base/BaseButton.vue';
   import HeaderUserDropdown from './HeaderUserDropdown.vue';
-  import ArrowIcon from '@/assets/icons/dropdown-arrow.svg?component';
+  import arrowIconUrl from '@/assets/icons/dropdown-arrow.svg?url';
   import ringIconUrl from '../assets/icons/ring.svg?url';
   import userPictureUrl from '../assets/icons/user-picture.svg?url';
   import userPictureGrayUrl from '../assets/icons/user-picture-gray.svg?url';
@@ -79,11 +81,11 @@
   }
 
   .menu-btn {
+    width: 2.1875rem;
+    height: 1.9375rem;
     border: 0;
     background-color: transparent;
     cursor: pointer;
-    padding: 0;
-    align-self: normal;
     padding: 0 0.5rem;
     border-radius: 0.25rem;
     transform: rotate(180deg);
@@ -98,6 +100,7 @@
   }
 
   .user {
+    height: 100%;
     display: flex;
     align-items: center;
     gap: 0.8125rem;
@@ -107,6 +110,7 @@
 
   .dropdown-container {
     position: relative;
+    height: 100%;
   }
 
   .username {
