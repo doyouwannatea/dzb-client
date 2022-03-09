@@ -99,6 +99,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    padding: 1rem 0;
   }
 
   .modal {
