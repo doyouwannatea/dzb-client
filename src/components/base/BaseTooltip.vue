@@ -58,4 +58,9 @@
     display: none;
     cursor: default;
   }
+
+  .tooltip-msg:hover,
+  .tooltip-msg:focus-visible {
+    display: none !important;
+  }
 </style>
