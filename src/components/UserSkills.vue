@@ -16,7 +16,12 @@
         <h2 class="subtitle">Индивидуальные навыки</h2>
       </BaseTooltip>
       <TagsList class="tags-list" :tags="tags" :show-all="true" />
-      <BaseButton class="edit-btn" case="uppercase" variant="outlined">
+      <BaseButton
+        class="edit-btn"
+        case="uppercase"
+        variant="outlined"
+        @click="authStore.editSkillsModalShow = true"
+      >
         Редактировать навыки
       </BaseButton>
     </div>
@@ -31,6 +36,9 @@
   import TagsList from './TagsList.vue';
   import BaseButton from './base/BaseButton.vue';
   import EditSkillsModal from './EditSkillsModal.vue';
+  import { useAuthStore } from '@/stores/auth';
+
+  const authStore = useAuthStore();
 
   const academicSkillsMsg = `Академические навыки - это набор практических умений студентов, 
   которые позволяют им быстрее и лучше усваивать новый материал в университете, 

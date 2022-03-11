@@ -1,10 +1,14 @@
 <template>
   <!-- auth modal -->
-  <BaseModal size="m" :is-show="true" @close="() => {}">
+  <BaseModal
+    size="m"
+    :is-show="authStore.editSkillsModalShow"
+    @close="authStore.editSkillsModalShow = false"
+  >
     <!-- HEADER -->
     <template #header>
       <h1>Редактирование навыков</h1>
-      <TagsList class="tags-list" :tags="tags" :show-all="true" />
+      <TagsList class="tags-list" :tags="userTags" :show-all="true" />
     </template>
     <!-- HEADER -->
 
@@ -13,31 +17,34 @@
       <h2>Добавить навыки</h2>
       <VMultiselect
         ref="multiselect"
-        v-model="value"
+        v-model="searchValue"
         placeholder="Поиск по навыкам"
         :searchable="true"
-        :options="tags"
+        :options="mockTags"
         label="tag"
         track-by="tag"
-        value-prop="id"
+        value-prop="tag"
         class="search"
-        @select="onSelect"
       />
     </div>
     <div class="skills">
       <div class="col">
         <h3 class="tags-title">По направлению</h3>
         <ul class="skills-list by-direction-skills">
-          <li v-for="tag in tagsBySubject" :key="tag" class="tag-item">
-            <button class="tag-btn">{{ tag }}</button>
+          <li v-for="tag in allFilteredTags" :key="tag.id" class="tag-item">
+            <button class="tag-btn" @click="onTagClick(tag)">
+              {{ tag.tag }}
+            </button>
           </li>
         </ul>
       </div>
       <div class="col right-col">
         <h3 class="tags-title">По алфавиту</h3>
         <ul class="skills-list">
-          <li v-for="tag in tags" :key="tag.id" class="tag-item">
-            <button class="tag-btn">{{ tag.tag }}</button>
+          <li v-for="tag in allFilteredTags" :key="tag.id" class="tag-item">
+            <button class="tag-btn" @click="onTagClick(tag)">
+              {{ tag.tag }}
+            </button>
           </li>
         </ul>
       </div>
@@ -57,58 +64,29 @@
   import BaseModal from './base/BaseModal.vue';
   import TagsList from './TagsList.vue';
   import BaseButton from './base/BaseButton.vue';
-  import { tags } from '@/models/mock/project';
-  import { ref } from 'vue';
+  import { tags as mockTags } from '@/models/mock/project';
+  import { computed, ref } from 'vue';
+  import { Tag } from '@/models/Project';
+  import { useAuthStore } from '@/stores/auth';
 
-  function onSelect() {
-    console.log(value.value);
+  const authStore = useAuthStore();
+
+  function onTagClick(tag: Tag) {
+    if (userTags.value.includes(tag)) return;
+    userTags.value.push(tag);
   }
 
-  const multiselect = ref(undefined);
-  const value = ref('');
+  const userTags = ref<Tag[]>([]);
+  const allTags = ref(mockTags);
+  const searchValue = ref('');
 
-  const tagsBySubject = [
-    'Web-разработка',
-    'Backend-разработка',
-    'Высшая математика',
-    'Web-разработка',
-    'Backend-разработка',
-    'Высшая математика',
-    'Web-разработка',
-    'Backend-разработка',
-    'Web-разработка',
-    'Backend-разработка',
-    'Высшая математика',
-    'Web-разработка',
-    'Backend-разработка',
-    'Высшая математика',
-    'Web-разработка',
-    'Backend-разработка',
-    'Web-разработка',
-    'Backend-разработка',
-    'Высшая математика',
-    'Web-разработка',
-    'Backend-разработка',
-    'Высшая математика',
-    'Web-разработка',
-    'Backend-разработка',
-    'Web-разработка',
-    'Backend-разработка',
-    'Высшая математика',
-    'Web-разработка',
-    'Backend-разработка',
-    'Высшая математика',
-    'Web-разработка',
-    'Backend-разработка',
-    'Web-разработка',
-    'Backend-разработка',
-    'Высшая математика',
-    'Web-разработка',
-    'Backend-разработка',
-    'Высшая математика',
-    'Web-разработка',
-    'Backend-разработка',
-  ];
+  const allFilteredTags = computed(() =>
+    allTags.value.filter(
+      (tag) =>
+        !searchValue.value ||
+        tag.tag.toLowerCase() === searchValue.value.toLowerCase(),
+    ),
+  );
 </script>
 
 <style scoped>
@@ -141,8 +119,7 @@
   }
 
   .skills-list {
-    max-height: 28.125rem;
-    min-height: 15.625rem;
+    height: 22.125rem;
     overflow: auto;
   }
 
