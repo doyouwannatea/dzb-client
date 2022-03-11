@@ -1,5 +1,5 @@
 <template>
-  <ul class="tag-list">
+  <ul v-if="visibleTags.length > 0" class="tag-list">
     <li v-for="tag of visibleTags" :key="tag.id">
       <BaseTag :disabled="disableAll">{{ tag.tag }}</BaseTag>
     </li>
