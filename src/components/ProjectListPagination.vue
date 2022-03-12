@@ -2,31 +2,23 @@
   <nav class="pagination">
     <ul class="pagination-list">
       <li :class="['pagination-item', { 'disabled-item': currentPage <= 1 }]">
-        <RouterLink
-          :class="['pagination-link', 'pagination-arrow']"
+        <button
+          :disabled="currentPage <= 1"
+          :class="['pagination-btn', 'pagination-arrow']"
           :tabindex="currentPage <= 1 ? -1 : 0"
-          :to="{
-            name: RouteNames.HOME,
-            query: { ...$route.query, page: currentPage - 1 },
-          }"
+          @click="setPage(currentPage - 1)"
         >
           &lt;
-        </RouterLink>
+        </button>
       </li>
       <li
         v-for="i in genPages()"
         :key="i"
         :class="['pagination-item', { active: i === currentPage }]"
       >
-        <RouterLink
-          class="pagination-link"
-          :to="{
-            name: RouteNames.HOME,
-            query: { ...$route.query, page: i },
-          }"
-        >
+        <button class="pagination-btn" @click="setPage(i)">
           {{ i }}
-        </RouterLink>
+        </button>
       </li>
       <li
         :class="[
@@ -34,44 +26,43 @@
           { 'disabled-item': currentPage >= totalPages },
         ]"
       >
-        <RouterLink
-          :class="['pagination-link', 'pagination-arrow']"
+        <button
+          :disabled="currentPage >= totalPages"
+          :class="['pagination-btn', 'pagination-arrow']"
           :tabindex="currentPage >= totalPages ? -1 : 0"
-          :to="{
-            name: RouteNames.HOME,
-            query: { ...$route.query, page: currentPage + 1 },
-          }"
+          @click="setPage(currentPage + 1)"
         >
           &gt;
-        </RouterLink>
+        </button>
       </li>
     </ul>
   </nav>
 </template>
 
 <script setup lang="ts">
-  import type { LocationQuery } from 'vue-router';
-  import { computed, ref, watch } from 'vue';
-  import { RouterLink, useRoute } from 'vue-router';
-  import { RouteNames } from '@/router/types/route-names';
-  const route = useRoute();
-  const props = defineProps({
-    totalItems: { type: Number, required: true },
-    pageSize: { type: Number, required: true },
-    pagesVisible: { type: Number, required: true },
-    defaultPage: { type: Number, default: 1 },
+  import { computed, ref, watch, withDefaults } from 'vue';
+  import { useProjectsStore } from '@/stores/projects';
+
+  type Props = {
+    totalItems: number;
+    pageSize: number;
+    pagesVisible: number;
+    defaultPage?: number;
+  };
+
+  const store = useProjectsStore();
+  const props = withDefaults(defineProps<Props>(), {
+    defaultPage: 1,
   });
 
-  // Computed
   const totalPages = computed(() =>
     Math.ceil(props.totalItems / props.pageSize),
   );
-  // Refs
   const currentPage = ref(1);
   const startPage = ref(1);
   const endPage = ref(1);
 
-  watch(() => route.query, updatePages, { immediate: true });
+  watch(() => store.filters.page, updatePages, { immediate: true });
 
   // генерирует видимые ссылки пагинации
   function genPages() {
@@ -89,10 +80,9 @@
   }
 
   // обновляет состояние компонента
-  function updatePages(query: LocationQuery) {
-    currentPage.value = isNaN(Number(query.page))
-      ? props.defaultPage
-      : Number(query.page);
+  function updatePages(page?: number) {
+    currentPage.value = page || props.defaultPage;
+
     if (currentPage.value < 1) {
       currentPage.value = 1;
     }
@@ -110,6 +100,11 @@
         startPage.value = endPage.value - props.pagesVisible + 1;
       }
     }
+  }
+
+  function setPage(page: number) {
+    store.setFilters({ page });
+    store.updateFilters();
   }
 </script>
 
@@ -139,25 +134,20 @@
     opacity: 0.4;
   }
 
-  .pagination-link {
-    font-family: inherit;
-    font-weight: 600;
+  .pagination-btn {
     font-size: 1.25rem;
-    line-height: 1.625rem;
-    text-transform: uppercase;
     color: var(--gray-color-2);
-    text-decoration: none;
     display: inline-block;
     width: 100%;
     height: 100%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
     border-bottom: 0.25rem solid transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
-  .pagination-link:hover,
-  .pagination-item.active .pagination-link {
+  .pagination-btn:hover,
+  .pagination-item.active .pagination-btn {
     border-bottom-color: var(--accent-color-2);
   }
 
