@@ -119,7 +119,7 @@
     </BaseAccordion>
 
     <footer class="footer">
-      <BaseButton case="uppercase" full-width :disabled="globalLoading">
+      <BaseButton case="uppercase" full-width :disabled="prjectsStore.loading">
         найти
       </BaseButton>
       <BaseButton
@@ -127,7 +127,7 @@
         type="button"
         full-width
         variant="link"
-        :disabled="globalLoading"
+        :disabled="prjectsStore.loading"
         @click="clearFilter"
       >
         сбросить фильтр
@@ -137,91 +137,34 @@
 </template>
 
 <script setup lang="ts">
-  import { watch } from 'vue';
-  import { ref, computed } from '@vue/reactivity';
-  import { useRouter } from 'vue-router';
-  import VMultiselect from '@vueform/multiselect';
   import { SupervisorNameKeys, TagKeys } from '@/models/enums/keys';
+
+  import VMultiselect from '@vueform/multiselect';
   import BaseAccordion from './base/BaseAccordion.vue';
   import BaseButton from './base/BaseButton.vue';
-  import { useProjectFilterOptions } from '@/hooks/useProjectFilterOptions';
-  import { toJSONLocal } from '@/helpers/string';
-  import { RouteNames } from '@/router/types/route-names';
-  import { encodeProjectFiltersToQueries } from '@/helpers/query';
-  import { useProjectsStore } from '@/stores/projects';
   import BaseCheckbox from './base/BaseCheckbox.vue';
   import BaseRadioButton from './base/BaseRadioButton.vue';
   import BaseInput from './base/BaseInput.vue';
 
-  const store = useProjectsStore();
-  const router = useRouter();
-  const globalLoading = computed(() => store.loading);
+  import { useProjectFilterOptions } from '@/hooks/useProjectFilterOptions';
+  import { useProjectsStore } from '@/stores/projects';
+  import { useProjectFilters } from '@/hooks/useProjectFilters';
+
+  const prjectsStore = useProjectsStore();
   const { allSupervisorNames, allTags, allTypes, allStates } =
     useProjectFilterOptions();
 
-  const tags = ref<number[]>([]);
-  const supervisors = ref<number[]>([]);
-  const type = ref<number>(0);
-  const states = ref<number[]>([]);
-  const difficulty = ref<string[]>([]);
-  const dateStart = ref<string | undefined>(undefined);
-  const dateEnd = ref<string | undefined>(undefined);
-
-  // наблюдаем за состоянием хранилища
-  // обновляем локальное состояние если что-то поменялось
-  watch(
-    () => store.filters,
-    (filters) => {
-      tags.value = filters.tags || [];
-      supervisors.value = filters.supervisor || [];
-      type.value = filters.type ? filters.type[0] : 0;
-      states.value = filters.state || [];
-      difficulty.value = filters.difficulty?.map(String) || [];
-      dateStart.value = filters.date_start
-        ? toJSONLocal(new Date(filters.date_start))
-        : undefined;
-      dateEnd.value = filters.date_end
-        ? toJSONLocal(new Date(filters.date_end))
-        : undefined;
-    },
-    { immediate: true },
-  );
-
-  function filter() {
-    if (globalLoading.value) return;
-    updateFilters();
-  }
-
-  function clearFilter() {
-    if (globalLoading.value) return;
-    tags.value = [];
-    difficulty.value = [];
-    states.value = [];
-    supervisors.value = [];
-    type.value = 0;
-    dateEnd.value = '';
-    dateStart.value = '';
-    updateFilters();
-  }
-
-  function updateFilters() {
-    router.push({
-      name: RouteNames.HOME,
-      query: {
-        ...encodeProjectFiltersToQueries({
-          tags: tags.value,
-          difficulty: difficulty.value.map(Number),
-          state: states.value,
-          supervisor: supervisors.value,
-          type: type.value ? [type.value] : [],
-          date_end: dateEnd.value || '',
-          date_start: dateStart.value || '',
-          page: 1,
-          title: router.currentRoute.value.query.title?.toString() || '',
-        }),
-      },
-    });
-  }
+  const {
+    clearFilter,
+    filter,
+    difficulty,
+    states,
+    supervisors,
+    tags,
+    type,
+    dateStart,
+    dateEnd,
+  } = useProjectFilters();
 </script>
 
 <style scoped>

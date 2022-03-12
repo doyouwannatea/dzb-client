@@ -41,17 +41,17 @@
   import ProjectSearch from '@/components/ProjectSearch.vue';
   import SidebarContainer from '@/components/SidebarContainer.vue';
   import ProjectListPagination from '@/components/ProjectListPagination.vue';
-  import { useUpdateProjectList } from '@/hooks/useUpdateProjectList';
   import { useProjectsStore } from '@/stores/projects';
+  import { useFilteredProjectList } from '@/hooks/useProjectFilters';
+  import { RouteNames } from '@/router/types/route-names';
 
+  useFilteredProjectList(RouteNames.HOME);
   const store = useProjectsStore();
 
   const error = computed(() => store.error);
   const loading = computed(() => store.loading);
   const projectList = computed(() => store.projectList);
   const projectCount = computed(() => store.projectCount);
-
-  useUpdateProjectList();
 </script>
 
 <style scoped>

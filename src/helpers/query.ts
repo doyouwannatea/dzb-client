@@ -3,6 +3,16 @@ import { uniq, toArray, pipe, toNumber, toString } from 'lodash/fp';
 import { LocationQuery, LocationQueryValue } from 'vue-router';
 import { mapNumber } from './array';
 
+export function parseLocationQueryValue<T>(
+  query: LocationQueryValue | LocationQueryValue[],
+): T | string {
+  try {
+    return JSON.parse(query?.toString() || '""');
+  } catch (error) {
+    return '';
+  }
+}
+
 const parseQueryArray = pipe(parseLocationQueryValue, toArray, uniq);
 const queryArrayToNumber = pipe(parseQueryArray, mapNumber);
 
@@ -36,14 +46,4 @@ export function decodeFiltersFromQueries(query: LocationQuery): ProjectFilters {
     tags: queryArrayToNumber(query.tags),
     difficulty: queryArrayToNumber(query.difficulty),
   };
-}
-
-export function parseLocationQueryValue<T>(
-  query: LocationQueryValue | LocationQueryValue[],
-): T | string {
-  try {
-    return JSON.parse(query?.toString() || '""');
-  } catch (error) {
-    return '';
-  }
 }
