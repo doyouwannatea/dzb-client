@@ -1,19 +1,17 @@
 import { ref, onBeforeMount, UnwrapRef } from 'vue';
 
-type Data<T> = T | null;
-
 interface Options<T> {
   defaultValue?: T;
   cancelRequest?: () => boolean;
 }
 
 export default function useAsyncData<T>(
-  promise: Promise<T>,
+  fetchData: () => Promise<T>,
   options?: Options<T>,
 ) {
   const loading = ref(false);
   const error = ref('');
-  const data = ref<Data<T>>(options?.defaultValue || null);
+  const data = ref<T | undefined>(options?.defaultValue);
 
   onBeforeMount(async () => {
     if (options?.cancelRequest && options.cancelRequest()) return;
@@ -21,9 +19,10 @@ export default function useAsyncData<T>(
     loading.value = true;
     error.value = '';
     try {
-      data.value = (await promise) as UnwrapRef<Data<T>>;
-    } catch (projectApiError) {
-      error.value = String(projectApiError);
+      data.value = (await fetchData()) as UnwrapRef<T>;
+      console.log(data.value);
+    } catch (e) {
+      error.value = String(e);
     } finally {
       loading.value = false;
     }

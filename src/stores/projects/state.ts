@@ -8,10 +8,10 @@ import {
 } from '@/models/Project';
 
 export interface ProjectFilterOptions {
-  allTags: Tag[] | null;
-  allTypes: Type[] | null;
-  allSupervisorNames: SupervisorName[] | null;
-  allStates: ProjectState[] | null;
+  allTags?: Tag[];
+  allTypes?: Type[];
+  allSupervisorNames?: SupervisorName[];
+  allStates?: ProjectState[];
 }
 
 interface State {
@@ -44,9 +44,9 @@ export const state = (): State => ({
     page: 1,
   },
   filterOptions: {
-    allStates: null,
-    allSupervisorNames: null,
-    allTags: null,
-    allTypes: null,
+    allStates: undefined,
+    allSupervisorNames: undefined,
+    allTags: undefined,
+    allTypes: undefined,
   },
 });
