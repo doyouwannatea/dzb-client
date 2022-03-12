@@ -31,6 +31,7 @@ export const useProjectSearch = ({ triggerOnInput }: Options) => {
 
     store.setFilters({
       title: term.value,
+      page: 1,
     });
     store.updateFilters();
   }

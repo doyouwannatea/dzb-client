@@ -62,6 +62,7 @@ export const useProjectFilters = () => {
       type: type.value ? [type.value] : [],
       date_end: dateEnd.value,
       date_start: dateStart.value,
+      page: 1,
     });
     projectsStore.updateFilters();
   }
