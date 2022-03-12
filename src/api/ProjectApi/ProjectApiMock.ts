@@ -18,12 +18,17 @@ import { supervisorNames } from '@/models/mock/supervisor';
 import IProjectApi from './IProjectApi';
 
 export class ProjectApiMock extends IProjectApi {
+  private static _instance: IProjectApi;
+
   private constructor() {
     super();
   }
 
   public static get instance() {
-    return this._instance || (this._instance = new this());
+    if (!this._instance) {
+      this._instance = new this();
+    }
+    return this._instance;
   }
 
   async getProjectList(page: number): Promise<ProjectListResponse> {

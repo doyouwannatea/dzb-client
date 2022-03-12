@@ -6,12 +6,17 @@ import { student } from '@/models/mock/student';
 import ICampusAuthApi from './ICampusAuthApi';
 
 export class CampusAuthApiMock extends ICampusAuthApi {
+  private static _instance: ICampusAuthApi;
+
   private constructor() {
     super();
   }
 
   public static get instance() {
-    return this._instance || (this._instance = new this());
+    if (!this._instance) {
+      this._instance = new this();
+    }
+    return this._instance;
   }
 
   async auth(): Promise<AuthToken> {

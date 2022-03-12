@@ -11,6 +11,7 @@ import {
 import IProjectApi, { ProjectListResponse } from './IProjectApi';
 
 export class ProjectApi extends IProjectApi {
+  private static _instance: IProjectApi;
   private ky = ky.create({
     prefixUrl: import.meta.env.VITE_PROJECT_API_URL,
     retry: { limit: 5 },
@@ -21,7 +22,10 @@ export class ProjectApi extends IProjectApi {
   }
 
   public static get instance() {
-    return this._instance || (this._instance = new this());
+    if (!this._instance) {
+      this._instance = new this();
+    }
+    return this._instance;
   }
 
   async getProjectList(page: number): Promise<ProjectListResponse> {

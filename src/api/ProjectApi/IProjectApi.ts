@@ -13,8 +13,6 @@ export interface ProjectListResponse {
 }
 
 export default abstract class IProjectApi {
-  protected static _instance: IProjectApi;
-
   abstract getProjectList(page: number): Promise<ProjectListResponse>;
   abstract filterProjectList(
     filters: ProjectFilters,
