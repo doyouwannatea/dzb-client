@@ -12,6 +12,7 @@
     "baseUrl": ".",
     "allowJs": true,
     "useDefineForClassFields": true,
+    "skipLibCheck": true,
     "paths": {
       "@/*": ["src/*"]
     }
