@@ -25,7 +25,7 @@ export const useFilteredProjectList = (page: RouteNames) => {
 export const useProjectFilters = () => {
   const projectsStore = useProjectsStore();
 
-  const tags = ref<number[]>([]);
+  const skills = ref<number[]>([]);
   const supervisors = ref<number[]>([]);
   const type = ref<number>(0);
   const states = ref<number[]>([]);
@@ -38,7 +38,7 @@ export const useProjectFilters = () => {
   watch(
     () => projectsStore.filters,
     (filters) => {
-      tags.value = filters.tags || [];
+      skills.value = filters.skills || [];
       supervisors.value = filters.supervisor || [];
       type.value = filters.type ? filters.type[0] : 0;
       states.value = filters.state || [];
@@ -55,7 +55,7 @@ export const useProjectFilters = () => {
 
   function filter() {
     projectsStore.setFilters({
-      tags: tags.value,
+      skills: skills.value,
       difficulty: difficulty.value.map(Number),
       state: states.value,
       supervisor: supervisors.value,
@@ -75,7 +75,7 @@ export const useProjectFilters = () => {
   return {
     filter,
     clearFilter,
-    tags,
+    skills,
     supervisors,
     type,
     states,

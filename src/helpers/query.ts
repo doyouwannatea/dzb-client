@@ -28,7 +28,7 @@ export function encodeProjectFiltersToQueries(
     type: JSON.stringify(filters.type),
     state: JSON.stringify(filters.state),
     supervisor: JSON.stringify(filters.supervisor),
-    tags: JSON.stringify(filters.tags),
+    skills: JSON.stringify(filters.skills),
     difficulty: JSON.stringify(filters.difficulty),
   };
 }
@@ -43,7 +43,7 @@ export function decodeFiltersFromQueries(query: LocationQuery): ProjectFilters {
     type: queryArrayToNumber(query.type),
     state: queryArrayToNumber(query.state),
     supervisor: queryArrayToNumber(query.supervisor),
-    tags: queryArrayToNumber(query.tags),
+    skills: queryArrayToNumber(query.skills),
     difficulty: queryArrayToNumber(query.difficulty),
   };
 }

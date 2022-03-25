@@ -4,7 +4,7 @@
       <h2 class="title">
         {{ project.title }}
       </h2>
-      <BaseBadge class="status">{{ project.state_name }}</BaseBadge>
+      <BaseBadge class="status">{{ project.state.state }}</BaseBadge>
       <div class="subtitle">{{ project.customer }}</div>
     </header>
     <div class="divider"></div>
@@ -22,13 +22,13 @@
           <b>Сроки реализации:</b> {{ project.date_start }} –
           {{ project.date_end }}
         </li>
-        <li class="list-item"><b>Тип проекта:</b> {{ project.type_name }}</li>
+        <li class="list-item"><b>Тип проекта:</b> {{ project.type.type }}</li>
       </ul>
       <div class="info">
         <ProjectTeamCounter
           class="team-counter"
-          :count="project.vacant_places"
-          :total="project.places"
+          :count="project.places"
+          :total="12"
         />
         <div class="difficulty">
           <span class="icon star-icon"></span>
@@ -37,7 +37,7 @@
       </div>
     </div>
     <footer class="footer container">
-      <TagsList :tags="props.project.tags" />
+      <SkillsList :skills="props.project.skills" />
       <div class="actions">
         <BaseButton
           case="uppercase"
@@ -67,12 +67,12 @@
   import { DifficultyText } from '@/models/enums/difficulty-text';
   import { StateClass } from '@/models/enums/state-class';
   import { useProjectsStore } from '@/stores/projects';
-  import TagsList from './TagsList.vue';
+  import SkillsList from './SkillsList.vue';
 
   const props = defineProps<{ project: Project }>();
   const projectsStore = useProjectsStore();
 
-  const stateClass = StateClass[props.project.state_name];
+  const stateClass = StateClass[props.project.state.state];
   const difficultyText = DifficultyText[props.project.difficulty];
 </script>
 

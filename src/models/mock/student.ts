@@ -13,6 +13,12 @@ export const student: Student = {
     {
       id: 2,
       skill: 'CSS',
+      created_at: '',
+      updated_at: '',
+      pivot: {
+        project_id: 1,
+        skill_id: 1,
+      },
     },
   ],
   experience: [0],

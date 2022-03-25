@@ -3,18 +3,18 @@ import type {
   Project,
   ProjectFilters,
   State,
-  SupervisorName,
-  Tag,
+  Supervisor,
+  Skill,
   Type,
 } from '@/models/Project';
 import {
   projectListResponse,
   states,
-  tags,
+  skills,
   types,
 } from '@/models/mock/project';
 import { delayRes } from '@/helpers/promise';
-import { supervisorNames } from '@/models/mock/supervisor';
+import { supervisorList } from '@/models/mock/supervisor';
 import IProjectApi from './IProjectApi';
 
 export class ProjectApiMock extends IProjectApi {
@@ -49,12 +49,12 @@ export class ProjectApiMock extends IProjectApi {
     return delayRes(project, 400);
   }
 
-  async getAllTags(): Promise<Tag[]> {
-    return delayRes(tags, 300);
+  async getAllSkills(): Promise<Skill[]> {
+    return delayRes(skills, 300);
   }
 
-  async getAllSupervisorNames(): Promise<SupervisorName[]> {
-    return delayRes(supervisorNames, 400);
+  async getAllSupervisors(): Promise<Supervisor[]> {
+    return delayRes(supervisorList, 400);
   }
 
   async getAllProjectTypes(): Promise<Type[]> {

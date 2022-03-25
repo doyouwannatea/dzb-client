@@ -5,9 +5,9 @@
       <BaseTooltip :message="academicSkillsMsg">
         <h2 class="subtitle">Академические навыки (ИСТб-18-1)</h2>
       </BaseTooltip>
-      <TagsList
+      <SkillsList
         class="tags-list"
-        :tags="tags"
+        :skills="skills"
         :show-all="true"
         :disable-all="true"
       />
@@ -15,7 +15,7 @@
       <BaseTooltip :message="individualSkillsMsg">
         <h2 class="subtitle">Индивидуальные навыки</h2>
       </BaseTooltip>
-      <TagsList class="tags-list" :tags="tags" :show-all="true" />
+      <SkillsList class="tags-list" :skills="skills" :show-all="true" />
       <BaseButton
         class="edit-btn"
         case="uppercase"
@@ -30,10 +30,10 @@
 </template>
 
 <script setup lang="ts">
-  import { tags } from '@/models/mock/project';
+  import { skills } from '@/models/mock/project';
   import BasePanel from './base/BasePanel.vue';
   import BaseTooltip from './base/BaseTooltip.vue';
-  import TagsList from './TagsList.vue';
+  import SkillsList from './SkillsList.vue';
   import BaseButton from './base/BaseButton.vue';
   import EditSkillsModal from './EditSkillsModal.vue';
   import { useAuthStore } from '@/stores/auth';

@@ -4,8 +4,8 @@ import {
   Project,
   ProjectFilters,
   State,
-  SupervisorName,
-  Tag,
+  Supervisor,
+  Skill,
   Type,
 } from '@/models/Project';
 import IProjectApi, { ProjectListResponse } from './IProjectApi';
@@ -43,12 +43,12 @@ export class ProjectApi extends IProjectApi {
     return this.ky.get('api/projects/filter', { searchParams }).json();
   }
 
-  async getAllTags(): Promise<Tag[]> {
-    return this.ky.get('api/tags').json();
+  async getAllSkills(): Promise<Skill[]> {
+    return this.ky.get('api/skills').json();
   }
 
-  async getAllSupervisorNames(): Promise<SupervisorName[]> {
-    return this.ky.get('api/supervisors/names').json();
+  async getAllSupervisors(): Promise<Supervisor[]> {
+    return this.ky.get('api/supervisors').json();
   }
 
   async getAllProjectTypes(): Promise<Type[]> {

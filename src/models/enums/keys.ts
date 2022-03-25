@@ -1,21 +1,30 @@
-import { State, SupervisorName, Tag, Type } from '../Project';
+import { State, Supervisor, Skill, Type } from '../Project';
 
-export const SupervisorNameKeys: Record<
-  keyof SupervisorName,
-  keyof SupervisorName
-> = {
+export const SupervisorKeys: Record<keyof Supervisor, keyof Supervisor> = {
   id: 'id',
   fio: 'fio',
+  api_token: 'api_token',
+  created_at: 'created_at',
+  email: 'email',
+  position: 'position',
+  updated_at: 'updated_at',
 };
 export const TypeKeys: Record<keyof Type, keyof Type> = {
   id: 'id',
   type: 'type',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
 };
-export const TagKeys: Record<keyof Tag, keyof Tag> = {
+export const SkillKeys: Record<keyof Skill, keyof Skill> = {
   id: 'id',
-  tag: 'tag',
+  created_at: 'created_at',
+  pivot: 'pivot',
+  skill: 'skill',
+  updated_at: 'updated_at',
 };
 export const StateKeys: Record<keyof State, keyof State> = {
   id: 'id',
   state: 'state',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
 };

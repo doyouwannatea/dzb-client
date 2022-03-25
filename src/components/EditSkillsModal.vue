@@ -8,7 +8,7 @@
     <!-- HEADER -->
     <template #header>
       <h1>Редактирование навыков</h1>
-      <TagsList class="tags-list" :tags="userTags" :show-all="true" />
+      <SkillsList class="tags-list" :skills="userSkills" :show-all="true" />
     </template>
     <!-- HEADER -->
 
@@ -20,10 +20,10 @@
         v-model="searchValue"
         placeholder="Поиск по навыкам"
         :searchable="true"
-        :options="mockTags"
-        label="tag"
-        track-by="tag"
-        value-prop="tag"
+        :options="mockSkills"
+        label="skill"
+        track-by="skill"
+        value-prop="skill"
         class="search"
       />
     </div>
@@ -31,9 +31,9 @@
       <div class="col">
         <h3 class="tags-title">По направлению</h3>
         <ul class="skills-list by-direction-skills">
-          <li v-for="tag in allFilteredTags" :key="tag.id" class="tag-item">
-            <button class="tag-btn" @click="onTagClick(tag)">
-              {{ tag.tag }}
+          <li v-for="skill in allFilteredTags" :key="skill.id" class="tag-item">
+            <button class="tag-btn" @click="onTagClick(skill)">
+              {{ skill.skill }}
             </button>
           </li>
         </ul>
@@ -41,9 +41,9 @@
       <div class="col right-col">
         <h3 class="tags-title">По алфавиту</h3>
         <ul class="skills-list">
-          <li v-for="tag in allFilteredTags" :key="tag.id" class="tag-item">
-            <button class="tag-btn" @click="onTagClick(tag)">
-              {{ tag.tag }}
+          <li v-for="skill in allFilteredTags" :key="skill.id" class="tag-item">
+            <button class="tag-btn" @click="onTagClick(skill)">
+              {{ skill.skill }}
             </button>
           </li>
         </ul>
@@ -62,29 +62,29 @@
 <script setup lang="ts">
   import VMultiselect from '@vueform/multiselect';
   import BaseModal from './base/BaseModal.vue';
-  import TagsList from './TagsList.vue';
+  import SkillsList from './SkillsList.vue';
   import BaseButton from './base/BaseButton.vue';
-  import { tags as mockTags } from '@/models/mock/project';
+  import { skills as mockSkills } from '@/models/mock/project';
   import { computed, ref } from 'vue';
-  import { Tag } from '@/models/Project';
+  import { Skill } from '@/models/Project';
   import { useAuthStore } from '@/stores/auth';
 
   const authStore = useAuthStore();
 
-  function onTagClick(tag: Tag) {
-    if (userTags.value.includes(tag)) return;
-    userTags.value.push(tag);
+  function onTagClick(skill: Skill) {
+    if (userSkills.value.includes(skill)) return;
+    userSkills.value.push(skill);
   }
 
-  const userTags = ref<Tag[]>([]);
-  const allTags = ref(mockTags);
+  const userSkills = ref<Skill[]>([]);
+  const allTags = ref(mockSkills);
   const searchValue = ref('');
 
   const allFilteredTags = computed(() =>
     allTags.value.filter(
-      (tag) =>
+      (skill) =>
         !searchValue.value ||
-        tag.tag.toLowerCase() === searchValue.value.toLowerCase(),
+        skill.skill.toLowerCase() === searchValue.value.toLowerCase(),
     ),
   );
 </script>

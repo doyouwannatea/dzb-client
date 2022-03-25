@@ -54,14 +54,14 @@
           mode="tags"
           placeholder="Ф.И.О."
           :searchable="true"
-          :options="allSupervisorNames.data.value"
-          :loading="allSupervisorNames.loading.value"
-          :label="SupervisorNameKeys.fio"
-          :track-by="SupervisorNameKeys.fio"
-          :value-prop="SupervisorNameKeys.id"
+          :options="allSupervisors.data.value"
+          :loading="allSupervisors.loading.value"
+          :label="SupervisorKeys.fio"
+          :track-by="SupervisorKeys.fio"
+          :value-prop="SupervisorKeys.id"
         />
-        <div v-if="allSupervisorNames.error.value" class="mt-2">
-          {{ allSupervisorNames.error.value }}
+        <div v-if="allSupervisors.error.value" class="mt-2">
+          {{ allSupervisors.error.value }}
         </div>
       </template>
     </BaseAccordion>
@@ -72,19 +72,19 @@
       <template #title>Теги</template>
       <template #content>
         <VMultiselect
-          v-model="tags"
+          v-model="skills"
           mode="tags"
           placeholder="Data Science"
           :close-on-select="false"
           :searchable="true"
-          :options="allTags.data.value"
-          :loading="allTags.loading.value"
-          :label="TagKeys.tag"
-          :track-by="TagKeys.tag"
-          :value-prop="TagKeys.id"
+          :options="allSkills.data.value"
+          :loading="allSkills.loading.value"
+          :label="SkillKeys.skill"
+          :track-by="SkillKeys.skill"
+          :value-prop="SkillKeys.id"
         />
-        <div v-if="allTags.error.value" class="mt-2">
-          {{ allTags.error.value }}
+        <div v-if="allSkills.error.value" class="mt-2">
+          {{ allSkills.error.value }}
         </div>
       </template>
     </BaseAccordion>
@@ -137,7 +137,7 @@
 </template>
 
 <script setup lang="ts">
-  import { SupervisorNameKeys, TagKeys } from '@/models/enums/keys';
+  import { SupervisorKeys, SkillKeys } from '@/models/enums/keys';
 
   import VMultiselect from '@vueform/multiselect';
   import BaseAccordion from './base/BaseAccordion.vue';
@@ -151,7 +151,7 @@
   import { useProjectFilters } from '@/hooks/useProjectFilters';
 
   const prjectsStore = useProjectsStore();
-  const { allSupervisorNames, allTags, allTypes, allStates } =
+  const { allSupervisors, allSkills, allTypes, allStates } =
     useProjectFilterOptions();
 
   const {
@@ -160,7 +160,7 @@
     difficulty,
     states,
     supervisors,
-    tags,
+    skills,
     type,
     dateStart,
     dateEnd,

@@ -20,7 +20,6 @@ export default function useAsyncData<T>(
     error.value = '';
     try {
       data.value = (await fetchData()) as UnwrapRef<T>;
-      console.log(data.value);
     } catch (e) {
       error.value = String(e);
     } finally {

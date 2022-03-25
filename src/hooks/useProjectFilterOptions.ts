@@ -15,8 +15,8 @@ export function useProjectFilterOptions() {
     return isProjectOptions(store.filterOptions);
   };
 
-  const allTags = useAsyncData(() => ProjectApi.getAllTags(), {
-    defaultValue: store.filterOptions?.allTags,
+  const allSkills = useAsyncData(() => ProjectApi.getAllSkills(), {
+    defaultValue: store.filterOptions?.allSkills,
     cancelRequest,
   });
   const allTypes = useAsyncData(() => ProjectApi.getAllProjectTypes(), {
@@ -27,31 +27,28 @@ export function useProjectFilterOptions() {
     defaultValue: store.filterOptions?.allStates,
     cancelRequest,
   });
-  const allSupervisorNames = useAsyncData(
-    () => ProjectApi.getAllSupervisorNames(),
-    {
-      defaultValue: store.filterOptions?.allSupervisorNames,
-      cancelRequest,
-    },
-  );
+  const allSupervisors = useAsyncData(() => ProjectApi.getAllSupervisors(), {
+    defaultValue: store.filterOptions?.allSupervisors,
+    cancelRequest,
+  });
 
   watch(
-    [allTags.data, allTypes.data, allStates.data, allSupervisorNames.data],
+    [allSkills.data, allTypes.data, allStates.data, allSupervisors.data],
     (options) => {
       store.setFilterOptions({
-        allTags: options[0],
+        allSkills: options[0],
         allTypes: options[1],
         allStates: options[2],
-        allSupervisorNames: options[3],
+        allSupervisors: options[3],
       });
     },
     { immediate: true },
   );
 
   return {
-    allTags,
+    allSkills,
     allTypes,
-    allSupervisorNames,
+    allSupervisors,
     allStates,
   };
 }

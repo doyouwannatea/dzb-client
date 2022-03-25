@@ -38,7 +38,7 @@ export const useProjectsStore = () => {
           page: undefined,
           state: undefined,
           supervisor: undefined,
-          tags: undefined,
+          skills: undefined,
           title: undefined,
           type: undefined,
         };

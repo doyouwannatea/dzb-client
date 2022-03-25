@@ -1,6 +1,12 @@
-export interface Tag {
+export interface Skill {
   id: number;
-  tag: string;
+  skill: string;
+  created_at: string;
+  updated_at: string;
+  pivot: {
+    project_id: number;
+    skill_id: number;
+  };
 }
 
 export interface Skill {
@@ -10,31 +16,39 @@ export interface Skill {
 
 export interface Type {
   id: number;
+  created_at: string;
+  updated_at: string;
   type: string;
 }
 
-export interface SupervisorName {
+export interface Supervisor {
   id: number;
+  created_at: string;
+  updated_at: string;
   fio: string;
+  email: string;
+  api_token: string | null;
+  position: string;
 }
 
 export type StateName = 'Открытый' | 'Активный' | 'Обработка' | 'Закрытый';
 
 export interface State {
   id: number;
+  created_at: string;
+  updated_at: string;
   state: StateName;
 }
 
-export type Difficulty = 1 | 2 | 3;
-
 export interface Project {
   id: number;
+  created_at: string;
+  updated_at: string;
   title: string;
   places: number;
-  tags: Tag[];
   goal: string;
   idea: string;
-  difficulty: Difficulty;
+  difficulty: number;
   date_start: string;
   date_end: string;
   requirements: string;
@@ -42,19 +56,17 @@ export interface Project {
   expected_result: string;
   additional_inf: string | null;
   result: string | null;
-  updated_at: string;
-  deleted_at: string | null;
-  type_name: string;
-  supervisor_name: string;
-  vacant_places: number;
-  state_name: StateName;
+  skills: Skill[];
+  type: Type;
+  state: State;
+  supervisor: Supervisor;
 }
 
 export interface ProjectFilters {
   type?: number[];
   state?: number[]; // массив id
   supervisor?: number[]; // массив id
-  tags?: number[]; // массив id
+  skills?: number[]; // массив id
   date_start?: string;
   date_end?: string;
   difficulty?: number[]; // Массив сложностей

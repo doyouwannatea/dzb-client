@@ -1,7 +1,5 @@
-import { Difficulty } from '../Project';
-
-export const DifficultyText: Record<Difficulty, string> = {
-  '1': 'Легко',
-  '2': 'Средне',
-  '3': 'Сложно',
+export const DifficultyText: Record<number, string> = {
+  1: 'Легко',
+  2: 'Средне',
+  3: 'Сложно',
 };

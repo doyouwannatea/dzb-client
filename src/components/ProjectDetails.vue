@@ -7,7 +7,7 @@
         :items="[
           {
             title: 'Руководитель проекта',
-            content: project.supervisor_name,
+            content: project.supervisor.fio,
           },
           {
             title: 'Заказчик',
@@ -28,7 +28,7 @@
         :items="[
           {
             title: 'Тип проекта',
-            content: project.type_name,
+            content: project.type.type,
           },
           {
             title: 'Цель проекта',
@@ -39,13 +39,9 @@
 
       <div>
         <h2 class="info-title">Статус проекта</h2>
-        <BaseBadge class="badge mt-2">{{ project.state_name }}</BaseBadge>
+        <BaseBadge class="badge mt-2">{{ project.state.state }}</BaseBadge>
         <h2 class="info-title mt-4">Кол-во участников</h2>
-        <ProjectTeamCounter
-          class="mt-2"
-          :count="project.vacant_places"
-          :total="project.places"
-        />
+        <ProjectTeamCounter class="mt-2" :count="project.places" :total="12" />
         <BaseButton
           case="uppercase"
           class="mt-4"
@@ -93,11 +89,7 @@
         <InformationListItem :bold="false" :wide="true">
           <template #title>Теги</template>
           <template #default>
-            <span class="tags">
-              <BaseTag v-for="tag in project.tags" :key="tag.id">
-                {{ tag.tag }}
-              </BaseTag>
-            </span>
+            <SkillsList :skills="project.skills" show-all />
           </template>
         </InformationListItem>
       </InformationList>
@@ -107,7 +99,6 @@
 
 <script setup lang="ts">
   import BasePanel from './base/BasePanel.vue';
-  import BaseTag from './base/BaseTag.vue';
   import BaseBadge from './base/BaseBadge.vue';
   import BaseButton from './base/BaseButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
@@ -116,19 +107,13 @@
   import InformationListItem from './InformationListItem.vue';
   import { useProjectsStore } from '@/stores/projects';
   import { storeToRefs } from 'pinia';
+  import SkillsList from './SkillsList.vue';
 
   const projectsStore = useProjectsStore();
   const { openedProject: project, loading, error } = storeToRefs(projectsStore);
 </script>
 
 <style scoped>
-  /* Components */
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3125rem;
-  }
-
   .badge {
     width: max-content;
   }
