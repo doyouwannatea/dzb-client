@@ -1,6 +1,6 @@
 import { Student } from '@/models/Student';
 
-interface State {
+export interface State {
   authModalShow: boolean;
   editSkillsModalShow: boolean;
   loading: boolean;

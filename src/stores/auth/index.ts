@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import CampusAuthApi from '@/api/CampusAuthApi';
 import { state } from './state';
+import { State } from '../auth/state';
 
 export const useAuthStore = defineStore('auth', {
   state,
@@ -26,5 +27,9 @@ export const useAuthStore = defineStore('auth', {
       return Boolean(state.profileData);
     },
   },
-  persist: true,
+  persist: {
+    afterRestore(ctx) {
+      (ctx.store.$state as State).loading = false;
+    },
+  },
 });
