@@ -4,22 +4,10 @@ import { AuthToken } from '@/models/CampusAuth';
 import ICampusAuthApi from './ICampusAuthApi';
 
 export class CampusAuthApi extends ICampusAuthApi {
-  private static _instance: ICampusAuthApi;
   private ky = ky.create({
     prefixUrl: import.meta.env.VITE_CAMPUS_AUTH_API_URL,
     retry: { limit: 5 },
   });
-
-  private constructor() {
-    super();
-  }
-
-  public static get instance() {
-    if (!this._instance) {
-      this._instance = new this();
-    }
-    return this._instance;
-  }
 
   async auth(): Promise<AuthToken> {
     const authToken: AuthToken = await this.ky.get('campus_auth').json();
@@ -34,4 +22,4 @@ export class CampusAuthApi extends ICampusAuthApi {
   }
 }
 
-export default CampusAuthApi.instance;
+export default new CampusAuthApi();

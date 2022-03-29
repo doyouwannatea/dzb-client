@@ -18,19 +18,6 @@ import { supervisorList } from '@/models/mock/supervisor';
 import IProjectApi from './IProjectApi';
 
 export class ProjectApiMock extends IProjectApi {
-  private static _instance: IProjectApi;
-
-  private constructor() {
-    super();
-  }
-
-  public static get instance() {
-    if (!this._instance) {
-      this._instance = new this();
-    }
-    return this._instance;
-  }
-
   async getProjectList(page: number): Promise<ProjectListResponse> {
     return delayRes(projectListResponse, 400);
   }
@@ -66,4 +53,4 @@ export class ProjectApiMock extends IProjectApi {
   }
 }
 
-export default ProjectApiMock.instance;
+export default new ProjectApiMock();

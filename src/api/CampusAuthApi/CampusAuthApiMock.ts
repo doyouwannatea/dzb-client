@@ -6,19 +6,6 @@ import { student } from '@/models/mock/student';
 import ICampusAuthApi from './ICampusAuthApi';
 
 export class CampusAuthApiMock extends ICampusAuthApi {
-  private static _instance: ICampusAuthApi;
-
-  private constructor() {
-    super();
-  }
-
-  public static get instance() {
-    if (!this._instance) {
-      this._instance = new this();
-    }
-    return this._instance;
-  }
-
   async auth(): Promise<AuthToken> {
     this.setToken(authToken.token);
     return delayRes(authToken, 300);
@@ -31,4 +18,4 @@ export class CampusAuthApiMock extends ICampusAuthApi {
   }
 }
 
-export default CampusAuthApiMock.instance;
+export default new CampusAuthApiMock();
