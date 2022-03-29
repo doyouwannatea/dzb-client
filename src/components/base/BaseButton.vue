@@ -96,7 +96,7 @@
 
   .outlined {
     border: 0.125rem solid var(--accent-color-1);
-    background-color: #fff;
+    background-color: transparent;
     color: var(--accent-color-1);
   }
 
