@@ -1,15 +1,24 @@
 import { RouteRecordRaw } from 'vue-router';
 import { RouteNames } from './types/route-names';
 import { validatePage } from './guards/validatePage';
-import ProjectDetails from '@/components/ProjectDetails.vue';
-import ProjectRequestsList from '@/components/ProjectRequestsList.vue';
-import ProfileUserInformation from '@/components/ProfileUserInformation.vue';
-import UserProjects from '@/components/UserProjects.vue';
-import UserSkills from '@/components/UserSkills.vue';
 
-const HomePage = () => import('../components/pages/HomePage.vue');
-const ProjectPage = () => import('../components/pages/ProjectPage.vue');
-const Profile = () => import('../components/pages/ProfilePage.vue');
+// ГЛАВНЫЕ СТРАНИЦЫ
+const HomePage = () => import('@/components/pages/HomePage.vue');
+const ProjectPage = () => import('@/components/pages/ProjectPage.vue');
+const Profile = () => import('@/components/pages/ProfilePage.vue');
+
+// ВЛОЖЕННЫЕ СТРАНИЦЫ
+// профиль пользователя
+const ProfileUserInformation = () =>
+  import('@/components/ProfileUserInformation.vue');
+const UserSkills = () => import('@/components/UserSkills.vue');
+const UserProjects = () => import('@/components/UserProjects.vue');
+const UserRequests = () => import('@/components/UserRequests.vue');
+
+// страницы проекта
+const ProjectRequestsList = () =>
+  import('@/components/ProjectRequestsList.vue');
+const ProjectDetails = () => import('@/components/ProjectDetails.vue');
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -68,7 +77,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: 'requests',
         name: RouteNames.USER_REQUESTS,
-        redirect: { name: RouteNames.USER_INFO },
+        component: UserRequests,
         meta: {
           type: 'user-nav',
           index: 1,
