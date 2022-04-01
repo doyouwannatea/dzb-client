@@ -15,3 +15,9 @@ export function toJSONLocal(date: Date) {
   local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
   return local.toJSON().slice(0, 10);
 }
+
+export function toString(val: unknown): string {
+  if (val === undefined || val === null) return '';
+  if (Array.isArray(val)) return JSON.stringify(val);
+  return String(val);
+}

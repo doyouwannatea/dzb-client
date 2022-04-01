@@ -1,23 +1,43 @@
 import { ProjectFilters } from '@/models/Project';
-import { uniq, toArray, pipe, toNumber, toString } from 'lodash/fp';
-import { LocationQuery, LocationQueryValue } from 'vue-router';
-import { mapNumber } from './array';
+import { ProjectFiltersLocationQuery } from '@/models/LocationQuery';
+import { LocationQueryValue } from 'vue-router';
+import { toString } from './string';
 
-export function parseLocationQueryValue<T>(
-  query: LocationQueryValue | LocationQueryValue[],
-): T | string {
+function locationQueryValueToNumber(
+  queryValue: LocationQueryValue | LocationQueryValue[],
+): number {
+  if (queryValue === null) return NaN;
+  return parseInt(queryValue.toString());
+}
+
+function locationQueryValueToArrayNumber(
+  queryValue: LocationQueryValue | LocationQueryValue[],
+): number[] {
   try {
-    return JSON.parse(query?.toString() || '""');
+    return JSON.parse(toString(queryValue)).map(locationQueryValueToNumber);
   } catch (error) {
-    return '';
+    return [];
   }
 }
 
-const parseQueryArray = pipe(parseLocationQueryValue, toArray, uniq);
-const queryArrayToNumber = pipe(parseQueryArray, mapNumber);
+export function locationQueryToProjectFilters(
+  query: ProjectFiltersLocationQuery,
+): ProjectFilters {
+  console.log(query);
+  return {
+    title: toString(query.title),
+    date_end: toString(query.date_end),
+    date_start: toString(query.date_start),
+    page: locationQueryValueToNumber(query.page),
+    type: locationQueryValueToArrayNumber(query.type),
+    state: locationQueryValueToArrayNumber(query.state),
+    supervisor: locationQueryValueToArrayNumber(query.supervisor),
+    skills: locationQueryValueToArrayNumber(query.skills),
+    difficulty: locationQueryValueToArrayNumber(query.difficulty),
+  };
+}
 
-// кодирует поля объекта в строку для передачи в search params
-export function encodeProjectFiltersToQueries(
+export function projectFiltersToSearchParams(
   filters: ProjectFilters,
 ): Record<keyof ProjectFilters, string> {
   return {
@@ -25,25 +45,10 @@ export function encodeProjectFiltersToQueries(
     date_end: toString(filters.date_end),
     date_start: toString(filters.date_start),
     page: toString(filters.page),
-    type: JSON.stringify(filters.type),
-    state: JSON.stringify(filters.state),
-    supervisor: JSON.stringify(filters.supervisor),
-    skills: JSON.stringify(filters.skills),
-    difficulty: JSON.stringify(filters.difficulty),
-  };
-}
-
-// декодирует ProjectFilters из search params
-export function decodeFiltersFromQueries(query: LocationQuery): ProjectFilters {
-  return {
-    title: toString(query.title),
-    date_end: toString(query.date_end),
-    date_start: toString(query.date_start),
-    page: toNumber(query.page),
-    type: queryArrayToNumber(query.type),
-    state: queryArrayToNumber(query.state),
-    supervisor: queryArrayToNumber(query.supervisor),
-    skills: queryArrayToNumber(query.skills),
-    difficulty: queryArrayToNumber(query.difficulty),
+    type: toString(filters.type),
+    state: toString(filters.state),
+    supervisor: toString(filters.supervisor),
+    skills: toString(filters.skills),
+    difficulty: toString(filters.difficulty),
   };
 }
