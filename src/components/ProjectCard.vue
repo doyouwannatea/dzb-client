@@ -64,8 +64,8 @@
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
   import type { Project } from '@/models/Project';
   import { RouteNames } from '@/router/types/route-names';
-  import { DifficultyText } from '@/models/enums/difficulty-text';
-  import { StateClass } from '@/models/enums/state-class';
+  import { DifficultyText } from '@/models/values/difficulty-text';
+  import { StateClass } from '@/models/values/state-class';
   import { useProjectsStore } from '@/stores/projects';
   import SkillsList from './SkillsList.vue';
 
