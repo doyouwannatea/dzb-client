@@ -23,7 +23,6 @@ function locationQueryValueToArrayNumber(
 export function locationQueryToProjectFilters(
   query: ProjectFiltersLocationQuery,
 ): ProjectFilters {
-  console.log(query);
   return {
     title: toString(query.title),
     date_end: toString(query.date_end),
