@@ -1,7 +1,6 @@
-import { LocationQueryValue } from 'vue-router';
+import { LocationQueryValue, LocationQuery } from 'vue-router';
 import { ProjectFilters } from './Project';
 
-export type ProjectFiltersLocationQuery = Record<
-  keyof ProjectFilters,
-  LocationQueryValue | LocationQueryValue[]
->;
+export type ProjectFiltersLocationQuery =
+  | Record<keyof ProjectFilters, LocationQueryValue | LocationQueryValue[]>
+  | LocationQuery;

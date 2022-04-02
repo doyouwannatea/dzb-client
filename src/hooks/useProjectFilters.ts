@@ -14,9 +14,7 @@ export const useFilteredProjectList = (page: RouteNames) => {
     () => route.query,
     (query) => {
       if (route.name !== page) return;
-      const filters = locationQueryToProjectFilters(
-        query as ProjectFiltersLocationQuery,
-      );
+      const filters = locationQueryToProjectFilters(query);
 
       store.setFilters(filters);
       store.getProjectList();
