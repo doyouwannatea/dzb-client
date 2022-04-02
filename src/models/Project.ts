@@ -9,11 +9,6 @@ export interface Skill {
   };
 }
 
-export interface Skill {
-  id: number;
-  skill: string;
-}
-
 export interface Type {
   id: number;
   created_at: string;
