@@ -39,6 +39,8 @@
 
 <style scoped>
   .btn {
+    --background-color: var(--accent-color-1);
+    --disabled-color: var(--gray-color-2);
     --hover-color: #2248bb;
     --active-color: #3e8bff;
 
@@ -77,7 +79,7 @@
   }
 
   .primary {
-    background-color: var(--accent-color-1);
+    background-color: var(--background-color);
   }
 
   .primary:hover {
@@ -91,13 +93,13 @@
   }
 
   .primary:disabled {
-    background-color: var(--gray-color-2);
+    background-color: var(--disabled-color);
   }
 
   .outlined {
-    border: 0.125rem solid var(--accent-color-1);
+    border: 0.125rem solid var(--background-color);
     background-color: transparent;
-    color: var(--accent-color-1);
+    color: var(--background-color);
   }
 
   .outlined:hover {
@@ -113,8 +115,8 @@
   }
 
   .outlined:disabled {
-    color: var(--gray-color-2);
-    border-color: var(--gray-color-2);
+    color: var(--disabled-color);
+    border-color: var(--disabled-color);
     background-color: transparent;
   }
 
@@ -122,13 +124,13 @@
     padding: 0;
     font-size: 0.875rem;
     border-radius: 0;
-    color: var(--accent-color-1);
+    color: var(--background-color);
   }
 
   .inline-link:hover,
   .link:hover {
     text-decoration: underline;
-    color: var(--accent-color-1);
+    color: var(--background-color);
   }
 
   .inline-link:active,
@@ -138,10 +140,10 @@
 
   .inline-link:disabled,
   .link:disabled {
-    color: var(--gray-color-2);
+    color: var(--disabled-color);
   }
 
   .link {
-    color: var(--accent-color-1);
+    color: var(--background-color);
   }
 </style>
