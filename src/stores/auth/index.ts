@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
-import CampusAuthApi from '@/api/CampusAuthApi';
+import campusAuthApi from '@/api/CampusAuthApi';
 import { state } from './state';
 import { State } from '../auth/state';
+import { Participation } from '@/models/Participation';
 
 export const useAuthStore = defineStore('auth', {
   state,
@@ -10,8 +11,10 @@ export const useAuthStore = defineStore('auth', {
       try {
         this.loading = true;
         this.error = '';
-        await CampusAuthApi.auth();
-        this.profileData = await CampusAuthApi.getCandidateInfo();
+        await campusAuthApi.auth();
+        this.profileData = await campusAuthApi.getCandidateInfo();
+        this.requestsList =
+          await campusAuthApi.getCandidateParticipationsList();
       } catch (error) {
         this.error = String(error);
       } finally {
