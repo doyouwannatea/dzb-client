@@ -3,7 +3,7 @@
   <BaseModal :is-show="props.isShow" @close="emit('close')">
     <!-- MAIN CONTENT -->
     <div class="success-modal">
-      <h1 class="title">Успех!</h1>
+      <h1>Успех!</h1>
       <p class="message">
         Ваша заявка на участие в проекте отправлена. <br />
         Вы можете изменять и отслеживать её в разделе <br />
@@ -38,10 +38,6 @@
 </script>
 
 <style scoped>
-  .title {
-    margin-top: 2.8125rem;
-  }
-
   .success-modal {
     text-align: center;
   }

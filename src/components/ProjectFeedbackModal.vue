@@ -3,7 +3,7 @@
   <BaseModal size="m" :is-show="props.isShow" @close="emit('close')">
     <!-- HEADER -->
     <template #header>
-      <h1 class="title">Отзыв об участии в проекте</h1>
+      <h1>Отзыв об участии в проекте</h1>
       <h2>Платформа для размещения вузовских олимпиад</h2>
     </template>
     <!-- HEADER -->

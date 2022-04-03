@@ -105,7 +105,7 @@
 
   .modal {
     --side-p: 2.75rem;
-    --top-p: 2.1875rem;
+    --top-p: 4rem;
     --bottom-p: 2.5rem;
 
     position: relative;

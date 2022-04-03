@@ -6,7 +6,7 @@
   >
     <!-- MAIN CONTENT -->
     <div class="success-modal">
-      <h1 class="title">Вы не авторизованы</h1>
+      <h1>Вы не авторизованы</h1>
       <p class="message">
         Чтобы подавать заявки на проект, вам необходимо войти в свой профиль
         через систему “Кампус”.
@@ -36,10 +36,6 @@
 </script>
 
 <style scoped>
-  .title {
-    margin-top: 2.8125rem;
-  }
-
   .success-modal {
     text-align: center;
   }
