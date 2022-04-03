@@ -21,3 +21,11 @@ export function toString(val: unknown): string {
   if (Array.isArray(val)) return JSON.stringify(val);
   return String(val);
 }
+
+export function repeatString(str: string, n: number): string {
+  let result = '';
+  for (let i = 0; i < n; i++) {
+    result += str;
+  }
+  return result;
+}
