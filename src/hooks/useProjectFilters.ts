@@ -1,9 +1,10 @@
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { decodeFiltersFromQueries } from '@/helpers/query';
+import { locationQueryToProjectFilters } from '@/helpers/query';
 import { toJSONLocal } from '@/helpers/string';
 import { RouteNames } from '@/router/types/route-names';
 import { useProjectsStore } from '@/stores/projects';
+import { ProjectFiltersLocationQuery } from '@/models/LocationQuery';
 
 export const useFilteredProjectList = (page: RouteNames) => {
   const route = useRoute();
@@ -13,7 +14,7 @@ export const useFilteredProjectList = (page: RouteNames) => {
     () => route.query,
     (query) => {
       if (route.name !== page) return;
-      const filters = decodeFiltersFromQueries(query);
+      const filters = locationQueryToProjectFilters(query);
 
       store.setFilters(filters);
       store.getProjectList();

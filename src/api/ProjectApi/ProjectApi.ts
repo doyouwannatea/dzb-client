@@ -1,5 +1,5 @@
 import ky from 'ky';
-import { encodeProjectFiltersToQueries } from '@/helpers/query';
+import { projectFiltersToSearchParams } from '@/helpers/query';
 import {
   Project,
   ProjectFilters,
@@ -27,7 +27,7 @@ export class ProjectApi extends IProjectApi {
   async filterProjectList(
     filters: ProjectFilters,
   ): Promise<ProjectListResponse> {
-    const searchParams = encodeProjectFiltersToQueries(filters);
+    const searchParams = projectFiltersToSearchParams(filters);
     return this.ky.get('api/projects/filter', { searchParams }).json();
   }
 

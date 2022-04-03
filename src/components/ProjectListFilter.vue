@@ -137,7 +137,7 @@
 </template>
 
 <script setup lang="ts">
-  import { SupervisorKeys, SkillKeys } from '@/models/enums/keys';
+  import { SupervisorKeys, SkillKeys } from '@/models/values/keys';
 
   import VMultiselect from '@vueform/multiselect';
   import BaseAccordion from './base/BaseAccordion.vue';

@@ -1,5 +1,5 @@
 import ProjectApi from '@/api/ProjectApi';
-import { encodeProjectFiltersToQueries } from '@/helpers/query';
+import { projectFiltersToSearchParams } from '@/helpers/query';
 import { Project, ProjectFilters } from '@/models/Project';
 import { RouteNames } from '@/router/types/route-names';
 import { defineStore } from 'pinia';
@@ -26,7 +26,7 @@ export const useProjectsStore = () => {
         if (this.loading) return;
         router.push({
           name: router.currentRoute.value.name || RouteNames.HOME,
-          query: encodeProjectFiltersToQueries(this.filters),
+          query: projectFiltersToSearchParams(this.filters),
         });
       },
       clearFilters() {

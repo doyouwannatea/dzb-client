@@ -102,7 +102,7 @@
   import BaseBadge from './base/BaseBadge.vue';
   import BaseButton from './base/BaseButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
-  import { DifficultyText } from '@/models/enums/difficulty-text';
+  import { DifficultyText } from '@/models/values/difficulty-text';
   import InformationList from './InformationList.vue';
   import InformationListItem from './InformationListItem.vue';
   import { useProjectsStore } from '@/stores/projects';
