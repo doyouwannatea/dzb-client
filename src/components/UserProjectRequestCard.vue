@@ -25,6 +25,7 @@
         v-if="editable"
         class="delete-btn"
         variant="outlined"
+        color="red"
         @click="$emit('delete', projectRequest)"
       >
         <svg
@@ -144,9 +145,6 @@
   }
 
   .delete-btn {
-    --background-color: var(--red-color-1);
-    --hover-color: var(--red-color-1);
-    --active-color: var(--red-color-2);
     margin-top: 1rem;
     grid-column: 3;
     padding: 0.425rem;

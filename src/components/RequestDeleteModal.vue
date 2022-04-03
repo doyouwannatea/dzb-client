@@ -12,6 +12,7 @@
           class="delete-btn"
           case="uppercase"
           variant="outlined"
+          color="red"
           @click="onDeleteRequest"
         >
           удалить заявку
@@ -62,11 +63,5 @@
     gap: 0.5rem;
     justify-content: center;
     margin-top: 2.5rem;
-  }
-
-  .delete-btn {
-    --background-color: var(--red-color-1);
-    --hover-color: var(--red-color-1);
-    --active-color: var(--red-color-2);
   }
 </style>

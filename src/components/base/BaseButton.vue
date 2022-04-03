@@ -6,6 +6,7 @@
       'btn',
       props.variant,
       props.case,
+      props.color,
       { 'full-width': props.fullWidth },
     ]"
   >
@@ -19,6 +20,7 @@
   type Variant = 'outlined' | 'link' | 'inline-link' | 'primary';
   type Is = 'button' | 'router-link';
   type Case = 'uppercase' | 'lowercase';
+  type Color = 'red';
 
   type Props = {
     variant?: Variant;
@@ -26,6 +28,7 @@
     disabled?: boolean;
     fullWidth?: boolean;
     case?: Case;
+    color?: Color;
   };
 
   const props = withDefaults(defineProps<Props>(), {
@@ -33,7 +36,8 @@
     variant: 'primary',
     disabled: false,
     fullWidth: false,
-    case: undefined,
+    case: 'uppercase',
+    color: undefined,
   });
 </script>
 
@@ -61,6 +65,12 @@
     background-color: transparent;
     transition: background-color 20ms ease, color 20ms ease;
     text-decoration: none;
+  }
+
+  .btn.red {
+    --background-color: var(--red-color-1);
+    --hover-color: var(--red-color-1);
+    --active-color: var(--red-color-2);
   }
 
   .btn:disabled {

@@ -27,6 +27,7 @@
       class="btn"
       case="uppercase"
       variant="outlined"
+      color="red"
       @click="onCancelEdit"
     >
       отмена
