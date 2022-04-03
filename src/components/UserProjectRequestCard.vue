@@ -1,7 +1,16 @@
 <template>
-  <BasePanel :cols="1" class="card">
+  <BasePanel :cols="1" :class="['card', { editable }]">
     <div class="card-content">
-      <h2 class="title">{{ projectRequest.project.title }}</h2>
+      <RouterLink
+        class="title"
+        :to="{
+          name: RouteNames.PROJECT_DETAILS,
+          params: { id: projectRequest.project.id },
+        }"
+        target="_blank"
+      >
+        {{ projectRequest.project.title }}
+      </RouterLink>
       <p class="desc">{{ projectRequest.project.goal }}</p>
 
       <BaseBadge class="status">
@@ -12,7 +21,12 @@
         {{ repeatString('I', projectRequest.priority) }}
       </div>
 
-      <BaseButton v-if="editable" class="delete-btn" variant="outlined">
+      <BaseButton
+        v-if="editable"
+        class="delete-btn"
+        variant="outlined"
+        @click="$emit('delete', projectRequest)"
+      >
         <svg
           width="25"
           height="25"
@@ -38,7 +52,6 @@
           />
         </svg>
       </BaseButton>
-      <!-- right col -->
     </div>
   </BasePanel>
 </template>
@@ -47,6 +60,8 @@
   import BasePanel from '@/components/base/BasePanel.vue';
   import { repeatString } from '@/helpers/string';
   import { Participation } from '@/models/Participation';
+  import { RouteNames } from '@/router/types/route-names';
+  import { RouterLink } from 'vue-router';
   import BaseBadge from './base/BaseBadge.vue';
   import BaseButton from './base/BaseButton.vue';
 
@@ -54,12 +69,24 @@
     editable: boolean;
     projectRequest: Participation;
   };
+  type Emits = {
+    (e: 'delete', request: Participation): void;
+  };
   defineProps<Props>();
+  defineEmits<Emits>();
 </script>
 
 <style scoped>
   .card {
     padding: 1.375rem 1.3125rem;
+  }
+
+  .card.ghost {
+    opacity: 0.5;
+  }
+
+  .card.editable {
+    cursor: grab;
   }
 
   .card-content {
@@ -70,10 +97,14 @@
   }
 
   .title {
+    justify-self: flex-start;
+
+    /* text */
     font-weight: 600;
     font-size: 1.5rem;
     line-height: 1.9375rem;
     color: #4f5569;
+    text-decoration: none;
   }
 
   .desc {
