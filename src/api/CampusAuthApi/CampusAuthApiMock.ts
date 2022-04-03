@@ -3,6 +3,8 @@ import { AuthToken } from '@/models/CampusAuth';
 import { Candidate } from '@/models/Candidate';
 import { authToken } from '@/models/mock/campusAuth';
 import { candidate } from '@/models/mock/candidate';
+import { participationsList } from '@/models/mock/participation';
+import { Participation } from '@/models/Participation';
 import ICampusAuthApi from './ICampusAuthApi';
 
 export class CampusAuthApiMock extends ICampusAuthApi {
@@ -15,6 +17,11 @@ export class CampusAuthApiMock extends ICampusAuthApi {
     const authToken = this.getToken();
     if (!authToken) throw new Error('Auth token required!');
     return delayRes(candidate, 300);
+  }
+
+  async getCandidateParticipationsList(): Promise<Participation[]> {
+    if (!authToken) throw new Error('Auth token required!');
+    return delayRes(participationsList, 300);
   }
 }
 

@@ -2,6 +2,8 @@ import ky from 'ky';
 import { Candidate } from '@/models/Candidate';
 import { AuthToken } from '@/models/CampusAuth';
 import ICampusAuthApi from './ICampusAuthApi';
+import { Participation } from '@/models/Participation';
+import campusAuthApiMock from './CampusAuthApiMock';
 
 export class CampusAuthApi extends ICampusAuthApi {
   private ky = ky.create({
@@ -19,6 +21,10 @@ export class CampusAuthApi extends ICampusAuthApi {
     return this.ky
       .get('api/candidate', { headers: { 'x-api-key': this.getToken() } })
       .json();
+  }
+
+  async getCandidateParticipationsList(): Promise<Participation[]> {
+    return campusAuthApiMock.getCandidateParticipationsList();
   }
 }
 
