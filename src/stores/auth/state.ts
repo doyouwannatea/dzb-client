@@ -1,11 +1,11 @@
-import { Student } from '@/models/Student';
+import { Candidate } from '@/models/Candidate';
 
 export interface State {
   authModalShow: boolean;
   editSkillsModalShow: boolean;
   loading: boolean;
   error: string;
-  profileData?: Student;
+  profileData?: Candidate;
 }
 
 export const state = (): State => ({

@@ -1,8 +1,8 @@
 import { delayRes } from '@/helpers/promise';
 import { AuthToken } from '@/models/CampusAuth';
-import { Student } from '@/models/Student';
+import { Candidate } from '@/models/Candidate';
 import { authToken } from '@/models/mock/campusAuth';
-import { student } from '@/models/mock/student';
+import { candidate } from '@/models/mock/candidate';
 import ICampusAuthApi from './ICampusAuthApi';
 
 export class CampusAuthApiMock extends ICampusAuthApi {
@@ -11,10 +11,10 @@ export class CampusAuthApiMock extends ICampusAuthApi {
     return delayRes(authToken, 300);
   }
 
-  async getStudentInfo(): Promise<Student> {
+  async getCandidateInfo(): Promise<Candidate> {
     const authToken = this.getToken();
     if (!authToken) throw new Error('Auth token required!');
-    return delayRes(student, 300);
+    return delayRes(candidate, 300);
   }
 }
 

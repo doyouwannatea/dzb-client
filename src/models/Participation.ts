@@ -1,14 +1,11 @@
-import { Project, Skill } from './Project';
+import { Candidate } from './Candidate';
+import { Project } from './Project';
 
 export interface Participation {
   id: number;
-  state: string;
-  motivation: string;
-  skills: Skill[];
+  priority: number;
   project: Project;
-}
-
-export interface ParticipationCreate {
-  motivation: string;
-  skills: Skill[];
+  candidate: Candidate;
+  state: string;
+  review: string;
 }

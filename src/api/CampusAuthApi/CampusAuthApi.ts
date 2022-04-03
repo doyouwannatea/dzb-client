@@ -1,5 +1,5 @@
 import ky from 'ky';
-import { Student } from '@/models/Student';
+import { Candidate } from '@/models/Candidate';
 import { AuthToken } from '@/models/CampusAuth';
 import ICampusAuthApi from './ICampusAuthApi';
 
@@ -15,7 +15,7 @@ export class CampusAuthApi extends ICampusAuthApi {
     return authToken;
   }
 
-  async getStudentInfo(): Promise<Student> {
+  async getCandidateInfo(): Promise<Candidate> {
     return this.ky
       .get('api/candidate', { headers: { 'x-api-key': this.getToken() } })
       .json();

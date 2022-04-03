@@ -11,7 +11,7 @@ export const useAuthStore = defineStore('auth', {
         this.loading = true;
         this.error = '';
         await CampusAuthApi.auth();
-        this.profileData = await CampusAuthApi.getStudentInfo();
+        this.profileData = await CampusAuthApi.getCandidateInfo();
       } catch (error) {
         this.error = String(error);
       } finally {

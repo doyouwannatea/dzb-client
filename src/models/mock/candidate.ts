@@ -1,6 +1,6 @@
-import { Student } from '../Student';
+import { Candidate } from '../Candidate';
 
-export const student: Student = {
+export const candidate: Candidate = {
   id: 2,
   fio: 'Малыгина Елена',
   about: 'Информация обо мне',
@@ -21,5 +21,5 @@ export const student: Student = {
       },
     },
   ],
-  experience: [0],
+  api_token: 'api_token test token',
 };
