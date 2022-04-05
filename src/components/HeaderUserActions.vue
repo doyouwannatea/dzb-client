@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { useAuthStore } from '@/stores/auth';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
   import BaseButton from './base/BaseButton.vue';
   import HeaderUserDropdown from './HeaderUserDropdown.vue';
   import arrowIconUrl from '@/assets/icons/dropdown-arrow.svg?url';

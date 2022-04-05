@@ -36,7 +36,7 @@
   import SkillsList from './SkillsList.vue';
   import BaseButton from './base/BaseButton.vue';
   import EditSkillsModal from './EditSkillsModal.vue';
-  import { useAuthStore } from '@/stores/auth';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
   const authStore = useAuthStore();
 

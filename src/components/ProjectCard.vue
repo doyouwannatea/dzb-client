@@ -67,7 +67,7 @@
   import { RouteNames } from '@/router/types/route-names';
   import { DifficultyText } from '@/models/values/difficulty-text';
   import { StateClass } from '@/models/values/state-class';
-  import { useProjectsStore } from '@/stores/projects';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import SkillsList from './SkillsList.vue';
 
   const props = defineProps<{ project: Project }>();

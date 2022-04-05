@@ -147,7 +147,7 @@
   import BaseInput from './base/BaseInput.vue';
 
   import { useProjectFilterOptions } from '@/hooks/useProjectFilterOptions';
-  import { useProjectsStore } from '@/stores/projects';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useProjectFilters } from '@/hooks/useProjectFilters';
 
   const prjectsStore = useProjectsStore();

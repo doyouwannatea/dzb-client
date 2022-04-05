@@ -67,7 +67,7 @@
   import { skills as mockSkills } from '@/models/mock/project';
   import { computed, ref } from 'vue';
   import { Skill } from '@/models/Project';
-  import { useAuthStore } from '@/stores/auth';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
   const authStore = useAuthStore();
 

@@ -105,7 +105,7 @@
   import { DifficultyText } from '@/models/values/difficulty-text';
   import InformationList from './InformationList.vue';
   import InformationListItem from './InformationListItem.vue';
-  import { useProjectsStore } from '@/stores/projects';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { storeToRefs } from 'pinia';
   import SkillsList from './SkillsList.vue';
 

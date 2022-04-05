@@ -4,7 +4,7 @@ import { Project, ProjectFilters } from '@/models/Project';
 import { RouteNames } from '@/router/types/route-names';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '../auth';
+import { useAuthStore } from '../auth/useAuthStore';
 import { ProjectFilterOptions, state } from './state';
 
 export const useProjectsStore = () => {

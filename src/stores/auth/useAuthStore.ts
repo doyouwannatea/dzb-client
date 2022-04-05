@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia';
 import campusAuthApi from '@/api/CampusAuthApi';
 import { state } from './state';
-import { State } from '../auth/state';
-import { Participation } from '@/models/Participation';
+import { State } from './state';
 
 export const useAuthStore = defineStore('auth', {
   state,

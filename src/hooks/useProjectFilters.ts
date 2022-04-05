@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router';
 import { locationQueryToProjectFilters } from '@/helpers/query';
 import { toJSONLocal } from '@/helpers/string';
 import { RouteNames } from '@/router/types/route-names';
-import { useProjectsStore } from '@/stores/projects';
+import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 import { ProjectFiltersLocationQuery } from '@/models/LocationQuery';
 
 export const useFilteredProjectList = (page: RouteNames) => {

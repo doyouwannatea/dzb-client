@@ -23,7 +23,7 @@
   import ProfileNavigation from '../unique/ProfileNavigation.vue';
   import DeadlineTimer from '../DeadlineTimer.vue';
   import { watch } from 'vue';
-  import { useAuthStore } from '@/stores/auth';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { RouteNames } from '@/router/types/route-names';
 
   const authStore = useAuthStore();

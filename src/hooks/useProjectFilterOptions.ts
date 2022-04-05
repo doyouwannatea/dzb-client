@@ -2,7 +2,7 @@ import { watch } from 'vue';
 import ProjectApi from '@/api/ProjectApi';
 import useAsyncData from './useAsyncData';
 import { ProjectFilterOptions } from '@/stores/projects/state';
-import { useProjectsStore } from '@/stores/projects';
+import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 
 const isProjectOptions = (options: ProjectFilterOptions) => {
   return Object.values(options).every(Boolean);

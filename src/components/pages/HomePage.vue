@@ -41,7 +41,7 @@
   import ProjectSearch from '@/components/ProjectSearch.vue';
   import SidebarContainer from '@/components/SidebarContainer.vue';
   import ProjectListPagination from '@/components/ProjectListPagination.vue';
-  import { useProjectsStore } from '@/stores/projects';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useFilteredProjectList } from '@/hooks/useProjectFilters';
   import { RouteNames } from '@/router/types/route-names';
 
