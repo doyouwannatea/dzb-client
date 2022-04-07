@@ -1,21 +1,28 @@
 <template>
-  <div v-if="editableList">
-    <Draggable v-model="editableList" v-bind="dragOptions" :move="onMove">
-      <template #item="{ element }">
+  <div v-if="editableRequestsList.length > 0">
+    <Draggable
+      v-model="editableRequestsList"
+      v-bind="dragOptions"
+      :disabled="dragDisabled"
+      :move="onMove"
+    >
+      <template #item="{ element, index }">
         <UserProjectRequestCard
-          :editable="!dragOptions.disabled"
-          :project-request="element"
-          @delete="onRequestDeleteModalOpen"
+          :editable="!dragDisabled"
+          :priority="index + 1"
+          :project-request="element.content"
+          @delete="openDeleteModal"
         />
       </template>
     </Draggable>
   </div>
+  <UserProjectRequestsStub v-else />
   <div v-if="authStore.loading">loading...</div>
   <div v-if="authStore.error">{{ authStore.error }}</div>
 
-  <div class="actions">
+  <div v-if="editableRequestsList.length > 0" class="actions">
     <BaseButton
-      v-if="!dragOptions.disabled"
+      v-if="!dragDisabled"
       class="btn"
       case="uppercase"
       @click="onSave"
@@ -23,7 +30,7 @@
       сохранить изменения
     </BaseButton>
     <BaseButton
-      v-if="!dragOptions.disabled"
+      v-if="!dragDisabled"
       class="btn"
       case="uppercase"
       variant="outlined"
@@ -33,7 +40,7 @@
       отмена
     </BaseButton>
     <BaseButton
-      v-if="dragOptions.disabled"
+      v-if="dragDisabled"
       class="btn edit-btn"
       variant="outlined"
       case="uppercase"
@@ -44,76 +51,114 @@
   </div>
   <RequestDeleteModal
     :is-show="deleteRequestModalShow"
-    :request="currentDeleteable"
+    :request="currentDeleteableRequest"
     @close="deleteRequestModalShow = false"
-    @delete-request="onDeleteRequest"
+    @delete-request="deleteRequest"
   />
 </template>
 
 <script setup lang="ts">
   import Draggable from 'vuedraggable';
-  import { ref, watch } from 'vue';
-  import UserProjectRequestCard from './UserProjectRequestCard.vue';
+  import { onBeforeMount, ref } from 'vue';
+  import UserProjectRequestCard from './ProjectRequestCard.vue';
   import BaseButton from './base/BaseButton.vue';
   import { Participation } from '@/models/Participation';
-  import { deleteByKey, deepClone } from '@/helpers/array';
+  import { immutableSort } from '@/helpers/array';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import RequestDeleteModal from './RequestDeleteModal.vue';
+  import campusAuthApi from '@/api/CampusAuthApi';
+  import { ALL_PRIORITIES } from '@/models/values/participation-priority';
+  import UserProjectRequestsStub from './UserProjectRequestsStub.vue';
+
+  type EditableListItem = {
+    order: number;
+    content?: Participation;
+  };
+
+  const dragOptions = {
+    animation: 200,
+    ghostClass: 'ghost',
+    itemKey: 'order',
+    tag: 'transition-group',
+  };
 
   const authStore = useAuthStore();
 
-  const currentDeleteable = ref<Participation | undefined>(undefined);
   const deleteRequestModalShow = ref(false);
-  const editableList = ref<Participation[] | undefined>(undefined);
+  const dragDisabled = ref(true);
+  const currentDeleteableRequest = ref<Participation | undefined>(undefined);
+  const editableRequestsList = ref<EditableListItem[]>([]);
 
-  watch(
-    () => authStore.requestsList,
-    () => (editableList.value = deepClone(authStore.requestsList)),
-    { immediate: true },
-  );
+  onBeforeMount(initEditableList);
 
-  const dragOptions = ref({
-    animation: 200,
-    disabled: true,
-    ghostClass: 'ghost',
-    itemKey: 'id',
-    tag: 'transition-group',
-  });
+  function initEditableList() {
+    if (authStore.requestsList?.length) {
+      const existingPriorities = new Set<number>();
 
-  function onToggleEdit() {
-    dragOptions.value.disabled = false;
-  }
+      for (const request of authStore.requestsList) {
+        editableRequestsList.value.push({
+          order: request.priority,
+          content: request,
+        });
+        existingPriorities.add(request.priority);
+      }
 
-  function onCancelEdit() {
-    dragOptions.value.disabled = true;
-    editableList.value = deepClone(authStore.requestsList);
-  }
+      const missingPriorities = ALL_PRIORITIES.filter(
+        (priority) => !existingPriorities.has(priority),
+      );
 
-  function onSave() {
-    dragOptions.value.disabled = true;
-    authStore.requestsList = editableList.value;
-  }
+      for (const priority of missingPriorities) {
+        editableRequestsList.value.push({
+          order: priority,
+        });
+      }
 
-  function onRequestDeleteModalOpen(request: Participation) {
-    deleteRequestModalShow.value = true;
-    currentDeleteable.value = request;
-  }
-
-  function onDeleteRequest(request: Participation) {
-    if (editableList.value) {
-      editableList.value = deleteByKey(editableList.value, 'id', request.id);
+      editableRequestsList.value = immutableSort(
+        editableRequestsList.value,
+        'ASC',
+        'order',
+      );
     }
   }
 
-  function onMove(evt: any) {
-    if (editableList.value) {
-      const index: number = evt.draggedContext.index;
-      const futureIndex: number = evt.draggedContext.futureIndex;
-      const priority = editableList.value[index].priority;
-      const futurePriority = editableList.value[futureIndex].priority;
+  function onToggleEdit() {
+    dragDisabled.value = false;
+  }
 
-      editableList.value[index].priority = futurePriority;
-      editableList.value[futureIndex].priority = priority;
+  function onCancelEdit() {
+    dragDisabled.value = true;
+    editableRequestsList.value = [];
+    initEditableList();
+  }
+
+  function onMove(event: any) {
+    if (!event.draggedContext.element.content) return false;
+  }
+
+  function onSave() {
+    dragDisabled.value = true;
+    if (editableRequestsList.value) {
+      for (const [index, item] of editableRequestsList.value.entries()) {
+        if (item.content)
+          campusAuthApi.setParticipationPriority(item.content.id, index + 1);
+      }
+    }
+  }
+
+  function openDeleteModal(request: Participation) {
+    deleteRequestModalShow.value = true;
+    currentDeleteableRequest.value = request;
+  }
+
+  function deleteRequest(request: Participation) {
+    if (editableRequestsList.value) {
+      const idx = editableRequestsList.value.findIndex(
+        (item) => item.content?.id === request.id,
+      );
+      editableRequestsList.value = [
+        ...editableRequestsList.value.slice(0, idx),
+        ...editableRequestsList.value.slice(idx + 1),
+      ];
     }
   }
 </script>

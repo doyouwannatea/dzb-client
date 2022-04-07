@@ -24,6 +24,17 @@ export class CampusAuthApi extends ICampusAuthApi {
   async getCandidateParticipationsList(): Promise<Participation[]> {
     return campusAuthApiMock.getCandidateParticipationsList();
   }
+
+  async deleteParticipation(id: number): Promise<void> {
+    return campusAuthApiMock.deleteParticipation(id);
+  }
+
+  async setParticipationPriority(
+    id: number,
+    newPriority: number,
+  ): Promise<void> {
+    return campusAuthApiMock.setParticipationPriority(id, newPriority);
+  }
 }
 
 export default new CampusAuthApi();

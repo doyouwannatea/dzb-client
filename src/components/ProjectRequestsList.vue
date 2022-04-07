@@ -40,24 +40,15 @@
     </table>
   </BasePanel>
   <BasePanel v-else :cols="1" class="empty-list-panel">
-    <section>
-      <h1 class="empty-title">Ни одной заявки :(</h1>
-      <p class="empty-subtitle">
-        Пока на этот проект ещё не подали ни одной заявки, так что ты можешь
-        стать первым!
-      </p>
-      <BaseButton case="uppercase" :disabled="loading" class="request-btn">
-        подать заявку
-      </BaseButton>
-    </section>
+    <ProjectRequestsStub />
   </BasePanel>
 </template>
 
 <script setup lang="ts">
   import BasePanel from './base/BasePanel.vue';
-  import BaseButton from './base/BaseButton.vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { storeToRefs } from 'pinia';
+  import ProjectRequestsStub from './ProjectRequestsStub.vue';
 
   const {
     openedProject: project,
@@ -67,31 +58,6 @@
 </script>
 
 <style scoped>
-  .empty-list-panel {
-    text-align: center;
-    color: var(--gray-color-2);
-  }
-
-  .empty-title {
-    font-size: 1.75rem;
-    line-height: 2.25rem;
-  }
-
-  .empty-subtitle {
-    font-size: 1.125rem;
-    line-height: 150%;
-    margin-top: 1rem;
-    max-width: 28.125rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .request-btn {
-    margin-top: 2.125rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
   .list-panel {
     padding-top: 0;
     padding-left: 0;
