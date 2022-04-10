@@ -151,8 +151,8 @@
     aspect-ratio: 1 / 1;
   }
 
-  .delete-btn:hover ::v-deep(.delete-btn-path),
-  .delete-btn:active ::v-deep(.delete-btn-path) {
+  .delete-btn:hover:deep(.delete-btn-path),
+  .delete-btn:active:deep(.delete-btn-path) {
     stroke: #fff;
   }
 </style>
