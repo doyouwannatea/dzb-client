@@ -43,6 +43,7 @@
           v-model="filters.tags"
           mode="tags"
           placeholder="По навыкам"
+          class="miltiselect"
           :close-on-select="false"
           :searchable="true"
           :options="allSkills.data.value"
@@ -110,7 +111,11 @@
 </script>
 
 <style scoped>
-  .miltiselect {
+  .miltiselect:deep(.multiselect-clear) {
+    display: none;
+  }
+
+  .miltiselect:first-child {
     margin-bottom: 1.25rem;
   }
 
