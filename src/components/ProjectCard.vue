@@ -5,7 +5,7 @@
         {{ project.title }}
       </h2>
       <BaseBadge class="status">{{ project.state.state }}</BaseBadge>
-      <div class="subtitle">{{ project.customer }}</div>
+      <div class="subtitle">{{ project.supervisor.fio }}</div>
     </header>
     <div class="divider"></div>
     <div class="body container">
@@ -19,17 +19,11 @@
           {{ project.requirements }}
         </li>
         <li class="list-item">
-          <b>Сроки реализации:</b> {{ project.date_start }} –
-          {{ project.date_end }}
+          <b>Старт проекта:</b> {{ project.date_start }}
         </li>
-        <li class="list-item"><b>Тип проекта:</b> {{ project.type.type }}</li>
       </ul>
       <div class="info">
-        <ProjectTeamCounter
-          class="team-counter"
-          :count="project.places"
-          :total="12"
-        />
+        <ProjectTeamCounter class="team-counter" :total="project.places" />
         <div class="difficulty">
           <span class="icon star-icon"></span>
           <span>{{ difficultyText }}</span>
@@ -81,7 +75,6 @@
   .card {
     --status-color: var(--accent-color-1);
     --border-left-color: var(--accent-color-1);
-    --team-counter-color: var(--accent-color-1);
 
     width: 100%;
     background: #ffffff;
@@ -93,21 +86,18 @@
   }
 
   .card.active {
-    --status-color: #26ab5b;
-    --border-left-color: #26ab5b;
-    --team-counter-color: #26ab5b;
+    --status-color: var(--green-color-1);
+    --border-left-color: var(--green-color-1);
   }
 
-  .card.recruitment {
-    --status-color: #ffa500;
-    --border-left-color: #ffa500;
-    --team-counter-color: #ff7a00;
+  .card.extra {
+    --status-color: var(--accent-color-2);
+    --border-left-color: var(--accent-color-2);
   }
 
-  .card.closed {
-    --status-color: #e24c4c;
-    --border-left-color: #e24c4c;
-    --team-counter-color: #e24c4c;
+  .card.archived {
+    --status-color: var(--gray-color-2);
+    --border-left-color: var(--gray-color-2);
   }
 
   .footer {
@@ -120,6 +110,7 @@
   .header {
     padding-bottom: 1.25rem;
     display: grid;
+    align-items: center;
     grid-template-columns: auto 1fr;
     gap: 0.8125rem;
   }
@@ -128,6 +119,7 @@
     display: flex;
     gap: 0.75rem;
     align-self: flex-end;
+    margin-left: auto;
   }
 
   .info {
@@ -147,10 +139,6 @@
 
   .difficulty {
     color: var(--text-color);
-  }
-
-  .team-counter {
-    color: var(--team-counter-color) !important;
   }
 
   .icon {
@@ -192,8 +180,8 @@
   .status {
     align-self: flex-start;
     justify-self: flex-end;
-    border-color: var(--status-color) !important;
-    color: var(--status-color) !important;
+    border-color: var(--status-color);
+    color: var(--status-color);
   }
 
   .body {

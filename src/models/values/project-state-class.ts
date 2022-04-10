@@ -5,8 +5,4 @@ export const StateClass: Record<StateName, string> = {
   добор: 'extra',
   'в архиве': 'archived',
   'идёт набор': 'recruiting',
-  // Открытый: 'new',
-  // Активный: 'active',
-  // Обработка: 'null',
-  // Закрытый: 'closed',
 };

@@ -29,12 +29,12 @@
         </clipPath>
       </defs>
     </svg>
-    <span>{{ count }}/{{ total }}</span>
+    <span>{{ total }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
-  defineProps<{ count: number; total: number }>();
+  defineProps<{ total: number }>();
 </script>
 
 <style scoped>
@@ -46,8 +46,8 @@
   }
 
   .icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.7rem;
+    height: 1.7rem;
   }
 
   .icon-path {
