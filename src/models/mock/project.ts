@@ -4,25 +4,25 @@ import { State, Skill, Type } from '../Project';
 export const states: State[] = [
   {
     id: 1,
-    state: 'Обработка',
+    state: 'идёт набор',
     created_at: '',
     updated_at: '',
   },
   {
     id: 2,
-    state: 'Открытый',
+    state: 'активный',
     created_at: '',
     updated_at: '',
   },
   {
     id: 3,
-    state: 'Активный',
+    state: 'добор',
     created_at: '',
     updated_at: '',
   },
   {
     id: 4,
-    state: 'Закрытый',
+    state: 'в архиве',
     created_at: '',
     updated_at: '',
   },
@@ -167,7 +167,7 @@ export const projectListResponse: ProjectListResponse = {
         position: 'руководитель',
       },
       state: {
-        state: 'Закрытый',
+        state: 'активный',
         id: 1,
         created_at: '',
         updated_at: '',
@@ -221,7 +221,7 @@ export const projectListResponse: ProjectListResponse = {
         position: 'руководитель',
       },
       state: {
-        state: 'Закрытый',
+        state: 'добор',
         id: 1,
         created_at: '',
         updated_at: '',
@@ -275,7 +275,7 @@ export const projectListResponse: ProjectListResponse = {
         position: 'руководитель',
       },
       state: {
-        state: 'Закрытый',
+        state: 'идёт набор',
         id: 1,
         created_at: '',
         updated_at: '',
@@ -329,7 +329,7 @@ export const projectListResponse: ProjectListResponse = {
         position: 'руководитель',
       },
       state: {
-        state: 'Закрытый',
+        state: 'в архиве',
         id: 1,
         created_at: '',
         updated_at: '',
@@ -383,7 +383,7 @@ export const projectListResponse: ProjectListResponse = {
         position: 'руководитель',
       },
       state: {
-        state: 'Закрытый',
+        state: 'активный',
         id: 1,
         created_at: '',
         updated_at: '',
@@ -437,7 +437,7 @@ export const projectListResponse: ProjectListResponse = {
         position: 'руководитель',
       },
       state: {
-        state: 'Закрытый',
+        state: 'активный',
         id: 1,
         created_at: '',
         updated_at: '',

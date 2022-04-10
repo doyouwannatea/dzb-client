@@ -3,7 +3,6 @@ import { Candidate } from '@/models/Candidate';
 import ICampusAuthApi from './ICampusAuthApi';
 import { Participation } from '@/models/Participation';
 import campusAuthApiMock from './CampusAuthApiMock';
-import { getCookie } from '@/helpers/cookie';
 
 export class CampusAuthApi extends ICampusAuthApi {
   private ky = ky.create({

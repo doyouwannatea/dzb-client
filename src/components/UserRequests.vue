@@ -57,7 +57,7 @@
   import BaseButton from './base/BaseButton.vue';
   import { Participation } from '@/models/Participation';
   import { deleteByKey, deepClone } from '@/helpers/array';
-  import { useAuthStore } from '@/stores/auth';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
   import RequestDeleteModal from './RequestDeleteModal.vue';
 
   const authStore = useAuthStore();

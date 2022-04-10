@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
   import { computed, ref, watch, withDefaults } from 'vue';
-  import { useProjectsStore } from '@/stores/projects';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 
   type Props = {
     totalItems: number;

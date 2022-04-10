@@ -41,7 +41,7 @@
   import { RouteNames } from '@/router/types/route-names';
   import { RouterView } from 'vue-router';
   import { onBeforeMount } from 'vue';
-  import { useProjectsStore } from '@/stores/projects';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { storeToRefs } from 'pinia';
   import ProjectTabs from '../ProjectTabs.vue';
 

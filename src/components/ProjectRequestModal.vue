@@ -99,7 +99,7 @@
   import BaseTooltip from './base/BaseTooltip.vue';
   import BaseInput from './base/BaseInput.vue';
   import BaseRadioButton from './base/BaseRadioButton.vue';
-  import { useProjectsStore } from '@/stores/projects';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 
   const projectsStore = useProjectsStore();
   const priorityValue = ref('');

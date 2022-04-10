@@ -30,7 +30,7 @@
 <script setup lang="ts">
   import BaseModal from './base/BaseModal.vue';
   import BaseButton from './base/BaseButton.vue';
-  import { useAuthStore } from '@/stores/auth';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
   const authStore = useAuthStore();
 </script>

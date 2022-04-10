@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
   import { useUserNavigationRoutes } from '@/hooks/useRoutes';
-  import { useAuthStore } from '@/stores/auth';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { RouterLink } from 'vue-router';
 
   const authStore = useAuthStore();

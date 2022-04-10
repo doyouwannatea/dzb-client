@@ -56,7 +56,7 @@
 <script setup lang="ts">
   import BasePanel from './base/BasePanel.vue';
   import BaseButton from './base/BaseButton.vue';
-  import { useProjectsStore } from '@/stores/projects';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { storeToRefs } from 'pinia';
 
   const {

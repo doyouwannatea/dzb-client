@@ -1,6 +1,6 @@
 import { ref, watch } from 'vue';
 import { debounce } from 'lodash';
-import { useProjectsStore } from '@/stores/projects';
+import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 
 type Options = {
   triggerOnInput: boolean;

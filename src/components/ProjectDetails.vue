@@ -102,10 +102,10 @@
   import BaseBadge from './base/BaseBadge.vue';
   import BaseButton from './base/BaseButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
-  import { DifficultyText } from '@/models/values/difficulty-text';
+  import { DifficultyText } from '@/models/values/project-difficulty';
   import InformationList from './InformationList.vue';
   import InformationListItem from './InformationListItem.vue';
-  import { useProjectsStore } from '@/stores/projects';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { storeToRefs } from 'pinia';
   import SkillsList from './SkillsList.vue';
 
