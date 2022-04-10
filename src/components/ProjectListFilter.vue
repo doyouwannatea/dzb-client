@@ -63,14 +63,26 @@
     <BaseAccordion>
       <template #title>Уровни сложности</template>
       <template #content>
-        <BaseCheckbox v-model="filters.difficulty" class="label" :value="1">
-          Легко
+        <BaseCheckbox
+          v-model="filters.difficulty"
+          class="label"
+          :value="Difficulties.LOW"
+        >
+          {{ DifficultyText[Difficulties.LOW] }}
         </BaseCheckbox>
-        <BaseCheckbox v-model="filters.difficulty" class="label" :value="2">
-          Средне
+        <BaseCheckbox
+          v-model="filters.difficulty"
+          class="label"
+          :value="Difficulties.MEDIUM"
+        >
+          {{ DifficultyText[Difficulties.MEDIUM] }}
         </BaseCheckbox>
-        <BaseCheckbox v-model="filters.difficulty" class="label" :value="3">
-          Сложно
+        <BaseCheckbox
+          v-model="filters.difficulty"
+          class="label"
+          :value="Difficulties.HIGH"
+        >
+          {{ DifficultyText[Difficulties.HIGH] }}
         </BaseCheckbox>
       </template>
     </BaseAccordion>
@@ -104,6 +116,10 @@
   import { useProjectFilterOptions } from '@/hooks/useProjectFilterOptions';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useProjectFilters } from '@/hooks/useProjectFilters';
+  import {
+    Difficulties,
+    DifficultyText,
+  } from '@/models/values/project-difficulty';
 
   const prjectsStore = useProjectsStore();
   const { allSkills, allStates } = useProjectFilterOptions();

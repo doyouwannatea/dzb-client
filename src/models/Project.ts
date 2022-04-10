@@ -35,6 +35,8 @@ export interface State {
   state: StateName;
 }
 
+export type Difficulty = 1 | 2 | 3;
+
 export interface Project {
   id: number;
   created_at: string;
@@ -43,7 +45,7 @@ export interface Project {
   places: number;
   goal: string;
   idea: string;
-  difficulty: number;
+  difficulty: Difficulty;
   date_start: string;
   date_end: string;
   requirements: string;
@@ -60,7 +62,7 @@ export interface Project {
 export interface ProjectFilters {
   state?: number[]; // массив id
   tags?: number[]; // массив id
-  difficulty?: number[]; // Массив сложностей
+  difficulty?: Difficulty[]; // Массив сложностей
   title?: string; // Поиск по подстроке в названии
   page?: number;
 }
