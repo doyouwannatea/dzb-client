@@ -54,7 +54,6 @@
 </template>
 
 <script setup lang="ts">
-  import BaseBadge from './base/BaseBadge.vue';
   import BaseButton from './base/BaseButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
   import type { Project } from '@/models/Project';

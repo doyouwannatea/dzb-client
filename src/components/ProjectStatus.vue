@@ -15,20 +15,22 @@
 
 <style scoped>
   .status {
-    --status-color: var(--accent-color-1);
-    border-color: var(--status-color);
-    color: var(--status-color);
+    --text-color: var(--accent-color-1);
+    --border-color: var(--accent-color-1);
   }
 
   .status.active {
-    --status-color: var(--green-color-1);
+    --text-color: var(--green-color-1);
+    --border-color: var(--green-color-1);
   }
 
   .status.extra {
-    --status-color: var(--accent-color-2);
+    --text-color: var(--accent-color-2);
+    --border-color: var(--accent-color-2);
   }
 
   .status.archived {
-    --status-color: var(--gray-color-2);
+    --text-color: var(--gray-color-2);
+    --border-color: var(--gray-color-2);
   }
 </style>
