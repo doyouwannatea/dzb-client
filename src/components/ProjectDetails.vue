@@ -14,8 +14,8 @@
             content: project.customer,
           },
           {
-            title: 'Сроки реализации',
-            content: `${project.date_start} - ${project.date_end}`,
+            title: 'Старт проекта',
+            content: project.date_start,
           },
           {
             title: 'Сложность',
@@ -27,10 +27,6 @@
       <InformationList
         :items="[
           {
-            title: 'Тип проекта',
-            content: project.type.type,
-          },
-          {
             title: 'Цель проекта',
             content: project.goal,
           },
@@ -39,9 +35,9 @@
 
       <div>
         <h2 class="info-title">Статус проекта</h2>
-        <BaseBadge class="badge mt-2">{{ project.state.state }}</BaseBadge>
+        <ProjectStatus class="badge mt-2" :state="project.state.state" />
         <h2 class="info-title mt-4">Кол-во участников</h2>
-        <ProjectTeamCounter class="mt-2" :count="project.places" :total="12" />
+        <ProjectTeamCounter class="mt-2" :total="12" />
         <BaseButton
           case="uppercase"
           class="mt-4"
@@ -108,6 +104,7 @@
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { storeToRefs } from 'pinia';
   import SkillsList from './SkillsList.vue';
+  import ProjectStatus from './ProjectStatus.vue';
 
   const projectsStore = useProjectsStore();
   const { openedProject: project, loading, error } = storeToRefs(projectsStore);

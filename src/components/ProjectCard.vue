@@ -4,7 +4,7 @@
       <h2 class="title">
         {{ project.title }}
       </h2>
-      <BaseBadge class="status">{{ project.state.state }}</BaseBadge>
+      <ProjectStatus class="status" :state="project.state.state" />
       <div class="subtitle">{{ project.supervisor.fio }}</div>
     </header>
     <div class="divider"></div>
@@ -63,6 +63,7 @@
   import { StateClass } from '@/models/values/project-state-class';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import SkillsList from './SkillsList.vue';
+  import ProjectStatus from './ProjectStatus.vue';
 
   const props = defineProps<{ project: Project }>();
   const projectsStore = useProjectsStore();
@@ -73,7 +74,6 @@
 
 <style scoped>
   .card {
-    --status-color: var(--accent-color-1);
     --border-left-color: var(--accent-color-1);
 
     width: 100%;
@@ -86,17 +86,14 @@
   }
 
   .card.active {
-    --status-color: var(--green-color-1);
     --border-left-color: var(--green-color-1);
   }
 
   .card.extra {
-    --status-color: var(--accent-color-2);
     --border-left-color: var(--accent-color-2);
   }
 
   .card.archived {
-    --status-color: var(--gray-color-2);
     --border-left-color: var(--gray-color-2);
   }
 
@@ -180,8 +177,6 @@
   .status {
     align-self: flex-start;
     justify-self: flex-end;
-    border-color: var(--status-color);
-    color: var(--status-color);
   }
 
   .body {
