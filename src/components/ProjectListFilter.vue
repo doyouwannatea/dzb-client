@@ -13,7 +13,7 @@
           :value="state.id"
           class="label"
         >
-          {{ state.state }}
+          {{ capitalizeFirstLetter(state.state) }}
         </BaseCheckbox>
         <div v-if="allStates.error.value" class="mt-2">
           {{ allStates.error.value }}
@@ -106,6 +106,7 @@
 </template>
 
 <script setup lang="ts">
+  import { capitalizeFirstLetter } from '@/helpers/string';
   import { SkillKeys } from '@/models/values/models-keys';
 
   import VMultiselect from '@vueform/multiselect';
@@ -147,10 +148,6 @@
     border-radius: 0.625rem;
     padding-top: 0.625rem;
     padding-bottom: 0.6875rem;
-  }
-
-  .label {
-    text-transform: capitalize;
   }
 
   .label:not(:last-child) {

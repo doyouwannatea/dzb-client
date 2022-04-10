@@ -29,3 +29,9 @@ export function repeatString(str: string, n: number): string {
   }
   return result;
 }
+
+export function capitalizeFirstLetter(str: string) {
+  const arr = str.split(' ');
+  arr[0] = arr[0].slice(0, 1).toUpperCase() + arr[0].slice(1);
+  return arr.join(' ');
+}
