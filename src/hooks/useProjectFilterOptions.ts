@@ -1,8 +1,8 @@
 import { watch } from 'vue';
 import ProjectApi from '@/api/ProjectApi';
 import useAsyncData from './useAsyncData';
-import { ProjectFilterOptions } from '@/stores/projects/state';
 import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+import { ProjectFilterOptions } from '@/models/Project';
 
 const isProjectOptions = (options: ProjectFilterOptions) => {
   return Object.values(options).every(Boolean);
@@ -16,30 +16,20 @@ export function useProjectFilterOptions() {
   };
 
   const allSkills = useAsyncData(() => ProjectApi.getAllSkills(), {
-    defaultValue: store.filterOptions?.allSkills,
-    cancelRequest,
-  });
-  const allTypes = useAsyncData(() => ProjectApi.getAllProjectTypes(), {
-    defaultValue: store.filterOptions?.allTypes,
+    defaultValue: store.filterOptions?.allTags,
     cancelRequest,
   });
   const allStates = useAsyncData(() => ProjectApi.getAllProjectStates(), {
     defaultValue: store.filterOptions?.allStates,
     cancelRequest,
   });
-  const allSupervisors = useAsyncData(() => ProjectApi.getAllSupervisors(), {
-    defaultValue: store.filterOptions?.allSupervisors,
-    cancelRequest,
-  });
 
   watch(
-    [allSkills.data, allTypes.data, allStates.data, allSupervisors.data],
+    [allSkills.data, allStates.data],
     (options) => {
       store.setFilterOptions({
-        allSkills: options[0],
-        allTypes: options[1],
-        allStates: options[2],
-        allSupervisors: options[3],
+        allTags: options[0],
+        allStates: options[1],
       });
     },
     { immediate: true },
@@ -47,8 +37,6 @@ export function useProjectFilterOptions() {
 
   return {
     allSkills,
-    allTypes,
-    allSupervisors,
     allStates,
   };
 }

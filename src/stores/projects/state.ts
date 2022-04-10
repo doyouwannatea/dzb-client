@@ -1,18 +1,8 @@
 import {
   Project,
-  Supervisor,
-  Skill,
-  Type,
-  State as ProjectState,
+  ProjectFilterOptions,
   ProjectFilters,
 } from '@/models/Project';
-
-export interface ProjectFilterOptions {
-  allSkills?: Skill[];
-  allTypes?: Type[];
-  allSupervisors?: Supervisor[];
-  allStates?: ProjectState[];
-}
 
 interface State {
   projectList?: Project[];
@@ -35,18 +25,12 @@ export const state = (): State => ({
   filters: {
     difficulty: [],
     state: [],
-    supervisor: [],
-    skills: [],
-    type: [],
-    date_end: '',
-    date_start: '',
+    tags: [],
     title: '',
     page: 1,
   },
   filterOptions: {
     allStates: undefined,
-    allSupervisors: undefined,
-    allSkills: undefined,
-    allTypes: undefined,
+    allTags: undefined,
   },
 });

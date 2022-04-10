@@ -25,13 +25,9 @@ export function locationQueryToProjectFilters(
 ): ProjectFilters {
   return {
     title: toString(query.title),
-    date_end: toString(query.date_end),
-    date_start: toString(query.date_start),
     page: locationQueryValueToNumber(query.page),
-    type: locationQueryValueToArrayNumber(query.type),
     state: locationQueryValueToArrayNumber(query.state),
-    supervisor: locationQueryValueToArrayNumber(query.supervisor),
-    skills: locationQueryValueToArrayNumber(query.skills),
+    tags: locationQueryValueToArrayNumber(query.tags),
     difficulty: locationQueryValueToArrayNumber(query.difficulty),
   };
 }
@@ -39,15 +35,12 @@ export function locationQueryToProjectFilters(
 export function projectFiltersToSearchParams(
   filters: ProjectFilters,
 ): Record<keyof ProjectFilters, string> {
+  console.log(filters);
   return {
     title: toString(filters.title),
-    date_end: toString(filters.date_end),
-    date_start: toString(filters.date_start),
     page: toString(filters.page),
-    type: toString(filters.type),
     state: toString(filters.state),
-    supervisor: toString(filters.supervisor),
-    skills: toString(filters.skills),
+    tags: toString(filters.tags),
     difficulty: toString(filters.difficulty),
   };
 }

@@ -9,7 +9,7 @@
         <BaseCheckbox
           v-for="state in allStates.data.value"
           :key="state.id"
-          v-model="states"
+          v-model="filters.state"
           :value="state.id"
           class="label"
         >
@@ -23,58 +23,26 @@
 
     <div class="divider"></div>
 
-    <BaseAccordion>
-      <template #title>
-        <span v-if="allTypes.loading.value" class="multiselect-spinner"></span>
-        <span>Тип проекта</span>
-      </template>
-      <template #content>
-        <BaseRadioButton
-          v-for="projectType in allTypes.data.value"
-          :key="projectType.id"
-          v-model="type"
-          :value="projectType.id"
-          class="label"
-        >
-          {{ projectType.type }}
-        </BaseRadioButton>
-        <div v-if="allTypes.error.value" class="mt-2">
-          {{ allTypes.error.value }}
-        </div>
-      </template>
-    </BaseAccordion>
-
-    <div class="divider"></div>
-
-    <BaseAccordion>
-      <template #title>Руководитель проекта</template>
-      <template #content>
-        <VMultiselect
-          v-model="supervisors"
-          mode="tags"
-          placeholder="Ф.И.О."
-          :searchable="true"
-          :options="allSupervisors.data.value"
-          :loading="allSupervisors.loading.value"
-          :label="SupervisorKeys.fio"
-          :track-by="SupervisorKeys.fio"
-          :value-prop="SupervisorKeys.id"
-        />
-        <div v-if="allSupervisors.error.value" class="mt-2">
-          {{ allSupervisors.error.value }}
-        </div>
-      </template>
-    </BaseAccordion>
-
-    <div class="divider"></div>
-
     <BaseAccordion class="loading">
-      <template #title>Теги</template>
+      <template #title>Теги проекта</template>
       <template #content>
         <VMultiselect
-          v-model="skills"
+          v-model="filters.tags"
           mode="tags"
-          placeholder="Data Science"
+          placeholder="По специальности"
+          class="miltiselect"
+          :close-on-select="false"
+          :searchable="true"
+          :options="allSkills.data.value"
+          :loading="allSkills.loading.value"
+          :label="SkillKeys.skill"
+          :track-by="SkillKeys.skill"
+          :value-prop="SkillKeys.id"
+        />
+        <VMultiselect
+          v-model="filters.tags"
+          mode="tags"
+          placeholder="По навыкам"
           :close-on-select="false"
           :searchable="true"
           :options="allSkills.data.value"
@@ -92,27 +60,15 @@
     <div class="divider"></div>
 
     <BaseAccordion>
-      <template #title>Сроки реализации</template>
-      <template #content>
-        <div class="date">
-          <BaseInput v-model="dateStart" class="input" type="date" />
-          <BaseInput v-model="dateEnd" class="input" type="date" />
-        </div>
-      </template>
-    </BaseAccordion>
-
-    <div class="divider"></div>
-
-    <BaseAccordion>
       <template #title>Уровни сложности</template>
       <template #content>
-        <BaseCheckbox v-model="difficulty" class="label" value="1">
+        <BaseCheckbox v-model="filters.difficulty" class="label" :value="1">
           Легко
         </BaseCheckbox>
-        <BaseCheckbox v-model="difficulty" class="label" value="2">
+        <BaseCheckbox v-model="filters.difficulty" class="label" :value="2">
           Средне
         </BaseCheckbox>
-        <BaseCheckbox v-model="difficulty" class="label" value="3">
+        <BaseCheckbox v-model="filters.difficulty" class="label" :value="3">
           Сложно
         </BaseCheckbox>
       </template>
@@ -137,39 +93,25 @@
 </template>
 
 <script setup lang="ts">
-  import { SupervisorKeys, SkillKeys } from '@/models/values/keys';
+  import { SkillKeys } from '@/models/values/models-keys';
 
   import VMultiselect from '@vueform/multiselect';
   import BaseAccordion from './base/BaseAccordion.vue';
   import BaseButton from './base/BaseButton.vue';
   import BaseCheckbox from './base/BaseCheckbox.vue';
-  import BaseRadioButton from './base/BaseRadioButton.vue';
-  import BaseInput from './base/BaseInput.vue';
 
   import { useProjectFilterOptions } from '@/hooks/useProjectFilterOptions';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useProjectFilters } from '@/hooks/useProjectFilters';
 
   const prjectsStore = useProjectsStore();
-  const { allSupervisors, allSkills, allTypes, allStates } =
-    useProjectFilterOptions();
-
-  const {
-    clearFilter,
-    filter,
-    difficulty,
-    states,
-    supervisors,
-    skills,
-    type,
-    dateStart,
-    dateEnd,
-  } = useProjectFilters();
+  const { allSkills, allStates } = useProjectFilterOptions();
+  const { clearFilter, filter, filters } = useProjectFilters();
 </script>
 
 <style scoped>
-  .input {
-    background-color: #f9f9f9;
+  .miltiselect {
+    margin-bottom: 1.25rem;
   }
 
   .divider {
@@ -186,14 +128,12 @@
     padding-bottom: 0.6875rem;
   }
 
-  .label:not(:last-child) {
-    margin-bottom: 0.8125rem;
+  .label {
+    text-transform: capitalize;
   }
 
-  .date {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
+  .label:not(:last-child) {
+    margin-bottom: 0.8125rem;
   }
 
   .footer {

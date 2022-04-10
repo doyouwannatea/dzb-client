@@ -26,7 +26,7 @@ export interface Supervisor {
   position: string;
 }
 
-export type StateName = 'Открытый' | 'Активный' | 'Обработка' | 'Закрытый';
+export type StateName = 'идёт набор' | 'активный' | 'добор' | 'в архиве';
 
 export interface State {
   id: number;
@@ -58,13 +58,14 @@ export interface Project {
 }
 
 export interface ProjectFilters {
-  type?: number[];
   state?: number[]; // массив id
-  supervisor?: number[]; // массив id
-  skills?: number[]; // массив id
-  date_start?: string;
-  date_end?: string;
+  tags?: number[]; // массив id
   difficulty?: number[]; // Массив сложностей
   title?: string; // Поиск по подстроке в названии
   page?: number;
+}
+
+export interface ProjectFilterOptions {
+  allTags?: Skill[];
+  allStates?: State[];
 }

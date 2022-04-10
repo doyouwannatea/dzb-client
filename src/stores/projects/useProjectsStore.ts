@@ -1,11 +1,15 @@
 import ProjectApi from '@/api/ProjectApi';
 import { projectFiltersToSearchParams } from '@/helpers/query';
-import { Project, ProjectFilters } from '@/models/Project';
+import {
+  Project,
+  ProjectFilterOptions,
+  ProjectFilters,
+} from '@/models/Project';
 import { RouteNames } from '@/router/types/route-names';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../auth/useAuthStore';
-import { ProjectFilterOptions, state } from './state';
+import { state } from './state';
 
 export const useProjectsStore = () => {
   const router = useRouter();
@@ -32,15 +36,11 @@ export const useProjectsStore = () => {
       clearFilters() {
         if (this.loading) return;
         this.filters = {
-          date_end: undefined,
-          date_start: undefined,
           difficulty: undefined,
           page: undefined,
           state: undefined,
-          supervisor: undefined,
-          skills: undefined,
+          tags: undefined,
           title: undefined,
-          type: undefined,
         };
       },
       setFilterOptions(options: ProjectFilterOptions) {
