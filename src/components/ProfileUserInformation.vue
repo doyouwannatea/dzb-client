@@ -2,7 +2,7 @@
   <BasePanel class="panel" :cols="2">
     <!-- USER INFORMATION -->
     <div>
-      <h1 class="title">Иванов Иван Иванович</h1>
+      <h1 class="title">{{ profileData?.fio }}</h1>
       <h2 class="subtitle">Контактная информация</h2>
       <!-- CONTACT INFO -->
       <InformationList class="margin-b" row-gap="m">
@@ -12,7 +12,9 @@
             <span class="label">E-Mail:</span>
           </template>
           <template #default>
-            <a href="mailto:ivanov@yandex.ru">ivanov@yandex.ru</a>
+            <a :href="`mailto:${profileData?.email}`">
+              {{ profileData?.email }}
+            </a>
           </template>
         </InformationListItem>
         <!-- EMAIL -->
@@ -22,7 +24,7 @@
           <template #title>
             <span class="label">Телефон:</span>
           </template>
-          <template #default>+7 (912) 345-67-89</template>
+          <template #default>{{ profileData?.phone }}</template>
         </InformationListItem>
         <!-- PHONE -->
       </InformationList>
@@ -36,27 +38,18 @@
           <template #title>
             <span class="label">Учебная группа:</span>
           </template>
-          <template #default> ИСТб-20-1 </template>
+          <template #default>{{ profileData?.training_group }}</template>
         </InformationListItem>
         <!-- GROUP -->
 
         <!-- INSTITUTE -->
         <InformationListItem :bold="false">
           <template #title>
-            <span class="label">Институт:</span>
+            <span class="label">Курс:</span>
           </template>
-          <template #default>ИИТиАД</template>
+          <template #default>{{ profileData?.course }}</template>
         </InformationListItem>
         <!-- INSTITUTE -->
-
-        <!-- PHONE -->
-        <InformationListItem :bold="false">
-          <template #title>
-            <span class="label">Телефон:</span>
-          </template>
-          <template #default>+7 (912) 345-67-89</template>
-        </InformationListItem>
-        <!-- PHONE -->
       </InformationList>
       <!-- ADDITIONAL INFO -->
     </div>
@@ -81,6 +74,10 @@
   import InformationListItem from './InformationListItem.vue';
   import InformationList from './InformationList.vue';
   import BasePanel from './base/BasePanel.vue';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
+
+  const authStore = useAuthStore();
+  const profileData = authStore.profileData;
 </script>
 
 <style scoped>
