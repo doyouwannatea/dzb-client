@@ -1,5 +1,5 @@
 <template>
-  <div v-if="editableRequestsList.length > 0">
+  <div v-if="authStore.requestsList?.length > 0">
     <Draggable
       v-model="editableRequestsList"
       v-bind="dragOptions"
@@ -20,7 +20,7 @@
   <div v-if="authStore.loading">loading...</div>
   <div v-if="authStore.error">{{ authStore.error }}</div>
 
-  <div v-if="editableRequestsList.length > 0" class="actions">
+  <div v-if="authStore.requestsList?.length > 0" class="actions">
     <BaseButton
       v-if="!dragDisabled"
       class="btn"
