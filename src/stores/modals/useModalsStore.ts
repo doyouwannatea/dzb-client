@@ -12,12 +12,22 @@ export const useModalsStore = defineStore('modals', {
       const authStore = useAuthStore();
       const projectsStore = useProjectsStore();
 
-      if (authStore.isAuth) {
-        projectsStore.openedProject = project;
-        this.projectRequestModal = true;
+      if (!authStore.isAuth) {
+        this.authModal = true;
         return;
       }
-      this.authModal = true;
+
+      if (authStore.requestsList) {
+        for (const participation of authStore.requestsList) {
+          if (participation.project.id === project.id) {
+            alert('Проект уже выбран');
+            return;
+          }
+        }
+      }
+
+      projectsStore.openedProject = project;
+      this.projectRequestModal = true;
     },
     // OPEN REQUEST MODAL
   },

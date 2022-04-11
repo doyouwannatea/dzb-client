@@ -164,21 +164,6 @@
     'Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас распределить в проект, в который вы хотите попасть с большей вероятностью, вы ставите ему больший приоритет. Вы сможете поменять приоритет проекта в личном кабинете после отправки заявки';
 
   watch(
-    () => modalsStore.projectRequestModal,
-    () => {
-      if (modalsStore.projectRequestModal && authStore.requestsList) {
-        for (const participation of authStore.requestsList) {
-          if (participation.project.id === projectsStore.openedProject?.id) {
-            modalsStore.projectRequestModal = false;
-            alert('Проект уже выбран');
-          }
-        }
-      }
-    },
-    { immediate: true },
-  );
-
-  watch(
     () => authStore.requestsList,
     () => {
       if (authStore.requestsList) {
