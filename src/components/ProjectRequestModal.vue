@@ -21,7 +21,7 @@
         <label class="input-label" for="fio">ФИО</label>
         <BaseInput
           id="fio"
-          value="Иванов Иван Иванович"
+          :value="authStore.profileData?.fio"
           class="input"
           disabled
           :icon="checkedIconUrl"
@@ -34,7 +34,7 @@
         <label class="input-label" for="mail">E-mail</label>
         <BaseInput
           id="mail"
-          value="ivanov@yandex.ru"
+          :value="authStore.profileData?.email"
           class="input"
           disabled
           :icon="checkedIconUrl"
@@ -47,7 +47,7 @@
         <label class="input-label" for="study-group">Учебная группа</label>
         <BaseInput
           id="study-group"
-          value="ИСТб-20-1"
+          :value="authStore.profileData?.training_group"
           class="input"
           disabled
           :icon="checkedIconUrl"
@@ -60,7 +60,7 @@
         <label class="input-label" for="phone-number">Номер телефона</label>
         <BaseInput
           id="phone-number"
-          value="+7 (912) 345-67-89"
+          :value="authStore.profileData?.phone"
           class="input"
           disabled
           :icon="checkedIconUrl"
