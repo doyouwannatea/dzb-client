@@ -3,7 +3,7 @@
   <BaseModal
     size="m"
     :is-show="modalsStore.projectRequestModal"
-    @close="modalsStore.projectRequestModal = false"
+    @close="onCloseModal"
   >
     <!-- HEADER -->
     <template #header>
@@ -197,6 +197,11 @@
       );
       priorityValue.value = undefined;
     }
+  }
+
+  function onCloseModal() {
+    modalsStore.projectRequestModal = false;
+    priorityValue.value = undefined;
   }
 </script>
 
