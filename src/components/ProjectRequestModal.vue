@@ -17,28 +17,52 @@
       <!-- fio -->
       <fieldset class="input-group">
         <label class="input-label" for="fio">ФИО</label>
-        <BaseInput id="fio" value="Иванов Иван Иванович" disabled />
+        <BaseInput
+          id="fio"
+          value="Иванов Иван Иванович"
+          class="input"
+          disabled
+          :icon="checkedIconUrl"
+        />
       </fieldset>
       <!-- fio -->
 
       <!-- mail -->
       <fieldset class="input-group">
         <label class="input-label" for="mail">E-mail</label>
-        <BaseInput id="mail" value="ivanov@yandex.ru" disabled />
+        <BaseInput
+          id="mail"
+          value="ivanov@yandex.ru"
+          class="input"
+          disabled
+          :icon="checkedIconUrl"
+        />
       </fieldset>
       <!-- mail -->
 
       <!-- study group -->
       <fieldset class="input-group">
         <label class="input-label" for="study-group">Учебная группа</label>
-        <BaseInput id="study-group" value="ИСТб-20-1" disabled />
+        <BaseInput
+          id="study-group"
+          value="ИСТб-20-1"
+          class="input"
+          disabled
+          :icon="checkedIconUrl"
+        />
       </fieldset>
       <!-- study group -->
 
       <!-- phone number -->
       <fieldset class="input-group">
         <label class="input-label" for="phone-number">Номер телефона</label>
-        <BaseInput id="phone-number" value="+7 (912) 345-67-89" disabled />
+        <BaseInput
+          id="phone-number"
+          value="+7 (912) 345-67-89"
+          class="input"
+          disabled
+          :icon="checkedIconUrl"
+        />
       </fieldset>
       <!-- phone number -->
     </div>
@@ -55,9 +79,15 @@
           <BaseRadioButton
             v-model="priorityValue"
             class="radio-label"
-            value="1"
+            :value="PriorityType.HIGH"
+            :disabled="highSelected"
           >
-            1 (Высший приоритет)
+            {{ PriorityType.HIGH }}
+            ({{ PriorityText[PriorityType.HIGH] }} приоритет)
+            <template v-if="highSelected">
+              <br />
+              *уже выбран на другой проект
+            </template>
           </BaseRadioButton>
           <!-- 1 (HIGH) -->
 
@@ -65,11 +95,15 @@
           <BaseRadioButton
             v-model="priorityValue"
             class="radio-label"
-            value="2"
-            disabled
+            :value="PriorityType.MEDIUM"
+            :disabled="mediumSelected"
           >
-            2 (Средний приоритет) <br />
-            *уже выбран на другой проект
+            {{ PriorityType.MEDIUM }}
+            ({{ PriorityText[PriorityType.MEDIUM] }} приоритет)
+            <template v-if="mediumSelected">
+              <br />
+              *уже выбран на другой проект
+            </template>
           </BaseRadioButton>
           <!-- 2 (MEDIUM) -->
 
@@ -77,13 +111,23 @@
           <BaseRadioButton
             v-model="priorityValue"
             class="radio-label"
-            value="3"
+            :value="PriorityType.LOW"
+            :disabled="lowSelected"
           >
-            3 (Низкий приоритет)
+            {{ PriorityType.LOW }}
+            ({{ PriorityText[PriorityType.LOW] }} приоритет)
+            <template v-if="lowSelected">
+              <br />
+              *уже выбран на другой проект
+            </template>
           </BaseRadioButton>
           <!-- 3 (LOW) -->
         </div>
-        <BaseButton case="uppercase" class="request-btn">
+        <BaseButton
+          case="uppercase"
+          class="request-btn"
+          @click="onCreateParticipation"
+        >
           Подать заявку
         </BaseButton>
       </div>
@@ -100,9 +144,16 @@
   import BaseInput from './base/BaseInput.vue';
   import BaseRadioButton from './base/BaseRadioButton.vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { PriorityText, PriorityType } from '@/models/values/project-priority';
+  import checkedIconUrl from '@/assets/icons/checked.svg?url';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
   const projectsStore = useProjectsStore();
-  const priorityValue = ref('');
+  const authStore = useAuthStore();
+  const priorityValue = ref<number>();
+  const highSelected = ref(false);
+  const mediumSelected = ref(false);
+  const lowSelected = ref(false);
   const priorityTooltipMsg =
     'Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас распределить в проект, в который вы хотите попасть с большей вероятностью, вы ставите ему больший приоритет.';
 </script>
@@ -114,9 +165,13 @@
 
   .input-label {
     font-size: 1.125rem;
-    font-weight: 800;
+    font-weight: 700;
     display: block;
     margin-bottom: 0.625rem;
+  }
+
+  .input.with-icon {
+    background-size: 1.4rem;
   }
 
   .request-btn {

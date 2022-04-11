@@ -71,6 +71,7 @@
 
   .input:disabled {
     color: var(--gray-color-2);
+    background-color: #f9f9f9;
     cursor: default;
   }
 
