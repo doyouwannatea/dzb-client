@@ -1,8 +1,8 @@
 <template>
   <!-- auth modal -->
   <BaseModal
-    :is-show="authStore.authModalShow"
-    @close="authStore.authModalShow = false"
+    :is-show="modalsStore.authModal"
+    @close="modalsStore.authModal = false"
   >
     <!-- MAIN CONTENT -->
     <div class="success-modal">
@@ -16,7 +16,7 @@
           case="uppercase"
           @click="
             authStore.auth();
-            authStore.authModalShow = false;
+            modalsStore.authModal = false;
           "
         >
           войти через кампус
@@ -30,8 +30,10 @@
 <script setup lang="ts">
   import BaseModal from './base/BaseModal.vue';
   import BaseButton from './base/BaseButton.vue';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
 
+  const modalsStore = useModalsStore();
   const authStore = useAuthStore();
 </script>
 

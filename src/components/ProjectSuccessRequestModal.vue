@@ -1,7 +1,7 @@
 <template>
   <!-- succsess modal -->
   <BaseModal
-    :is-show="authStore.successParticipationCreate"
+    :is-show="modalsStore.projectSuccessRequestModal"
     @close="closeModal"
   >
     <!-- MAIN CONTENT -->
@@ -47,12 +47,12 @@
   import { RouteNames } from '@/router/types/route-names';
   import BaseModal from './base/BaseModal.vue';
   import BaseButton from './base/BaseButton.vue';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
 
-  const authStore = useAuthStore();
+  const modalsStore = useModalsStore();
 
   function closeModal() {
-    authStore.successParticipationCreate = false;
+    modalsStore.projectSuccessRequestModal = false;
   }
 </script>
 

@@ -7,7 +7,7 @@ function locationQueryValueToNumber(
   queryValue: LocationQueryValue | LocationQueryValue[],
 ): number {
   if (queryValue === null) return NaN;
-  return parseInt(queryValue.toString());
+  return parseInt(toString(queryValue));
 }
 
 function locationQueryValueToArrayNumber(

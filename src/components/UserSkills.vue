@@ -20,7 +20,7 @@
         class="edit-btn"
         case="uppercase"
         variant="outlined"
-        @click="authStore.editSkillsModalShow = true"
+        @click="modalsStore.editSkillsModal = true"
       >
         Редактировать навыки
       </BaseButton>
@@ -36,9 +36,9 @@
   import SkillsList from './SkillsList.vue';
   import BaseButton from './base/BaseButton.vue';
   import EditSkillsModal from './EditSkillsModal.vue';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
 
-  const authStore = useAuthStore();
+  const modalsStore = useModalsStore();
 
   const academicSkillsMsg = `Академические навыки - это набор практических умений студентов, 
   которые позволяют им быстрее и лучше усваивать новый материал в университете, 

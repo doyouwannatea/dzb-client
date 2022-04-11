@@ -2,8 +2,8 @@
   <!-- project request modal -->
   <BaseModal
     size="m"
-    :is-show="projectsStore.requestModalShow"
-    @close="projectsStore.requestModalShow = false"
+    :is-show="modalsStore.projectRequestModal"
+    @close="modalsStore.projectRequestModal = false"
   >
     <!-- HEADER -->
     <template #header>
@@ -128,6 +128,7 @@
         <BaseButton
           case="uppercase"
           class="request-btn"
+          :disabled="authStore.loading || !priorityValue"
           @click="onCreateParticipation"
         >
           Подать заявку
@@ -149,15 +150,33 @@
   import { PriorityText, PriorityType } from '@/models/values/project-priority';
   import checkedIconUrl from '@/assets/icons/checked.svg?url';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
 
   const projectsStore = useProjectsStore();
   const authStore = useAuthStore();
+  const modalsStore = useModalsStore();
+
   const priorityValue = ref<number>();
   const highSelected = ref(false);
   const mediumSelected = ref(false);
   const lowSelected = ref(false);
   const priorityTooltipMsg =
     'Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас распределить в проект, в который вы хотите попасть с большей вероятностью, вы ставите ему больший приоритет. Вы сможете поменять приоритет проекта в личном кабинете после отправки заявки';
+
+  watch(
+    () => modalsStore.projectRequestModal,
+    () => {
+      if (modalsStore.projectRequestModal && authStore.requestsList) {
+        for (const participation of authStore.requestsList) {
+          if (participation.project.id === projectsStore.openedProject?.id) {
+            modalsStore.projectRequestModal = false;
+            alert('Проект уже выбран');
+          }
+        }
+      }
+    },
+    { immediate: true },
+  );
 
   watch(
     () => authStore.requestsList,

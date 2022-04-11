@@ -36,7 +36,7 @@
         <BaseButton
           case="uppercase"
           variant="outlined"
-          @click="projectsStore.openRequestModal(props.project)"
+          @click="modalsStore.openRequestModal(props.project)"
         >
           Подать заявку
         </BaseButton>
@@ -60,12 +60,13 @@
   import { RouteNames } from '@/router/types/route-names';
   import { DifficultyText } from '@/models/values/project-difficulty';
   import { StateClass } from '@/models/values/project-state-class';
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import SkillsList from './SkillsList.vue';
   import ProjectStatus from './ProjectStatus.vue';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
 
   const props = defineProps<{ project: Project }>();
-  const projectsStore = useProjectsStore();
+
+  const modalsStore = useModalsStore();
 
   const stateClass = StateClass[props.project.state.state];
   const difficultyText = DifficultyText[props.project.difficulty];

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import campusAuthApi from '@/api/CampusAuthApi';
 import { state } from './state';
 import { State } from './state';
+import { useModalsStore } from '../modals/useModalsStore';
 
 export const useAuthStore = defineStore('auth', {
   state,
@@ -25,11 +26,14 @@ export const useAuthStore = defineStore('auth', {
 
     // CREATE PATRICIPATION
     async createPatricipation(priority: number, projectId: number) {
+      const modalsStore = useModalsStore();
+
       await this._onAsync(async () => {
         await campusAuthApi.createProjectParticipation(priority, projectId);
         this.requestsList =
           await campusAuthApi.getCandidateParticipationsList();
-        this.successParticipationCreate = true;
+        modalsStore.projectSuccessRequestModal = true;
+        modalsStore.projectRequestModal = false;
       });
     },
     // CREATE PATRICIPATION
@@ -84,7 +88,6 @@ export const useAuthStore = defineStore('auth', {
   persist: {
     afterRestore(ctx) {
       (ctx.store.$state as State).loading = false;
-      (ctx.store.$state as State).successParticipationCreate = false;
     },
   },
 });

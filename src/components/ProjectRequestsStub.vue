@@ -16,8 +16,10 @@
   import BaseStub from './base/BaseStub.vue';
   import BaseButton from './base/BaseButton.vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
 
   const projectsStore = useProjectsStore();
+  const modalsStore = useModalsStore();
 
   const title = 'Ни одной заявки :(';
   const subtitle =
@@ -26,7 +28,7 @@
 
   function onClick() {
     if (projectsStore.openedProject) {
-      projectsStore.openRequestModal(projectsStore.openedProject);
+      modalsStore.openRequestModal(projectsStore.openedProject);
     }
   }
 </script>

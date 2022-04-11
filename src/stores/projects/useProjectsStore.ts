@@ -8,7 +8,6 @@ import {
 import { RouteNames } from '@/router/types/route-names';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '../auth/useAuthStore';
 import { state } from './state';
 
 export const useProjectsStore = () => {
@@ -17,7 +16,6 @@ export const useProjectsStore = () => {
   return defineStore('projects', {
     state,
     actions: {
-      // MUTATIONS
       setProjectList(projectList?: Project[], projectCount = 0) {
         this.projectList = projectList;
         this.projectCount = projectCount;
@@ -46,16 +44,8 @@ export const useProjectsStore = () => {
       setFilterOptions(options: ProjectFilterOptions) {
         this.filterOptions = options;
       },
-      openRequestModal(project: Project) {
-        const authStore = useAuthStore();
-        if (authStore.isAuth) {
-          this.openedProject = project;
-          this.requestModalShow = true;
-          return;
-        }
-        authStore.authModalShow = true;
-      },
-      // ASYNC ACTIONS
+
+      // GET PROJECT LIST
       async getProjectList() {
         this.setProjectList();
         this.loading = true;
@@ -71,6 +61,9 @@ export const useProjectsStore = () => {
           this.loading = false;
         }
       },
+      // GET PROJECT LIST
+
+      // GET SINGLE PROJECT
       async getSingleProject(projectId: number) {
         this.openedProject = undefined;
         this.loading = true;
@@ -84,6 +77,7 @@ export const useProjectsStore = () => {
           this.loading = false;
         }
       },
+      // GET SINGLE PROJECT
     },
   })();
 };

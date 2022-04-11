@@ -2,8 +2,8 @@
   <!-- auth modal -->
   <BaseModal
     size="m"
-    :is-show="authStore.editSkillsModalShow"
-    @close="authStore.editSkillsModalShow = false"
+    :is-show="modalsStore.editSkillsModal"
+    @close="modalsStore.editSkillsModal = false"
   >
     <!-- HEADER -->
     <template #header>
@@ -67,9 +67,9 @@
   import { skills as mockSkills } from '@/models/mock/project';
   import { computed, ref } from 'vue';
   import { Skill } from '@/models/Project';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
 
-  const authStore = useAuthStore();
+  const modalsStore = useModalsStore();
 
   function onTagClick(skill: Skill) {
     if (userSkills.value.includes(skill)) return;

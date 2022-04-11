@@ -41,7 +41,7 @@
         <BaseButton
           case="uppercase"
           class="mt-4"
-          @click="projectsStore.openRequestModal(project!)"
+          @click="modalsStore.openRequestModal(project!)"
         >
           Подать заявку
         </BaseButton>
@@ -105,8 +105,11 @@
   import { storeToRefs } from 'pinia';
   import SkillsList from './SkillsList.vue';
   import ProjectStatus from './ProjectStatus.vue';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
 
   const projectsStore = useProjectsStore();
+  const modalsStore = useModalsStore();
+
   const { openedProject: project, loading, error } = storeToRefs(projectsStore);
 </script>
 
