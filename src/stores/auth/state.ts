@@ -4,6 +4,7 @@ import { Participation } from '@/models/Participation';
 export interface State {
   authModalShow: boolean;
   editSkillsModalShow: boolean;
+  successParticipationCreate: boolean;
   loading: boolean;
   error: string;
   profileData?: Candidate;
@@ -15,6 +16,7 @@ export const state = (): State => ({
   error: '',
   authModalShow: false,
   editSkillsModalShow: false,
+  successParticipationCreate: false,
   profileData: undefined,
   requestsList: undefined,
 });

@@ -1,6 +1,9 @@
 <template>
   <!-- succsess modal -->
-  <BaseModal :is-show="props.isShow" @close="emit('close')">
+  <BaseModal
+    :is-show="authStore.successParticipationCreate"
+    @close="closeModal"
+  >
     <!-- MAIN CONTENT -->
     <div class="success-modal">
       <h1>Успех!</h1>
@@ -9,15 +12,31 @@
         Вы можете изменять и отслеживать её в разделе <br />
         <BaseButton
           is="router-link"
-          :to="{ name: RouteNames.HOME }"
+          :to="{ name: RouteNames.USER_REQUESTS }"
           variant="inline-link"
+          @click="closeModal"
         >
           “Мои заявки”</BaseButton
         >.
       </p>
       <div class="modal-buttons">
-        <BaseButton case="uppercase">назад к списку</BaseButton>
-        <BaseButton case="uppercase" variant="link">Мои заявки</BaseButton>
+        <BaseButton
+          is="router-link"
+          case="uppercase"
+          :to="{ name: RouteNames.HOME }"
+          @click="closeModal"
+        >
+          к списку проектов
+        </BaseButton>
+        <BaseButton
+          is="router-link"
+          case="uppercase"
+          :to="{ name: RouteNames.USER_REQUESTS }"
+          variant="link"
+          @click="closeModal"
+        >
+          Мои заявки
+        </BaseButton>
       </div>
     </div>
     <!-- MAIN CONTENT -->
@@ -25,16 +44,16 @@
 </template>
 
 <script setup lang="ts">
-  import { withDefaults } from 'vue';
   import { RouteNames } from '@/router/types/route-names';
   import BaseModal from './base/BaseModal.vue';
   import BaseButton from './base/BaseButton.vue';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
-  type Props = { isShow: boolean };
-  type Emits = { (e: 'close'): void };
+  const authStore = useAuthStore();
 
-  const props = withDefaults(defineProps<Props>(), { isShow: false });
-  const emit = defineEmits<Emits>();
+  function closeModal() {
+    authStore.successParticipationCreate = false;
+  }
 </script>
 
 <style scoped>

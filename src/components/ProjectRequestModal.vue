@@ -137,7 +137,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import BaseModal from './base/BaseModal.vue';
   import BaseButton from './base/BaseButton.vue';
   import BaseTooltip from './base/BaseTooltip.vue';
@@ -155,7 +155,43 @@
   const mediumSelected = ref(false);
   const lowSelected = ref(false);
   const priorityTooltipMsg =
-    'Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас распределить в проект, в который вы хотите попасть с большей вероятностью, вы ставите ему больший приоритет.';
+    'Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас распределить в проект, в который вы хотите попасть с большей вероятностью, вы ставите ему больший приоритет. Вы сможете поменять приоритет проекта в личном кабинете после отправки заявки';
+
+  watch(
+    () => authStore,
+    () => {
+      if (authStore.requestsList) {
+        highSelected.value = false;
+        mediumSelected.value = false;
+        lowSelected.value = false;
+
+        for (const participation of authStore.requestsList) {
+          switch (participation.priority) {
+            case 1:
+              highSelected.value = true;
+              break;
+            case 2:
+              mediumSelected.value = true;
+              break;
+            case 3:
+              lowSelected.value = true;
+              break;
+          }
+        }
+      }
+    },
+    { immediate: true, deep: true },
+  );
+
+  function onCreateParticipation() {
+    if (projectsStore.openedProject && priorityValue.value) {
+      authStore.createPatricipation(
+        priorityValue.value,
+        projectsStore.openedProject.id,
+      );
+      priorityValue.value = undefined;
+    }
+  }
 </script>
 
 <style scoped>
