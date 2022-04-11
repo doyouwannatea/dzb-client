@@ -23,6 +23,20 @@ export const useAuthStore = defineStore('auth', {
     exit() {
       this.profileData = undefined;
     },
+    async createPatricipation(priority: number, projectId: number) {
+      try {
+        this.loading = true;
+        this.error = '';
+        await campusAuthApi.createProjectParticipation(priority, projectId);
+        this.requestsList =
+          await campusAuthApi.getCandidateParticipationsList();
+        this.successParticipationCreate = true;
+      } catch (error) {
+        this.error = String(error);
+      } finally {
+        this.loading = false;
+      }
+    },
   },
   getters: {
     isAuth: (state) => {
@@ -32,6 +46,7 @@ export const useAuthStore = defineStore('auth', {
   persist: {
     afterRestore(ctx) {
       (ctx.store.$state as State).loading = false;
+      (ctx.store.$state as State).successParticipationCreate = false;
     },
   },
 });

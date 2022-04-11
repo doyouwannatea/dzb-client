@@ -35,6 +35,13 @@ export class CampusAuthApi extends ICampusAuthApi {
   ): Promise<void> {
     return campusAuthApiMock.setParticipationPriority(id, newPriority);
   }
+
+  async createProjectParticipation(
+    priority: number,
+    projectId: number,
+  ): Promise<void> {
+    return campusAuthApiMock.createProjectParticipation(priority, projectId);
+  }
 }
 
 export default new CampusAuthApi();

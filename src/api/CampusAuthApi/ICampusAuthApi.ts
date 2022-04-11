@@ -13,4 +13,8 @@ export default abstract class ICampusAuthApi {
     newPriority: number,
   ): Promise<void>;
   abstract deleteParticipation(id: number): Promise<void>;
+  abstract createProjectParticipation(
+    priority: number,
+    projectId: number,
+  ): Promise<void>;
 }
