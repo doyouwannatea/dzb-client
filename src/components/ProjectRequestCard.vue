@@ -1,6 +1,12 @@
 <template>
-  <BasePanel :cols="1" :class="['card', { editable }]">
-    <div class="card-content">
+  <BasePanel
+    :cols="1"
+    :class="[
+      'card',
+      { editable: editable && projectRequest, stub: !projectRequest },
+    ]"
+  >
+    <div v-if="projectRequest" class="card-content">
       <RouterLink
         class="title"
         :to="{
@@ -18,7 +24,7 @@
       </BaseBadge>
 
       <div :class="['priority', { editable }]">
-        {{ repeatString('I', projectRequest.priority) }}
+        {{ repeatString('I', priority) }}
       </div>
 
       <BaseButton
@@ -26,7 +32,7 @@
         class="delete-btn"
         variant="outlined"
         color="red"
-        @click="$emit('delete', projectRequest)"
+        @click="$emit('delete', projectRequest!)"
       >
         <svg
           width="25"
@@ -54,6 +60,7 @@
         </svg>
       </BaseButton>
     </div>
+    <div v-else>приоритет {{ priority }}</div>
   </BasePanel>
 </template>
 
@@ -68,7 +75,8 @@
 
   type Props = {
     editable: boolean;
-    projectRequest: Participation;
+    priority: number;
+    projectRequest?: Participation;
   };
   type Emits = {
     (e: 'delete', request: Participation): void;
@@ -82,12 +90,17 @@
     padding: 1.375rem 1.3125rem;
   }
 
-  .card.ghost {
+  .card.sortable-chosen {
     opacity: 0.5;
   }
 
   .card.editable {
     cursor: grab;
+  }
+
+  .card.stub {
+    opacity: 1;
+    background-color: var(--gray-color-1);
   }
 
   .card-content {
@@ -106,6 +119,10 @@
     line-height: 1.9375rem;
     color: #4f5569;
     text-decoration: none;
+  }
+
+  .title:hover {
+    text-decoration: underline;
   }
 
   .desc {

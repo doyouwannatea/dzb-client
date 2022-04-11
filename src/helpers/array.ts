@@ -1,14 +1,19 @@
-export const mapNumber = <T>(arr: T[]) => arr.map(Number);
-
-export function deleteByKey<T extends Record<string, unknown>>(
-  array: T[],
-  key: keyof T,
-  searchValue: unknown,
+export function immutableSort<T>(
+  arr: T[],
+  sortBy?: 'ASC' | 'DESC',
+  key?: keyof T,
 ): T[] {
-  const idx = array.findIndex((item) => item[key] === searchValue);
-  return [...array.slice(0, idx), ...array.slice(idx + 1)];
-}
+  return [...arr].sort((a, b) => {
+    let aVal: number;
+    let bVal: number;
+    if (key) {
+      aVal = Number(a[key]);
+      bVal = Number(b[key]);
+    } else {
+      aVal = Number(a);
+      bVal = Number(b);
+    }
 
-export function deepClone<T>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj));
+    return sortBy === 'ASC' ? aVal - bVal : bVal - aVal;
+  });
 }
