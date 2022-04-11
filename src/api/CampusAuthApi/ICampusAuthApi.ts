@@ -9,8 +9,8 @@ export default abstract class ICampusAuthApi {
   abstract getCandidateInfo(): Promise<Candidate>;
   abstract getCandidateParticipationsList(): Promise<Participation[]>;
   abstract setParticipationPriority(
-    id: number,
-    newPriority: number,
+    participationId: number,
+    priority: number,
   ): Promise<void>;
   abstract deleteParticipation(id: number): Promise<void>;
   abstract createProjectParticipation(

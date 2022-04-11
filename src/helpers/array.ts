@@ -17,3 +17,7 @@ export function immutableSort<T>(
     return sortBy === 'ASC' ? aVal - bVal : bVal - aVal;
   });
 }
+
+export function deepClone<T>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj));
+}

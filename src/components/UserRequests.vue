@@ -25,6 +25,7 @@
       v-if="!dragDisabled"
       class="btn"
       case="uppercase"
+      :disabled="authStore.loading"
       @click="onSave"
     >
       сохранить изменения
@@ -35,6 +36,7 @@
       case="uppercase"
       variant="outlined"
       color="red"
+      :disabled="authStore.loading"
       @click="onCancelEdit"
     >
       отмена
@@ -44,6 +46,7 @@
       class="btn edit-btn"
       variant="outlined"
       case="uppercase"
+      :disabled="authStore.loading"
       @click="onToggleEdit"
     >
       Редактировать заявки
@@ -59,14 +62,13 @@
 
 <script setup lang="ts">
   import Draggable from 'vuedraggable';
-  import { onBeforeMount, ref } from 'vue';
+  import { ref, watch } from 'vue';
   import UserProjectRequestCard from './ProjectRequestCard.vue';
   import BaseButton from './base/BaseButton.vue';
   import { Participation } from '@/models/Participation';
   import { immutableSort } from '@/helpers/array';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import RequestDeleteModal from './RequestDeleteModal.vue';
-  import campusAuthApi from '@/api/CampusAuthApi';
   import { ALL_PRIORITIES } from '@/models/values/participation-priority';
   import UserProjectRequestsStub from './UserProjectRequestsStub.vue';
 
@@ -89,10 +91,14 @@
   const currentDeleteableRequest = ref<Participation | undefined>(undefined);
   const editableRequestsList = ref<EditableListItem[]>([]);
 
-  onBeforeMount(initEditableList);
+  watch(() => authStore.requestsList, initEditableList, {
+    deep: true,
+    immediate: true,
+  });
 
   function initEditableList() {
-    if (authStore.requestsList?.length) {
+    if (authStore.requestsList) {
+      editableRequestsList.value = [];
       const existingPriorities = new Set<number>();
 
       for (const request of authStore.requestsList) {
@@ -127,7 +133,6 @@
 
   function onCancelEdit() {
     dragDisabled.value = true;
-    editableRequestsList.value = [];
     initEditableList();
   }
 
@@ -138,10 +143,12 @@
   function onSave() {
     dragDisabled.value = true;
     if (editableRequestsList.value) {
+      const participations: { id: number; priority: number }[] = [];
       for (const [index, item] of editableRequestsList.value.entries()) {
         if (item.content)
-          campusAuthApi.setParticipationPriority(item.content.id, index + 1);
+          participations.push({ id: item.content.id, priority: index + 1 });
       }
+      authStore.updateParticipationsPriorities(participations);
     }
   }
 
@@ -152,13 +159,7 @@
 
   function deleteRequest(request: Participation) {
     if (editableRequestsList.value) {
-      const idx = editableRequestsList.value.findIndex(
-        (item) => item.content?.id === request.id,
-      );
-      editableRequestsList.value = [
-        ...editableRequestsList.value.slice(0, idx),
-        ...editableRequestsList.value.slice(idx + 1),
-      ];
+      authStore.deleteParticipation(request.id);
     }
   }
 </script>

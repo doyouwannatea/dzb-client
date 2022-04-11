@@ -1,3 +1,4 @@
+import { deepClone } from '@/helpers/array';
 import { delayRes } from '@/helpers/promise';
 import { Candidate } from '@/models/Candidate';
 import { candidate } from '@/models/mock/candidate';
@@ -16,13 +17,13 @@ export class CampusAuthApiMock extends ICampusAuthApi {
   async getCandidateInfo(): Promise<Candidate> {
     const authToken = this.getAuthToken();
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
-    return delayRes(candidate, 300);
+    return delayRes(deepClone(candidate), 300);
   }
 
   async getCandidateParticipationsList(): Promise<Participation[]> {
     const authToken = this.getAuthToken();
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
-    return delayRes(participationsList, 300);
+    return delayRes(deepClone(participationsList), 300);
   }
 
   async deleteParticipation(id: number): Promise<void> {
@@ -35,14 +36,20 @@ export class CampusAuthApiMock extends ICampusAuthApi {
   }
 
   async setParticipationPriority(
-    id: number,
-    newPriority: number,
+    participationId: number,
+    priority: number,
   ): Promise<void> {
     const authToken = this.getAuthToken();
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
+    if (priority < 1) throw new Error('Priority must be > 0');
+    if (priority > 3) throw new Error('Priority must be < 4');
 
-    const idx = participationsList.findIndex((request) => request.id === id);
-    participationsList[idx].priority = newPriority;
+    const participation = participationsList.find(
+      (request) => request.id === participationId,
+    );
+    if (!participation) throw new Error('participation not found');
+    participation.priority = priority;
+    return delayRes(undefined, 300);
   }
 
   async createProjectParticipation(
@@ -60,7 +67,6 @@ export class CampusAuthApiMock extends ICampusAuthApi {
       (project) => project.id === projectId,
     );
     if (!project) throw new Error('Project not found');
-    const participationsList = await this.getCandidateParticipationsList();
     for (const participation of participationsList) {
       if (participation.priority === priority)
         throw new Error('The priority has already been selected');

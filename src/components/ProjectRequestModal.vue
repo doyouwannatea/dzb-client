@@ -9,6 +9,8 @@
     <template #header>
       <h1 class="title">Подача заявки на проект</h1>
       <h2>{{ projectsStore.openedProject?.title }}</h2>
+      <h3 v-if="authStore.loading">loading...</h3>
+      <h3 v-if="authStore.error">{{ authStore.error }}</h3>
     </template>
     <!-- HEADER -->
 
@@ -158,7 +160,7 @@
     'Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас распределить в проект, в который вы хотите попасть с большей вероятностью, вы ставите ему больший приоритет. Вы сможете поменять приоритет проекта в личном кабинете после отправки заявки';
 
   watch(
-    () => authStore,
+    () => authStore.requestsList,
     () => {
       if (authStore.requestsList) {
         highSelected.value = false;

@@ -30,10 +30,13 @@ export class CampusAuthApi extends ICampusAuthApi {
   }
 
   async setParticipationPriority(
-    id: number,
-    newPriority: number,
+    participationId: number,
+    priority: number,
   ): Promise<void> {
-    return campusAuthApiMock.setParticipationPriority(id, newPriority);
+    return campusAuthApiMock.setParticipationPriority(
+      participationId,
+      priority,
+    );
   }
 
   async createProjectParticipation(
