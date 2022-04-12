@@ -8,6 +8,7 @@
     >
       <template #item="{ element, index }">
         <UserProjectRequestCard
+          :key="element.order"
           :editable="!dragDisabled"
           :priority="index + 1"
           :project-request="element.content"
@@ -21,6 +22,11 @@
   <div v-if="authStore.error">{{ authStore.error }}</div>
 
   <div v-if="authStore.requestsList?.length > 0" class="actions">
+    <p v-if="!dragDisabled" class="info">
+      <img class="cursor-icon" :src="cursorIconUrl" alt="" />
+      для изменения приоритета зажмите и перетащите карточку заявки в поле
+      другого приоритета
+    </p>
     <BaseButton
       v-if="!dragDisabled"
       class="btn"
@@ -69,8 +75,9 @@
   import { immutableSort } from '@/helpers/array';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import RequestDeleteModal from './RequestDeleteModal.vue';
-  import { ALL_PRIORITIES } from '@/models/values/participation-priority';
   import UserProjectRequestsStub from './UserProjectRequestsStub.vue';
+  import { ALL_PRIORITIES } from '@/models/values/project-priority';
+  import cursorIconUrl from '@/assets/icons/cursor.svg?url';
 
   type EditableListItem = {
     order: number;
@@ -168,11 +175,27 @@
   .actions {
     display: flex;
     justify-content: flex-end;
+    align-items: flex-start;
     gap: 0.5rem;
   }
 
   .edit-btn {
     width: 100%;
     max-width: 25rem;
+  }
+
+  .info {
+    display: flex;
+    gap: 0.625rem;
+    align-items: center;
+
+    line-height: 150%;
+    color: var(--gray-color-2);
+  }
+
+  .cursor-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    aspect-ratio: 1 / 1;
   }
 </style>

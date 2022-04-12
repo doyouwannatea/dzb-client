@@ -9,3 +9,5 @@ export const PriorityText: Record<PriorityType, string> = {
   2: 'Средний',
   3: 'Низкий',
 };
+
+export const ALL_PRIORITIES = [1, 2, 3];
