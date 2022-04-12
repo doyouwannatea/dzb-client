@@ -6,8 +6,9 @@
       { editable: editable && projectRequest, stub: !projectRequest },
     ]"
   >
-    <div v-if="projectRequest" class="card-content">
+    <div class="card-content">
       <RouterLink
+        v-if="projectRequest"
         class="title"
         :to="{
           name: RouteNames.PROJECT_DETAILS,
@@ -17,18 +18,24 @@
       >
         {{ projectRequest.project.title }}
       </RouterLink>
-      <p class="desc">{{ projectRequest.project.goal }}</p>
-
-      <BaseBadge class="status">
-        {{ projectRequest.state }}
-      </BaseBadge>
-
-      <div :class="['priority', { editable }]">
-        {{ repeatString('I', priority) }}
+      <div v-else class="title stub-line stub-title">Проект не выбран</div>
+      <p v-if="projectRequest" class="desc">
+        {{ projectRequest.project.goal }}
+      </p>
+      <div v-else class="stub-wrapper">
+        <div class="stub-line"></div>
+        <div class="stub-line"></div>
       </div>
 
+      <BaseBadge class="status">
+        {{ PriorityText[priority] }} приоритет
+        <div class="priority">
+          {{ repeatString('I', priority) }}
+        </div>
+      </BaseBadge>
+
       <BaseButton
-        v-if="editable"
+        v-if="editable && projectRequest"
         class="delete-btn"
         variant="outlined"
         color="red"
@@ -60,7 +67,6 @@
         </svg>
       </BaseButton>
     </div>
-    <div v-else>приоритет {{ priority }}</div>
   </BasePanel>
 </template>
 
@@ -68,6 +74,7 @@
   import BasePanel from '@/components/base/BasePanel.vue';
   import { repeatString } from '@/helpers/string';
   import { Participation } from '@/models/Participation';
+  import { PriorityText } from '@/models/values/project-priority';
   import { RouteNames } from '@/router/types/route-names';
   import { RouterLink } from 'vue-router';
   import BaseBadge from './base/BaseBadge.vue';
@@ -135,7 +142,8 @@
 
   .priority {
     border-radius: 50%;
-    background-color: var(--gray-color-1);
+    color: #fff;
+    background-color: var(--accent-color-1);
     width: 2.8125rem;
     height: 2.8125rem;
     display: flex;
@@ -143,6 +151,8 @@
     text-align: center;
     justify-content: center;
     justify-self: flex-end;
+    margin-right: -2px;
+    margin-left: auto;
 
     /* text */
     font-weight: 600;
@@ -150,26 +160,57 @@
     line-height: normal;
   }
 
-  .priority.editable {
-    color: #fff;
-    background-color: var(--accent-color-1);
+  .stub:deep(.priority) {
+    background-color: var(--gray-color-2);
   }
 
   .status {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    padding-left: 1rem;
+    height: 2.8125rem;
+    gap: 0.9375rem;
+
+    /* text */
     white-space: nowrap;
+    color: var(--accent-color-1);
+    border-color: var(--accent-color-1);
+  }
+
+  .stub:deep(.status) {
     color: var(--gray-color-2);
     border-color: var(--gray-color-2);
   }
 
   .delete-btn {
     margin-top: 1rem;
-    grid-column: 3;
+    grid-column: 2;
     padding: 0.425rem;
     aspect-ratio: 1 / 1;
+    justify-self: flex-end;
   }
 
   .delete-btn:hover:deep(.delete-btn-path),
   .delete-btn:active:deep(.delete-btn-path) {
     stroke: #fff;
+  }
+
+  .stub-title {
+    text-decoration: none !important;
+    color: var(--gray-color-2);
+  }
+
+  .stub-line {
+    background-color: #d2d2d2;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .stub-wrapper {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    grid-row: 2;
   }
 </style>
