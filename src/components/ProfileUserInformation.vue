@@ -59,7 +59,15 @@
     <div class="right-col">
       <h2 class="subtitle">Навыки</h2>
       <SkillsList :skills="skills" :default-visible="7" />
-      <BaseButton class="edit-btn" case="uppercase" variant="outlined">
+      <BaseButton
+        is="a"
+        class="edit-btn"
+        case="uppercase"
+        variant="outlined"
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://int.istu.edu/"
+      >
         Редактировать профиль
       </BaseButton>
     </div>
@@ -83,6 +91,7 @@
 <style scoped>
   .panel {
     min-height: 100%;
+    display: flex;
   }
 
   .label {
