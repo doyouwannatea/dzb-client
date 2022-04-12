@@ -81,11 +81,11 @@
           <BaseRadioButton
             v-model="priorityValue"
             class="radio-label"
-            :value="PriorityType.HIGH"
+            :value="Priorities.HIGH"
             :disabled="highSelected"
           >
-            {{ PriorityType.HIGH }}
-            ({{ PriorityText[PriorityType.HIGH] }} приоритет)
+            {{ Priorities.HIGH }}
+            ({{ PriorityText[Priorities.HIGH] }} приоритет)
             <template v-if="highSelected">
               <br />
               *уже выбран на другой проект
@@ -97,11 +97,11 @@
           <BaseRadioButton
             v-model="priorityValue"
             class="radio-label"
-            :value="PriorityType.MEDIUM"
+            :value="Priorities.MEDIUM"
             :disabled="mediumSelected"
           >
-            {{ PriorityType.MEDIUM }}
-            ({{ PriorityText[PriorityType.MEDIUM] }} приоритет)
+            {{ Priorities.MEDIUM }}
+            ({{ PriorityText[Priorities.MEDIUM] }} приоритет)
             <template v-if="mediumSelected">
               <br />
               *уже выбран на другой проект
@@ -113,11 +113,11 @@
           <BaseRadioButton
             v-model="priorityValue"
             class="radio-label"
-            :value="PriorityType.LOW"
+            :value="Priorities.LOW"
             :disabled="lowSelected"
           >
-            {{ PriorityType.LOW }}
-            ({{ PriorityText[PriorityType.LOW] }} приоритет)
+            {{ Priorities.LOW }}
+            ({{ PriorityText[Priorities.LOW] }} приоритет)
             <template v-if="lowSelected">
               <br />
               *уже выбран на другой проект
@@ -147,16 +147,17 @@
   import BaseInput from './base/BaseInput.vue';
   import BaseRadioButton from './base/BaseRadioButton.vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { PriorityText, PriorityType } from '@/models/values/project-priority';
+  import { PriorityText, Priorities } from '@/models/values/project-priority';
   import checkedIconUrl from '@/assets/icons/checked.svg?url';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { Priority } from '@/models/Participation';
 
   const projectsStore = useProjectsStore();
   const authStore = useAuthStore();
   const modalsStore = useModalsStore();
 
-  const priorityValue = ref<number>();
+  const priorityValue = ref<Priority>();
   const highSelected = ref(false);
   const mediumSelected = ref(false);
   const lowSelected = ref(false);

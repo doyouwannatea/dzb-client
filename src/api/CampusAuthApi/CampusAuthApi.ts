@@ -1,7 +1,7 @@
 import ky from 'ky';
 import { Candidate } from '@/models/Candidate';
 import ICampusAuthApi from './ICampusAuthApi';
-import { Participation } from '@/models/Participation';
+import { Participation, Priority } from '@/models/Participation';
 import campusAuthApiMock from './CampusAuthApiMock';
 
 export class CampusAuthApi extends ICampusAuthApi {
@@ -31,7 +31,7 @@ export class CampusAuthApi extends ICampusAuthApi {
 
   async setParticipationPriority(
     participationId: number,
-    priority: number,
+    priority: Priority,
   ): Promise<void> {
     return campusAuthApiMock.setParticipationPriority(
       participationId,
@@ -40,7 +40,7 @@ export class CampusAuthApi extends ICampusAuthApi {
   }
 
   async createProjectParticipation(
-    priority: number,
+    priority: Priority,
     projectId: number,
   ): Promise<void> {
     return campusAuthApiMock.createProjectParticipation(priority, projectId);

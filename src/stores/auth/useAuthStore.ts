@@ -3,6 +3,7 @@ import campusAuthApi from '@/api/CampusAuthApi';
 import { state } from './state';
 import { State } from './state';
 import { useModalsStore } from '../modals/useModalsStore';
+import { Priority } from '@/models/Participation';
 
 export const useAuthStore = defineStore('auth', {
   state,
@@ -25,7 +26,7 @@ export const useAuthStore = defineStore('auth', {
     // EXIT
 
     // CREATE PATRICIPATION
-    async createPatricipation(priority: number, projectId: number) {
+    async createPatricipation(priority: Priority, projectId: number) {
       const modalsStore = useModalsStore();
 
       await this._onAsync(async () => {
@@ -40,7 +41,7 @@ export const useAuthStore = defineStore('auth', {
 
     // UPDATE PARTICIPATIONS PRIORITIES
     async updateParticipationsPriorities(
-      participations: { id: number; priority: number }[],
+      participations: { id: number; priority: Priority }[],
     ) {
       await this._onAsync(async () => {
         const promises = participations.map((participation) =>

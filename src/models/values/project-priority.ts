@@ -1,13 +1,25 @@
-export const enum PriorityType {
-  HIGH = 1,
-  MEDIUM = 2,
-  LOW = 3,
+import { Priority } from '@/models/Participation';
+
+const enum PriorityType {
+  HIGH = 'HIGH',
+  MEDIUM = 'MEDIUM',
+  LOW = 'LOW',
 }
 
-export const PriorityText: Record<PriorityType, string> = {
+export const Priorities: Record<PriorityType, Priority> = {
+  HIGH: 1,
+  MEDIUM: 2,
+  LOW: 3,
+};
+
+export const PriorityText: Record<Priority, string> = {
   1: 'Высший',
   2: 'Средний',
   3: 'Низкий',
 };
 
-export const ALL_PRIORITIES = [1, 2, 3];
+export const ALL_PRIORITIES = [
+  Priorities.LOW,
+  Priorities.MEDIUM,
+  Priorities.HIGH,
+];

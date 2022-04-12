@@ -73,7 +73,7 @@
 <script setup lang="ts">
   import BasePanel from '@/components/base/BasePanel.vue';
   import { repeatString } from '@/helpers/string';
-  import { Participation } from '@/models/Participation';
+  import { Participation, Priority } from '@/models/Participation';
   import { PriorityText } from '@/models/values/project-priority';
   import { RouteNames } from '@/router/types/route-names';
   import { RouterLink } from 'vue-router';
@@ -82,7 +82,7 @@
 
   type Props = {
     editable: boolean;
-    priority: number;
+    priority: Priority;
     projectRequest?: Participation;
   };
   type Emits = {

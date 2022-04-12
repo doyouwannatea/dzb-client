@@ -4,7 +4,7 @@ import { Candidate } from '@/models/Candidate';
 import { candidate } from '@/models/mock/candidate';
 import { participationsList } from '@/models/mock/participation';
 import { projectListResponse } from '@/models/mock/project';
-import { Participation } from '@/models/Participation';
+import { Participation, Priority } from '@/models/Participation';
 import { AUTH_TOKEN_REQUIRED } from '@/models/values/error-messages';
 import ICampusAuthApi from './ICampusAuthApi';
 
@@ -37,7 +37,7 @@ export class CampusAuthApiMock extends ICampusAuthApi {
 
   async setParticipationPriority(
     participationId: number,
-    priority: number,
+    priority: Priority,
   ): Promise<void> {
     const authToken = this.getAuthToken();
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
@@ -53,7 +53,7 @@ export class CampusAuthApiMock extends ICampusAuthApi {
   }
 
   async createProjectParticipation(
-    priority: number,
+    priority: Priority,
     projectId: number,
   ): Promise<void> {
     // проверки на стороне клиента

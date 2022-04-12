@@ -1,5 +1,5 @@
 <template>
-  <div v-if="authStore.requestsList?.length > 0">
+  <div v-if="authStore.requestsList && authStore.requestsList.length > 0">
     <Draggable
       v-model="editableRequestsList"
       v-bind="dragOptions"
@@ -21,7 +21,10 @@
   <div v-if="authStore.loading">loading...</div>
   <div v-if="authStore.error">{{ authStore.error }}</div>
 
-  <div v-if="authStore.requestsList?.length > 0" class="actions">
+  <div
+    v-if="authStore.requestsList && authStore.requestsList.length > 0"
+    class="actions"
+  >
     <p v-if="!dragDisabled" class="info">
       <img class="cursor-icon" :src="cursorIconUrl" alt="" />
       для изменения приоритета зажмите и перетащите карточку заявки в поле
@@ -71,7 +74,7 @@
   import { ref, watch } from 'vue';
   import UserProjectRequestCard from './ProjectRequestCard.vue';
   import BaseButton from './base/BaseButton.vue';
-  import { Participation } from '@/models/Participation';
+  import { Participation, Priority } from '@/models/Participation';
   import { immutableSort } from '@/helpers/array';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import RequestDeleteModal from './RequestDeleteModal.vue';
@@ -150,10 +153,13 @@
   function onSave() {
     dragDisabled.value = true;
     if (editableRequestsList.value) {
-      const participations: { id: number; priority: number }[] = [];
+      const participations: { id: number; priority: Priority }[] = [];
       for (const [index, item] of editableRequestsList.value.entries()) {
         if (item.content)
-          participations.push({ id: item.content.id, priority: index + 1 });
+          participations.push({
+            id: item.content.id,
+            priority: (index + 1) as Priority,
+          });
       }
       authStore.updateParticipationsPriorities(participations);
     }
