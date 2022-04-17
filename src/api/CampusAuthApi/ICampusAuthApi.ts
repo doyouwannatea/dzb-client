@@ -1,6 +1,7 @@
 import { getCookie, setCookie } from '@/helpers/cookie';
 import { Candidate } from '@/models/Candidate';
 import { Participation } from '@/models/Participation';
+import { Project } from '@/models/Project';
 
 export default abstract class ICampusAuthApi {
   public getAuthToken = () => getCookie('token');
@@ -8,6 +9,7 @@ export default abstract class ICampusAuthApi {
   abstract auth(): Promise<void>;
   abstract getCandidateInfo(): Promise<Candidate>;
   abstract getCandidateParticipationsList(): Promise<Participation[]>;
+  abstract getUserProjectList(): Promise<Project[]>;
   abstract setParticipationPriority(
     participationId: number,
     priority: number,

@@ -15,6 +15,7 @@ export const useAuthStore = defineStore('auth', {
         this.profileData = await campusAuthApi.getCandidateInfo();
         this.requestsList =
           await campusAuthApi.getCandidateParticipationsList();
+        this.projectsList = await campusAuthApi.getUserProjectList();
       });
     },
     // AUTH

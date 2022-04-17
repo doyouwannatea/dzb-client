@@ -3,6 +3,7 @@ import { Candidate } from '@/models/Candidate';
 import ICampusAuthApi from './ICampusAuthApi';
 import { Participation, Priority } from '@/models/Participation';
 import campusAuthApiMock from './CampusAuthApiMock';
+import { Project } from '@/models/Project';
 
 export class CampusAuthApi extends ICampusAuthApi {
   private ky = ky.create({
@@ -44,6 +45,10 @@ export class CampusAuthApi extends ICampusAuthApi {
     projectId: number,
   ): Promise<void> {
     return campusAuthApiMock.createProjectParticipation(priority, projectId);
+  }
+
+  async getUserProjectList(): Promise<Project[]> {
+    return campusAuthApiMock.getUserProjectList();
   }
 }
 

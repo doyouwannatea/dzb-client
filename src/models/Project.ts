@@ -57,7 +57,6 @@ export interface Project {
   type: Type;
   state: State;
   supervisor: Supervisor;
-  project_result?: string;
   participant_feedback?: string;
 }
 

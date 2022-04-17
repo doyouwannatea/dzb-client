@@ -5,6 +5,7 @@ import { candidate } from '@/models/mock/candidate';
 import { participationsList } from '@/models/mock/participation';
 import { projectListResponse } from '@/models/mock/project';
 import { Participation, Priority } from '@/models/Participation';
+import { Project } from '@/models/Project';
 import { AUTH_TOKEN_REQUIRED } from '@/models/values/error-messages';
 import ICampusAuthApi from './ICampusAuthApi';
 
@@ -81,6 +82,13 @@ export class CampusAuthApiMock extends ICampusAuthApi {
       review: 'review',
     });
     return delayRes(undefined, 300);
+  }
+
+  async getUserProjectList(): Promise<Project[]> {
+    const projects = projectListResponse.data.filter(
+      (project) => project.participant_feedback || project.result,
+    );
+    return delayRes(projects, 300);
   }
 }
 
