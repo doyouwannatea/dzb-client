@@ -25,7 +25,39 @@ export class ProjectApiMock extends IProjectApi {
   async filterProjectList(
     filters: ProjectFilters,
   ): Promise<ProjectListResponse> {
-    return delayRes(projectListResponse, 400);
+    let filteredList = projectListResponse.data;
+    // DIFFICULTY
+    if (filters.difficulty && filters.difficulty.length > 0) {
+      filteredList = filteredList.filter((project) =>
+        filters.difficulty?.includes(project.difficulty),
+      );
+    }
+    // STATE
+    if (filters.state && filters.state.length > 0) {
+      filteredList = filteredList.filter((project) =>
+        filters.state?.includes(project.state.id),
+      );
+    }
+    // TITLE
+    if (filters.title) {
+      filteredList = filteredList.filter(
+        (project) =>
+          filters.title &&
+          project.title.toLowerCase().includes(filters.title.toLowerCase()),
+      );
+    }
+    // TAGS
+    if (filters.tags && filters.tags.length > 0) {
+      filteredList = filteredList.filter((project) =>
+        filters.tags?.some((tag) =>
+          project.skills.some((skill) => tag === skill.id),
+        ),
+      );
+    }
+    return delayRes(
+      { projectCount: filteredList.length, data: filteredList },
+      400,
+    );
   }
 
   async getSingleProject(projectId: number): Promise<Project> {

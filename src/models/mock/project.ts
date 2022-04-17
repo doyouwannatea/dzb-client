@@ -1,31 +1,36 @@
 import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
 import { State, Skill, Type } from '../Project';
 
+const recruitingState: State = {
+  state: 'идёт набор',
+  id: 1,
+  created_at: '',
+  updated_at: '',
+};
+const activeState: State = {
+  state: 'активный',
+  id: 2,
+  created_at: '',
+  updated_at: '',
+};
+const extraState: State = {
+  state: 'добор',
+  id: 3,
+  created_at: '',
+  updated_at: '',
+};
+const archivedState: State = {
+  state: 'в архиве',
+  id: 4,
+  created_at: '',
+  updated_at: '',
+};
+
 export const states: State[] = [
-  {
-    id: 1,
-    state: 'идёт набор',
-    created_at: '',
-    updated_at: '',
-  },
-  {
-    id: 2,
-    state: 'активный',
-    created_at: '',
-    updated_at: '',
-  },
-  {
-    id: 3,
-    state: 'добор',
-    created_at: '',
-    updated_at: '',
-  },
-  {
-    id: 4,
-    state: 'в архиве',
-    created_at: '',
-    updated_at: '',
-  },
+  recruitingState,
+  activeState,
+  extraState,
+  archivedState,
 ];
 
 export const types: Type[] = [
@@ -117,7 +122,7 @@ export const skills: Skill[] = [
 ];
 
 export const projectListResponse: ProjectListResponse = {
-  projectCount: 62,
+  projectCount: 6,
   data: [
     {
       id: 10,
@@ -139,18 +144,7 @@ export const projectListResponse: ProjectListResponse = {
         'Выполнено проектирование данных, разработаны функциональные моделей для всех типов пользователей (администратор, преподаватель, студент), макеты интерфейсов пользователей, выполнена реализация БД. Реализованный прототип отображает список ВКР из БД.',
       updated_at: '2020-11-21 09:43:22',
       created_at: '1',
-      skills: [
-        {
-          id: 9,
-          skill: 'Web',
-          created_at: '',
-          updated_at: '',
-          pivot: {
-            project_id: 1,
-            skill_id: 1,
-          },
-        },
-      ],
+      skills: [skills[0], skills[1], skills[2]],
       type: {
         id: 1,
         type: 'Прикладной',
@@ -166,12 +160,7 @@ export const projectListResponse: ProjectListResponse = {
         id: 1,
         position: 'руководитель',
       },
-      state: {
-        state: 'активный',
-        id: 1,
-        created_at: '',
-        updated_at: '',
-      },
+      state: activeState,
     },
     {
       id: 11,
@@ -193,18 +182,7 @@ export const projectListResponse: ProjectListResponse = {
         'Выполнено проектирование данных, разработаны функциональные моделей для всех типов пользователей (администратор, преподаватель, студент), макеты интерфейсов пользователей, выполнена реализация БД. Реализованный прототип отображает список ВКР из БД.',
       updated_at: '2020-11-21 09:43:22',
       created_at: '1',
-      skills: [
-        {
-          id: 9,
-          skill: 'Web',
-          created_at: '',
-          updated_at: '',
-          pivot: {
-            project_id: 1,
-            skill_id: 1,
-          },
-        },
-      ],
+      skills: [skills[0], skills[1], skills[3]],
       type: {
         id: 1,
         type: 'Прикладной',
@@ -220,12 +198,7 @@ export const projectListResponse: ProjectListResponse = {
         id: 1,
         position: 'руководитель',
       },
-      state: {
-        state: 'добор',
-        id: 1,
-        created_at: '',
-        updated_at: '',
-      },
+      state: extraState,
     },
     {
       id: 13,
@@ -247,18 +220,7 @@ export const projectListResponse: ProjectListResponse = {
         'Выполнено проектирование данных, разработаны функциональные моделей для всех типов пользователей (администратор, преподаватель, студент), макеты интерфейсов пользователей, выполнена реализация БД. Реализованный прототип отображает список ВКР из БД.',
       updated_at: '2020-11-21 09:43:22',
       created_at: '1',
-      skills: [
-        {
-          id: 9,
-          skill: 'Web',
-          created_at: '',
-          updated_at: '',
-          pivot: {
-            project_id: 1,
-            skill_id: 1,
-          },
-        },
-      ],
+      skills: [skills[5], skills[4]],
       type: {
         id: 1,
         type: 'Прикладной',
@@ -274,12 +236,7 @@ export const projectListResponse: ProjectListResponse = {
         id: 1,
         position: 'руководитель',
       },
-      state: {
-        state: 'идёт набор',
-        id: 1,
-        created_at: '',
-        updated_at: '',
-      },
+      state: recruitingState,
     },
     {
       id: 16,
@@ -301,18 +258,7 @@ export const projectListResponse: ProjectListResponse = {
         'Выполнено проектирование данных, разработаны функциональные моделей для всех типов пользователей (администратор, преподаватель, студент), макеты интерфейсов пользователей, выполнена реализация БД. Реализованный прототип отображает список ВКР из БД.',
       updated_at: '2020-11-21 09:43:22',
       created_at: '1',
-      skills: [
-        {
-          id: 9,
-          skill: 'Web',
-          created_at: '',
-          updated_at: '',
-          pivot: {
-            project_id: 1,
-            skill_id: 1,
-          },
-        },
-      ],
+      skills: [skills[6]],
       type: {
         id: 1,
         type: 'Прикладной',
@@ -328,12 +274,7 @@ export const projectListResponse: ProjectListResponse = {
         id: 1,
         position: 'руководитель',
       },
-      state: {
-        state: 'в архиве',
-        id: 1,
-        created_at: '',
-        updated_at: '',
-      },
+      state: archivedState,
     },
     {
       id: 17,
@@ -355,18 +296,7 @@ export const projectListResponse: ProjectListResponse = {
         'Выполнено проектирование данных, разработаны функциональные моделей для всех типов пользователей (администратор, преподаватель, студент), макеты интерфейсов пользователей, выполнена реализация БД. Реализованный прототип отображает список ВКР из БД.',
       updated_at: '2020-11-21 09:43:22',
       created_at: '1',
-      skills: [
-        {
-          id: 9,
-          skill: 'Web',
-          created_at: '',
-          updated_at: '',
-          pivot: {
-            project_id: 1,
-            skill_id: 1,
-          },
-        },
-      ],
+      skills: skills,
       type: {
         id: 1,
         type: 'Прикладной',
@@ -382,12 +312,7 @@ export const projectListResponse: ProjectListResponse = {
         id: 1,
         position: 'руководитель',
       },
-      state: {
-        state: 'активный',
-        id: 1,
-        created_at: '',
-        updated_at: '',
-      },
+      state: activeState,
     },
     {
       id: 19,
@@ -409,18 +334,7 @@ export const projectListResponse: ProjectListResponse = {
         'Выполнено проектирование данных, разработаны функциональные моделей для всех типов пользователей (администратор, преподаватель, студент), макеты интерфейсов пользователей, выполнена реализация БД. Реализованный прототип отображает список ВКР из БД.',
       updated_at: '2020-11-21 09:43:22',
       created_at: '1',
-      skills: [
-        {
-          id: 9,
-          skill: 'Web',
-          created_at: '',
-          updated_at: '',
-          pivot: {
-            project_id: 1,
-            skill_id: 1,
-          },
-        },
-      ],
+      skills: [skills[6], skills[5], skills[2]],
       type: {
         id: 1,
         type: 'Прикладной',
@@ -436,12 +350,7 @@ export const projectListResponse: ProjectListResponse = {
         id: 1,
         position: 'руководитель',
       },
-      state: {
-        state: 'активный',
-        id: 1,
-        created_at: '',
-        updated_at: '',
-      },
+      state: activeState,
     },
   ],
 };
