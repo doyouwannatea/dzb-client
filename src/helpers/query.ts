@@ -37,7 +37,6 @@ export function locationQueryToProjectFilters(
 export function projectFiltersToSearchParams(
   filters: ProjectFilters,
 ): Record<keyof ProjectFilters, string> {
-  console.log(filters);
   return {
     title: toString(filters.title),
     page: toString(filters.page),
