@@ -30,5 +30,20 @@ export const useModalsStore = defineStore('modals', {
       this.projectRequestModal = true;
     },
     // OPEN REQUEST MODAL
+
+    // OPEN FEEDBACK MODAL
+    openFeedbackModal(project: Project) {
+      const authStore = useAuthStore();
+      const projectsStore = useProjectsStore();
+
+      if (!authStore.isAuth) {
+        this.authModal = true;
+        return;
+      }
+
+      projectsStore.openedProject = project;
+      this.projectFeedbackModal = true;
+    },
+    // OPEN FEEDBACK MODAL
   },
 });

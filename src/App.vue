@@ -2,6 +2,7 @@
   <AuthModal />
   <ProjectRequestModal />
   <ProjectSuccessRequestModal />
+  <ProjectFeedbackModal />
   <RouterView></RouterView>
 </template>
 
@@ -10,4 +11,5 @@
   import ProjectRequestModal from './components/ProjectRequestModal.vue';
   import AuthModal from './components/AuthModal.vue';
   import ProjectSuccessRequestModal from './components/ProjectSuccessRequestModal.vue';
+  import ProjectFeedbackModal from './components/ProjectFeedbackModal.vue';
 </script>

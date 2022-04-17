@@ -3,6 +3,7 @@ export interface State {
   editSkillsModal: boolean;
   projectSuccessRequestModal: boolean;
   projectRequestModal: boolean;
+  projectFeedbackModal: boolean;
 }
 
 export const state = (): State => ({
@@ -10,4 +11,5 @@ export const state = (): State => ({
   editSkillsModal: false,
   projectRequestModal: false,
   projectSuccessRequestModal: false,
+  projectFeedbackModal: false,
 });

@@ -1,60 +1,49 @@
 <template>
-  <!-- project request modal -->
-  <BaseModal size="m" :is-show="props.isShow" @close="emit('close')">
+  <BaseModal
+    size="m"
+    :is-show="modalsStore.projectFeedbackModal"
+    @close="modalsStore.projectFeedbackModal = false"
+  >
     <!-- HEADER -->
     <template #header>
       <h1>Отзыв об участии в проекте</h1>
-      <h2>Платформа для размещения вузовских олимпиад</h2>
+      <h2 class="project-title">{{ project?.title }}</h2>
     </template>
     <!-- HEADER -->
 
     <!-- MAIN CONTENT -->
     <div class="author">
-      <div class="avatar"><img :src="userMockUrl" alt="user" /></div>
+      <div class="avatar"><img :src="userMockUrl" alt="" /></div>
       <div>
-        <div class="name">Лукьянов Н.Д.</div>
-        <div class="position">кандидат технических наук, доцент</div>
+        <div class="name">{{ project?.supervisor.fio }}</div>
+        <div class="position">{{ project?.supervisor.position }}</div>
       </div>
     </div>
 
     <p class="feedback">
-      Студент-практикант Ф.И.О. в период с 29.06.2015 г. по 12.07.2015 г.
-      проходил учебно-ознакомительную практику в магазине ООО «Центральное»,
-      расположенном по адресу: г. Южно-Сахалинск, ул. Ленина 218 в качестве
-      помощника руководителя. <br />
-      <br />
-      В течение всего периода практики, Ф.И.О. внимательно и ответственно
-      относился к выполняемой работе. Изучал методы управления и основные методы
-      мотивации персонала, должностные обязанности персонала, пробовал проводить
-      анализ хозяйственной деятельности организации за последние три года,
-      ознакомился с порядком ведения различных распорядительных документов,
-      учетной документации, изучал организационную структуру предприятия,
-      участвовал в различной повседневной работе. <br />
-      <br />
-      Всю порученную работу выполнял добросовестно и в срок. Стремился
-      приобретать новые знания, чтобы быть ещё более полезным на месте практики.
-      Неоднократно оказывал помощь сотрудникам организации. Руководство
-      организации оценивают работу Ф.И.О. на «отлично». <br />
-      <br />
-      Замечаний по прохождению практики к Ф.И.О. нет.
+      {{ project?.participant_feedback?.trim() }}
     </p>
     <!-- MAIN CONTENT -->
   </BaseModal>
 </template>
 
 <script setup lang="ts">
-  import { withDefaults } from 'vue';
   import userMockUrl from '@/assets/images/user-mock.png';
   import BaseModal from './base/BaseModal.vue';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { storeToRefs } from 'pinia';
 
-  type Props = { isShow: boolean };
-  type Emits = { (e: 'close'): void };
-
-  const props = withDefaults(defineProps<Props>(), { isShow: false });
-  const emit = defineEmits<Emits>();
+  const modalsStore = useModalsStore();
+  const projectsStore = useProjectsStore();
+  const { openedProject: project } = storeToRefs(projectsStore);
 </script>
 
 <style scoped>
+  .project-title {
+    margin-top: 0.625rem;
+  }
+
   .author {
     display: flex;
     align-items: center;
@@ -75,5 +64,9 @@
     font-size: 1.125rem;
     line-height: 1.375rem;
     color: var(--gray-color-2);
+  }
+
+  .feedback {
+    white-space: pre-wrap;
   }
 </style>
