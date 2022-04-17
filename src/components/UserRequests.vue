@@ -30,36 +30,38 @@
       для изменения приоритета зажмите и перетащите карточку заявки в поле
       другого приоритета
     </p>
-    <BaseButton
-      v-if="!dragDisabled"
-      class="btn"
-      case="uppercase"
-      :disabled="authStore.loading"
-      @click="onSave"
-    >
-      сохранить изменения
-    </BaseButton>
-    <BaseButton
-      v-if="!dragDisabled"
-      class="btn"
-      case="uppercase"
-      variant="outlined"
-      color="red"
-      :disabled="authStore.loading"
-      @click="onCancelEdit"
-    >
-      отмена
-    </BaseButton>
-    <BaseButton
-      v-if="dragDisabled"
-      class="btn edit-btn"
-      variant="outlined"
-      case="uppercase"
-      :disabled="authStore.loading"
-      @click="onToggleEdit"
-    >
-      Редактировать заявки
-    </BaseButton>
+    <div class="buttons">
+      <BaseButton
+        v-if="!dragDisabled"
+        class="btn"
+        case="uppercase"
+        :disabled="authStore.loading"
+        @click="onSave"
+      >
+        сохранить изменения
+      </BaseButton>
+      <BaseButton
+        v-if="!dragDisabled"
+        class="btn"
+        case="uppercase"
+        variant="outlined"
+        color="red"
+        :disabled="authStore.loading"
+        @click="onCancelEdit"
+      >
+        отмена
+      </BaseButton>
+      <BaseButton
+        v-if="dragDisabled"
+        class="btn edit-btn"
+        variant="outlined"
+        case="uppercase"
+        :disabled="authStore.loading"
+        @click="onToggleEdit"
+      >
+        Редактировать заявки
+      </BaseButton>
+    </div>
   </div>
   <RequestDeleteModal
     :is-show="deleteRequestModalShow"
@@ -182,6 +184,11 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .buttons {
+    display: flex;
     gap: 0.5rem;
   }
 
