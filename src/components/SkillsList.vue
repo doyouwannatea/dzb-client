@@ -4,7 +4,11 @@
       <BaseTag :disabled="disableAll">{{ skill.skill }}</BaseTag>
     </li>
     <li v-if="showBtnVisible" class="show-btn-wrapper">
-      <BaseButton variant="inline-link" @click="isSkillsVisible = true">
+      <BaseButton
+        case="lowercase"
+        variant="inline-link"
+        @click="isSkillsVisible = true"
+      >
         {{ showBtnText }}
       </BaseButton>
     </li>
