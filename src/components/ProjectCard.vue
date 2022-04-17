@@ -33,13 +33,8 @@
     <footer class="footer container">
       <SkillsList :skills="props.project.skills" />
       <div class="actions">
-        <BaseButton
-          case="uppercase"
-          variant="outlined"
-          @click="modalsStore.openRequestModal(props.project)"
-        >
-          Подать заявку
-        </BaseButton>
+        <OpenParticipationModalButton :project="props.project" />
+        <OpenFeedbackModalButton :project="props.project" />
         <BaseButton
           is="router-link"
           case="uppercase"
@@ -62,11 +57,10 @@
   import { StateClass } from '@/models/values/project-state-class';
   import SkillsList from './SkillsList.vue';
   import ProjectStatus from './ProjectStatus.vue';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import OpenFeedbackModalButton from './OpenFeedbackModalButton.vue';
+  import OpenParticipationModalButton from './OpenParticipationModalButton.vue';
 
   const props = defineProps<{ project: Project }>();
-
-  const modalsStore = useModalsStore();
 
   const stateClass = StateClass[props.project.state.state];
   const difficultyText = DifficultyText[props.project.difficulty];

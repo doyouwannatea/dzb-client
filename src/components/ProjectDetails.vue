@@ -38,13 +38,8 @@
         <ProjectStatus class="badge mt-2" :state="project.state.state" />
         <h2 class="info-title mt-4">Кол-во участников</h2>
         <ProjectTeamCounter class="mt-2" :total="12" />
-        <BaseButton
-          case="uppercase"
-          class="mt-4"
-          @click="modalsStore.openRequestModal(project!)"
-        >
-          Подать заявку
-        </BaseButton>
+        <OpenParticipationModalButton class="mt-4" :project="project" />
+        <OpenFeedbackModalButton class="mt-4" :project="project" />
       </div>
     </BasePanel>
 
@@ -95,8 +90,6 @@
 
 <script setup lang="ts">
   import BasePanel from './base/BasePanel.vue';
-  import BaseBadge from './base/BaseBadge.vue';
-  import BaseButton from './base/BaseButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
   import { DifficultyText } from '@/models/values/project-difficulty';
   import InformationList from './InformationList.vue';
@@ -105,11 +98,10 @@
   import { storeToRefs } from 'pinia';
   import SkillsList from './SkillsList.vue';
   import ProjectStatus from './ProjectStatus.vue';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import OpenParticipationModalButton from './OpenParticipationModalButton.vue';
+  import OpenFeedbackModalButton from './OpenFeedbackModalButton.vue';
 
   const projectsStore = useProjectsStore();
-  const modalsStore = useModalsStore();
-
   const { openedProject: project, loading, error } = storeToRefs(projectsStore);
 </script>
 
