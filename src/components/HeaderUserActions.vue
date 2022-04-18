@@ -105,7 +105,7 @@
     align-items: center;
     gap: 0.8125rem;
     cursor: default;
-    max-width: 16.375rem;
+    max-width: 18.375rem;
   }
 
   .dropdown-container {
