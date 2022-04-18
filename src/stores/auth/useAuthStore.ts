@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import campusAuthApi from '@/api/CampusAuthApi';
 import { state } from './state';
-import { State } from './state';
 import { useModalsStore } from '../modals/useModalsStore';
 import { Priority } from '@/models/Participation';
 
@@ -12,17 +11,25 @@ export const useAuthStore = defineStore('auth', {
     async auth() {
       await this._onAsync(async () => {
         await campusAuthApi.auth();
+      });
+    },
+    // AUTH
+
+    // FETCH USER DATA
+    async fetchUserData() {
+      await this._onAsync(async () => {
         this.profileData = await campusAuthApi.getCandidateInfo();
         this.requestsList =
           await campusAuthApi.getCandidateParticipationsList();
         this.projectsList = await campusAuthApi.getUserProjectList();
       });
     },
-    // AUTH
+    // FETCH USER DATA
 
     // EXIT
     exit() {
       this.profileData = undefined;
+      campusAuthApi.setAuthToken('');
     },
     // EXIT
 
@@ -85,11 +92,6 @@ export const useAuthStore = defineStore('auth', {
   getters: {
     isAuth: (state) => {
       return Boolean(state.profileData);
-    },
-  },
-  persist: {
-    afterRestore(ctx) {
-      (ctx.store.$state as State).loading = false;
     },
   },
 });
