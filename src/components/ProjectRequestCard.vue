@@ -164,7 +164,7 @@
     background-color: var(--gray-color-2);
   }
 
-  .status {
+  .card:deep(.status) {
     display: flex;
     align-items: center;
     padding: 0;
