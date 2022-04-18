@@ -7,20 +7,16 @@
       <!-- CONTACT INFO -->
       <InformationList class="margin-b" row-gap="m">
         <!-- EMAIL -->
-        <InformationListItem :bold="false">
+        <InformationListItem v-if="profileData?.email" :bold="false">
           <template #title>
             <span class="label">E-Mail:</span>
           </template>
-          <template #default>
-            <a :href="`mailto:${profileData?.email}`">
-              {{ profileData?.email }}
-            </a>
-          </template>
+          <template #default>{{ profileData?.email }}</template>
         </InformationListItem>
         <!-- EMAIL -->
 
         <!-- PHONE -->
-        <InformationListItem :bold="false">
+        <InformationListItem v-if="profileData?.phone" :bold="false">
           <template #title>
             <span class="label">Телефон:</span>
           </template>
@@ -34,7 +30,7 @@
       <h2 class="subtitle">Дополнительная информация</h2>
       <InformationList row-gap="m">
         <!-- GROUP -->
-        <InformationListItem :bold="false">
+        <InformationListItem v-if="profileData?.training_group" :bold="false">
           <template #title>
             <span class="label">Учебная группа:</span>
           </template>
@@ -43,7 +39,7 @@
         <!-- GROUP -->
 
         <!-- INSTITUTE -->
-        <InformationListItem :bold="false">
+        <InformationListItem v-if="profileData?.course" :bold="false">
           <template #title>
             <span class="label">Курс:</span>
           </template>

@@ -24,7 +24,7 @@
           :value="authStore.profileData?.fio"
           class="input"
           disabled
-          :icon="checkedIconUrl"
+          :icon="authStore.profileData?.fio ? checkedIconUrl : errorIconUrl"
         />
       </fieldset>
       <!-- fio -->
@@ -37,7 +37,7 @@
           :value="authStore.profileData?.email"
           class="input"
           disabled
-          :icon="checkedIconUrl"
+          :icon="authStore.profileData?.email ? checkedIconUrl : errorIconUrl"
         />
       </fieldset>
       <!-- mail -->
@@ -50,7 +50,11 @@
           :value="authStore.profileData?.training_group"
           class="input"
           disabled
-          :icon="checkedIconUrl"
+          :icon="
+            authStore.profileData?.training_group
+              ? checkedIconUrl
+              : errorIconUrl
+          "
         />
       </fieldset>
       <!-- study group -->
@@ -63,7 +67,7 @@
           :value="authStore.profileData?.phone"
           class="input"
           disabled
-          :icon="checkedIconUrl"
+          :icon="authStore.profileData?.phone ? checkedIconUrl : errorIconUrl"
         />
       </fieldset>
       <!-- phone number -->
@@ -149,6 +153,7 @@
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { PriorityText, Priorities } from '@/models/values/project-priority';
   import checkedIconUrl from '@/assets/icons/checked.svg?url';
+  import errorIconUrl from '@/assets/icons/close-red.png?url';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { Priority } from '@/models/Participation';
