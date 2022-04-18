@@ -29,7 +29,7 @@ export const useAuthStore = defineStore('auth', {
     // EXIT
     exit() {
       this.profileData = undefined;
-      campusAuthApi.setAuthToken('');
+      campusAuthApi.deleteAuthToken();
     },
     // EXIT
 
