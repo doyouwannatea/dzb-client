@@ -1,16 +1,16 @@
 <template>
-  <BaseBadge :class="['status', stateClass]">{{ state }}</BaseBadge>
+  <BaseBadge :class="['status', stateClass]">{{ state.state }}</BaseBadge>
 </template>
 
 <script setup lang="ts">
-  import { StateName } from '@/models/Project';
+  import { State } from '@/models/Project';
   import { StateClass } from '@/models/values/project-state-class';
   import BaseBadge from './base/BaseBadge.vue';
 
-  type Props = { state: StateName };
+  type Props = { state: State };
   const props = defineProps<Props>();
 
-  const stateClass = StateClass[props.state];
+  const stateClass = StateClass[props.state.id];
 </script>
 
 <style scoped>

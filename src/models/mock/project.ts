@@ -4,26 +4,18 @@ import { State, Skill, Type } from '../Project';
 const recruitingState: State = {
   state: 'идёт набор',
   id: 1,
-  created_at: '',
-  updated_at: '',
 };
 const activeState: State = {
   state: 'активный',
   id: 2,
-  created_at: '',
-  updated_at: '',
 };
 const extraState: State = {
   state: 'добор',
   id: 3,
-  created_at: '',
-  updated_at: '',
 };
 const archivedState: State = {
   state: 'в архиве',
   id: 4,
-  created_at: '',
-  updated_at: '',
 };
 
 export const states: State[] = [

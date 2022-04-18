@@ -26,14 +26,29 @@ export interface Supervisor {
   position: string;
 }
 
-export type StateName = 'идёт набор' | 'активный' | 'добор' | 'в архиве';
-
-export interface State {
+export interface StateName {
   id: number;
-  created_at: string;
-  updated_at: string;
-  state: StateName;
+  state: string;
 }
+
+export interface RecruitingState extends StateName {
+  id: 1;
+  state: 'идёт набор';
+}
+export interface ActiveState extends StateName {
+  id: 2;
+  state: 'активный';
+}
+export interface ExtraState extends StateName {
+  id: 3;
+  state: 'добор';
+}
+export interface ArchivedState extends StateName {
+  id: 4;
+  state: 'в архиве';
+}
+
+export type State = RecruitingState | ActiveState | ExtraState | ArchivedState;
 
 export type Difficulty = 1 | 2 | 3;
 

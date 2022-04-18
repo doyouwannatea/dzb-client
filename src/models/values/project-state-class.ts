@@ -1,8 +1,19 @@
-import { StateName } from '../Project';
+import {
+  ExtraState,
+  ArchivedState,
+  ActiveState,
+  RecruitingState,
+} from '../Project';
 
-export const StateClass: Record<StateName, string> = {
-  активный: 'active',
-  добор: 'extra',
-  'в архиве': 'archived',
-  'идёт набор': 'recruiting',
+export const StateClass: Record<
+  | ArchivedState['id']
+  | ExtraState['id']
+  | ActiveState['id']
+  | RecruitingState['id'],
+  string
+> = {
+  1: 'recruiting',
+  2: 'active',
+  3: 'extra',
+  4: 'archived',
 };

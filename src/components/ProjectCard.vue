@@ -4,7 +4,7 @@
       <h2 class="title">
         {{ project.title }}
       </h2>
-      <ProjectStatus class="status" :state="project.state.state" />
+      <ProjectStatus class="status" :state="project.state" />
       <div class="subtitle">{{ project.supervisor.fio }}</div>
     </header>
     <div class="divider"></div>
@@ -62,7 +62,7 @@
 
   const props = defineProps<{ project: Project }>();
 
-  const stateClass = StateClass[props.project.state.state];
+  const stateClass = StateClass[props.project.state.id];
   const difficultyText = DifficultyText[props.project.difficulty];
 </script>
 

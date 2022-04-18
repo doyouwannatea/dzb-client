@@ -25,6 +25,4 @@ export const SkillKeys: Record<keyof Skill, keyof Skill> = {
 export const StateKeys: Record<keyof State, keyof State> = {
   id: 'id',
   state: 'state',
-  created_at: 'created_at',
-  updated_at: 'updated_at',
 };
