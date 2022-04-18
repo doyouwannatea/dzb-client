@@ -8,7 +8,7 @@ import { Project } from '@/models/Project';
 export class CampusAuthApi extends ICampusAuthApi {
   private ky = ky.create({
     prefixUrl: import.meta.env.VITE_CAMPUS_AUTH_API_URL,
-    retry: { limit: 5 },
+    retry: { limit: 5, statusCodes: [408, 413, 429, 502, 503, 504] },
   });
 
   async auth(): Promise<void> {
