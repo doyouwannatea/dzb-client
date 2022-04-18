@@ -20,5 +20,5 @@
   const modalsStore = useModalsStore();
   const props = defineProps<Props>();
 
-  const showBtn = computed(() => props.project.state.state !== 'в архиве');
+  const showBtn = computed(() => props.project.state.id !== 4);
 </script>
