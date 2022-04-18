@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from '@/helpers/cookie';
+import { deleteCookie, getCookie, setCookie } from '@/helpers/cookie';
 import { Candidate } from '@/models/Candidate';
 import { Participation } from '@/models/Participation';
 import { Project } from '@/models/Project';
@@ -6,6 +6,7 @@ import { Project } from '@/models/Project';
 export default abstract class ICampusAuthApi {
   public getAuthToken = () => getCookie('token');
   public setAuthToken = (token: string) => setCookie('token', token);
+  public deleteAuthToken = () => deleteCookie('token');
   abstract auth(): Promise<void>;
   abstract getCandidateInfo(): Promise<Candidate>;
   abstract getCandidateParticipationsList(): Promise<Participation[]>;
