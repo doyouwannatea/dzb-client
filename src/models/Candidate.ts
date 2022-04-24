@@ -12,3 +12,8 @@ export interface Candidate {
   api_token: string;
   skills: Skill[];
 }
+
+export interface UserSkills {
+  common: Skill[];
+  personal: Skill[];
+}

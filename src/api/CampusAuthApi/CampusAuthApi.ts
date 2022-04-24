@@ -1,9 +1,9 @@
 import ky from 'ky';
-import { Candidate } from '@/models/Candidate';
+import { Candidate, UserSkills } from '@/models/Candidate';
 import ICampusAuthApi from './ICampusAuthApi';
 import { Participation, Priority } from '@/models/Participation';
 import campusAuthApiMock from './CampusAuthApiMock';
-import { Project } from '@/models/Project';
+import { Project, Skill } from '@/models/Project';
 
 export class CampusAuthApi extends ICampusAuthApi {
   private ky = ky.create({
@@ -49,6 +49,14 @@ export class CampusAuthApi extends ICampusAuthApi {
 
   async getUserProjectList(): Promise<Project[]> {
     return campusAuthApiMock.getUserProjectList();
+  }
+
+  async getUserSkills(): Promise<UserSkills> {
+    return campusAuthApiMock.getUserSkills();
+  }
+
+  async updateUserSkills(skills: Skill[]): Promise<void> {
+    return campusAuthApiMock.updateUserSkills(skills);
   }
 }
 

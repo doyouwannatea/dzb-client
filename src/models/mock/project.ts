@@ -1,5 +1,5 @@
 import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
-import { State, Skill, Type } from '../Project';
+import { State, Skill, Type, ProjectTags } from '../Project';
 
 const recruitingState: State = {
   state: 'идёт набор',
@@ -112,6 +112,98 @@ export const skills: Skill[] = [
     },
   },
 ];
+
+const specialties: Skill[] = [
+  {
+    id: 1,
+    skill: 'ИСТ',
+    created_at: '',
+    updated_at: '',
+    pivot: {
+      project_id: 1,
+      skill_id: 1,
+    },
+  },
+  {
+    id: 2,
+    skill: 'ЭВМ',
+    created_at: '',
+    updated_at: '',
+    pivot: {
+      project_id: 1,
+      skill_id: 1,
+    },
+  },
+  {
+    id: 3,
+    skill: 'АСУ',
+    created_at: '',
+    updated_at: '',
+    pivot: {
+      project_id: 1,
+      skill_id: 1,
+    },
+  },
+];
+
+const general: Skill[] = [
+  {
+    id: 8,
+    skill: 'Построение графиков',
+    created_at: '',
+    updated_at: '',
+    pivot: {
+      project_id: 1,
+      skill_id: 1,
+    },
+  },
+  {
+    id: 7,
+    skill: 'Информационная безопасность',
+    created_at: '',
+    updated_at: '',
+    pivot: {
+      project_id: 1,
+      skill_id: 1,
+    },
+  },
+  {
+    id: 1,
+    skill: 'Web-разработка',
+    created_at: '',
+    updated_at: '',
+    pivot: {
+      project_id: 1,
+      skill_id: 1,
+    },
+  },
+  {
+    id: 2,
+    skill: 'Высшая математика',
+    created_at: '',
+    updated_at: '',
+    pivot: {
+      project_id: 1,
+      skill_id: 1,
+    },
+  },
+  {
+    id: 3,
+    skill: 'Инфокоммуникация',
+    created_at: '',
+    updated_at: '',
+    pivot: {
+      project_id: 1,
+      skill_id: 1,
+    },
+  },
+];
+
+export const allProjectTags: ProjectTags = {
+  skills,
+  general,
+  specialties,
+};
 
 export const projectListResponse: ProjectListResponse = {
   projectCount: 6,

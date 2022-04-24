@@ -5,6 +5,7 @@ import type {
   Supervisor,
   Skill,
   Type,
+  ProjectTags,
 } from '@/models/Project';
 
 export interface ProjectListResponse {
@@ -18,7 +19,7 @@ export default abstract class IProjectApi {
     filters: ProjectFilters,
   ): Promise<ProjectListResponse>;
   abstract getSingleProject(projectId: number): Promise<Project>;
-  abstract getAllSkills(): Promise<Skill[]>;
+  abstract getAllProjectTags(): Promise<ProjectTags>;
   abstract getAllSupervisors(): Promise<Supervisor[]>;
   abstract getAllProjectTypes(): Promise<Type[]>;
   abstract getAllProjectStates(): Promise<State[]>;

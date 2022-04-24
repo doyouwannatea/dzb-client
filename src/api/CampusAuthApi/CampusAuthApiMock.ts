@@ -1,11 +1,11 @@
 import { deepClone } from '@/helpers/array';
 import { delayRes } from '@/helpers/promise';
-import { Candidate } from '@/models/Candidate';
+import { Candidate, UserSkills } from '@/models/Candidate';
 import { candidate } from '@/models/mock/candidate';
 import { participationsList } from '@/models/mock/participation';
 import { projectListResponse } from '@/models/mock/project';
 import { Participation, Priority } from '@/models/Participation';
-import { Project } from '@/models/Project';
+import { Project, Skill } from '@/models/Project';
 import { AUTH_TOKEN_REQUIRED } from '@/models/values/error-messages';
 import ICampusAuthApi from './ICampusAuthApi';
 
@@ -92,6 +92,14 @@ export class CampusAuthApiMock extends ICampusAuthApi {
       (project) => project.participant_feedback || project.result,
     );
     return delayRes(projects, 300);
+  }
+
+  async getUserSkills(): Promise<UserSkills> {
+    return {} as UserSkills; // TODO: доделать
+  }
+
+  async updateUserSkills(skills: Skill[]): Promise<void> {
+    // TODO: доделать
   }
 }
 
