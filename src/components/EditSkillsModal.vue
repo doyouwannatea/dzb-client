@@ -88,19 +88,19 @@
   const projectsStore = useProjectsStore();
 
   const searchValue = ref('');
-  const availableSkills = computed(() => [
-    ...projectsStore.additionalProjectData.tags?.skills.filter(
+  const availableSkills = computed<Skill[]>(() => [
+    ...(projectsStore.additionalProjectData.tags?.skills.filter(
       (skill) => !userHasSkill(skill),
-    ),
-    ...projectsStore.additionalProjectData.tags?.general.filter(
+    ) || []),
+    ...(projectsStore.additionalProjectData.tags?.general.filter(
       (skill) => !userHasSkill(skill),
-    ),
+    ) || []),
   ]);
   const skills = ref<Skill[]>([]);
-  const generalSkills = computed(() =>
+  const generalSkills = computed<Skill[] | undefined>(() =>
     projectsStore.additionalProjectData.tags?.general.filter(searchSkills),
   );
-  const commonSkills = computed(() =>
+  const commonSkills = computed<Skill[] | undefined>(() =>
     projectsStore.additionalProjectData.tags?.skills.filter(searchSkills),
   );
   const disableSaveBtn = computed(
