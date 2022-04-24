@@ -115,7 +115,7 @@ export const skills: Skill[] = [
 
 const specialties: Skill[] = [
   {
-    id: 1,
+    id: 13,
     skill: 'ИСТ',
     created_at: '',
     updated_at: '',
@@ -125,7 +125,7 @@ const specialties: Skill[] = [
     },
   },
   {
-    id: 2,
+    id: 14,
     skill: 'ЭВМ',
     created_at: '',
     updated_at: '',
@@ -135,7 +135,7 @@ const specialties: Skill[] = [
     },
   },
   {
-    id: 3,
+    id: 15,
     skill: 'АСУ',
     created_at: '',
     updated_at: '',
@@ -146,7 +146,7 @@ const specialties: Skill[] = [
   },
 ];
 
-const general: Skill[] = [
+const generalSkills: Skill[] = [
   {
     id: 8,
     skill: 'Построение графиков',
@@ -158,7 +158,7 @@ const general: Skill[] = [
     },
   },
   {
-    id: 7,
+    id: 9,
     skill: 'Информационная безопасность',
     created_at: '',
     updated_at: '',
@@ -168,7 +168,7 @@ const general: Skill[] = [
     },
   },
   {
-    id: 1,
+    id: 10,
     skill: 'Web-разработка',
     created_at: '',
     updated_at: '',
@@ -178,7 +178,7 @@ const general: Skill[] = [
     },
   },
   {
-    id: 2,
+    id: 11,
     skill: 'Высшая математика',
     created_at: '',
     updated_at: '',
@@ -188,7 +188,7 @@ const general: Skill[] = [
     },
   },
   {
-    id: 3,
+    id: 12,
     skill: 'Инфокоммуникация',
     created_at: '',
     updated_at: '',
@@ -201,7 +201,7 @@ const general: Skill[] = [
 
 export const allProjectTags: ProjectTags = {
   skills,
-  general,
+  general: generalSkills,
   specialties,
 };
 

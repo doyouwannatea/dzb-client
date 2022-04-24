@@ -1,14 +1,16 @@
 <template>
   <!-- auth modal -->
-  <BaseModal
-    size="m"
-    :is-show="modalsStore.editSkillsModal"
-    @close="modalsStore.editSkillsModal = false"
-  >
+  <BaseModal size="m" :is-show="modalsStore.editSkillsModal" @close="onClose">
     <!-- HEADER -->
     <template #header>
       <h1>Редактирование навыков</h1>
-      <SkillsList class="tags-list" :skills="userSkills" :show-all="true" />
+      <SkillsList
+        class="tags-list"
+        :skills="skills"
+        :show-all="true"
+        :deletable="true"
+        @delete="onDeleteSkill"
+      />
     </template>
     <!-- HEADER -->
 
@@ -20,7 +22,7 @@
         v-model="searchValue"
         placeholder="Поиск по навыкам"
         :searchable="true"
-        :options="mockSkills"
+        :options="availableSkills"
         label="skill"
         track-by="skill"
         value-prop="skill"
@@ -30,9 +32,13 @@
     <div class="skills">
       <div class="col">
         <h3 class="tags-title">По направлению</h3>
-        <ul class="skills-list by-direction-skills">
-          <li v-for="skill in allFilteredTags" :key="skill.id" class="tag-item">
-            <button class="tag-btn" @click="onTagClick(skill)">
+        <span v-if="projectsStore.tagsLoading">loading...</span>
+        <ul v-else class="skills-list by-direction-skills">
+          <li v-for="skill in generalSkills" :key="skill.id" class="tag-item">
+            <button
+              :class="['tag-btn', { selected: userHasSkill(skill) }]"
+              @click="onTagClick(skill)"
+            >
               {{ skill.skill }}
             </button>
           </li>
@@ -40,9 +46,13 @@
       </div>
       <div class="col right-col">
         <h3 class="tags-title">По алфавиту</h3>
-        <ul class="skills-list">
-          <li v-for="skill in allFilteredTags" :key="skill.id" class="tag-item">
-            <button class="tag-btn" @click="onTagClick(skill)">
+        <span v-if="projectsStore.tagsLoading">loading...</span>
+        <ul v-else class="skills-list">
+          <li v-for="skill in commonSkills" :key="skill.id" class="tag-item">
+            <button
+              :class="['tag-btn', { selected: userHasSkill(skill) }]"
+              @click="onTagClick(skill)"
+            >
               {{ skill.skill }}
             </button>
           </li>
@@ -53,7 +63,9 @@
 
     <!-- ACTIONS -->
     <div class="actions">
-      <BaseButton case="uppercase">сохранить</BaseButton>
+      <BaseButton case="uppercase" :disabled="disableSaveBtn" @click="onSave">
+        {{ authStore.loading ? 'loading...' : 'сохранить' }}
+      </BaseButton>
     </div>
     <!-- ACTIONS -->
   </BaseModal>
@@ -64,29 +76,83 @@
   import BaseModal from './base/BaseModal.vue';
   import SkillsList from './SkillsList.vue';
   import BaseButton from './base/BaseButton.vue';
-  import { skills as mockSkills } from '@/models/mock/project';
-  import { computed, ref } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import { Skill } from '@/models/Project';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { deepClone } from '@/helpers/array';
 
   const modalsStore = useModalsStore();
+  const authStore = useAuthStore();
+  const projectsStore = useProjectsStore();
 
-  function onTagClick(skill: Skill) {
-    if (userSkills.value.includes(skill)) return;
-    userSkills.value.push(skill);
+  const searchValue = ref('');
+  const availableSkills = computed(() => [
+    ...projectsStore.additionalProjectData.tags?.skills.filter(
+      (skill) => !userHasSkill(skill),
+    ),
+    ...projectsStore.additionalProjectData.tags?.general.filter(
+      (skill) => !userHasSkill(skill),
+    ),
+  ]);
+  const skills = ref<Skill[]>([]);
+  const generalSkills = computed(() =>
+    projectsStore.additionalProjectData.tags?.general.filter(searchSkills),
+  );
+  const commonSkills = computed(() =>
+    projectsStore.additionalProjectData.tags?.skills.filter(searchSkills),
+  );
+  const disableSaveBtn = computed(
+    () =>
+      authStore.loading ||
+      JSON.stringify(skills.value) ===
+        JSON.stringify(authStore.userSkills?.personal || []),
+  );
+
+  watch(() => authStore.userSkills?.personal, initSkills, {
+    immediate: true,
+    deep: true,
+  });
+
+  function searchSkills(skill: Skill) {
+    return (
+      !searchValue.value ||
+      skill.skill.toLowerCase() === searchValue.value.toLowerCase()
+    );
   }
 
-  const userSkills = ref<Skill[]>([]);
-  const allTags = ref(mockSkills);
-  const searchValue = ref('');
+  function onTagClick(skill: Skill) {
+    if (userHasSkill(skill)) return;
+    searchValue.value = '';
+    skills.value.push(skill);
+  }
 
-  const allFilteredTags = computed(() =>
-    allTags.value.filter(
-      (skill) =>
-        !searchValue.value ||
-        skill.skill.toLowerCase() === searchValue.value.toLowerCase(),
-    ),
-  );
+  function userHasSkill(skill: Skill): boolean {
+    return (
+      Boolean(skills.value.find((s) => s.id === skill.id)) ||
+      Boolean(authStore.userSkills?.common.find((s) => s.id === skill.id))
+    );
+  }
+
+  function initSkills() {
+    skills.value = deepClone(authStore.userSkills?.personal || []);
+  }
+
+  function onSave() {
+    authStore.updateUserSkills(skills.value);
+  }
+
+  function onDeleteSkill(skill: Skill) {
+    const idx = skills.value.findIndex((s) => s.id === skill.id);
+    skills.value.splice(idx, 1);
+  }
+
+  function onClose() {
+    modalsStore.editSkillsModal = false;
+    searchValue.value = '';
+    initSkills();
+  }
 </script>
 
 <style scoped>
@@ -175,6 +241,12 @@
 
   .tag-btn:hover {
     text-decoration: underline;
+  }
+
+  .tag-btn.selected {
+    text-decoration: line-through;
+    cursor: not-allowed;
+    color: var(--gray-color-1);
   }
 
   .actions {

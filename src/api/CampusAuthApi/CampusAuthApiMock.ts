@@ -1,7 +1,7 @@
 import { deepClone } from '@/helpers/array';
 import { delayRes } from '@/helpers/promise';
 import { Candidate, UserSkills } from '@/models/Candidate';
-import { candidate } from '@/models/mock/candidate';
+import { candidate, userSkills } from '@/models/mock/candidate';
 import { participationsList } from '@/models/mock/participation';
 import { projectListResponse } from '@/models/mock/project';
 import { Participation, Priority } from '@/models/Participation';
@@ -91,15 +91,17 @@ export class CampusAuthApiMock extends ICampusAuthApi {
     const projects = projectListResponse.data.filter(
       (project) => project.participant_feedback || project.result,
     );
-    return delayRes(projects, 300);
+    return delayRes(deepClone(projects), 300);
   }
 
   async getUserSkills(): Promise<UserSkills> {
-    return {} as UserSkills; // TODO: доделать
+    return delayRes(userSkills, 300);
   }
 
   async updateUserSkills(skills: Skill[]): Promise<void> {
-    // TODO: доделать
+    userSkills.personal = deepClone(skills);
+    candidate.skills = [...userSkills.personal, ...userSkills.common];
+    return delayRes(undefined, 300);
   }
 }
 

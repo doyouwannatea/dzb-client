@@ -3,6 +3,7 @@ import campusAuthApi from '@/api/CampusAuthApi';
 import { state } from './state';
 import { useModalsStore } from '../modals/useModalsStore';
 import { Priority } from '@/models/Participation';
+import { Skill } from '@/models/Project';
 
 export const useAuthStore = defineStore('auth', {
   state,
@@ -74,6 +75,24 @@ export const useAuthStore = defineStore('auth', {
       });
     },
     // DELETE PARTICIPATION
+
+    // GET USER SKILLS
+    getUserSkills() {
+      return this._onAsync(async () => {
+        this.userSkills = await campusAuthApi.getUserSkills();
+      });
+    },
+    // GET USER SKILLS
+
+    // UPDATE USER SKILLS
+    updateUserSkills(skills: Skill[]) {
+      return this._onAsync(async () => {
+        await campusAuthApi.updateUserSkills(skills);
+        await this.getUserSkills();
+        this.profileData = await campusAuthApi.getCandidateInfo();
+      });
+    },
+    // GET USER SKILLS
 
     // ON ASYNC
     async _onAsync<T>(callback: () => Promise<T>) {

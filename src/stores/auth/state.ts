@@ -1,4 +1,4 @@
-import { Candidate } from '@/models/Candidate';
+import { Candidate, UserSkills } from '@/models/Candidate';
 import { Participation } from '@/models/Participation';
 import { Project } from '@/models/Project';
 
@@ -8,6 +8,7 @@ export interface State {
   profileData?: Candidate;
   requestsList?: Participation[];
   projectsList?: Project[];
+  userSkills?: UserSkills;
 }
 
 export const state = (): State => ({
@@ -16,4 +17,5 @@ export const state = (): State => ({
   profileData: undefined,
   requestsList: undefined,
   projectsList: undefined,
+  userSkills: undefined,
 });

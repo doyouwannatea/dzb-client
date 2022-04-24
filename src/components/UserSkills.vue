@@ -3,23 +3,32 @@
     <div>
       <h1 class="title">Навыки</h1>
       <BaseTooltip :message="academicSkillsMsg">
-        <h2 class="subtitle">Академические навыки (ИСТб-18-1)</h2>
+        <h2 class="subtitle">
+          Академические навыки ({{ authStore.profileData?.training_group }})
+        </h2>
       </BaseTooltip>
       <SkillsList
         class="tags-list"
-        :skills="skills"
+        :skills="authStore.userSkills?.common"
         :show-all="true"
         :disable-all="true"
       />
+      <div v-if="authStore.loading">loading...</div>
       <div class="divider"></div>
       <BaseTooltip :message="individualSkillsMsg">
         <h2 class="subtitle">Индивидуальные навыки</h2>
       </BaseTooltip>
-      <SkillsList class="tags-list" :skills="skills" :show-all="true" />
+      <SkillsList
+        class="tags-list"
+        :skills="authStore.userSkills?.personal"
+        :show-all="true"
+      />
+      <div v-if="authStore.loading">loading...</div>
       <BaseButton
         class="edit-btn"
         case="uppercase"
         variant="outlined"
+        :disabled="authStore.loading"
         @click="modalsStore.editSkillsModal = true"
       >
         Редактировать навыки
@@ -30,25 +39,30 @@
 </template>
 
 <script setup lang="ts">
-  import { skills } from '@/models/mock/project';
   import BasePanel from './base/BasePanel.vue';
   import BaseTooltip from './base/BaseTooltip.vue';
   import SkillsList from './SkillsList.vue';
   import BaseButton from './base/BaseButton.vue';
   import EditSkillsModal from './EditSkillsModal.vue';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { onBeforeMount } from 'vue';
+  import { useFetchAdditionalProjectDataOnce } from '@/hooks/useFetchAdditionalProjectDataOnce';
 
+  useFetchAdditionalProjectDataOnce();
+  onBeforeMount(() => authStore.getUserSkills());
   const modalsStore = useModalsStore();
+  const authStore = useAuthStore();
 
-  const academicSkillsMsg = `Академические навыки - это набор практических умений студентов, 
-  которые позволяют им быстрее и лучше усваивать новый материал в университете, 
-  видеть поставленные проблемы глубже и глубже размышлять над заданными вопросами, 
+  const academicSkillsMsg = `Академические навыки - это набор практических умений студентов,
+  которые позволяют им быстрее и лучше усваивать новый материал в университете,
+  видеть поставленные проблемы глубже и глубже размышлять над заданными вопросами,
   что в итоге помогает им писать более сложные и интересные академические работы (эссе, доклады)`;
 
-  const individualSkillsMsg = `Подбор кандидатов начинается с оценки резюме. 
-  Если хотите, чтобы вам назначили собеседование, то указывайте свои основные умения, 
-  не надеясь, что пары общих фраз будет достаточно. 
-  Вы можете посмотреть пример профессиональных знаний для резюме системного администратора, 
+  const individualSkillsMsg = `Подбор кандидатов начинается с оценки резюме.
+  Если хотите, чтобы вам назначили собеседование, то указывайте свои основные умения,
+  не надеясь, что пары общих фраз будет достаточно.
+  Вы можете посмотреть пример профессиональных знаний для резюме системного администратора,
   чтобы понять, что надо указывать. Можно выделить такие умения:`;
 </script>
 

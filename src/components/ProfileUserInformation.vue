@@ -54,7 +54,7 @@
     <!-- SKILLS -->
     <div class="right-col">
       <h2 class="subtitle">Навыки</h2>
-      <SkillsList :skills="skills" :default-visible="7" />
+      <SkillsList :skills="profileData?.skills" :default-visible="7" />
       <BaseButton
         is="a"
         class="edit-btn"
@@ -74,7 +74,6 @@
 <script setup lang="ts">
   import SkillsList from './SkillsList.vue';
   import BaseButton from './base/BaseButton.vue';
-  import { skills } from '@/models/mock/project';
   import InformationListItem from './InformationListItem.vue';
   import InformationList from './InformationList.vue';
   import BasePanel from './base/BasePanel.vue';
