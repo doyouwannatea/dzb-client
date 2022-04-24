@@ -24,7 +24,7 @@ export const state = (): State => ({
     difficulty: [],
     state: [],
     tags: [],
-    specialties: [],
+    specialities: [],
     title: '',
     page: 1,
   },

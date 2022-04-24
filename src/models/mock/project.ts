@@ -113,7 +113,7 @@ export const skills: Skill[] = [
   },
 ];
 
-const specialties: Skill[] = [
+const specialities: Skill[] = [
   {
     id: 13,
     skill: 'ИСТ',
@@ -202,7 +202,7 @@ const generalSkills: Skill[] = [
 export const allProjectTags: ProjectTags = {
   skills,
   general: generalSkills,
-  specialties,
+  specialities: specialities,
 };
 
 export const projectListResponse: ProjectListResponse = {

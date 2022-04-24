@@ -29,7 +29,7 @@ export const useProjectFilters = () => {
     difficulty: [],
     state: [],
     tags: [],
-    specialties: [],
+    specialities: [],
   });
 
   // наблюдаем за состоянием хранилища
