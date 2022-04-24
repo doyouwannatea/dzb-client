@@ -2,12 +2,12 @@
   <form class="filters" @submit.prevent="filter">
     <BaseAccordion>
       <template #title>
-        <span v-if="allStates.loading.value" class="multiselect-spinner"></span>
+        <span v-if="statesLoading" class="multiselect-spinner"></span>
         <span>Статус проекта</span>
       </template>
       <template #content>
         <BaseCheckbox
-          v-for="state in allStates.data.value"
+          v-for="state in additionalProjectData.states"
           :key="state.id"
           v-model="filters.state"
           :value="state.id"
@@ -15,8 +15,8 @@
         >
           {{ capitalizeFirstLetter(state.state) }}
         </BaseCheckbox>
-        <div v-if="allStates.error.value" class="mt-2">
-          {{ allStates.error.value }}
+        <div v-if="error" class="mt-2">
+          {{ error }}
         </div>
       </template>
     </BaseAccordion>
@@ -27,14 +27,14 @@
       <template #title>Теги проекта</template>
       <template #content>
         <VMultiselect
-          v-model="filters.tags"
+          v-model="filters.specialties"
           mode="tags"
           placeholder="По специальности"
           class="miltiselect"
           :close-on-select="false"
           :searchable="true"
-          :options="allSkills.data.value"
-          :loading="allSkills.loading.value"
+          :options="additionalProjectData.tags?.specialties"
+          :loading="tagsLoading"
           :label="SkillKeys.skill"
           :track-by="SkillKeys.skill"
           :value-prop="SkillKeys.id"
@@ -46,14 +46,14 @@
           class="miltiselect"
           :close-on-select="false"
           :searchable="true"
-          :options="allSkills.data.value"
-          :loading="allSkills.loading.value"
+          :options="additionalProjectData.tags?.skills"
+          :loading="tagsLoading"
           :label="SkillKeys.skill"
           :track-by="SkillKeys.skill"
           :value-prop="SkillKeys.id"
         />
-        <div v-if="allSkills.error.value" class="mt-2">
-          {{ allSkills.error.value }}
+        <div v-if="error" class="mt-2">
+          {{ error }}
         </div>
       </template>
     </BaseAccordion>
@@ -88,7 +88,7 @@
     </BaseAccordion>
 
     <footer class="footer">
-      <BaseButton case="uppercase" full-width :disabled="prjectsStore.loading">
+      <BaseButton case="uppercase" full-width :disabled="loading">
         найти
       </BaseButton>
       <BaseButton
@@ -96,7 +96,7 @@
         type="button"
         full-width
         variant="link"
-        :disabled="prjectsStore.loading"
+        :disabled="loading"
         @click="clearFilter"
       >
         сбросить фильтр
@@ -114,16 +114,16 @@
   import BaseButton from './base/BaseButton.vue';
   import BaseCheckbox from './base/BaseCheckbox.vue';
 
-  import { useProjectFilterOptions } from '@/hooks/useProjectFilterOptions';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useProjectFilters } from '@/hooks/useProjectFilters';
   import {
     Difficulties,
     DifficultyText,
   } from '@/models/values/project-difficulty';
+  import { storeToRefs } from 'pinia';
 
-  const prjectsStore = useProjectsStore();
-  const { allSkills, allStates } = useProjectFilterOptions();
+  const { additionalProjectData, loading, error, tagsLoading, statesLoading } =
+    storeToRefs(useProjectsStore());
   const { clearFilter, filter, filters } = useProjectFilters();
 </script>
 

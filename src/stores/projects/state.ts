@@ -1,34 +1,35 @@
 import {
   Project,
-  ProjectFilterOptions,
+  AdditionalProjectData,
   ProjectFilters,
 } from '@/models/Project';
 
 interface State {
-  projectList?: Project[];
-  projectCount: number;
   loading: boolean;
   error: string;
-  filters: ProjectFilters;
-  filterOptions: ProjectFilterOptions;
+  projectList?: Project[];
+  projectCount: number;
   openedProject?: Project;
+  filters: ProjectFilters;
+  additionalProjectData: AdditionalProjectData;
 }
 
 export const state = (): State => ({
-  openedProject: undefined,
-  projectList: undefined,
-  projectCount: 0,
   loading: false,
   error: '',
+  projectList: undefined,
+  projectCount: 0,
+  openedProject: undefined,
   filters: {
     difficulty: [],
     state: [],
     tags: [],
+    specialties: [],
     title: '',
     page: 1,
   },
-  filterOptions: {
-    allStates: undefined,
-    allTags: undefined,
+  additionalProjectData: {
+    states: undefined,
+    tags: undefined,
   },
 });

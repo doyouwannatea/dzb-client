@@ -31,6 +31,7 @@ export function locationQueryToProjectFilters(
     difficulty: locationQueryValueToArrayNumber(
       query.difficulty,
     ) as Difficulty[],
+    specialties: locationQueryValueToArrayNumber(query.specialties),
   };
 }
 
@@ -43,5 +44,6 @@ export function projectFiltersToSearchParams(
     state: toString(filters.state),
     tags: toString(filters.tags),
     difficulty: toString(filters.difficulty),
+    specialties: toString(filters.specialties),
   };
 }

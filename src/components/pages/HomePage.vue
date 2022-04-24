@@ -44,8 +44,10 @@
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useFilteredProjectList } from '@/hooks/useProjectFilters';
   import { RouteNames } from '@/router/types/route-names';
+  import { useFetchAdditionalProjectDataOnce } from '@/hooks/useFetchAdditionalProjectDataOnce';
 
   useFilteredProjectList(RouteNames.HOME);
+  useFetchAdditionalProjectDataOnce();
   const store = useProjectsStore();
 
   const error = computed(() => store.error);
