@@ -34,7 +34,11 @@
         <h3 class="tags-title">По направлению</h3>
         <span v-if="projectsStore.tagsLoading">loading...</span>
         <ul v-else class="skills-list by-direction-skills">
-          <li v-for="skill in generalSkills" :key="skill.id" class="tag-item">
+          <li
+            v-for="skill in filteredGeneralSkills"
+            :key="skill.id"
+            class="tag-item"
+          >
             <button
               :class="['tag-btn', { selected: userHasSkill(skill) }]"
               @click="onTagClick(skill)"
@@ -48,7 +52,11 @@
         <h3 class="tags-title">По алфавиту</h3>
         <span v-if="projectsStore.tagsLoading">loading...</span>
         <ul v-else class="skills-list">
-          <li v-for="skill in commonSkills" :key="skill.id" class="tag-item">
+          <li
+            v-for="skill in filteredCommonSkills"
+            :key="skill.id"
+            class="tag-item"
+          >
             <button
               :class="['tag-btn', { selected: userHasSkill(skill) }]"
               @click="onTagClick(skill)"
@@ -83,62 +91,77 @@
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { deepClone } from '@/helpers/array';
 
+  // <STORES>
   const modalsStore = useModalsStore();
   const authStore = useAuthStore();
   const projectsStore = useProjectsStore();
+  // </STORES>
 
+  // <REFS>
   const searchValue = ref('');
-  const availableSkills = computed<Skill[]>(() => [
-    ...(projectsStore.additionalProjectData.tags?.skills.filter(
-      (skill) => !userHasSkill(skill),
-    ) || []),
-    ...(projectsStore.additionalProjectData.tags?.general.filter(
-      (skill) => !userHasSkill(skill),
-    ) || []),
-  ]);
   const skills = ref<Skill[]>([]);
-  const generalSkills = computed<Skill[] | undefined>(() =>
+  // </REFS>
+
+  // <WATCHERS>
+  watch(() => authStore.userSkills?.personal, initSkills, {
+    immediate: true,
+    deep: true,
+  });
+  // </WATCHERS>
+
+  // <COMPUTED VALUES>
+  // available skills
+  const availableSkills = computed<Skill[]>(() => {
+    const skills: Skill[] =
+      projectsStore.additionalProjectData.tags?.skills || [];
+    const generalSkills: Skill[] =
+      projectsStore.additionalProjectData.tags?.general || [];
+    return [
+      ...skills.filter((skill) => !userHasSkill(skill)),
+      ...generalSkills.filter((skill) => !userHasSkill(skill)),
+    ];
+  });
+  // filtered general skills
+  const filteredGeneralSkills = computed<Skill[] | undefined>(() =>
     projectsStore.additionalProjectData.tags?.general.filter(searchSkills),
   );
-  const commonSkills = computed<Skill[] | undefined>(() =>
+  // filtered common skills
+  const filteredCommonSkills = computed<Skill[] | undefined>(() =>
     projectsStore.additionalProjectData.tags?.skills.filter(searchSkills),
   );
+  // disable save button
   const disableSaveBtn = computed(
     () =>
       authStore.loading ||
       JSON.stringify(skills.value) ===
         JSON.stringify(authStore.userSkills?.personal || []),
   );
+  // </COMPUTED VALUES>
 
-  watch(() => authStore.userSkills?.personal, initSkills, {
-    immediate: true,
-    deep: true,
-  });
-
+  // <FUNCTIONS>
   function searchSkills(skill: Skill) {
     return (
       !searchValue.value ||
       skill.skill.toLowerCase() === searchValue.value.toLowerCase()
     );
   }
-
-  function onTagClick(skill: Skill) {
-    if (userHasSkill(skill)) return;
-    searchValue.value = '';
-    skills.value.push(skill);
-  }
-
   function userHasSkill(skill: Skill): boolean {
     return (
       Boolean(skills.value.find((s) => s.id === skill.id)) ||
       Boolean(authStore.userSkills?.common.find((s) => s.id === skill.id))
     );
   }
-
   function initSkills() {
     skills.value = deepClone(authStore.userSkills?.personal || []);
   }
+  // </FUNCTIONS>
 
+  // <EVENTS>
+  function onTagClick(skill: Skill) {
+    if (userHasSkill(skill)) return;
+    searchValue.value = '';
+    skills.value.push(skill);
+  }
   function onSave() {
     authStore.updateUserSkills(skills.value);
   }
@@ -153,6 +176,7 @@
     searchValue.value = '';
     initSkills();
   }
+  // </EVENTS>
 </script>
 
 <style scoped>
