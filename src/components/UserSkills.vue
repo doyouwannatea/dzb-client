@@ -1,6 +1,6 @@
 <template>
   <BasePanel class="panel" :cols="1">
-    <div>
+    <div class="container">
       <h1 class="title">Навыки</h1>
       <BaseTooltip :message="academicSkillsMsg">
         <h2 class="subtitle">
@@ -69,6 +69,11 @@
 <style scoped>
   .panel {
     min-height: 100%;
+    display: grid;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
   }
 
   .divider {
@@ -95,7 +100,7 @@
   }
 
   .edit-btn {
-    margin-top: 3rem;
+    margin-top: auto;
     margin-left: auto;
     display: block;
   }
