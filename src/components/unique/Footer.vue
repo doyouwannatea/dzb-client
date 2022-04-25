@@ -3,12 +3,7 @@
     <BaseContainer size="lg" class="container">
       <div>
         <RouterLink class="clear-link" :to="{ name: RouteNames.HOME }">
-          <AppLogo
-            class="logo"
-            :logo-icon="logoImage"
-            :logo-width="50"
-            :logo-height="73"
-          />
+          <AppLogo class="logo" />
         </RouterLink>
 
         <p class="initials">
@@ -84,7 +79,6 @@
   import { RouterLink } from 'vue-router';
   import AppLogo from '../AppLogo.vue';
   import BaseContainer from '../base/BaseContainer.vue';
-  import logoImage from '../../assets/icons/logo-white.svg?url';
   import { RouteNames } from '@/router/types/route-names';
   import {
     useMainNavigationRoutes,
@@ -115,6 +109,8 @@
   }
 
   .logo {
+    --width: 4.375rem;
+    --height: 4.375rem;
     max-width: 16.875rem;
     color: #fff;
     grid-column: span 2;
