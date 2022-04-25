@@ -27,7 +27,7 @@ export const routes: RouteRecordRaw[] = [
     name: RouteNames.HOME,
     meta: {
       type: 'main-nav',
-      index: 0,
+      order: 0,
       title: 'Все проекты',
     },
     beforeEnter: [validatePage],
@@ -70,7 +70,7 @@ export const routes: RouteRecordRaw[] = [
         component: ProfileUserInformation,
         meta: {
           type: 'user-nav',
-          index: 0,
+          order: 0,
           title: 'Мой профиль',
         },
       },
@@ -80,7 +80,7 @@ export const routes: RouteRecordRaw[] = [
         component: UserRequests,
         meta: {
           type: 'user-nav',
-          index: 1,
+          order: 1,
           title: 'Мои заявки',
         },
       },
@@ -90,7 +90,7 @@ export const routes: RouteRecordRaw[] = [
         component: UserProjects,
         meta: {
           type: 'user-nav',
-          index: 2,
+          order: 2,
           title: 'Мои проекты',
         },
       },
@@ -100,7 +100,7 @@ export const routes: RouteRecordRaw[] = [
         component: UserSkills,
         meta: {
           type: 'user-nav',
-          index: 3,
+          order: 3,
           title: 'Навыки',
         },
       },
@@ -112,7 +112,7 @@ export const routes: RouteRecordRaw[] = [
     name: RouteNames.FAQ,
     meta: {
       type: 'main-nav',
-      index: 1,
+      order: 1,
       title: 'вопрос-ответ',
     },
   },
@@ -122,7 +122,7 @@ export const routes: RouteRecordRaw[] = [
     redirect: { name: RouteNames.HOME },
     meta: {
       type: 'main-nav',
-      index: 2,
+      order: 2,
       title: 'контакты',
     },
   },

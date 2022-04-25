@@ -6,7 +6,7 @@ export const useUserNavigationRoutes = () => {
   return router
     .getRoutes()
     .filter((route) => route.meta.type === 'user-nav')
-    .sort((a, b) => (a.meta.index || 0) - (b.meta.index || 0));
+    .sort((a, b) => (a.meta.order || 0) - (b.meta.order || 0));
 };
 
 export const useMainNavigationRoutes = () => {
@@ -15,5 +15,5 @@ export const useMainNavigationRoutes = () => {
   return router
     .getRoutes()
     .filter((route) => route.meta.type === 'main-nav')
-    .sort((a, b) => (a.meta.index || 0) - (b.meta.index || 0));
+    .sort((a, b) => (a.meta.order || 0) - (b.meta.order || 0));
 };
