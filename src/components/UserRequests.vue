@@ -76,12 +76,15 @@
   import { ref, watch } from 'vue';
   import UserProjectRequestCard from './ProjectRequestCard.vue';
   import BaseButton from './base/BaseButton.vue';
-  import { Participation, Priority } from '@/models/Participation';
+  import {
+    Participation,
+    Priority,
+    ALL_PRIORITIES,
+  } from '@/models/Participation';
   import { immutableSort } from '@/helpers/array';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import RequestDeleteModal from './RequestDeleteModal.vue';
   import UserProjectRequestsStub from './UserProjectRequestsStub.vue';
-  import { ALL_PRIORITIES } from '@/models/values/project-priority';
   import cursorIconUrl from '@/assets/icons/cursor.svg?url';
 
   type EditableListItem = {

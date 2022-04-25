@@ -12,6 +12,7 @@
 <script lang="ts" setup>
   import BaseButton from './base/BaseButton.vue';
   import { Project } from '@/models/Project';
+  import { StateID } from '@/models/ProjectState';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { computed } from 'vue';
 
@@ -20,5 +21,7 @@
   const modalsStore = useModalsStore();
   const props = defineProps<Props>();
 
-  const showBtn = computed(() => props.project.state.id !== 4);
+  const showBtn = computed(
+    () => props.project.state.id !== StateID.ArchivedState,
+  );
 </script>

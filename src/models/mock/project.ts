@@ -1,21 +1,22 @@
 import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
-import { State, Skill, Type } from '../Project';
+import { Skill, Type } from '../Project';
+import { State, StateID } from '../ProjectState';
 
 const recruitingState: State = {
   state: 'идёт набор',
-  id: 1,
+  id: StateID.RecruitingState,
 };
 const activeState: State = {
   state: 'активный',
-  id: 2,
+  id: StateID.ActiveState,
 };
 const extraState: State = {
   state: 'добор',
-  id: 3,
+  id: StateID.ExtraState,
 };
 const archivedState: State = {
   state: 'в архиве',
-  id: 4,
+  id: StateID.ArchivedState,
 };
 
 export const states: State[] = [

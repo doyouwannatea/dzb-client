@@ -3,8 +3,7 @@
 </template>
 
 <script setup lang="ts">
-  import { State } from '@/models/Project';
-  import { StateClass } from '@/models/values/project-state-class';
+  import { State, StateClass } from '@/models/ProjectState';
   import BaseBadge from './base/BaseBadge.vue';
 
   type Props = { state: State };

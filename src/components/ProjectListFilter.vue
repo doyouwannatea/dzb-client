@@ -66,23 +66,23 @@
         <BaseCheckbox
           v-model="filters.difficulty"
           class="label"
-          :value="Difficulties.LOW"
+          :value="Difficulty.Low"
         >
-          {{ DifficultyText[Difficulties.LOW] }}
+          {{ DifficultyText[Difficulty.Low] }}
         </BaseCheckbox>
         <BaseCheckbox
           v-model="filters.difficulty"
           class="label"
-          :value="Difficulties.MEDIUM"
+          :value="Difficulty.Medium"
         >
-          {{ DifficultyText[Difficulties.MEDIUM] }}
+          {{ DifficultyText[Difficulty.Medium] }}
         </BaseCheckbox>
         <BaseCheckbox
           v-model="filters.difficulty"
           class="label"
-          :value="Difficulties.HIGH"
+          :value="Difficulty.High"
         >
-          {{ DifficultyText[Difficulties.HIGH] }}
+          {{ DifficultyText[Difficulty.High] }}
         </BaseCheckbox>
       </template>
     </BaseAccordion>
@@ -107,7 +107,7 @@
 
 <script setup lang="ts">
   import { capitalizeFirstLetter } from '@/helpers/string';
-  import { SkillKeys } from '@/models/values/models-keys';
+  import { SkillKeys } from '@/values/models-keys';
 
   import VMultiselect from '@vueform/multiselect';
   import BaseAccordion from './base/BaseAccordion.vue';
@@ -117,10 +117,7 @@
   import { useProjectFilterOptions } from '@/hooks/useProjectFilterOptions';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useProjectFilters } from '@/hooks/useProjectFilters';
-  import {
-    Difficulties,
-    DifficultyText,
-  } from '@/models/values/project-difficulty';
+  import { DifficultyText, Difficulty } from '@/models/ProjectDifficulty';
 
   const prjectsStore = useProjectsStore();
   const { allSkills, allStates } = useProjectFilterOptions();

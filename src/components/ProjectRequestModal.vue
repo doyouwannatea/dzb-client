@@ -85,11 +85,11 @@
           <BaseRadioButton
             v-model="priorityValue"
             class="radio-label"
-            :value="Priorities.HIGH"
+            :value="Priority.High"
             :disabled="highSelected"
           >
-            {{ Priorities.HIGH }}
-            ({{ PriorityText[Priorities.HIGH] }} приоритет)
+            {{ Priority.High }}
+            ({{ PriorityText[Priority.High] }} приоритет)
             <template v-if="highSelected">
               <br />
               *уже выбран на другой проект
@@ -101,11 +101,11 @@
           <BaseRadioButton
             v-model="priorityValue"
             class="radio-label"
-            :value="Priorities.MEDIUM"
+            :value="Priority.Medium"
             :disabled="mediumSelected"
           >
-            {{ Priorities.MEDIUM }}
-            ({{ PriorityText[Priorities.MEDIUM] }} приоритет)
+            {{ Priority.Medium }}
+            ({{ PriorityText[Priority.Medium] }} приоритет)
             <template v-if="mediumSelected">
               <br />
               *уже выбран на другой проект
@@ -117,11 +117,11 @@
           <BaseRadioButton
             v-model="priorityValue"
             class="radio-label"
-            :value="Priorities.LOW"
+            :value="Priority.Low"
             :disabled="lowSelected"
           >
-            {{ Priorities.LOW }}
-            ({{ PriorityText[Priorities.LOW] }} приоритет)
+            {{ Priority.Low }}
+            ({{ PriorityText[Priority.Low] }} приоритет)
             <template v-if="lowSelected">
               <br />
               *уже выбран на другой проект
@@ -151,12 +151,11 @@
   import BaseInput from './base/BaseInput.vue';
   import BaseRadioButton from './base/BaseRadioButton.vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { PriorityText, Priorities } from '@/models/values/project-priority';
+  import { PriorityText, Priority } from '@/models/Participation';
   import checkedIconUrl from '@/assets/icons/checked.svg?url';
   import errorIconUrl from '@/assets/icons/close-red.png?url';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { Priority } from '@/models/Participation';
 
   const projectsStore = useProjectsStore();
   const authStore = useAuthStore();

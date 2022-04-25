@@ -1,7 +1,11 @@
 import { Candidate } from './Candidate';
 import { Project } from './Project';
 
-export type Priority = 1 | 2 | 3;
+export const enum Priority {
+  Low = 3,
+  Medium = 2,
+  High = 1,
+}
 
 export interface Participation {
   id: number;
@@ -11,3 +15,11 @@ export interface Participation {
   state: string;
   review: string;
 }
+
+export const PriorityText: Record<Priority, string> = {
+  [Priority.High]: 'Высший',
+  [Priority.Medium]: 'Средний',
+  [Priority.Low]: 'Низкий',
+};
+
+export const ALL_PRIORITIES = [Priority.Low, Priority.Medium, Priority.High];

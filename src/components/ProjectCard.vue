@@ -51,10 +51,10 @@
 <script setup lang="ts">
   import BaseButton from './base/BaseButton.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
-  import type { Project } from '@/models/Project';
+  import { Project } from '@/models/Project';
+  import { DifficultyText } from '@/models/ProjectDifficulty';
+  import { StateClass } from '@/models/ProjectState';
   import { RouteNames } from '@/router/types/route-names';
-  import { DifficultyText } from '@/models/values/project-difficulty';
-  import { StateClass } from '@/models/values/project-state-class';
   import SkillsList from './SkillsList.vue';
   import ProjectStatus from './ProjectStatus.vue';
   import OpenFeedbackModalButton from './OpenFeedbackModalButton.vue';

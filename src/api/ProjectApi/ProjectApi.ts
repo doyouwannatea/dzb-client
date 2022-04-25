@@ -3,12 +3,12 @@ import { projectFiltersToSearchParams } from '@/helpers/query';
 import {
   Project,
   ProjectFilters,
-  State,
   Supervisor,
   Skill,
   Type,
 } from '@/models/Project';
 import IProjectApi, { ProjectListResponse } from './IProjectApi';
+import { State } from '@/models/ProjectState';
 
 export class ProjectApi extends IProjectApi {
   private ky = ky.create({

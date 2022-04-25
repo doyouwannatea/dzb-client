@@ -1,3 +1,6 @@
+import { Difficulty } from './ProjectDifficulty';
+import { State } from './ProjectState';
+
 export interface Skill {
   id: number;
   skill: string;
@@ -25,32 +28,6 @@ export interface Supervisor {
   api_token: string | null;
   position: string;
 }
-
-export interface StateName {
-  id: number;
-  state: string;
-}
-
-export interface RecruitingState extends StateName {
-  id: 1;
-  state: 'идёт набор';
-}
-export interface ActiveState extends StateName {
-  id: 2;
-  state: 'активный';
-}
-export interface ExtraState extends StateName {
-  id: 3;
-  state: 'добор';
-}
-export interface ArchivedState extends StateName {
-  id: 4;
-  state: 'в архиве';
-}
-
-export type State = RecruitingState | ActiveState | ExtraState | ArchivedState;
-
-export type Difficulty = 1 | 2 | 3;
 
 export interface Project {
   id: number;

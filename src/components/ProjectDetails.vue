@@ -91,7 +91,7 @@
 <script setup lang="ts">
   import BasePanel from './base/BasePanel.vue';
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
-  import { DifficultyText } from '@/models/values/project-difficulty';
+  import { DifficultyText } from '@/models/ProjectDifficulty';
   import InformationList from './InformationList.vue';
   import InformationListItem from './InformationListItem.vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';

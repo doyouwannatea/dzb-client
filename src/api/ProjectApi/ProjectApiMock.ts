@@ -2,7 +2,6 @@ import { ProjectListResponse } from './IProjectApi';
 import type {
   Project,
   ProjectFilters,
-  State,
   Supervisor,
   Skill,
   Type,
@@ -16,6 +15,7 @@ import {
 import { delayRes } from '@/helpers/promise';
 import { supervisorList } from '@/models/mock/supervisor';
 import IProjectApi from './IProjectApi';
+import { State } from '@/models/ProjectState';
 
 export class ProjectApiMock extends IProjectApi {
   async getProjectList(page: number): Promise<ProjectListResponse> {

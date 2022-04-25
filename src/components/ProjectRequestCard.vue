@@ -74,7 +74,7 @@
   import BasePanel from '@/components/base/BasePanel.vue';
   import { repeatString } from '@/helpers/string';
   import { Participation, Priority } from '@/models/Participation';
-  import { PriorityText } from '@/models/values/project-priority';
+  import { PriorityText } from '@/models/Participation';
   import { RouteNames } from '@/router/types/route-names';
   import { RouterLink } from 'vue-router';
   import BaseBadge from './base/BaseBadge.vue';

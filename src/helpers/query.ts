@@ -1,7 +1,8 @@
-import { Difficulty, ProjectFilters } from '@/models/Project';
+import { ProjectFilters } from '@/models/Project';
 import { ProjectFiltersLocationQuery } from '@/models/LocationQuery';
 import { LocationQueryValue } from 'vue-router';
 import { toString } from './string';
+import { Difficulty } from '@/models/ProjectDifficulty';
 
 function locationQueryValueToNumber(
   queryValue: LocationQueryValue | LocationQueryValue[],

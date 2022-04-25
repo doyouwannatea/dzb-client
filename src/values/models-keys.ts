@@ -1,4 +1,5 @@
-import { State, Supervisor, Skill, Type } from '../Project';
+import { Supervisor, Skill, Type } from '../models/Project';
+import { State } from '../models/ProjectState';
 
 export const SupervisorKeys: Record<keyof Supervisor, keyof Supervisor> = {
   id: 'id',
