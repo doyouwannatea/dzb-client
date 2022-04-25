@@ -11,4 +11,6 @@ export interface Candidate {
   training_group: string;
   api_token: string;
   skills: Skill[];
+  is_student: boolean;
+  is_teacher: boolean;
 }

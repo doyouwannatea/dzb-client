@@ -10,7 +10,7 @@
 <script setup lang="ts">
   import { RouteNames } from '@/router/types/route-names';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { useUserNavigationRoutes } from '@/hooks/useRoutes';
+  import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
   import BaseDropdown, { DropdownItem } from './base/BaseDropdown.vue';
   import { watch } from 'vue';
   import { useRoute } from 'vue-router';
@@ -28,7 +28,7 @@
 
   const route = useRoute();
   const authStore = useAuthStore();
-  const routes = useUserNavigationRoutes();
+  const routes = useRoledUserNavigationRoutes();
 
   watch(
     () => route.path,

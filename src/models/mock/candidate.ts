@@ -22,4 +22,6 @@ export const candidate: Candidate = {
     },
   ],
   api_token: 'api_token test token',
+  is_student: true,
+  is_teacher: false,
 };

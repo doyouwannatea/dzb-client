@@ -82,6 +82,7 @@ export const routes: RouteRecordRaw[] = [
           type: 'user-nav',
           order: 1,
           title: 'Мои заявки',
+          role: ['student'],
         },
       },
       {
@@ -102,6 +103,7 @@ export const routes: RouteRecordRaw[] = [
           type: 'user-nav',
           order: 3,
           title: 'Навыки',
+          role: ['student'],
         },
       },
     ],

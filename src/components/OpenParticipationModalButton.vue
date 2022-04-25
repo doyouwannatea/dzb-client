@@ -1,6 +1,6 @@
 <template>
   <BaseButton
-    v-if="showBtn"
+    v-if="!hideBtn"
     case="uppercase"
     variant="outlined"
     @click="modalsStore.openRequestModal(props.project)"
@@ -15,13 +15,17 @@
   import { StateID } from '@/models/ProjectState';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { computed } from 'vue';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
   type Props = { project: Project };
 
   const modalsStore = useModalsStore();
+  const authStore = useAuthStore();
   const props = defineProps<Props>();
 
-  const showBtn = computed(
-    () => props.project.state.id !== StateID.ArchivedState,
+  const hideBtn = computed(
+    () =>
+      props.project.state.id === StateID.ArchivedState ||
+      authStore.profileData?.is_teacher,
   );
 </script>

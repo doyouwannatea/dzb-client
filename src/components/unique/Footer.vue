@@ -33,7 +33,7 @@
         </ul>
       </nav>
 
-      <section class="info-block">
+      <section v-if="authStore.isAuth" class="info-block">
         <h3 class="title info-title">Личный кабиент</h3>
         <ul class="info-list">
           <li v-for="link in userRoutes" :key="link.name" class="info-item">
@@ -88,11 +88,13 @@
   import { RouteNames } from '@/router/types/route-names';
   import {
     useMainNavigationRoutes,
-    useUserNavigationRoutes,
+    useRoledUserNavigationRoutes,
   } from '@/hooks/useRoutes';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
+  const authStore = useAuthStore();
   const mainRoutes = useMainNavigationRoutes();
-  const userRoutes = useUserNavigationRoutes();
+  const userRoutes = useRoledUserNavigationRoutes();
 </script>
 
 <style scoped>
