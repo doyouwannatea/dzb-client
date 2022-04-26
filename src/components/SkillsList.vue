@@ -1,7 +1,13 @@
 <template>
   <ul v-if="visibleSkills.length > 0" class="list">
     <li v-for="skill of visibleSkills" :key="skill.id">
-      <BaseTag :disabled="disableAll">{{ skill.skill }}</BaseTag>
+      <BaseTag
+        :disabled="disableAll"
+        :deletable="deletable"
+        @delete="$emit('delete', skill)"
+      >
+        {{ skill.skill }}
+      </BaseTag>
     </li>
     <li v-if="showBtnVisible" class="show-btn-wrapper">
       <BaseButton
@@ -27,6 +33,11 @@
     showAll?: boolean;
     defaultVisible?: number;
     disableAll?: boolean;
+    deletable?: boolean;
+  };
+
+  type Emits = {
+    (e: 'delete', skill: Skill): void;
   };
 
   const props = withDefaults(defineProps<Props>(), {
@@ -34,7 +45,9 @@
     showAll: false,
     defaultVisible: 3,
     disableAll: false,
+    deletable: undefined,
   });
+  defineEmits<Emits>();
 
   // Setup variables
   const hiddenSkillsCount = props.skills.length - props.defaultVisible;

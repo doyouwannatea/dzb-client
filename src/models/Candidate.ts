@@ -14,3 +14,8 @@ export interface Candidate {
   is_student: boolean;
   is_teacher: boolean;
 }
+
+export interface UserSkills {
+  common: Skill[];
+  personal: Skill[];
+}

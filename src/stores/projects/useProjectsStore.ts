@@ -1,10 +1,6 @@
 import ProjectApi from '@/api/ProjectApi';
 import { projectFiltersToSearchParams } from '@/helpers/query';
-import {
-  Project,
-  ProjectFilterOptions,
-  ProjectFilters,
-} from '@/models/Project';
+import { Project, ProjectFilters } from '@/models/Project';
 import { RouteNames } from '@/router/types/route-names';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
@@ -41,10 +37,6 @@ export const useProjectsStore = () => {
           title: undefined,
         };
       },
-      setFilterOptions(options: ProjectFilterOptions) {
-        this.filterOptions = options;
-      },
-
       // GET PROJECT LIST
       async getProjectList() {
         this.setProjectList();
@@ -78,6 +70,35 @@ export const useProjectsStore = () => {
         }
       },
       // GET SINGLE PROJECT
+
+      // GET SINGLE PROJECT
+      async getAddProjectData() {
+        this.additionalProjectData = {
+          states: undefined,
+          tags: undefined,
+        };
+        this.loading = true;
+        this.error = '';
+        try {
+          this.additionalProjectData.tags =
+            await ProjectApi.getAllProjectTags();
+          this.additionalProjectData.states =
+            await ProjectApi.getAllProjectStates();
+        } catch (error) {
+          this.error = String(error);
+        } finally {
+          this.loading = false;
+        }
+      },
+      // GET SINGLE PROJECT
+    },
+    getters: {
+      tagsLoading(): boolean {
+        return this.loading && !this.additionalProjectData.tags;
+      },
+      statesLoading(): boolean {
+        return this.loading && !this.additionalProjectData.states;
+      },
     },
   })();
 };

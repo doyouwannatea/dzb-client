@@ -55,12 +55,19 @@ export interface Project {
 export interface ProjectFilters {
   state?: number[]; // массив id
   tags?: number[]; // массив id
+  specialities?: number[]; // массив id
   difficulty?: Difficulty[]; // Массив сложностей
   title?: string; // Поиск по подстроке в названии
   page?: number;
 }
 
-export interface ProjectFilterOptions {
-  allTags?: Skill[];
-  allStates?: State[];
+export interface ProjectTags {
+  skills: Skill[];
+  specialities: Skill[];
+  general: Skill[];
+}
+
+export interface AdditionalProjectData {
+  tags?: ProjectTags;
+  states?: State[];
 }

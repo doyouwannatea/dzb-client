@@ -3,21 +3,22 @@ import campusAuthApi from '@/api/CampusAuthApi';
 import { state } from './state';
 import { useModalsStore } from '../modals/useModalsStore';
 import { Priority } from '@/models/Participation';
+import { Skill } from '@/models/Project';
 
 export const useAuthStore = defineStore('auth', {
   state,
   actions: {
     // AUTH
-    async auth() {
-      await this._onAsync(async () => {
+    auth() {
+      return this._onAsync(async () => {
         await campusAuthApi.auth();
       });
     },
     // AUTH
 
     // FETCH USER DATA
-    async fetchUserData() {
-      await this._onAsync(async () => {
+    fetchUserData() {
+      return this._onAsync(async () => {
         this.profileData = await campusAuthApi.getCandidateInfo();
         this.requestsList =
           await campusAuthApi.getCandidateParticipationsList();
@@ -34,10 +35,10 @@ export const useAuthStore = defineStore('auth', {
     // EXIT
 
     // CREATE PATRICIPATION
-    async createPatricipation(priority: Priority, projectId: number) {
+    createPatricipation(priority: Priority, projectId: number) {
       const modalsStore = useModalsStore();
 
-      await this._onAsync(async () => {
+      return this._onAsync(async () => {
         await campusAuthApi.createProjectParticipation(priority, projectId);
         this.requestsList =
           await campusAuthApi.getCandidateParticipationsList();
@@ -48,10 +49,10 @@ export const useAuthStore = defineStore('auth', {
     // CREATE PATRICIPATION
 
     // UPDATE PARTICIPATIONS PRIORITIES
-    async updateParticipationsPriorities(
+    updateParticipationsPriorities(
       participations: { id: number; priority: Priority }[],
     ) {
-      await this._onAsync(async () => {
+      return this._onAsync(async () => {
         const promises = participations.map((participation) =>
           campusAuthApi.setParticipationPriority(
             participation.id,
@@ -66,14 +67,32 @@ export const useAuthStore = defineStore('auth', {
     // UPDATE PARTICIPATIONS PRIORITIES
 
     // DELETE PARTICIPATION
-    async deleteParticipation(id: number) {
-      await this._onAsync(async () => {
+    deleteParticipation(id: number) {
+      return this._onAsync(async () => {
         await campusAuthApi.deleteParticipation(id);
         this.requestsList =
           await campusAuthApi.getCandidateParticipationsList();
       });
     },
     // DELETE PARTICIPATION
+
+    // GET USER SKILLS
+    getUserSkills() {
+      return this._onAsync(async () => {
+        this.userSkills = await campusAuthApi.getUserSkills();
+      });
+    },
+    // GET USER SKILLS
+
+    // UPDATE USER SKILLS
+    updateUserSkills(skills: Skill[]) {
+      return this._onAsync(async () => {
+        await campusAuthApi.updateUserSkills(skills);
+        await this.getUserSkills();
+        this.profileData = await campusAuthApi.getCandidateInfo();
+      });
+    },
+    // GET USER SKILLS
 
     // ON ASYNC
     async _onAsync<T>(callback: () => Promise<T>) {

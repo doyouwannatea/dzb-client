@@ -1,4 +1,16 @@
-import { Candidate } from '../Candidate';
+import { Candidate, UserSkills } from '../Candidate';
+import { Skill } from '../Project';
+import { allProjectTags } from './project';
+
+const { skills, general } = allProjectTags;
+const commonSkills: Skill[] = [
+  skills[0],
+  skills[1],
+  skills[2],
+  general[2],
+  general[4],
+];
+const personalSkills: Skill[] = [general[3]];
 
 export const candidate: Candidate = {
   id: 2,
@@ -9,19 +21,13 @@ export const candidate: Candidate = {
   numz: '11111111',
   course: 3,
   training_group: 'АСУб-19-1',
-  skills: [
-    {
-      id: 2,
-      skill: 'CSS',
-      created_at: '',
-      updated_at: '',
-      pivot: {
-        project_id: 1,
-        skill_id: 1,
-      },
-    },
-  ],
+  skills: [...commonSkills, ...personalSkills],
   api_token: 'api_token test token',
   is_student: true,
   is_teacher: false,
+};
+
+export const userSkills: UserSkills = {
+  common: commonSkills,
+  personal: personalSkills,
 };

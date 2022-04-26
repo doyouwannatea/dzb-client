@@ -1,25 +1,17 @@
 <template>
   <div class="logo">
-    <span
-      :style="{
-        backgroundImage: logoIcon && `url(${logoIcon})`,
-        minWidth: `${logoWidth}px`,
-        height: `${logoHeight}px`,
-      }"
-      class="logo-icon"
-    ></span>
+    <span class="logo-icon"></span>
     <span
       >Проектная деятельность <br /><small class="small">в ИРНИТУ</small></span
     >
   </div>
 </template>
 
-<script setup lang="ts">
-  defineProps<{ logoIcon?: string; logoWidth?: number; logoHeight?: number }>();
-</script>
-
 <style scoped>
   .logo {
+    --width: 3.125rem;
+    --height: 3.125rem;
+
     display: flex;
     gap: 1.25rem;
     align-items: center;
@@ -34,9 +26,9 @@
   }
 
   .logo-icon {
-    min-width: 2.25rem;
-    height: 3.1875rem;
-    background: url('../assets/icons/logo.svg') center / contain no-repeat;
+    min-width: var(--width);
+    height: var(--height);
+    background: url('../assets/icons/new-logo.svg') center / contain no-repeat;
   }
 
   .small {
