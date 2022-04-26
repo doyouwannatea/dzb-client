@@ -9,9 +9,11 @@ export const requiresAuth: NavigationGuard = (to, from, next) => {
 
   if (to.meta.requiresAuth && !authStore.isAuth) {
     modalsStore.authModal = true;
-    return next({
-      name: RouteNames.HOME,
-    });
+    return next(
+      from || {
+        name: RouteNames.HOME,
+      },
+    );
   }
   return next();
 };
