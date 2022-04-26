@@ -9,6 +9,7 @@ import {
 } from '@/models/Project';
 import IProjectApi, { ProjectListResponse } from './IProjectApi';
 import { State } from '@/models/ProjectState';
+import { formatProjectDate } from '@/helpers/project';
 
 export class ProjectApi extends IProjectApi {
   private ky = ky.create({
@@ -16,19 +17,22 @@ export class ProjectApi extends IProjectApi {
     retry: { limit: 5 },
   });
 
-  async getProjectList(page: number): Promise<ProjectListResponse> {
-    return this.ky.get('api/projects', { searchParams: { page } }).json();
-  }
-
   async getSingleProject(projectId: number): Promise<Project> {
-    return this.ky.get(`api/projects/${projectId}`).json();
+    const project: Project = await this.ky
+      .get(`api/projects/${projectId}`)
+      .json();
+    return formatProjectDate(project);
   }
 
   async filterProjectList(
     filters: ProjectFilters,
   ): Promise<ProjectListResponse> {
     const searchParams = projectFiltersToSearchParams(filters);
-    return this.ky.get('api/projects/filter', { searchParams }).json();
+    const projectListRes: ProjectListResponse = await this.ky
+      .get('api/projects/filter', { searchParams })
+      .json();
+    projectListRes.data = projectListRes.data.map(formatProjectDate);
+    return projectListRes;
   }
 
   async getAllProjectTags(): Promise<ProjectTags> {

@@ -16,6 +16,10 @@ export function toJSONLocal(date: Date) {
   return local.toJSON().slice(0, 10);
 }
 
+export function formatDate(date: Date) {
+  return date.toLocaleDateString('ru-RU');
+}
+
 export function toString(val: unknown): string {
   if (val === undefined || val === null) return '';
   if (Array.isArray(val)) return JSON.stringify(val);

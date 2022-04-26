@@ -1,4 +1,5 @@
 import { deepClone } from '@/helpers/array';
+import { formatProjectDate } from '@/helpers/project';
 import { delayRes } from '@/helpers/promise';
 import { Candidate, UserSkills } from '@/models/Candidate';
 import { candidate, userSkills } from '@/models/mock/candidate';
@@ -91,7 +92,7 @@ export class CampusAuthApiMock extends ICampusAuthApi {
     const projects = projectListResponse.data.filter(
       (project) => project.participant_feedback || project.result,
     );
-    return delayRes(deepClone(projects), 300);
+    return delayRes(deepClone(projects.map(formatProjectDate)), 300);
   }
 
   async getUserSkills(): Promise<UserSkills> {

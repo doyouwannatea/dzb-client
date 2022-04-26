@@ -16,12 +16,9 @@ import { delayRes } from '@/helpers/promise';
 import { supervisorList } from '@/models/mock/supervisor';
 import IProjectApi from './IProjectApi';
 import { State } from '@/models/ProjectState';
+import { formatProjectDate } from '@/helpers/project';
 
 export class ProjectApiMock extends IProjectApi {
-  async getProjectList(page: number): Promise<ProjectListResponse> {
-    return delayRes(projectListResponse, 400);
-  }
-
   async filterProjectList(
     filters: ProjectFilters,
   ): Promise<ProjectListResponse> {
@@ -54,6 +51,9 @@ export class ProjectApiMock extends IProjectApi {
         ),
       );
     }
+
+    filteredList = filteredList.map(formatProjectDate);
+
     return delayRes(
       { projectCount: filteredList.length, data: filteredList },
       400,
@@ -65,7 +65,7 @@ export class ProjectApiMock extends IProjectApi {
       (singleProject) => singleProject.id === projectId,
     );
     if (!project) throw new Error('проект не найден');
-    return delayRes(project, 400);
+    return delayRes(formatProjectDate(project), 400);
   }
 
   async getAllProjectTags(): Promise<ProjectTags> {
