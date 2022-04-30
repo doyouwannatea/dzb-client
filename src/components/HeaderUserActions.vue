@@ -12,7 +12,7 @@
             <img :src="arrowIconUrl" alt="↓" />
           </button>
         </div>
-        <HeaderUserDropdown
+        <UserNavigationDropdown
           :handle-node="handleMenuNode"
           :is-open="isMenuOpen"
           @close="closeMenu"
@@ -44,14 +44,14 @@
   import { ref } from 'vue';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import BaseButton from './base/BaseButton.vue';
-  import HeaderUserDropdown from './HeaderUserDropdown.vue';
+  import UserNavigationDropdown from './UserNavigationDropdown.vue';
   import arrowIconUrl from '@/assets/icons/dropdown-arrow.svg?url';
   import ringIconUrl from '../assets/icons/ring.svg?url';
   import userPictureUrl from '../assets/icons/user-picture.svg?url';
   import userPictureGrayUrl from '../assets/icons/user-picture-gray.svg?url';
 
   const authStore = useAuthStore();
-  const handleMenuNode = ref(undefined);
+  const handleMenuNode = ref();
   const isMenuOpen = ref(false);
   const closeMenu = () => (isMenuOpen.value = false);
   const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);

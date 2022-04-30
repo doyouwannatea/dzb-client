@@ -1,5 +1,5 @@
 <template>
-  <BaseDropdown
+  <DropdownList
     :handle-node="props.handleNode"
     :is-open="props.isOpen"
     :items-list="items"
@@ -8,16 +8,16 @@
 </template>
 
 <script setup lang="ts">
+  import { watch } from 'vue';
+  import { useRoute } from 'vue-router';
   import { RouteNames } from '@/router/types/route-names';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
-  import BaseDropdown, { DropdownItem } from './base/BaseDropdown.vue';
-  import { watch } from 'vue';
-  import { useRoute } from 'vue-router';
+  import DropdownList, { DropdownItem } from './DropdownList.vue';
 
   type Props = {
     isOpen: boolean;
-    handleNode?: HTMLElement;
+    handleNode: HTMLElement;
   };
   type Emits = {
     (e: 'close'): void;
