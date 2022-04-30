@@ -1,6 +1,5 @@
 <template>
   <BasePanel
-    :cols="1"
     :class="[
       'card',
       { editable: editable && projectRequest, stub: !projectRequest },

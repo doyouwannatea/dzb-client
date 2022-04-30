@@ -1,89 +1,95 @@
 <template>
   <section v-if="project && !loading && !error">
     <!-- Panel -->
-    <BasePanel :cols="3">
-      <!-- Information list -->
-      <InformationList
-        :items="[
-          {
-            title: 'Руководитель проекта',
-            content: project.supervisor.fio,
-          },
-          {
-            title: 'Заказчик',
-            content: project.customer,
-          },
-          {
-            title: 'Старт проекта',
-            content: project.date_start,
-          },
-          {
-            title: 'Сложность',
-            content: DifficultyText[project.difficulty],
-          },
-        ]"
-      />
-      <!-- Information list -->
-      <InformationList
-        :items="[
-          {
-            title: 'Цель проекта',
-            content: project.goal,
-          },
-        ]"
-      />
+    <BasePanel>
+      <GridLayout class="three-cols-grid">
+        <!-- Information list -->
+        <InformationList
+          :items="[
+            {
+              title: 'Руководитель проекта',
+              content: project.supervisor.fio,
+            },
+            {
+              title: 'Заказчик',
+              content: project.customer,
+            },
+            {
+              title: 'Старт проекта',
+              content: project.date_start,
+            },
+            {
+              title: 'Сложность',
+              content: DifficultyText[project.difficulty],
+            },
+          ]"
+        />
+        <!-- Information list -->
+        <InformationList
+          :items="[
+            {
+              title: 'Цель проекта',
+              content: project.goal,
+            },
+          ]"
+        />
 
-      <div>
-        <h2 class="info-title">Статус проекта</h2>
-        <ProjectStatus class="badge mt-2" :state="project.state" />
-        <h2 class="info-title mt-4">Кол-во участников</h2>
-        <ProjectTeamCounter class="mt-2" :total="12" />
-        <OpenParticipationModalButton class="mt-4" :project="project" />
-        <OpenFeedbackModalButton class="mt-4" :project="project" />
-      </div>
+        <div>
+          <h2 class="info-title">Статус проекта</h2>
+          <ProjectStatus class="badge mt-2" :state="project.state" />
+          <h2 class="info-title mt-4">Кол-во участников</h2>
+          <ProjectTeamCounter class="mt-2" :total="12" />
+          <OpenParticipationModalButton class="mt-4" :project="project" />
+          <OpenFeedbackModalButton class="mt-4" :project="project" />
+        </div>
+      </GridLayout>
     </BasePanel>
 
     <!-- Panel -->
-    <BasePanel :cols="2">
-      <!-- Information list -->
-      <InformationList
-        :items="[
-          {
-            title: 'Ожидаемый результат',
-            content: project.expected_result,
-          },
-        ]"
-      />
+    <BasePanel>
+      <GridLayout :cols-count="2">
+        <!-- Information list -->
+        <InformationList
+          :items="[
+            {
+              title: 'Ожидаемый результат',
+              content: project.expected_result,
+            },
+          ]"
+        />
 
-      <!-- Information list -->
-      <InformationList
-        :items="[
-          {
-            title: 'Требования к участникам',
-            content: project.requirements,
-          },
-        ]"
-      />
+        <!-- Information list -->
+        <InformationList
+          :items="[
+            {
+              title: 'Требования к участникам',
+              content: project.requirements,
+            },
+          ]"
+        />
+      </GridLayout>
     </BasePanel>
 
     <!-- Panel -->
-    <BasePanel :cols="1">
-      <!-- Information list -->
-      <InformationList>
-        <InformationListItem :bold="false" :wide="true">
-          <template #title>Идея проекта</template>
-          <template #default>
-            {{ project.idea }}
-          </template>
-        </InformationListItem>
+    <BasePanel>
+      <GridLayout :cols-count="1">
+        <!-- Information list -->
+        <InformationList>
+          <InformationListItem :bold="false" :wide="true">
+            <template #title>Идея проекта</template>
+            <template #default>
+              {{ project.idea }}
+            </template>
+          </InformationListItem>
 
-        <InformationListItem :bold="false" :wide="true">
-          <template #title>Теги</template>
-          <template #default>
-            <SkillsList :skills="project.skills" show-all />
-          </template>
-        </InformationListItem>
-      </InformationList>
+          <InformationListItem :bold="false" :wide="true">
+            <template #title>Теги</template>
+            <template #default>
+              <SkillsList :skills="project.skills" show-all />
+            </template>
+          </InformationListItem>
+        </InformationList>
+      </GridLayout>
     </BasePanel>
   </section>
 </template>
@@ -100,6 +106,7 @@
   import ProjectStatus from './ProjectStatus.vue';
   import OpenParticipationModalButton from './OpenParticipationModalButton.vue';
   import OpenFeedbackModalButton from './OpenFeedbackModalButton.vue';
+  import GridLayout from './GridLayout.vue';
 
   const projectsStore = useProjectsStore();
   const { openedProject: project, loading, error } = storeToRefs(projectsStore);
@@ -114,5 +121,9 @@
     font-size: inherit;
     font-weight: 600;
     line-height: normal;
+  }
+
+  .three-cols-grid {
+    --grid-template-columns: 4fr 4fr 2fr;
   }
 </style>

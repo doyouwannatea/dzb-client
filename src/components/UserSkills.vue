@@ -1,5 +1,5 @@
 <template>
-  <BasePanel class="panel" :cols="1">
+  <BasePanel class="panel">
     <div class="container">
       <h1 class="title">Навыки</h1>
       <BaseTooltip :message="academicSkillsMsg">
@@ -68,10 +68,11 @@
 
 <style scoped>
   .panel {
+    display: flex;
     min-height: 100%;
-    display: grid;
   }
   .container {
+    width: 100%;
     display: flex;
     flex-direction: column;
   }

@@ -1,5 +1,5 @@
 <template>
-  <BasePanel v-if="project && !loading && !error" :cols="1" class="list-panel">
+  <BasePanel v-if="project && !loading && !error" class="list-panel">
     <table>
       <tr>
         <th>№</th>
@@ -39,7 +39,7 @@
       </tr>
     </table>
   </BasePanel>
-  <BasePanel v-else :cols="1" class="empty-list-panel">
+  <BasePanel v-else>
     <ProjectRequestsStub />
   </BasePanel>
 </template>
@@ -74,6 +74,7 @@
   }
 
   table {
+    width: 100%;
     border-collapse: collapse;
     text-align: left;
     font-size: 1.25rem;
