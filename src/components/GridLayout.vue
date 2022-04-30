@@ -2,7 +2,7 @@
   <div
     class="row"
     :style="{
-      '--grid-template-columns': $props.colsCount
+      gridTemplateColumns: $props.colsCount
         ? gridTemplateCols($props.colsCount)
         : '',
     }"
@@ -33,14 +33,6 @@
     row-gap: var(--gap);
     grid-template-columns: var(--grid-template-columns);
   }
-
-  /* .row.row-2 {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .row.row-3 {
-    grid-template-columns: 4fr 4fr 2fr;
-  } */
 
   .row > :deep(*:not(:last-child)) {
     padding-right: var(--gap);
