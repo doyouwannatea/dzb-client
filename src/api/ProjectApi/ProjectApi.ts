@@ -11,7 +11,7 @@ import IProjectApi, { ProjectListResponse } from './IProjectApi';
 import { State } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
 
-export class ProjectApi extends IProjectApi {
+export default class ProjectApi extends IProjectApi {
   private ky = ky.create({
     prefixUrl: import.meta.env.VITE_PROJECT_API_URL,
     retry: { limit: 5 },
@@ -51,5 +51,3 @@ export class ProjectApi extends IProjectApi {
     return this.ky.get('api/states').json();
   }
 }
-
-export default new ProjectApi();

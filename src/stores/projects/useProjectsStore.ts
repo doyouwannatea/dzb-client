@@ -1,4 +1,4 @@
-import ProjectApi from '@/api/ProjectApi';
+import { projectApi } from '@/api/ProjectApi';
 import { projectFiltersToSearchParams } from '@/helpers/query';
 import { Project, ProjectFilters } from '@/models/Project';
 import { RouteNames } from '@/router/types/route-names';
@@ -43,7 +43,7 @@ export const useProjectsStore = () => {
         this.loading = true;
         this.error = '';
         try {
-          const { data, projectCount } = await ProjectApi.filterProjectList(
+          const { data, projectCount } = await projectApi.filterProjectList(
             this.filters,
           );
           this.setProjectList(data, projectCount);
@@ -61,7 +61,7 @@ export const useProjectsStore = () => {
         this.loading = true;
         this.error = '';
         try {
-          const project = await ProjectApi.getSingleProject(projectId);
+          const project = await projectApi.getSingleProject(projectId);
           this.openedProject = project;
         } catch (error) {
           this.error = String(error);
@@ -81,9 +81,9 @@ export const useProjectsStore = () => {
         this.error = '';
         try {
           this.additionalProjectData.tags =
-            await ProjectApi.getAllProjectTags();
+            await projectApi.getAllProjectTags();
           this.additionalProjectData.states =
-            await ProjectApi.getAllProjectStates();
+            await projectApi.getAllProjectStates();
         } catch (error) {
           this.error = String(error);
         } finally {

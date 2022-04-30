@@ -1,11 +1,11 @@
 import ky from 'ky';
 import { Candidate, UserSkills } from '@/models/Candidate';
-import ICampusAuthApi from './ICampusAuthApi';
 import { Participation, Priority } from '@/models/Participation';
-import campusAuthApiMock from './CampusAuthApiMock';
 import { Project, Skill } from '@/models/Project';
+import ICampusAuthApi from './ICampusAuthApi';
+import CampusAuthApiMock from './CampusAuthApiMock';
 
-export class CampusAuthApi extends ICampusAuthApi {
+export default class CampusAuthApi extends ICampusAuthApi {
   private ky = ky.create({
     prefixUrl: import.meta.env.VITE_CAMPUS_AUTH_API_URL,
     retry: { limit: 5, statusCodes: [408, 413, 429, 502, 503, 504] },
@@ -23,10 +23,12 @@ export class CampusAuthApi extends ICampusAuthApi {
   }
 
   async getCandidateParticipationsList(): Promise<Participation[]> {
+    const campusAuthApiMock = new CampusAuthApiMock();
     return campusAuthApiMock.getCandidateParticipationsList();
   }
 
   async deleteParticipation(id: number): Promise<void> {
+    const campusAuthApiMock = new CampusAuthApiMock();
     return campusAuthApiMock.deleteParticipation(id);
   }
 
@@ -34,6 +36,7 @@ export class CampusAuthApi extends ICampusAuthApi {
     participationId: number,
     priority: Priority,
   ): Promise<void> {
+    const campusAuthApiMock = new CampusAuthApiMock();
     return campusAuthApiMock.setParticipationPriority(
       participationId,
       priority,
@@ -44,20 +47,22 @@ export class CampusAuthApi extends ICampusAuthApi {
     priority: Priority,
     projectId: number,
   ): Promise<void> {
+    const campusAuthApiMock = new CampusAuthApiMock();
     return campusAuthApiMock.createProjectParticipation(priority, projectId);
   }
 
   async getUserProjectList(): Promise<Project[]> {
+    const campusAuthApiMock = new CampusAuthApiMock();
     return campusAuthApiMock.getUserProjectList();
   }
 
   async getUserSkills(): Promise<UserSkills> {
+    const campusAuthApiMock = new CampusAuthApiMock();
     return campusAuthApiMock.getUserSkills();
   }
 
   async updateUserSkills(skills: Skill[]): Promise<void> {
+    const campusAuthApiMock = new CampusAuthApiMock();
     return campusAuthApiMock.updateUserSkills(skills);
   }
 }
-
-export default new CampusAuthApi();

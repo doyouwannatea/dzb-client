@@ -10,7 +10,7 @@ import { Project, Skill } from '@/models/Project';
 import { AUTH_TOKEN_REQUIRED } from '@/values/error-messages';
 import ICampusAuthApi from './ICampusAuthApi';
 
-export class CampusAuthApiMock extends ICampusAuthApi {
+export default class CampusAuthApiMock extends ICampusAuthApi {
   async auth(): Promise<void> {
     this.setAuthToken(
       '6956a5x2a38zf27ad9ce3b9b464b73d2131e4bd01053333e758ae00a6fddf995',
@@ -105,5 +105,3 @@ export class CampusAuthApiMock extends ICampusAuthApi {
     return delayRes(undefined, 300);
   }
 }
-
-export default new CampusAuthApiMock();

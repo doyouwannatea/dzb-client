@@ -18,7 +18,7 @@ import IProjectApi from './IProjectApi';
 import { State } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
 
-export class ProjectApiMock extends IProjectApi {
+export default class ProjectApiMock extends IProjectApi {
   async filterProjectList(
     filters: ProjectFilters,
   ): Promise<ProjectListResponse> {
@@ -84,5 +84,3 @@ export class ProjectApiMock extends IProjectApi {
     return delayRes(states, 300);
   }
 }
-
-export default new ProjectApiMock();
