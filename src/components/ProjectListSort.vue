@@ -1,5 +1,6 @@
 <template>
-  <fieldset class="sort">
+  <!-- UNDER DEV  -->
+  <fieldset v-if="false" class="sort">
     <label for="project-sort">Сортировка: </label>
     <select id="project-sort" class="sort-input" name="project-sort">
       <option class="option" selected value="По сроку">По сроку</option>

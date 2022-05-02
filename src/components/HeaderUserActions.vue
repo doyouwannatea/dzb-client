@@ -1,7 +1,8 @@
 <template>
   <div class="actions">
     <template v-if="authStore.isAuth">
-      <button class="ring-btn">
+      <!-- UNDER DEV  -->
+      <button v-if="false" class="ring-btn">
         <img :src="ringIconUrl" alt="уведомления" class="icon" />
       </button>
       <div class="dropdown-container">
