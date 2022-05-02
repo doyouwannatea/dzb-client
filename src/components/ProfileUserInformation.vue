@@ -1,6 +1,6 @@
 <template>
   <BasePanel class="panel">
-    <GridLayout :cols-count="2">
+    <GridLayout :cols="2">
       <!-- USER INFORMATION -->
       <div>
         <h1 class="title">{{ profileData?.fio }}</h1>

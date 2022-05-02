@@ -2,7 +2,7 @@
   <section v-if="project && !loading && !error">
     <!-- Panel -->
     <BasePanel>
-      <GridLayout class="three-cols-grid">
+      <GridLayout cols="4fr 4fr 2fr">
         <!-- Information list -->
         <InformationList
           :items="[
@@ -47,7 +47,7 @@
 
     <!-- Panel -->
     <BasePanel>
-      <GridLayout :cols-count="2">
+      <GridLayout :cols="2">
         <!-- Information list -->
         <InformationList
           :items="[
@@ -72,7 +72,7 @@
 
     <!-- Panel -->
     <BasePanel>
-      <GridLayout :cols-count="1">
+      <GridLayout :cols="1">
         <!-- Information list -->
         <InformationList>
           <InformationListItem :bold="false" :wide="true">
@@ -121,9 +121,5 @@
     font-size: inherit;
     font-weight: 600;
     line-height: normal;
-  }
-
-  .three-cols-grid {
-    --grid-template-columns: 4fr 4fr 2fr;
   }
 </style>

@@ -2,9 +2,7 @@
   <div
     class="row"
     :style="{
-      gridTemplateColumns: $props.colsCount
-        ? gridTemplateCols($props.colsCount)
-        : '',
+      gridTemplateColumns: gridTemplateCols($props.cols),
     }"
   >
     <slot></slot>
@@ -12,26 +10,28 @@
 </template>
 
 <script setup lang="ts">
-  defineProps<{ colsCount?: number }>();
+  defineProps<{ cols?: number | string }>();
 
-  function gridTemplateCols(colsCount: number): string {
-    let cols = '';
-    for (let i = 0; i < colsCount; i++) {
-      cols += '1fr ';
+  function gridTemplateCols(cols?: number | string): string {
+    if (!cols) return '';
+    if (typeof cols === 'string') return cols;
+
+    let gridTemplateColsStr = '';
+    for (let i = 0; i < cols; i++) {
+      gridTemplateColsStr += '1fr ';
     }
-    return cols;
+    return gridTemplateColsStr;
   }
 </script>
 
 <style scoped>
   .row {
-    --grid-template-columns: 1fr;
     --gap: 1.875rem;
     --border-color: var(--gray-color-1);
 
     display: grid;
     row-gap: var(--gap);
-    grid-template-columns: var(--grid-template-columns);
+    grid-template-columns: 1fr;
   }
 
   .row > :deep(*:not(:last-child)) {

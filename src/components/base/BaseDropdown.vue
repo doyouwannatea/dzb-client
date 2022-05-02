@@ -44,11 +44,8 @@
 
 <style scoped>
   .dropdown {
-    --width: 15rem;
-    --padding: 1.0625rem 0;
-
-    width: var(--width);
-    padding: var(--padding);
+    width: 15rem;
+    padding: 1.0625rem 0 !important;
     position: absolute;
     top: 80%;
     right: 0;
