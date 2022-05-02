@@ -39,7 +39,6 @@
           is="router-link"
           case="uppercase"
           :to="{ name: RouteNames.PROJECT_DETAILS, params: { id: project.id } }"
-          target="_blank"
         >
           Подробнее
         </BaseButton>
