@@ -38,7 +38,7 @@
           <h2 class="info-title">Статус проекта</h2>
           <ProjectStatus class="badge mt-2" :state="project.state" />
           <h2 class="info-title mt-4">Кол-во участников</h2>
-          <ProjectTeamCounter class="mt-2" :total="12" />
+          <ProjectTeamCounter class="mt-2" :total="project.places" />
           <OpenParticipationModalButton class="mt-4" :project="project" />
           <OpenFeedbackModalButton class="mt-4" :project="project" />
         </div>
