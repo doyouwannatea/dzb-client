@@ -16,8 +16,8 @@
   .project-list {
     display: flex;
     flex-direction: column;
-    list-style: none;
-    padding-left: 0;
     gap: 0.9375rem;
+    padding-left: 0;
+    list-style: none;
   }
 </style>

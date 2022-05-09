@@ -40,8 +40,8 @@
 <style scoped>
   .team-counter {
     display: flex;
-    align-items: center;
     gap: 0.5625rem;
+    align-items: center;
     color: var(--accent-color-1);
   }
 

@@ -95,36 +95,36 @@
   .footer {
     position: sticky;
     top: 100vh;
-
-    background-color: var(--text-color);
-    color: #fff;
     padding-top: 3.5rem;
     padding-bottom: 2.25rem;
     margin-top: 8.75rem;
+    color: #fff;
+
+    background-color: var(--text-color);
   }
 
   .title {
     font-size: 1rem;
-    line-height: 1.25rem;
     font-weight: 600;
+    line-height: 1.25rem;
     color: #fff;
   }
 
   .logo {
     --width: 4.375rem;
     --height: 4.375rem;
+    grid-column: span 2;
     max-width: 16.875rem;
     color: #fff;
-    grid-column: span 2;
   }
 
   .initials {
-    font-weight: 300;
+    max-width: 30em;
+    margin-top: 7em;
     font-size: 0.88rem;
+    font-weight: 300;
     line-height: 155.3%;
     text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
-    margin-top: 7em;
-    max-width: 30em;
   }
 
   .initials .thin {
@@ -138,26 +138,26 @@
   }
 
   .divider {
-    background-color: rgba(255, 255, 255, 0.8);
     width: 1px;
     height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
   }
 
   /* Info block */
   .info-list {
-    list-style: none;
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
     padding-left: 0;
+    list-style: none;
   }
 
   .info-item {
     font-size: 0.88rem;
-    line-height: 1.125rem;
     font-weight: 400;
-    text-transform: uppercase;
+    line-height: 1.125rem;
     color: var(--gray-color-2);
+    text-transform: uppercase;
   }
 
   .info-title {
@@ -166,24 +166,24 @@
 
   /* Nav */
   .nav-list {
-    padding-left: 0;
-    list-style: none;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    padding-left: 0;
+    list-style: none;
   }
 
   .nav-link {
     display: inline-block;
     width: 100%;
-    text-transform: uppercase;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
+    text-transform: uppercase;
   }
 
   .link {
-    text-decoration: none;
     color: inherit;
+    text-decoration: none;
   }
   .link:hover {
     text-decoration: underline;

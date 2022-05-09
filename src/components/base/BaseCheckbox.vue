@@ -64,13 +64,13 @@
   }
 
   .label {
-    font-weight: 400;
-    font-size: 1.125rem;
-    line-height: normal;
     display: flex;
-    align-items: center;
-    color: var(--text-color);
     gap: 0.9375rem;
+    align-items: center;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: normal;
+    color: var(--text-color);
   }
 
   .label:hover {
@@ -79,12 +79,12 @@
   }
 
   .checkbox {
-    appearance: none;
-    border: 1px solid var(--gray-color-2);
+    position: relative;
     width: 1.25rem;
     height: 1.25rem;
+    border: 1px solid var(--gray-color-2);
     border-radius: 0.1875rem;
-    position: relative;
+    appearance: none;
   }
 
   .checkbox:checked {
@@ -93,14 +93,14 @@
   }
 
   .checkbox:checked::before {
-    content: '\2713';
     position: absolute;
-    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     line-height: normal;
+    color: #fff;
+    content: '\2713';
   }
 </style>

@@ -41,10 +41,10 @@
 
 <style scoped>
   .info-list {
-    list-style: none;
     display: flex;
     flex-direction: column;
     font-size: 1.13rem;
+    list-style: none;
   }
 
   .gap-m {

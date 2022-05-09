@@ -40,12 +40,12 @@
 
 <style scoped>
   .breadcrumbs {
+    display: flex;
     padding-left: 0;
     list-style: none;
-    display: flex;
   }
   .breadcrumbs-item {
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
     font-size: 0.875rem;
     font-weight: 400;
     line-height: normal;
@@ -53,17 +53,17 @@
     color: #7b7b7b;
   }
   .breadcrumbs-item:not(:last-child)::after {
-    content: '/';
-    margin-left: 0.375rem;
     margin-right: 0.375rem;
+    margin-left: 0.375rem;
     color: var(--text-color);
+    content: '/';
   }
   .breadcrumbs-link {
+    padding: 0;
     color: var(--text-color);
     text-decoration: none;
-    border: 0;
-    padding: 0;
     cursor: pointer;
+    border: 0;
   }
   .breadcrumbs-link:hover {
     text-decoration: underline;

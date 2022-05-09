@@ -110,18 +110,18 @@
 
 <style scoped>
   .pagination {
-    background: #ffffff;
-    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
-    border-radius: 0.625rem;
-    margin-bottom: 0.9375rem;
     margin-top: 0.9375rem;
+    margin-bottom: 0.9375rem;
+    background: #ffffff;
+    border-radius: 0.625rem;
+    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
   }
 
   .pagination-list {
-    list-style: none;
     display: flex;
-    justify-content: center;
     gap: 2.25rem;
+    justify-content: center;
+    list-style: none;
   }
 
   .pagination-item {
@@ -135,14 +135,14 @@
   }
 
   .pagination-btn {
-    font-size: 1.25rem;
-    color: var(--gray-color-2);
     display: inline-block;
     width: 100%;
     height: 100%;
-    border: none;
-    background-color: transparent;
+    font-size: 1.25rem;
+    color: var(--gray-color-2);
     cursor: pointer;
+    background-color: transparent;
+    border: none;
     border-bottom: 0.25rem solid transparent;
   }
 

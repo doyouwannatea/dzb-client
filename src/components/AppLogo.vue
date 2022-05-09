@@ -16,13 +16,13 @@
     gap: 1.25rem;
     align-items: center;
 
-    font-family: 'Geometria';
-    font-weight: bold;
+    font-family: 'Geometria', Arial, Helvetica, sans-serif;
     font-size: 1.4375rem;
+    font-weight: bold;
     line-height: 1em;
-    text-transform: uppercase;
-    text-decoration: none;
     color: var(--accent-color-1);
+    text-decoration: none;
+    text-transform: uppercase;
   }
 
   .logo-icon {
@@ -32,9 +32,9 @@
   }
 
   .small {
-    text-transform: initial;
     font-size: 0.7826em;
     font-weight: 600;
     line-height: 1.375em;
+    text-transform: initial;
   }
 </style>

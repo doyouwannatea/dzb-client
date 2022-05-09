@@ -10,13 +10,13 @@
     --text-color: var(--accent-color-1);
 
     padding: 0.625rem 2rem;
-    border: 2px solid var(--border-color);
-    border-radius: 6.25rem;
-    font-weight: 600;
     font-size: 1rem;
+    font-weight: 600;
     line-height: normal;
+    color: var(--text-color);
     text-align: center;
     text-transform: uppercase;
-    color: var(--text-color);
+    border: 2px solid var(--border-color);
+    border-radius: 6.25rem;
   }
 </style>

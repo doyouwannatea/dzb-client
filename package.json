@@ -9,13 +9,14 @@
     "serve": "vite preview",
     "type-check": "vue-tsc --noEmit && eslint --ext .ts,vue --ignore-path .gitignore . --fix",
     "lint": "prettier -w -u .",
-    "stylelint": "stylelint **/*.vue",
-    "stylelint:fix": "stylelint **/*.vue --fix",
+    "stylelint": "stylelint **/*.{vue,css}",
+    "stylelint:fix": "stylelint **/*.{vue,css} --fix",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*": "prettier --ignore-unknown --write",
-    "*.vue": "stylelint --fix && eslint --fix"
+    "*.vue": "eslint --fix",
+    "*.{vue,css}": "stylelint --fix"
   },
   "dependencies": {
     "@babel/core": "^7.16.0",

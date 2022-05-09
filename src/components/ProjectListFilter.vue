@@ -125,12 +125,12 @@
 </script>
 
 <style scoped>
-  .miltiselect:deep(.multiselect-clear) {
-    display: none;
-  }
-
   .miltiselect:first-child {
     margin-bottom: 1.25rem;
+  }
+
+  .miltiselect:deep(.multiselect-clear) {
+    display: none;
   }
 
   .divider {
@@ -140,11 +140,11 @@
   }
 
   .filters {
+    padding-top: 0.625rem;
+    padding-bottom: 0.6875rem;
     background: #ffffff;
     border: 1px solid var(--gray-color-1);
     border-radius: 0.625rem;
-    padding-top: 0.625rem;
-    padding-bottom: 0.6875rem;
   }
 
   .label:not(:last-child) {
@@ -155,8 +155,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.6875rem;
-    margin-top: 1.25rem;
-    padding-left: 1.375rem;
     padding-right: 1.375rem;
+    padding-left: 1.375rem;
+    margin-top: 1.25rem;
   }
 </style>

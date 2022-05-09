@@ -88,8 +88,8 @@
 
 <style scoped>
   .panel {
-    min-height: 100%;
     display: flex;
+    min-height: 100%;
   }
 
   .label {
@@ -97,22 +97,22 @@
   }
 
   .subtitle {
-    font-weight: 800;
-    font-size: 1.125rem;
-    line-height: 1.6875rem;
     margin-bottom: 1.0625rem;
+    font-size: 1.125rem;
+    font-weight: 800;
+    line-height: 1.6875rem;
   }
 
   .title {
-    line-height: 2.375rem;
-    margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 2.375rem;
     border-bottom: 1px solid var(--gray-color-1);
   }
 
   .edit-btn {
-    margin-top: auto;
     align-self: flex-end;
+    margin-top: auto;
   }
 
   .right-col {

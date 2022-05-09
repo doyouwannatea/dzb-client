@@ -59,9 +59,9 @@
 <style scoped>
   .top-filters {
     display: flex;
+    gap: 2.1875rem;
     align-items: center;
     justify-content: space-between;
-    gap: 2.1875rem;
     margin-bottom: 1.125rem;
   }
 

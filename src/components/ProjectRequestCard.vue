@@ -105,23 +105,23 @@
   }
 
   .card.stub {
-    opacity: 1;
     background-color: var(--gray-color-1);
+    opacity: 1;
   }
 
   .card-content {
     display: grid;
-    align-items: flex-start;
     grid-template-columns: auto minmax(min-content, 16.25rem) min-content;
     column-gap: 0.9375rem;
+    align-items: flex-start;
   }
 
   .title {
     justify-self: flex-start;
+    font-size: 1.5rem;
 
     /* text */
     font-weight: 600;
-    font-size: 1.5rem;
     line-height: 1.9375rem;
     color: #4f5569;
     text-decoration: none;
@@ -132,31 +132,31 @@
   }
 
   .desc {
+    grid-row: 2;
+    grid-column: 1;
+    margin-top: 0.625rem;
     font-size: 1.125rem;
     line-height: 150%;
-    margin-top: 0.625rem;
-    grid-column: 1;
-    grid-row: 2;
   }
 
   .priority {
-    border-radius: 50%;
-    color: #fff;
-    background-color: var(--accent-color-1);
-    width: 2.8125rem;
-    height: 2.8125rem;
     display: flex;
     align-items: center;
-    text-align: center;
     justify-content: center;
     justify-self: flex-end;
+    width: 2.8125rem;
+    height: 2.8125rem;
     margin-right: -2px;
     margin-left: auto;
+    font-size: 1.5rem;
 
     /* text */
     font-weight: 600;
-    font-size: 1.5rem;
     line-height: normal;
+    color: #fff;
+    text-align: center;
+    background-color: var(--accent-color-1);
+    border-radius: 50%;
   }
 
   .stub:deep(.priority) {
@@ -165,15 +165,15 @@
 
   .card:deep(.status) {
     display: flex;
+    gap: 0.9375rem;
     align-items: center;
+    height: 2.8125rem;
     padding: 0;
     padding-left: 1rem;
-    height: 2.8125rem;
-    gap: 0.9375rem;
+    color: var(--accent-color-1);
 
     /* text */
     white-space: nowrap;
-    color: var(--accent-color-1);
     border-color: var(--accent-color-1);
   }
 
@@ -183,11 +183,11 @@
   }
 
   .delete-btn {
-    margin-top: 1rem;
     grid-column: 2;
-    padding: 0.425rem;
-    aspect-ratio: 1 / 1;
     justify-self: flex-end;
+    aspect-ratio: 1 / 1;
+    padding: 0.425rem;
+    margin-top: 1rem;
   }
 
   .delete-btn:hover:deep(.delete-btn-path),
@@ -196,20 +196,20 @@
   }
 
   .stub-title {
-    text-decoration: none !important;
     color: var(--gray-color-2);
+    text-decoration: none !important;
   }
 
   .stub-line {
-    background-color: #d2d2d2;
     padding: 0.5rem 0.75rem;
+    background-color: #d2d2d2;
   }
 
   .stub-wrapper {
-    margin-top: 0.75rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
     grid-row: 2;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
   }
 </style>

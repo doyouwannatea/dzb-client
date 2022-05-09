@@ -25,9 +25,9 @@
 <style scoped>
   /* Container */
   .container {
-    height: 7rem;
     display: flex;
     justify-content: space-between;
+    height: 7rem;
   }
 
   /* Header */
@@ -36,11 +36,11 @@
     background: #fff;
   }
   .header::before {
-    content: '';
-    width: 100%;
-    height: 1.5px;
-    background-color: var(--gray-color-1);
     position: absolute;
     bottom: 0;
+    width: 100%;
+    height: 1.5px;
+    content: '';
+    background-color: var(--gray-color-1);
   }
 </style>

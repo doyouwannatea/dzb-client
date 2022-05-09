@@ -30,8 +30,8 @@
     --border-color: var(--gray-color-1);
 
     display: grid;
-    row-gap: var(--gap);
     grid-template-columns: 1fr;
+    row-gap: var(--gap);
   }
 
   .row > :deep(*:not(:last-child)) {

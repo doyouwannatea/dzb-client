@@ -73,20 +73,20 @@
   }
 
   .action {
-    font-family: 'Mont';
+    display: inline-block;
+    width: 100%;
+    padding: 0.625rem 1.3125rem;
+    font-family: 'Mont', Arial, Helvetica, sans-serif;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 600;
-    font-size: 1rem;
     line-height: 1.25rem;
     color: var(--text-color);
-    display: inline-block;
-    padding: 0.625rem 1.3125rem;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    width: 100%;
     text-align: left;
     text-decoration: none;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
   }
 
   .action:hover {

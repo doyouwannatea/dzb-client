@@ -15,20 +15,43 @@
 </script>
 
 <style scoped>
+  .tooltip-msg {
+    position: absolute;
+    bottom: 100%;
+    left: 100%;
+    display: none;
+    width: 3000%;
+    max-width: 22.25rem;
+    padding: 0.9375rem;
+    font-size: 0.9375rem;
+    line-height: 180%;
+    text-align: left;
+    cursor: default;
+    background: #ffffff;
+    border: 1px solid var(--gray-color-1);
+    border-radius: 0.625rem;
+    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
+  }
+
+  .tooltip-msg:hover,
+  .tooltip-msg:focus-visible {
+    display: none !important;
+  }
+
   .tooltip-container {
     display: flex;
     align-items: center;
   }
 
   .btn {
+    position: relative;
     width: 1.5rem;
     height: 1.5rem;
-    margin-left: 0.4375rem;
     padding: 0;
-    border: none;
+    margin-left: 0.4375rem;
     cursor: pointer;
     background: transparent;
-    position: relative;
+    border: none;
   }
 
   .btn:hover .tooltip-msg,
@@ -39,28 +62,5 @@
   .icon {
     width: 100%;
     height: 100%;
-  }
-
-  .tooltip-msg {
-    background: #ffffff;
-    border: 1px solid var(--gray-color-1);
-    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
-    border-radius: 0.625rem;
-    padding: 0.9375rem;
-    max-width: 22.25rem;
-    width: 3000%;
-    position: absolute;
-    left: 100%;
-    bottom: 100%;
-    text-align: left;
-    font-size: 0.9375rem;
-    line-height: 180%;
-    display: none;
-    cursor: default;
-  }
-
-  .tooltip-msg:hover,
-  .tooltip-msg:focus-visible {
-    display: none !important;
   }
 </style>

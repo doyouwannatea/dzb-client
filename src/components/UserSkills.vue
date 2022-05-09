@@ -72,27 +72,27 @@
     min-height: 100%;
   }
   .container {
-    width: 100%;
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
 
   .divider {
     width: 100%;
     height: 1px;
-    background: var(--gray-color-1);
     margin: 1.75rem 0;
+    background: var(--gray-color-1);
   }
 
   .title {
-    font-weight: 800;
-    font-size: 1.875rem;
-    line-height: 2.375rem;
     margin-bottom: 2.0625rem;
+    font-size: 1.875rem;
+    font-weight: 800;
+    line-height: 2.375rem;
   }
   .subtitle {
-    font-weight: 600;
     font-size: 1.25rem;
+    font-weight: 600;
     line-height: 1.625rem;
   }
 
@@ -101,8 +101,8 @@
   }
 
   .edit-btn {
+    display: block;
     margin-top: auto;
     margin-left: auto;
-    display: block;
   }
 </style>

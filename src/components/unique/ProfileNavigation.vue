@@ -39,19 +39,19 @@
   }
 
   .action {
-    color: var(--text-color);
     display: inline-block;
-    padding: 1.25rem 0;
     width: 100%;
-    text-decoration: none;
+    padding: 1.25rem 0;
     font-size: 1.25rem;
     line-height: 1.625rem;
+    color: var(--text-color);
 
     /* for button */
     text-align: left;
+    text-decoration: none;
+    cursor: pointer;
     background: transparent;
     border: none;
-    cursor: pointer;
   }
 
   .action:hover,

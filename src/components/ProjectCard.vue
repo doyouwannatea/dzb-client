@@ -70,12 +70,12 @@
     --border-left-color: var(--accent-color-1);
 
     width: 100%;
-    background: #ffffff;
-    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
-    border-radius: 0.625rem;
-    border-left: 1.25rem solid var(--border-left-color);
     padding-top: 1.375rem;
     padding-bottom: 1.375rem;
+    background: #ffffff;
+    border-left: 1.25rem solid var(--border-left-color);
+    border-radius: 0.625rem;
+    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
   }
 
   .card.active {
@@ -92,17 +92,17 @@
 
   .footer {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     gap: 3.375rem;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .header {
-    padding-bottom: 1.25rem;
     display: grid;
-    align-items: center;
     grid-template-columns: auto 1fr;
     gap: 0.8125rem;
+    align-items: center;
+    padding-bottom: 1.25rem;
   }
 
   .actions {
@@ -114,20 +114,17 @@
 
   .info {
     display: flex;
+    gap: 1.375rem;
     justify-content: flex-end;
+    margin-top: 0.625rem;
     font-size: 1.125rem;
     line-height: 1.4375rem;
-    gap: 1.375rem;
-    margin-top: 0.625rem;
   }
 
   .difficulty {
     display: flex;
-    align-items: center;
     gap: 0.5625rem;
-  }
-
-  .difficulty {
+    align-items: center;
     color: var(--text-color);
   }
 
@@ -142,8 +139,8 @@
   }
 
   .container {
-    padding-left: 1.25rem;
     padding-right: 1.25rem;
+    padding-left: 1.25rem;
   }
 
   .divider {
@@ -153,16 +150,16 @@
   }
 
   .title {
-    font-weight: 600;
+    max-width: 44.0625rem;
     font-size: 1.5rem;
+    font-weight: 600;
     line-height: 1.9375rem;
     color: #4f5569;
-    max-width: 44.0625rem;
   }
 
   .subtitle {
-    font-weight: 400;
     font-size: 1rem;
+    font-weight: 400;
     line-height: 1.25rem;
     color: #4f5569;
   }
@@ -182,8 +179,8 @@
   }
 
   .list-item {
-    font-weight: 600;
     font-size: 1rem;
+    font-weight: 600;
     line-height: 1.25rem;
     color: var(--text-color);
     list-style: none;

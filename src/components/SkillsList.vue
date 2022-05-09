@@ -76,10 +76,10 @@
   }
 
   .list {
-    list-style: none;
-    padding-left: 0;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    padding-left: 0;
+    list-style: none;
   }
 </style>

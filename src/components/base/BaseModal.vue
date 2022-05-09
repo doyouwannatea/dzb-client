@@ -60,61 +60,18 @@
 </script>
 
 <style scoped>
-  /* common content styles */
-  /* Headlines */
-  .modal:deep(h1) {
-    font-weight: 800;
-    font-size: 2.5rem;
-    line-height: 3.1875rem;
-  }
-
-  .modal:deep(h2) {
-    font-weight: 600;
-    font-size: 1.5rem;
-    line-height: 1.9375rem;
-  }
-
-  /* text */
-  .modal:deep(p) {
-    font-weight: 600;
-    font-size: 1.125rem;
-    line-height: 150%;
-  }
-
-  /* link */
-  .modal:deep(a) {
-    font-size: 1.125rem;
-  }
-  /* common content styles */
-
-  .modal-background {
-    z-index: 100000;
-    overflow: auto;
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 1rem 0;
-  }
-
   .modal {
     --side-p: 2.75rem;
     --top-p: 2.1875rem;
     --bottom-p: 2.5rem;
 
     position: relative;
-    background: #ffffff;
-    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
-    border-radius: 0.625rem;
+    width: 100%;
     padding-top: var(--top-p);
     padding-bottom: var(--bottom-p);
-    width: 100%;
+    background: #ffffff;
+    border-radius: 0.625rem;
+    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
   }
 
   .modal.s {
@@ -126,6 +83,49 @@
     max-width: 60rem;
   }
 
+  /* common content styles */
+  /* Headlines */
+  .modal:deep(h1) {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 3.1875rem;
+  }
+
+  .modal:deep(h2) {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.9375rem;
+  }
+
+  /* text */
+  .modal:deep(p) {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 150%;
+  }
+
+  /* link */
+  .modal:deep(a) {
+    font-size: 1.125rem;
+  }
+  /* common content styles */
+
+  .modal-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100000;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
   .close-icon {
     width: 1.5rem;
     height: 1.5rem;
@@ -134,17 +134,17 @@
 
   .close-btn {
     position: absolute;
-    right: 1.125rem;
     top: 1rem;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
+    right: 1.125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 3rem;
     height: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 0;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
   }
 
   .close-btn:hover {
@@ -154,19 +154,16 @@
   .modal-header,
   .modal-actions,
   .modal-content {
-    padding-left: var(--side-p);
     padding-right: var(--side-p);
+    padding-left: var(--side-p);
   }
 
   .modal-header {
     /* side padding + space for the close button */
     padding-right: calc(var(--side-p) + 1.25rem);
-  }
-
-  .modal-header {
-    border-bottom: 2px solid var(--gray-color-1);
     padding-bottom: 1.6875rem;
     margin-bottom: 2.25rem;
+    border-bottom: 2px solid var(--gray-color-1);
   }
 
   .modal-actions {

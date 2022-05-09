@@ -25,9 +25,9 @@
     --side-padding: 1rem;
 
     width: 100%;
-    padding-left: var(--side-padding);
     padding-right: var(--side-padding);
-    margin-left: auto;
+    padding-left: var(--side-padding);
     margin-right: auto;
+    margin-left: auto;
   }
 </style>

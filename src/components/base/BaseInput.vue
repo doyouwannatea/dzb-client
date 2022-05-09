@@ -40,13 +40,13 @@
 
 <style scoped>
   .input {
+    width: 100%;
+    padding: 0.75rem 0.8rem;
+    font-size: 1.125rem;
+    color: var(--text-color);
     background-color: #fff;
     border: 1px solid var(--gray-color-1);
     border-radius: 0.3125rem;
-    color: var(--text-color);
-    font-size: 1.125rem;
-    padding: 0.75rem 0.8rem;
-    width: 100%;
   }
 
   .input.with-icon {
@@ -56,8 +56,8 @@
 
   .input[type='date']::-webkit-inner-spin-button,
   .input[type='date']::-webkit-calendar-picker-indicator {
-    opacity: 0.3;
     margin: 0;
+    opacity: 0.3;
   }
 
   .input::placeholder {
@@ -71,8 +71,8 @@
 
   .input:disabled {
     color: var(--gray-color-2);
-    background-color: #f9f9f9;
     cursor: default;
+    background-color: #f9f9f9;
   }
 
   .input:focus-visible {

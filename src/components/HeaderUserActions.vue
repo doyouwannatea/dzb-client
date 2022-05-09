@@ -70,24 +70,24 @@
 
   .actions {
     display: flex;
-    align-items: center;
     gap: 1.875rem;
+    align-items: center;
   }
 
   .ring-btn {
-    border: 0;
-    background: transparent;
     padding: 0.5rem;
     cursor: pointer;
+    background: transparent;
+    border: 0;
   }
 
   .menu-btn {
     width: 2.1875rem;
     height: 1.9375rem;
-    border: 0;
-    background-color: transparent;
-    cursor: pointer;
     padding: 0 0.5rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
     border-radius: 0.25rem;
     transform: rotate(180deg);
   }
@@ -101,12 +101,12 @@
   }
 
   .user {
-    height: 100%;
     display: flex;
-    align-items: center;
     gap: 0.8125rem;
-    cursor: default;
+    align-items: center;
     max-width: 18.375rem;
+    height: 100%;
+    cursor: default;
   }
 
   .dropdown-container {
@@ -115,8 +115,8 @@
   }
 
   .username {
-    font-weight: 600;
     font-size: 1.125rem;
+    font-weight: 600;
     line-height: 1.4375em;
     color: var(--accent-color-1);
     user-select: none;

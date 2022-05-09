@@ -9,8 +9,8 @@
   --ms-option-font-size: 1.125rem;
   --ms-font-size: 1.125rem;
   min-height: 3.5625rem;
-  padding-bottom: 0.5em;
   padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 .multiselect.is-active {
@@ -18,8 +18,8 @@
 }
 
 .multiselect-tag {
-  white-space: normal;
   overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .multiselect-tag-remove:hover {
@@ -41,23 +41,23 @@
 
 .multiselect-tag {
   padding: 0.4375rem 1.25rem;
-  background: #f1f4fe;
-  border-radius: 1.875rem;
 
   font-size: 0.875rem;
   line-height: 1.125rem;
 
   color: var(--accent-color-1);
+  background: #f1f4fe;
+  border-radius: 1.875rem;
 }
 
 .multiselect-single-label {
   display: block;
-  padding-right: 4.5em;
   width: 100%;
-  text-overflow: ellipsis;
+  padding-right: 4.5em;
   overflow: hidden;
-  white-space: nowrap;
   line-height: 3.5625rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .multiselect-search {

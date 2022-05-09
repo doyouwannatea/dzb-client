@@ -23,30 +23,30 @@
 <style scoped>
   .tag {
     display: inline-flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     padding: 0.4375rem 1.25rem;
-    background: #f1f4fe;
-    border-radius: 1.875rem;
 
     font-size: 0.875rem;
     line-height: 1.125rem;
 
     color: var(--accent-color-1);
+    background: #f1f4fe;
+    border-radius: 1.875rem;
   }
 
   .tag.disabled {
-    background: var(--gray-color-1);
     color: var(--gray-color-2);
+    background: var(--gray-color-1);
   }
 
   .remove-btn {
+    gap: 0.5rem;
+    color: var(--accent-color-1);
+    cursor: pointer;
+    background-color: transparent;
     border: none;
     border-radius: 50%;
-    gap: 0.5rem;
-    cursor: pointer;
-    color: var(--accent-color-1);
-    background-color: transparent;
   }
 
   .remove-btn:hover {

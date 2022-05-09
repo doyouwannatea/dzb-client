@@ -58,27 +58,12 @@
 </script>
 
 <style scoped>
-  .list-panel {
-    padding-top: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .accepted {
-    background-color: #eef9f2;
-    color: var(--text-color);
-  }
-
-  .accepted > td:nth-child(2) {
-    font-weight: 800;
-  }
-
   table {
     width: 100%;
-    border-collapse: collapse;
-    text-align: left;
     font-size: 1.25rem;
     color: #737373;
+    text-align: left;
+    border-collapse: collapse;
   }
 
   th {
@@ -93,14 +78,29 @@
     border-bottom: 1px solid #e5f1ea;
   }
 
+  th:first-child,
+  td:first-child {
+    padding-right: 0.625rem;
+    padding-left: 0.625rem;
+    text-align: center;
+  }
+
   tr:last-child > td {
     border-bottom: none;
   }
 
-  th:first-child,
-  td:first-child {
-    text-align: center;
-    padding-right: 0.625rem;
-    padding-left: 0.625rem;
+  .list-panel {
+    padding-top: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .accepted {
+    color: var(--text-color);
+    background-color: #eef9f2;
+  }
+
+  .accepted > td:nth-child(2) {
+    font-weight: 800;
   }
 </style>

@@ -192,10 +192,10 @@
   }
 
   .search-wrapper {
-    margin-bottom: 0.625rem;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    margin-bottom: 0.625rem;
   }
 
   .search {
@@ -244,9 +244,9 @@
 
     font-size: 0.75rem;
     line-height: 0.9375rem;
-    text-transform: uppercase;
 
     color: var(--gray-color-2);
+    text-transform: uppercase;
   }
 
   .tag-item {
@@ -256,11 +256,11 @@
   .tag-btn {
     display: block;
     width: 100%;
-    text-align: left;
     padding: 0.5625rem 0;
-    border: none;
-    background-color: transparent;
+    text-align: left;
     cursor: pointer;
+    background-color: transparent;
+    border: none;
   }
 
   .tag-btn:hover {
@@ -268,14 +268,14 @@
   }
 
   .tag-btn.selected {
+    color: var(--gray-color-1);
     text-decoration: line-through;
     cursor: not-allowed;
-    color: var(--gray-color-1);
   }
 
   .actions {
-    margin-top: 2.75rem;
     display: flex;
     justify-content: center;
+    margin-top: 2.75rem;
   }
 </style>

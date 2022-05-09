@@ -14,28 +14,28 @@
 
 <style scoped>
   .sort {
-    border: 0;
     padding: 0;
+    border: 0;
   }
   .sort-input {
     display: inline-block;
     width: 150px;
     padding: 0.2rem;
     padding-right: 1.5em;
-    border: 0;
-    background-color: transparent;
-
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-family: 'Mont';
+    font-family: 'Mont', Arial, Helvetica, sans-serif;
+    font-size: 1.125rem;
     font-style: normal;
     font-weight: 400;
-    color: #485ea4;
-    font-size: 1.125rem;
     line-height: 1.4375rem;
+    color: #485ea4;
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+    background: url(../assets/icons/arrow.svg) right / contain no-repeat;
+    background-color: transparent;
+    border: 0;
 
     appearance: none;
-    background: url(../assets/icons/arrow.svg) right / contain no-repeat;
   }
 
   .sort-input:focus {

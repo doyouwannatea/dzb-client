@@ -19,38 +19,38 @@
 
 <style scoped>
   .project-tab {
-    text-transform: uppercase;
-    color: var(--text-color);
-    text-decoration: none;
     display: inline-block;
     padding: 1rem 3rem;
+    color: var(--text-color);
+    text-decoration: none;
+    text-transform: uppercase;
   }
 
   .project-tab.router-link-exact-active {
-    border-radius: 0.625rem 0.625rem 0 0;
-    background: #ffffff;
-    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
     position: relative;
+    background: #ffffff;
+    border-radius: 0.625rem 0.625rem 0 0;
+    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
   }
 
   .project-tab.router-link-exact-active::before {
-    content: '';
     position: absolute;
-    left: 0;
     bottom: -0.3125rem;
+    left: 0;
     width: 100%;
     height: 0.4rem;
+    content: '';
     background-color: #fff;
     border-radius: 0.625rem;
   }
 
   .project-tab.router-link-exact-active:first-child:after {
-    content: '';
     position: absolute;
-    left: 0;
     bottom: -0.5625rem;
-    height: 0.5625rem;
+    left: 0;
     width: 0.3125rem;
+    height: 0.5625rem;
+    content: '';
     background-color: #fff;
   }
 

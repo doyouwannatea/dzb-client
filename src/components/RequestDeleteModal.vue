@@ -54,9 +54,9 @@
   }
 
   .subtitle {
+    padding: 0 5rem;
     margin-top: 0.75rem;
     font-size: 1.125rem;
-    padding: 0 5rem;
   }
   .actions {
     display: flex;

@@ -185,9 +185,9 @@
 <style scoped>
   .actions {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
     gap: 0.5rem;
+    align-items: flex-start;
+    justify-content: flex-end;
   }
 
   .buttons {

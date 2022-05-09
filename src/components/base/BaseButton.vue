@@ -49,22 +49,22 @@
     --active-color: #3e8bff;
 
     display: inline-flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
     gap: 0.8125rem;
-    color: #ffffff;
+    align-items: center;
+    justify-content: center;
     padding: 1rem 2rem;
     font-size: 1rem;
     font-weight: 600;
-    border: 0;
     line-height: normal;
-    border-radius: 0.3125rem;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
     background-color: transparent;
+    border: 0;
+    border-radius: 0.3125rem;
     transition: background-color 20ms ease, color 20ms ease;
-    text-decoration: none;
   }
 
   .btn.red {
@@ -93,13 +93,13 @@
   }
 
   .primary:hover {
-    background-color: var(--hover-color);
     color: #fff;
+    background-color: var(--hover-color);
   }
 
   .primary:active {
-    background-color: var(--active-color);
     color: #fff;
+    background-color: var(--active-color);
   }
 
   .primary:disabled {
@@ -107,40 +107,44 @@
   }
 
   .outlined {
-    border: 0.125rem solid var(--background-color);
-    background-color: transparent;
     color: var(--background-color);
+    background-color: transparent;
+    border: 0.125rem solid var(--background-color);
   }
 
   .outlined:hover {
-    border-color: var(--hover-color);
-    background-color: var(--hover-color);
     color: #fff;
+    background-color: var(--hover-color);
+    border-color: var(--hover-color);
   }
 
   .outlined:active {
-    border-color: var(--active-color);
-    background-color: var(--active-color);
     color: #fff;
+    background-color: var(--active-color);
+    border-color: var(--active-color);
   }
 
   .outlined:disabled {
     color: var(--disabled-color);
-    border-color: var(--disabled-color);
     background-color: transparent;
+    border-color: var(--disabled-color);
   }
 
   .inline-link {
     padding: 0;
     font-size: 0.875rem;
+    color: var(--background-color);
     border-radius: 0;
+  }
+
+  .link {
     color: var(--background-color);
   }
 
   .inline-link:hover,
   .link:hover {
-    text-decoration: underline;
     color: var(--background-color);
+    text-decoration: underline;
   }
 
   .inline-link:active,
@@ -151,9 +155,5 @@
   .inline-link:disabled,
   .link:disabled {
     color: var(--disabled-color);
-  }
-
-  .link {
-    color: var(--background-color);
   }
 </style>

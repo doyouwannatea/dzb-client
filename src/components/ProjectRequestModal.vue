@@ -216,10 +216,10 @@
   }
 
   .input-label {
-    font-size: 1.125rem;
-    font-weight: 700;
     display: block;
     margin-bottom: 0.625rem;
+    font-size: 1.125rem;
+    font-weight: 700;
   }
 
   .input.with-icon {
@@ -235,8 +235,8 @@
   }
 
   .subtitle {
-    font-size: 1.25rem;
     margin: 0;
+    font-size: 1.25rem;
   }
 
   .input-group {

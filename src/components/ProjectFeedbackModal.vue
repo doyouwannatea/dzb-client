@@ -46,22 +46,22 @@
 
   .author {
     display: flex;
-    align-items: center;
     gap: 1.125rem;
+    align-items: center;
     margin-bottom: 1.875rem;
   }
   .name {
-    font-weight: 800;
     font-size: 1.5rem;
+    font-weight: 800;
     line-height: 151.8%;
     color: var(--accent-color-1);
   }
 
   .position {
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    font-size: 1.125rem;
     font-style: normal;
     font-weight: 500;
-    font-size: 1.125rem;
     line-height: 1.375rem;
     color: var(--gray-color-2);
   }

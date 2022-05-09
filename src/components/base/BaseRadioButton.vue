@@ -51,28 +51,28 @@
   }
 
   .radio {
-    appearance: none;
-    border: 1px solid var(--gray-color-2);
+    position: relative;
     width: 1.25rem;
     height: 1.25rem;
+    border: 1px solid var(--gray-color-2);
     border-radius: 50%;
-    position: relative;
+    appearance: none;
   }
 
   .radio:checked {
+    background-color: var(--accent-color-1);
     border-color: var(--accent-color-1);
     box-shadow: inset 0 0 0px 0.1875rem #fff;
-    background-color: var(--accent-color-1);
   }
 
   .label {
-    font-weight: 400;
-    font-size: 1.125rem;
-    line-height: normal;
     display: flex;
-    align-items: center;
-    color: var(--text-color);
     gap: 0.9375rem;
+    align-items: center;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: normal;
+    color: var(--text-color);
   }
 
   .label:hover {
