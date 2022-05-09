@@ -2,24 +2,24 @@
   <BasePanel
     :class="[
       'card',
-      { editable: editable && projectRequest, stub: !projectRequest },
+      { editable: editable && participation, stub: !participation },
     ]"
   >
     <div class="card-content">
       <RouterLink
-        v-if="projectRequest"
+        v-if="participation && project"
         class="title"
         :to="{
           name: RouteNames.PROJECT_DETAILS,
-          params: { id: projectRequest.project.id },
+          params: { id: project.id },
         }"
         target="_blank"
       >
-        {{ projectRequest.project.title }}
+        {{ project.title }}
       </RouterLink>
       <div v-else class="title stub-line stub-title">Проект не выбран</div>
-      <p v-if="projectRequest" class="desc">
-        {{ projectRequest.project.goal }}
+      <p v-if="participation && project" class="desc">
+        {{ project.goal }}
       </p>
       <div v-else class="stub-wrapper">
         <div class="stub-line"></div>
@@ -34,11 +34,11 @@
       </BaseBadge>
 
       <BaseButton
-        v-if="editable && projectRequest"
+        v-if="editable && participation"
         class="delete-btn"
         variant="outlined"
         color="red"
-        @click="$emit('delete', projectRequest!)"
+        @click="$emit('delete', participation!)"
       >
         <svg
           width="25"
@@ -74,6 +74,7 @@
   import { repeatString } from '@/helpers/string';
   import { Participation, Priority } from '@/models/Participation';
   import { PriorityText } from '@/models/Participation';
+  import { Project } from '@/models/Project';
   import { RouteNames } from '@/router/types/route-names';
   import { RouterLink } from 'vue-router';
   import BaseBadge from './base/BaseBadge.vue';
@@ -82,7 +83,8 @@
   type Props = {
     editable: boolean;
     priority: Priority;
-    projectRequest?: Participation;
+    participation?: Participation;
+    project?: Project;
   };
   type Emits = {
     (e: 'delete', request: Participation): void;

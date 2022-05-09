@@ -52,8 +52,8 @@
         <InformationList
           :items="[
             {
-              title: 'Ожидаемый результат',
-              content: project.expected_result,
+              title: 'Ожидаемый продуктовый результат',
+              content: project.product_result,
             },
           ]"
         />

@@ -11,7 +11,7 @@
           :key="element.order"
           :editable="!dragDisabled"
           :priority="index + 1"
-          :project-request="element.content"
+          :participation="element.content"
           @delete="openDeleteModal"
         />
       </template>

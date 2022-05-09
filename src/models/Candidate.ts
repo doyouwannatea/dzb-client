@@ -9,7 +9,6 @@ export interface Candidate {
   phone: string;
   course: number;
   training_group: string;
-  api_token: string;
   skills: Skill[];
   is_student: boolean;
   is_teacher: boolean;

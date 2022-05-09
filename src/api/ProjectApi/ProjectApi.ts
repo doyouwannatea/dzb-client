@@ -1,15 +1,10 @@
 import ky from 'ky';
 import { projectFiltersToSearchParams } from '@/helpers/query';
-import {
-  Project,
-  ProjectFilters,
-  Supervisor,
-  Type,
-  ProjectTags,
-} from '@/models/Project';
+import { Project, ProjectFilters, Type, ProjectTags } from '@/models/Project';
 import IProjectApi, { ProjectListResponse } from './IProjectApi';
 import { State } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
+import { Supervisor } from '@/models/Supervisor';
 
 export default class ProjectApi extends IProjectApi {
   private ky = ky.create({
