@@ -4,19 +4,22 @@
   "scripts": {
     "dev": "vite",
     "dev:mock": "vite --mode mock",
-    "build": "npm run type-check && vite build",
+    "build": "npm run lint && vite build",
     "deploy:gh-pages": "bash gh-pages-deploy.sh",
     "serve": "vite preview",
-    "type-check": "vue-tsc --noEmit && eslint --ext .ts,vue --ignore-path .gitignore . --fix",
-    "lint": "prettier -w -u .",
+    "type-check": "vue-tsc --noEmit",
+    "prettier": "prettier --ignore-unknown --write .",
     "stylelint": "stylelint **/*.{vue,css}",
     "stylelint:fix": "stylelint **/*.{vue,css} --fix",
+    "eslint": "eslint **/*.{vue,ts}",
+    "eslint:fix": "eslint **/*.{vue,ts} --fix",
+    "lint": "npm run prettier && npm run stylelint && npm run eslint && npm run type-check",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*": "prettier --ignore-unknown --write",
-    "*.vue": "eslint --fix",
-    "*.{vue,css}": "stylelint --fix"
+    "*": "npm run prettier",
+    "*.{vue,ts}": "npm run eslint:fix",
+    "*.{vue,css}": "npm run stylelint:fix"
   },
   "dependencies": {
     "@babel/core": "^7.16.0",
