@@ -11,10 +11,6 @@
               content: project.supervisor.fio,
             },
             {
-              title: 'Заказчик',
-              content: project.customer,
-            },
-            {
               title: 'Старт проекта',
               content: project.date_start,
             },
@@ -47,6 +43,25 @@
 
     <!-- Panel -->
     <BasePanel>
+      <!-- Information list -->
+      <InformationList
+        :items="[
+          {
+            title: 'Требования к студентам',
+            content: project.requirements,
+            wide: true,
+          },
+          {
+            title: 'Описание проекта',
+            content: project.description,
+            wide: true,
+          },
+        ]"
+      />
+    </BasePanel>
+
+    <!-- Panel -->
+    <BasePanel>
       <GridLayout :cols="2">
         <!-- Information list -->
         <InformationList
@@ -62,8 +77,8 @@
         <InformationList
           :items="[
             {
-              title: 'Требования к участникам',
-              content: project.requirements,
+              title: 'Ожидаемый учебный результат',
+              content: project.study_result,
             },
           ]"
         />
@@ -72,24 +87,15 @@
 
     <!-- Panel -->
     <BasePanel>
-      <GridLayout :cols="1">
-        <!-- Information list -->
-        <InformationList>
-          <InformationListItem :bold="false" :wide="true">
-            <template #title>Идея проекта</template>
-            <template #default>
-              {{ project.idea }}
-            </template>
-          </InformationListItem>
-
-          <InformationListItem :bold="false" :wide="true">
-            <template #title>Теги</template>
-            <template #default>
-              <SkillList :skills="project.skills" show-all />
-            </template>
-          </InformationListItem>
-        </InformationList>
-      </GridLayout>
+      <!-- Information list -->
+      <InformationList>
+        <InformationListItem :bold="false" :wide="true">
+          <template #title>Теги</template>
+          <template #default>
+            <SkillList :skills="project.skills" show-all />
+          </template>
+        </InformationListItem>
+      </InformationList>
     </BasePanel>
   </section>
 </template>

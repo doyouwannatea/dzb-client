@@ -24,8 +24,16 @@
       </ul>
       <div class="info">
         <ProjectTeamCounter class="team-counter" :total="project.places" />
-        <div class="difficulty">
-          <span class="icon star-icon"></span>
+        <div
+          v-if="checkProjectDifficulty(project.difficulty)"
+          class="difficulty"
+        >
+          <template
+            v-for="(_, idx) in Array.from(new Array(project.difficulty))"
+            :key="idx"
+          >
+            <span class="icon star-icon"></span>
+          </template>
           <span>{{ difficultyText }}</span>
         </div>
       </div>
@@ -58,6 +66,7 @@
   import ProjectStatus from './ProjectStatus.vue';
   import OpenFeedbackModalButton from './OpenFeedbackModalButton.vue';
   import OpenParticipationModalButton from './OpenParticipationModalButton.vue';
+  import { checkProjectDifficulty } from '@/helpers/project';
 
   const props = defineProps<{ project: Project }>();
 
