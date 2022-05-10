@@ -85,7 +85,7 @@
           <InformationListItem :bold="false" :wide="true">
             <template #title>Теги</template>
             <template #default>
-              <SkillsList :skills="project.skills" show-all />
+              <SkillList :skills="project.skills" show-all />
             </template>
           </InformationListItem>
         </InformationList>
@@ -102,7 +102,7 @@
   import InformationListItem from './InformationListItem.vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { storeToRefs } from 'pinia';
-  import SkillsList from './SkillsList.vue';
+  import SkillList from './SkillList.vue';
   import ProjectStatus from './ProjectStatus.vue';
   import OpenParticipationModalButton from './OpenParticipationModalButton.vue';
   import OpenFeedbackModalButton from './OpenFeedbackModalButton.vue';

@@ -17,9 +17,9 @@ export const useModalsStore = defineStore('modals', {
         return;
       }
 
-      if (authStore.requestsList) {
-        for (const participation of authStore.requestsList) {
-          if (participation.project.id === project.id) {
+      if (authStore.participationList) {
+        for (const participation of authStore.participationList) {
+          if (participation.project_id === project.id) {
             alert('Проект уже выбран');
             return;
           }

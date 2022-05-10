@@ -6,7 +6,7 @@
     @close="$emit('close')"
   >
     <ul>
-      <li v-for="item in itemsList" :key="item.content" class="item">
+      <li v-for="item in itemList" :key="item.content" class="item">
         <!-- if item is a link -->
         <template v-if="item.type === 'link'">
           <!-- if item is a ROUTER link -->
@@ -49,7 +49,7 @@
   type Props = {
     isOpen: boolean;
     handleNode: HTMLElement;
-    itemsList: DropdownItem[];
+    itemList: DropdownItem[];
     position?: Position;
   };
   type Emits = {
@@ -57,7 +57,7 @@
   };
 
   withDefaults(defineProps<Props>(), {
-    itemsList: () => [],
+    itemList: () => [],
     position: () => ({}),
   });
   defineEmits<Emits>();

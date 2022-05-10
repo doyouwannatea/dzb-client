@@ -17,6 +17,8 @@ export interface Participation {
   updated_at: string;
 }
 
+export type ParticipationWithProject = Participation & { project?: Project };
+
 export const PriorityText: Record<Priority, string> = {
   [Priority.High]: 'Высший',
   [Priority.Medium]: 'Средний',

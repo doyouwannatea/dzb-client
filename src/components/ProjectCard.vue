@@ -31,7 +31,7 @@
       </div>
     </div>
     <footer class="footer container">
-      <SkillsList :skills="props.project.skills" />
+      <SkillList :skills="props.project.skills" />
       <div class="actions">
         <OpenParticipationModalButton :project="props.project" />
         <OpenFeedbackModalButton :project="props.project" />
@@ -54,7 +54,7 @@
   import { DifficultyText } from '@/models/ProjectDifficulty';
   import { StateClass } from '@/models/ProjectState';
   import { RouteNames } from '@/router/types/route-names';
-  import SkillsList from './SkillsList.vue';
+  import SkillList from './SkillList.vue';
   import ProjectStatus from './ProjectStatus.vue';
   import OpenFeedbackModalButton from './OpenFeedbackModalButton.vue';
   import OpenParticipationModalButton from './OpenParticipationModalButton.vue';

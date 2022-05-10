@@ -1,8 +1,7 @@
 import { Participation } from '../Participation';
 import { candidate } from './candidate';
-import { projectListResponse } from './project';
 
-export const participationsList: Participation[] = [
+export const participationList: Participation[] = [
   {
     id: 1,
     priority: 1,

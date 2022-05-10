@@ -1,6 +1,10 @@
 import ky from 'ky';
 import { Candidate, UserSkills } from '@/models/Candidate';
-import { Participation, Priority } from '@/models/Participation';
+import {
+  Participation,
+  ParticipationWithProject,
+  Priority,
+} from '@/models/Participation';
 import { Project, Skill } from '@/models/Project';
 import ICampusAuthApi from './ICampusAuthApi';
 import CampusAuthApiMock from './CampusAuthApiMock';
@@ -22,33 +26,43 @@ export default class CampusAuthApi extends ICampusAuthApi {
       .json();
   }
 
-  async getCandidateParticipationsList(): Promise<Participation[]> {
-    const campusAuthApiMock = new CampusAuthApiMock();
-    return campusAuthApiMock.getCandidateParticipationsList();
+  async getParticipationList(): Promise<ParticipationWithProject[]> {
+    const participations: Participation[] = await this.ky
+      .get(`/api/participations`, {
+        headers: { 'x-api-key': this.getAuthToken() },
+      })
+      .json();
+    return this.getParticipationsWithProjects(participations);
   }
 
   async deleteParticipation(id: number): Promise<void> {
-    const campusAuthApiMock = new CampusAuthApiMock();
-    return campusAuthApiMock.deleteParticipation(id);
+    return this.ky
+      .get(`/api/participations${id}`, {
+        headers: { 'x-api-key': this.getAuthToken() },
+        method: 'delete',
+      })
+      .json();
   }
 
-  async setParticipationPriority(
+  async updateParticipation(
     participationId: number,
     priority: Priority,
   ): Promise<void> {
     const campusAuthApiMock = new CampusAuthApiMock();
-    return campusAuthApiMock.setParticipationPriority(
-      participationId,
-      priority,
-    );
+    return campusAuthApiMock.updateParticipation(participationId, priority);
   }
 
   async createProjectParticipation(
     priority: Priority,
     projectId: number,
   ): Promise<void> {
-    const campusAuthApiMock = new CampusAuthApiMock();
-    return campusAuthApiMock.createProjectParticipation(priority, projectId);
+    return this.ky
+      .get(`/api/participations${projectId}`, {
+        headers: { 'x-api-key': this.getAuthToken() },
+        method: 'post',
+        body: JSON.stringify({ priority }),
+      })
+      .json();
   }
 
   async getUserProjectList(): Promise<Project[]> {

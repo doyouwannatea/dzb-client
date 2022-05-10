@@ -7,7 +7,7 @@
           Академические навыки ({{ authStore.profileData?.training_group }})
         </h2>
       </BaseTooltip>
-      <SkillsList
+      <SkillList
         class="tags-list"
         :skills="authStore.userSkills?.common"
         :show-all="true"
@@ -18,7 +18,7 @@
       <BaseTooltip :message="individualSkillsMsg">
         <h2 class="subtitle">Индивидуальные навыки</h2>
       </BaseTooltip>
-      <SkillsList
+      <SkillList
         class="tags-list"
         :skills="authStore.userSkills?.personal"
         :show-all="true"
@@ -41,16 +41,14 @@
 <script setup lang="ts">
   import BasePanel from './base/BasePanel.vue';
   import BaseTooltip from './base/BaseTooltip.vue';
-  import SkillsList from './SkillsList.vue';
+  import SkillList from './SkillList.vue';
   import BaseButton from './base/BaseButton.vue';
   import EditSkillsModal from './EditSkillsModal.vue';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { onBeforeMount } from 'vue';
   import { useFetchAdditionalProjectDataOnce } from '@/hooks/useFetchAdditionalProjectDataOnce';
 
   useFetchAdditionalProjectDataOnce();
-  onBeforeMount(() => authStore.getUserSkills());
   const modalsStore = useModalsStore();
   const authStore = useAuthStore();
 

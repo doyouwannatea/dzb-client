@@ -12,7 +12,7 @@
         Вы можете изменять и отслеживать её в разделе <br />
         <BaseButton
           is="router-link"
-          :to="{ name: RouteNames.USER_REQUESTS }"
+          :to="{ name: RouteNames.USER_PARTICIPATIONS }"
           variant="inline-link"
           @click="closeModal"
         >
@@ -31,7 +31,7 @@
         <BaseButton
           is="router-link"
           case="uppercase"
-          :to="{ name: RouteNames.USER_REQUESTS }"
+          :to="{ name: RouteNames.USER_PARTICIPATIONS }"
           variant="link"
           @click="closeModal"
         >

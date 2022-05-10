@@ -1,7 +1,7 @@
 import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
 import { Type } from '../Project';
 import { State, StateID } from '../ProjectState';
-import { participationsList } from './participation';
+import { participationList } from './participation';
 import { skills } from './project-skills';
 
 const recruitingState: State = {
@@ -74,7 +74,7 @@ export const projectListResponse: ProjectListResponse = {
       },
       state: activeState,
       description: 'описание',
-      participations: participationsList,
+      participations: participationList,
       participant_feedback: null,
     },
     {
@@ -109,7 +109,7 @@ export const projectListResponse: ProjectListResponse = {
       },
       state: activeState,
       description: 'описание',
-      participations: participationsList,
+      participations: participationList,
       participant_feedback: null,
     },
     {
@@ -144,7 +144,7 @@ export const projectListResponse: ProjectListResponse = {
       },
       state: activeState,
       description: 'описание',
-      participations: participationsList,
+      participations: participationList,
       participant_feedback: null,
     },
   ],

@@ -7,7 +7,7 @@
     "build": "npm run lint && vite build",
     "deploy:gh-pages": "bash gh-pages-deploy.sh",
     "serve": "vite preview",
-    "type-check": "vue-tsc --noEmit && npm run eslint",
+    "type-check": "vue-tsc --noEmit",
     "prettier": "prettier --ignore-unknown --write",
     "stylelint": "stylelint **/*.{vue,css}",
     "stylelint:fix": "stylelint **/*.{vue,css} --fix",
@@ -17,9 +17,9 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*": "prettier --ignore-unknown --write",
-    "*.{vue,ts}": "vue-tsc --noEmit && eslint --fix",
-    "*.{vue,css}": "stylelint --fix"
+    "*": "npm run prettier",
+    "*.{vue,ts}": "npm run eslint:fix",
+    "*.{vue,css}": "npm run stylelint:fix"
   },
   "dependencies": {
     "@babel/core": "^7.16.0",
