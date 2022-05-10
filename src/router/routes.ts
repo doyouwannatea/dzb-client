@@ -13,11 +13,10 @@ const ProfileUserInformation = () =>
   import('@/components/ProfileUserInformation.vue');
 const UserSkills = () => import('@/components/UserSkills.vue');
 const UserProjects = () => import('@/components/UserProjects.vue');
-const UserRequests = () => import('@/components/UserRequests.vue');
+const UserParticipations = () => import('@/components/UserParticipations.vue');
 
 // страницы проекта
-const ProjectRequestsList = () =>
-  import('@/components/ProjectRequestsList.vue');
+const ProjectRequestList = () => import('@/components/ProjectRequestList.vue');
 const ProjectDetails = () => import('@/components/ProjectDetails.vue');
 
 export const routes: RouteRecordRaw[] = [
@@ -48,7 +47,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: 'requests',
         name: RouteNames.PROJECT_REQUESTS_LIST,
-        component: ProjectRequestsList,
+        component: ProjectRequestList,
         meta: {
           title: 'Список заявок',
         },
@@ -76,8 +75,8 @@ export const routes: RouteRecordRaw[] = [
       },
       {
         path: 'requests',
-        name: RouteNames.USER_REQUESTS,
-        component: UserRequests,
+        name: RouteNames.USER_PARTICIPATIONS,
+        component: UserParticipations,
         meta: {
           type: 'user-nav',
           order: 1,

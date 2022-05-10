@@ -2,7 +2,7 @@
   <DropdownList
     :handle-node="props.handleNode"
     :is-open="props.isOpen"
-    :items-list="items"
+    :item-list="items"
     @close="emit('close')"
   />
 </template>

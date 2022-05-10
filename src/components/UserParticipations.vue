@@ -1,7 +1,7 @@
 <template>
-  <div v-if="authStore.requestsList && authStore.requestsList.length > 0">
+  <div v-if="authStore.isParticipationList">
     <Draggable
-      v-model="editableRequestsList"
+      v-model="editableRequestList"
       v-bind="dragOptions"
       :disabled="dragDisabled"
       :move="onMove"
@@ -11,7 +11,8 @@
           :key="element.order"
           :editable="!dragDisabled"
           :priority="index + 1"
-          :project-request="element.content"
+          :participation="element.content"
+          :project="element.content?.project"
           @delete="openDeleteModal"
         />
       </template>
@@ -21,10 +22,7 @@
   <div v-if="authStore.loading">loading...</div>
   <div v-if="authStore.error">{{ authStore.error }}</div>
 
-  <div
-    v-if="authStore.requestsList && authStore.requestsList.length > 0"
-    class="actions"
-  >
+  <div v-if="authStore.isParticipationList" class="actions">
     <p v-if="!dragDisabled" class="info">
       <img class="cursor-icon" :src="cursorIconUrl" alt="" />
       для изменения приоритета зажмите и перетащите карточку заявки в поле
@@ -80,6 +78,7 @@
     Participation,
     Priority,
     ALL_PRIORITIES,
+    ParticipationWithProject,
   } from '@/models/Participation';
   import { immutableSort } from '@/helpers/array';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
@@ -89,7 +88,7 @@
 
   type EditableListItem = {
     order: number;
-    content?: Participation;
+    content?: ParticipationWithProject;
   };
 
   const dragOptions = {
@@ -103,21 +102,23 @@
 
   const deleteRequestModalShow = ref(false);
   const dragDisabled = ref(true);
-  const currentDeleteableRequest = ref<Participation | undefined>(undefined);
-  const editableRequestsList = ref<EditableListItem[]>([]);
+  const currentDeleteableRequest = ref<ParticipationWithProject | undefined>(
+    undefined,
+  );
+  const editableRequestList = ref<EditableListItem[]>([]);
 
-  watch(() => authStore.requestsList, initEditableList, {
+  watch(() => authStore.participationList, initEditableList, {
     deep: true,
     immediate: true,
   });
 
   function initEditableList() {
-    if (authStore.requestsList) {
-      editableRequestsList.value = [];
+    if (authStore.participationList) {
+      editableRequestList.value = [];
       const existingPriorities = new Set<number>();
 
-      for (const request of authStore.requestsList) {
-        editableRequestsList.value.push({
+      for (const request of authStore.participationList) {
+        editableRequestList.value.push({
           order: request.priority,
           content: request,
         });
@@ -129,13 +130,13 @@
       );
 
       for (const priority of missingPriorities) {
-        editableRequestsList.value.push({
+        editableRequestList.value.push({
           order: priority,
         });
       }
 
-      editableRequestsList.value = immutableSort(
-        editableRequestsList.value,
+      editableRequestList.value = immutableSort(
+        editableRequestList.value,
         'ASC',
         'order',
       );
@@ -157,12 +158,12 @@
 
   function onSave() {
     dragDisabled.value = true;
-    if (editableRequestsList.value) {
-      const participations: { id: number; priority: Priority }[] = [];
-      for (const [index, item] of editableRequestsList.value.entries()) {
+    if (editableRequestList.value) {
+      const participations: ParticipationWithProject[] = [];
+      for (const [index, item] of editableRequestList.value.entries()) {
         if (item.content)
           participations.push({
-            id: item.content.id,
+            ...item.content,
             priority: (index + 1) as Priority,
           });
       }
@@ -176,7 +177,7 @@
   }
 
   function deleteRequest(request: Participation) {
-    if (editableRequestsList.value) {
+    if (editableRequestList.value) {
       authStore.deleteParticipation(request.id);
     }
   }

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { state } from './state';
 import { useModalsStore } from '../modals/useModalsStore';
-import { Priority } from '@/models/Participation';
+import { ParticipationWithProject, Priority } from '@/models/Participation';
 import { Skill } from '@/models/Project';
 import { campusAuthApi } from '@/api/CampusAuthApi';
 
@@ -20,9 +20,9 @@ export const useAuthStore = defineStore('auth', {
     fetchUserData() {
       return this._onAsync(async () => {
         this.profileData = await campusAuthApi.getCandidateInfo();
-        this.requestsList =
-          await campusAuthApi.getCandidateParticipationsList();
-        this.projectsList = await campusAuthApi.getUserProjectList();
+        this.participationList = await campusAuthApi.getParticipationList();
+        this.projectList = await campusAuthApi.getUserProjectList();
+        this.userSkills = await campusAuthApi.getUserSkills();
       });
     },
     // FETCH USER DATA
@@ -40,8 +40,7 @@ export const useAuthStore = defineStore('auth', {
 
       return this._onAsync(async () => {
         await campusAuthApi.createProjectParticipation(priority, projectId);
-        this.requestsList =
-          await campusAuthApi.getCandidateParticipationsList();
+        this.participationList = await campusAuthApi.getParticipationList();
         modalsStore.projectSuccessRequestModal = true;
         modalsStore.projectRequestModal = false;
       });
@@ -49,19 +48,10 @@ export const useAuthStore = defineStore('auth', {
     // CREATE PATRICIPATION
 
     // UPDATE PARTICIPATIONS PRIORITIES
-    updateParticipationsPriorities(
-      participations: { id: number; priority: Priority }[],
-    ) {
+    updateParticipationsPriorities(participations: ParticipationWithProject[]) {
       return this._onAsync(async () => {
-        const promises = participations.map((participation) =>
-          campusAuthApi.setParticipationPriority(
-            participation.id,
-            participation.priority,
-          ),
-        );
-        await Promise.allSettled(promises);
-        this.requestsList =
-          await campusAuthApi.getCandidateParticipationsList();
+        await campusAuthApi.updateParticipationList(participations);
+        this.participationList = participations;
       });
     },
     // UPDATE PARTICIPATIONS PRIORITIES
@@ -70,8 +60,7 @@ export const useAuthStore = defineStore('auth', {
     deleteParticipation(id: number) {
       return this._onAsync(async () => {
         await campusAuthApi.deleteParticipation(id);
-        this.requestsList =
-          await campusAuthApi.getCandidateParticipationsList();
+        this.participationList = await campusAuthApi.getParticipationList();
       });
     },
     // DELETE PARTICIPATION
@@ -109,8 +98,8 @@ export const useAuthStore = defineStore('auth', {
     // ON ASYNC
   },
   getters: {
-    isAuth: (state) => {
-      return Boolean(state.profileData);
-    },
+    isAuth: (state) => Boolean(state.profileData),
+    isParticipationList: (state) =>
+      state.participationList && state.participationList.length > 0,
   },
 });

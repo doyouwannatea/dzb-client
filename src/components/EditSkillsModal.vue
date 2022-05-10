@@ -4,7 +4,7 @@
     <!-- HEADER -->
     <template #header>
       <h1>Редактирование навыков</h1>
-      <SkillsList
+      <SkillList
         class="tags-list"
         :skills="skills"
         :show-all="true"
@@ -82,7 +82,7 @@
 <script setup lang="ts">
   import VMultiselect from '@vueform/multiselect';
   import BaseModal from './base/BaseModal.vue';
-  import SkillsList from './SkillsList.vue';
+  import SkillList from './SkillList.vue';
   import BaseButton from './base/BaseButton.vue';
   import { computed, ref, watch } from 'vue';
   import { Skill } from '@/models/Project';

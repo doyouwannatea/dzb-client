@@ -3,11 +3,16 @@ import { formatProjectDate } from '@/helpers/project';
 import { delayRes } from '@/helpers/promise';
 import { Candidate, UserSkills } from '@/models/Candidate';
 import { candidate, userSkills } from '@/models/mock/candidate';
-import { participationsList } from '@/models/mock/participation';
+import { participationList } from '@/models/mock/participation';
 import { projectListResponse } from '@/models/mock/project';
-import { Participation, Priority } from '@/models/Participation';
+import {
+  Participation,
+  ParticipationWithProject,
+  Priority,
+} from '@/models/Participation';
 import { Project, Skill } from '@/models/Project';
 import { AUTH_TOKEN_REQUIRED } from '@/values/error-messages';
+import { projectApi } from '../ProjectApi';
 import ICampusAuthApi from './ICampusAuthApi';
 
 export default class CampusAuthApiMock extends ICampusAuthApi {
@@ -25,22 +30,27 @@ export default class CampusAuthApiMock extends ICampusAuthApi {
     return delayRes(deepClone(candidate), 300);
   }
 
-  async getCandidateParticipationsList(): Promise<Participation[]> {
+  async getParticipationList(): Promise<ParticipationWithProject[]> {
     const authToken = this.getAuthToken();
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
-    return delayRes(deepClone(participationsList), 300);
+
+    const participationsWithProjects = await this.getParticipationsWithProjects(
+      participationList,
+    );
+
+    return delayRes(deepClone(participationsWithProjects), 300);
   }
 
   async deleteParticipation(id: number): Promise<void> {
     const authToken = this.getAuthToken();
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
 
-    const idx = participationsList.findIndex((request) => request.id === id);
-    participationsList.splice(idx, 1);
+    const idx = participationList.findIndex((request) => request.id === id);
+    participationList.splice(idx, 1);
     return delayRes(undefined, 300);
   }
 
-  async setParticipationPriority(
+  async updateParticipation(
     participationId: number,
     priority: Priority,
   ): Promise<void> {
@@ -49,7 +59,7 @@ export default class CampusAuthApiMock extends ICampusAuthApi {
     if (priority < 1) throw new Error('Priority must be > 0');
     if (priority > 3) throw new Error('Priority must be < 4');
 
-    const participation = participationsList.find(
+    const participation = participationList.find(
       (request) => request.id === participationId,
     );
     if (!participation) throw new Error('participation not found');
@@ -72,25 +82,27 @@ export default class CampusAuthApiMock extends ICampusAuthApi {
       (project) => project.id === projectId,
     );
     if (!project) throw new Error('Project not found');
-    for (const participation of participationsList) {
+    for (const participation of participationList) {
       if (participation.priority === priority)
         throw new Error('The priority has already been selected');
     }
     const candidate = await this.getCandidateInfo();
-    participationsList.push({
+    participationList.push({
       id: Math.floor(Math.random() * 100),
-      candidate,
+      candidate_id: candidate.id,
       priority,
-      project,
-      state: 'заявка отправлена',
+      project_id: project.id,
+      state_id: 0,
       review: 'review',
+      created_at: new Date(Date.now()).toISOString(),
+      updated_at: new Date(Date.now()).toISOString(),
     });
     return delayRes(undefined, 300);
   }
 
   async getUserProjectList(): Promise<Project[]> {
     const projects = projectListResponse.data.filter(
-      (project) => project.participant_feedback || project.result,
+      (project) => project.participant_feedback,
     );
     return delayRes(deepClone(projects.map(formatProjectDate)), 300);
   }

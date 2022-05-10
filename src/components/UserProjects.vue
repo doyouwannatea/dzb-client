@@ -1,10 +1,10 @@
 <template>
   <div v-if="loading">loading...</div>
   <div v-if="error">{{ error }}</div>
-  <div v-if="projectsList && !projectsList.length">у вас еще нет проектов</div>
+  <div v-if="projectList && !projectList.length">у вас еще нет проектов</div>
   <ProjectList
-    v-if="!loading && !error && projectsList"
-    :project-list="projectsList"
+    v-if="!loading && !error && projectList"
+    :project-list="projectList"
   />
 </template>
 
@@ -13,5 +13,5 @@
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { storeToRefs } from 'pinia';
 
-  const { projectsList, loading, error } = storeToRefs(useAuthStore());
+  const { projectList, loading, error } = storeToRefs(useAuthStore());
 </script>

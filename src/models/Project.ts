@@ -1,55 +1,42 @@
+import { Participation } from './Participation';
 import { Difficulty } from './ProjectDifficulty';
 import { State } from './ProjectState';
+import { Supervisor } from './Supervisor';
 
 export interface Skill {
   id: number;
   skill: string;
-  created_at: string;
-  updated_at: string;
-  pivot: {
-    project_id: number;
-    skill_id: number;
-  };
+  skillCategory_id: number;
 }
 
 export interface Type {
   id: number;
-  created_at: string;
-  updated_at: string;
   type: string;
 }
 
-export interface Supervisor {
-  id: number;
-  created_at: string;
-  updated_at: string;
-  fio: string;
-  email: string;
-  api_token: string | null;
-  position: string;
-}
-
 export interface Project {
-  id: number;
-  created_at: string;
-  updated_at: string;
-  title: string;
-  places: number;
-  goal: string;
-  idea: string;
-  difficulty: Difficulty;
-  date_start: string;
-  date_end: string;
-  requirements: string;
-  customer: string;
-  expected_result: string;
   additional_inf: string | null;
-  result: string | null;
+  created_at: string;
+  customer: string;
+  date_end: string;
+  date_start: string;
+  description: string;
+  difficulty: Difficulty;
+  goal: string;
+  id: number;
+  participations: Participation[];
+  places: number;
+  product_result: string;
+  requirements: string;
   skills: Skill[];
-  type: Type;
   state: State;
+  study_result: string;
   supervisor: Supervisor;
-  participant_feedback?: string;
+  title: string;
+  type: Type;
+  idea: string;
+  updated_at: string;
+  participant_feedback: string | null;
 }
 
 export interface ProjectFilters {

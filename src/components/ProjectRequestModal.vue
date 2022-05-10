@@ -169,14 +169,14 @@
     'Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас распределить в проект, в который вы хотите попасть с большей вероятностью, вы ставите ему больший приоритет. Вы сможете поменять приоритет проекта в личном кабинете после отправки заявки';
 
   watch(
-    () => authStore.requestsList,
+    () => authStore.participationList,
     () => {
-      if (authStore.requestsList) {
+      if (authStore.participationList) {
         highSelected.value = false;
         mediumSelected.value = false;
         lowSelected.value = false;
 
-        for (const participation of authStore.requestsList) {
+        for (const participation of authStore.participationList) {
           switch (participation.priority) {
             case 1:
               highSelected.value = true;

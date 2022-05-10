@@ -1,4 +1,3 @@
-import { Candidate } from './Candidate';
 import { Project } from './Project';
 
 export const enum Priority {
@@ -9,12 +8,16 @@ export const enum Priority {
 
 export interface Participation {
   id: number;
+  candidate_id: number;
+  state_id: number;
+  project_id: number;
   priority: Priority;
-  project: Project;
-  candidate: Candidate;
-  state: string;
   review: string;
+  created_at: string;
+  updated_at: string;
 }
+
+export type ParticipationWithProject = Participation & { project?: Project };
 
 export const PriorityText: Record<Priority, string> = {
   [Priority.High]: 'Высший',

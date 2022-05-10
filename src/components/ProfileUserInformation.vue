@@ -55,7 +55,7 @@
       <!-- SKILLS -->
       <div class="right-col">
         <h2 class="subtitle">Навыки</h2>
-        <SkillsList :skills="profileData?.skills" :default-visible="7" />
+        <SkillList :skills="profileData?.skills" :default-visible="7" />
         <BaseButton
           is="a"
           class="edit-btn"
@@ -74,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-  import SkillsList from './SkillsList.vue';
+  import SkillList from './SkillList.vue';
   import BaseButton from './base/BaseButton.vue';
   import InformationListItem from './InformationListItem.vue';
   import InformationList from './InformationList.vue';

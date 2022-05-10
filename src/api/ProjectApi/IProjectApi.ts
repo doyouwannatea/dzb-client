@@ -1,11 +1,11 @@
 import type {
   Project,
   ProjectFilters,
-  Supervisor,
   Type,
   ProjectTags,
 } from '@/models/Project';
 import { State } from '@/models/ProjectState';
+import { Supervisor } from '@/models/Supervisor';
 
 export interface ProjectListResponse {
   data: Project[];
