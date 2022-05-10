@@ -45,10 +45,14 @@
         <h3 class="title info-title">Контакты администратора:</h3>
         <ul class="info-list">
           <li class="info-item">
-            Телефон: <a class="link" href="#">+7 (3952) 999-999</a>
+            Телефон:
+            <a class="link" href="tel:+73952405164">+7 (3952) 40-51-64</a>
           </li>
           <li class="info-item">
-            E-mail: <a class="link" href="#">admin@admin.ru</a>
+            E-mail:
+            <a class="link" href="mailto:arshinskyv@istu.edu">
+              arshinskyv@istu.edu
+            </a>
           </li>
         </ul>
       </section>
@@ -58,16 +62,19 @@
         <ul class="info-list">
           <li class="info-item">664074, г. Иркутск ул. Лермонтова 83</li>
           <li class="info-item">
-            Телефон: <a class="link" href="#">+7 (3952) 405-000</a>
+            Телефон:
+            <a class="link" href="tel:+73952405000">+7 (3952) 405-000</a>
           </li>
           <li class="info-item">
-            Факс: <a class="link" href="#">+7 (3952) 405-100</a>
+            Факс: <a class="link" href="tel:+73952405100">+7 (3952) 405-100</a>
           </li>
           <li class="info-item">
-            Справочная: <a class="link" href="#">+7 (3952) 405-009</a>
+            Справочная:
+            <a class="link" href="tel:+73952405009">+7 (3952) 405-009</a>
           </li>
           <li class="info-item">
-            E-mail: <a class="link" href="#">info@istu.edu</a>
+            E-mail:
+            <a class="link" href="mailto:info@istu.edu">info@istu.edu</a>
           </li>
         </ul>
       </section>
