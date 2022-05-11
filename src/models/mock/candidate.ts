@@ -13,13 +13,13 @@ const personalSkills: Skill[] = [generalSkills[3]];
 
 export const candidate: Candidate = {
   id: 2,
-  fio: 'Малыгина Елена',
+  fio: 'Булгатов Александр',
   about: 'Информация обо мне',
-  email: 'example.example@.com',
-  phone: '+7 777 777 77 77',
-  numz: '11111111',
+  email: 'alexand.bulgatov13@gmail.com',
+  phone: '+7 964 3500 255',
+  numz: '19430087',
   course: 3,
-  training_group: 'АСУб-19-1',
+  training_group: 'ИСТб-19-1',
   skills: [...commonSkills, ...personalSkills],
   is_student: true,
   is_teacher: false,
