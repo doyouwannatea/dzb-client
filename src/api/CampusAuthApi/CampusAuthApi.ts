@@ -28,7 +28,7 @@ export default class CampusAuthApi extends ICampusAuthApi {
 
   async getParticipationList(): Promise<ParticipationWithProject[]> {
     const participations: Participation[] = await this.ky
-      .get(`/api/participations`, {
+      .get(`api/participations`, {
         headers: { 'x-api-key': this.getAuthToken() },
       })
       .json();
@@ -37,7 +37,7 @@ export default class CampusAuthApi extends ICampusAuthApi {
 
   async deleteParticipation(id: number): Promise<void> {
     return this.ky
-      .get(`/api/participations${id}`, {
+      .get(`api/participations${id}`, {
         headers: { 'x-api-key': this.getAuthToken() },
         method: 'delete',
       })
@@ -57,7 +57,7 @@ export default class CampusAuthApi extends ICampusAuthApi {
     projectId: number,
   ): Promise<void> {
     return this.ky
-      .get(`/api/participations${projectId}`, {
+      .get(`api/participations${projectId}`, {
         headers: { 'x-api-key': this.getAuthToken() },
         method: 'post',
         body: JSON.stringify({ priority }),
