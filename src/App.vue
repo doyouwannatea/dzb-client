@@ -1,15 +1,15 @@
 <template>
   <AuthModal />
-  <ProjectRequestModal />
-  <ProjectSuccessRequestModal />
+  <ParticipationModal />
+  <ParticipationSuccessModal />
   <ProjectFeedbackModal />
   <RouterView></RouterView>
 </template>
 
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
-  import ProjectRequestModal from './components/ProjectRequestModal.vue';
-  import AuthModal from './components/AuthModal.vue';
-  import ProjectSuccessRequestModal from './components/ProjectSuccessRequestModal.vue';
-  import ProjectFeedbackModal from './components/ProjectFeedbackModal.vue';
+  import AuthModal from './components/layout/AuthModal.vue';
+  import ParticipationModal from './components/participation/ParticipationModal.vue';
+  import ParticipationSuccessModal from './components/participation/ParticipationSuccessModal.vue';
+  import ProjectFeedbackModal from './components/feedback/ProjectFeedbackModal.vue';
 </script>

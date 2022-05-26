@@ -45,8 +45,8 @@ export const useAuthStore = defineStore('auth', {
       return this._onAsync(async () => {
         await participationApi.createProjectParticipation(priority, projectId);
         this.participationList = await participationApi.getParticipationList();
-        modalsStore.projectSuccessRequestModal = true;
-        modalsStore.projectRequestModal = false;
+        modalsStore.participationSuccessModal = true;
+        modalsStore.participationModal = false;
       });
     },
     // CREATE PATRICIPATION

@@ -24,7 +24,9 @@ export default class ParticipationApiMock extends IParticipationApi {
     const authToken = ICampusApi.getAuthToken();
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
 
-    const idx = participationList.findIndex((request) => request.id === id);
+    const idx = participationList.findIndex(
+      (participation) => participation.id === id,
+    );
     participationList.splice(idx, 1);
     return delayRes(undefined, 300);
   }
@@ -39,7 +41,7 @@ export default class ParticipationApiMock extends IParticipationApi {
     if (priority > 3) throw new Error('Priority must be < 4');
 
     const participation = participationList.find(
-      (request) => request.id === participationId,
+      (participation) => participation.id === participationId,
     );
     if (!participation) throw new Error('participation not found');
     participation.priority = priority;

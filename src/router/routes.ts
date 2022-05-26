@@ -2,22 +2,22 @@ import { RouteRecordRaw } from 'vue-router';
 import { RouteNames } from './types/route-names';
 import { validatePage } from './guards/validatePage';
 
-// ГЛАВНЫЕ СТРАНИЦЫ
-const HomePage = () => import('@/components/pages/HomePage.vue');
-const ProjectPage = () => import('@/components/pages/ProjectPage.vue');
-const Profile = () => import('@/components/pages/ProfilePage.vue');
+// Project page
+const ProjectPage = () => import('@/pages/ProjectPage/index.vue');
+const ProjectParticipationList = () =>
+  import('@/pages/ProjectPage/ProjectParticipationList.vue');
+const ProjectDetails = () => import('@/pages/ProjectPage/ProjectDetails.vue');
 
-// ВЛОЖЕННЫЕ СТРАНИЦЫ
-// профиль пользователя
-const ProfileUserInformation = () =>
-  import('@/components/ProfileUserInformation.vue');
-const UserSkills = () => import('@/components/UserSkills.vue');
-const UserProjects = () => import('@/components/UserProjects.vue');
-const UserParticipations = () => import('@/components/UserParticipations.vue');
+// User page
+const UserPage = () => import('@/pages/UserPage/index.vue');
+const UserProfile = () => import('@/pages/UserPage/UserProfile.vue');
+const UserSkills = () => import('@/pages/UserPage/UserSkills.vue');
+const UserProjects = () => import('@/pages/UserPage/UserProjects.vue');
+const UserParticipations = () =>
+  import('@/pages/UserPage/UserParticipations.vue');
 
-// страницы проекта
-const ProjectRequestList = () => import('@/components/ProjectRequestList.vue');
-const ProjectDetails = () => import('@/components/ProjectDetails.vue');
+// Home page
+const HomePage = () => import('@/pages/HomePage.vue');
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -45,9 +45,9 @@ export const routes: RouteRecordRaw[] = [
         },
       },
       {
-        path: 'requests',
-        name: RouteNames.PROJECT_REQUESTS_LIST,
-        component: ProjectRequestList,
+        path: 'participations',
+        name: RouteNames.PROJECT_PARTICIPATIONS,
+        component: ProjectParticipationList,
         meta: {
           title: 'Список заявок',
         },
@@ -57,7 +57,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/profile',
     name: RouteNames.PROFILE,
-    component: Profile,
+    component: UserPage,
     meta: {
       title: 'Профиль пользователя',
       requiresAuth: true,
@@ -66,7 +66,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: RouteNames.USER_INFO,
-        component: ProfileUserInformation,
+        component: UserProfile,
         meta: {
           type: 'user-nav',
           order: 0,
@@ -74,7 +74,7 @@ export const routes: RouteRecordRaw[] = [
         },
       },
       {
-        path: 'requests',
+        path: 'participations',
         name: RouteNames.USER_PARTICIPATIONS,
         component: UserParticipations,
         meta: {

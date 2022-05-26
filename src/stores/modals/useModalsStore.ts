@@ -7,8 +7,8 @@ import { state } from './state';
 export const useModalsStore = defineStore('modals', {
   state,
   actions: {
-    // OPEN REQUEST MODAL
-    openRequestModal(project: Project) {
+    // OPEN PARTICIPATION MODAL
+    openParticipationModal(project: Project) {
       const authStore = useAuthStore();
       const projectsStore = useProjectsStore();
 
@@ -27,9 +27,9 @@ export const useModalsStore = defineStore('modals', {
       }
 
       projectsStore.openedProject = project;
-      this.projectRequestModal = true;
+      this.participationModal = true;
     },
-    // OPEN REQUEST MODAL
+    // OPEN PARTICIPATION MODAL
 
     // OPEN FEEDBACK MODAL
     openFeedbackModal(project: Project) {
