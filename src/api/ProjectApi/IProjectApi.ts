@@ -21,4 +21,5 @@ export default abstract class IProjectApi {
   abstract getAllSupervisors(): Promise<Supervisor[]>;
   abstract getAllProjectTypes(): Promise<Type[]>;
   abstract getAllProjectStates(): Promise<State[]>;
+  abstract getUserProjectList(): Promise<Project[]>;
 }

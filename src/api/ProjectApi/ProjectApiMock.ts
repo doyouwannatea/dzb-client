@@ -17,6 +17,7 @@ import {
   specialities,
   skills,
 } from '@/models/mock/project-skills';
+import { deepClone } from '@/helpers/array';
 
 export default class ProjectApiMock extends IProjectApi {
   async filterProjectList(
@@ -82,5 +83,12 @@ export default class ProjectApiMock extends IProjectApi {
 
   async getAllProjectStates(): Promise<State[]> {
     return delayRes(states, 300);
+  }
+
+  async getUserProjectList(): Promise<Project[]> {
+    const projects = projectListResponse.data.filter(
+      (project) => project.participant_feedback,
+    );
+    return delayRes(deepClone(projects.map(formatProjectDate)), 300);
   }
 }

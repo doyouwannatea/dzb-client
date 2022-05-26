@@ -3,7 +3,11 @@ import { state } from './state';
 import { useModalsStore } from '../modals/useModalsStore';
 import { ParticipationWithProject, Priority } from '@/models/Participation';
 import { Skill } from '@/models/Project';
-import { campusAuthApi } from '@/api/CampusAuthApi';
+import { campusApi } from '@/api/CampusApi';
+import { participationApi } from '@/api/ParticipationApi';
+import { projectApi } from '@/api/ProjectApi';
+import { skillsApi } from '@/api/SkillsApi';
+import ICampusApi from '@/api/CampusApi/ICampusApi';
 
 export const useAuthStore = defineStore('auth', {
   state,
@@ -11,7 +15,7 @@ export const useAuthStore = defineStore('auth', {
     // AUTH
     auth() {
       return this._onAsync(async () => {
-        await campusAuthApi.auth();
+        await campusApi.auth();
       });
     },
     // AUTH
@@ -19,10 +23,10 @@ export const useAuthStore = defineStore('auth', {
     // FETCH USER DATA
     fetchUserData() {
       return this._onAsync(async () => {
-        this.profileData = await campusAuthApi.getCandidateInfo();
-        this.participationList = await campusAuthApi.getParticipationList();
-        this.projectList = await campusAuthApi.getUserProjectList();
-        this.userSkills = await campusAuthApi.getUserSkills();
+        this.profileData = await campusApi.getUserInfo();
+        this.participationList = await participationApi.getParticipationList();
+        this.projectList = await projectApi.getUserProjectList();
+        this.userSkills = await skillsApi.getUserSkills();
       });
     },
     // FETCH USER DATA
@@ -30,7 +34,7 @@ export const useAuthStore = defineStore('auth', {
     // EXIT
     exit() {
       this.profileData = undefined;
-      campusAuthApi.deleteAuthToken();
+      ICampusApi.deleteAuthToken();
     },
     // EXIT
 
@@ -39,8 +43,8 @@ export const useAuthStore = defineStore('auth', {
       const modalsStore = useModalsStore();
 
       return this._onAsync(async () => {
-        await campusAuthApi.createProjectParticipation(priority, projectId);
-        this.participationList = await campusAuthApi.getParticipationList();
+        await participationApi.createProjectParticipation(priority, projectId);
+        this.participationList = await participationApi.getParticipationList();
         modalsStore.projectSuccessRequestModal = true;
         modalsStore.projectRequestModal = false;
       });
@@ -50,7 +54,7 @@ export const useAuthStore = defineStore('auth', {
     // UPDATE PARTICIPATIONS PRIORITIES
     updateParticipationsPriorities(participations: ParticipationWithProject[]) {
       return this._onAsync(async () => {
-        await campusAuthApi.updateParticipationList(participations);
+        await participationApi.updateParticipationList(participations);
         this.participationList = participations;
       });
     },
@@ -59,8 +63,8 @@ export const useAuthStore = defineStore('auth', {
     // DELETE PARTICIPATION
     deleteParticipation(id: number) {
       return this._onAsync(async () => {
-        await campusAuthApi.deleteParticipation(id);
-        this.participationList = await campusAuthApi.getParticipationList();
+        await participationApi.deleteParticipation(id);
+        this.participationList = await participationApi.getParticipationList();
       });
     },
     // DELETE PARTICIPATION
@@ -68,7 +72,7 @@ export const useAuthStore = defineStore('auth', {
     // GET USER SKILLS
     getUserSkills() {
       return this._onAsync(async () => {
-        this.userSkills = await campusAuthApi.getUserSkills();
+        this.userSkills = await skillsApi.getUserSkills();
       });
     },
     // GET USER SKILLS
@@ -76,9 +80,9 @@ export const useAuthStore = defineStore('auth', {
     // UPDATE USER SKILLS
     updateUserSkills(skills: Skill[]) {
       return this._onAsync(async () => {
-        await campusAuthApi.updateUserSkills(skills);
+        await skillsApi.updateUserSkills(skills);
         await this.getUserSkills();
-        this.profileData = await campusAuthApi.getCandidateInfo();
+        this.profileData = await campusApi.getUserInfo();
       });
     },
     // GET USER SKILLS
