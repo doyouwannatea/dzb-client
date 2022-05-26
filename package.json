@@ -27,10 +27,12 @@
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@dafcoe/vue-collapsible-panel": "^0.2.0",
+    "@types/js-cookie": "^3.0.2",
     "@vueform/multiselect": "^2.3.3",
     "@vueuse/core": "^7.6.2",
     "@vueuse/integrations": "^7.7.0",
     "focus-trap": "^6.7.3",
+    "js-cookie": "^3.0.1",
     "ky": "^0.28.7",
     "lodash": "^4.17.21",
     "pinia": "^2.0.11",

@@ -9,7 +9,7 @@ export const baseKyInstance = ky.create({
       (request) => {
         request.headers.set(
           ICampusApi.AUTH_TOKEN_NAME,
-          ICampusApi.getAuthToken(),
+          ICampusApi.getAuthToken() || '',
         );
       },
     ],
