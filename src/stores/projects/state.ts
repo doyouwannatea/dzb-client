@@ -23,7 +23,7 @@ export const state = (): State => ({
   filters: {
     difficulty: [],
     state: [],
-    tags: [],
+    skills: [],
     specialities: [],
     title: '',
     page: 1,

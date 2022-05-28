@@ -41,7 +41,7 @@ export interface Project {
 
 export interface ProjectFilters {
   state?: number[]; // массив id
-  tags?: number[]; // массив id
+  skills?: number[]; // массив id
   specialities?: number[]; // массив id
   difficulty?: Difficulty[]; // Массив сложностей
   title?: string; // Поиск по подстроке в названии

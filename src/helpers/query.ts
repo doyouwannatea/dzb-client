@@ -28,7 +28,7 @@ export function locationQueryToProjectFilters(
     title: toString(query.title),
     page: locationQueryValueToNumber(query.page),
     state: locationQueryValueToArrayNumber(query.state),
-    tags: locationQueryValueToArrayNumber(query.tags),
+    skills: locationQueryValueToArrayNumber(query.skills),
     difficulty: locationQueryValueToArrayNumber(
       query.difficulty,
     ) as Difficulty[],
@@ -43,7 +43,7 @@ export function projectFiltersToSearchParams(
     title: toString(filters.title),
     page: toString(filters.page),
     state: toString(filters.state),
-    tags: toString(filters.tags),
+    skills: toString(filters.skills),
     difficulty: toString(filters.difficulty),
     specialities: toString(filters.specialities),
   };

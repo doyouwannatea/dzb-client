@@ -40,7 +40,7 @@
           :value-prop="SkillKeys.id"
         />
         <VMultiselect
-          v-model="filters.tags"
+          v-model="filters.skills"
           mode="tags"
           placeholder="По навыкам"
           class="miltiselect"

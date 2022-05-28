@@ -33,7 +33,7 @@ export const useProjectsStore = () => {
           difficulty: undefined,
           page: undefined,
           state: undefined,
-          tags: undefined,
+          skills: undefined,
           title: undefined,
         };
       },

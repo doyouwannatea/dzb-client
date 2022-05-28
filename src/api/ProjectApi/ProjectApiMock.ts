@@ -45,9 +45,9 @@ export default class ProjectApiMock extends IProjectApi {
       );
     }
     // TAGS
-    if (filters.tags && filters.tags.length > 0) {
+    if (filters.skills && filters.skills.length > 0) {
       filteredList = filteredList.filter((project) =>
-        filters.tags?.some((tag) =>
+        filters.skills?.some((tag) =>
           project.skills.some((skill) => tag === skill.id),
         ),
       );

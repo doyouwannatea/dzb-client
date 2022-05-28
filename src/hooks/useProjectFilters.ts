@@ -28,7 +28,7 @@ export const useProjectFilters = () => {
   const filters = ref<ProjectFilters>({
     difficulty: [],
     state: [],
-    tags: [],
+    skills: [],
     specialities: [],
   });
 
