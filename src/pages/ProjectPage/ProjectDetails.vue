@@ -18,6 +18,10 @@
               title: 'Сложность',
               content: DifficultyText[project.difficulty],
             },
+            {
+              title: 'Заказчик',
+              content: project.customer,
+            },
           ]"
         />
         <!-- Information list -->

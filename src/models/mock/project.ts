@@ -44,7 +44,7 @@ export const projectListResponse: ProjectListResponse = {
     {
       additional_inf: null,
       created_at: '',
-      customer: '',
+      customer: 'ИРНИТУ',
       date_end: '2021-06-01',
       date_start: '2021-01-29',
       description:

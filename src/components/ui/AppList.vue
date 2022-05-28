@@ -5,7 +5,7 @@
         v-for="{ title, content, bold, wide } in items"
         :key="title + content"
       >
-        <AppListItem :bold="bold" :wide="wide">
+        <AppListItem v-if="content" :bold="bold" :wide="wide">
           <template #title>{{ title }}</template>
           <template #default>
             {{ content }}
