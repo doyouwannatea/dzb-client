@@ -120,14 +120,14 @@ export const routes: RouteRecordRaw[] = [
       title: 'вопрос-ответ',
     },
   },
-  {
-    path: '/contacts',
-    name: RouteNames.CONTACTS,
-    redirect: { name: RouteNames.HOME },
-    meta: {
-      type: 'main-nav',
-      order: 2,
-      title: 'контакты',
-    },
-  },
+  // {
+  //   path: '/contacts',
+  //   name: RouteNames.CONTACTS,
+  //   redirect: { name: RouteNames.HOME },
+  //   meta: {
+  //     type: 'main-nav',
+  //     order: 2,
+  //     title: 'контакты',
+  //   },
+  // },
 ];

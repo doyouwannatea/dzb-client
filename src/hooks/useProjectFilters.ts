@@ -1,4 +1,5 @@
 import { ref, watch } from 'vue';
+import _ from 'lodash';
 import { useRoute } from 'vue-router';
 import { locationQueryToProjectFilters } from '@/helpers/query';
 import { RouteNames } from '@/router/types/route-names';
@@ -11,10 +12,10 @@ export const useFilteredProjectList = (page: RouteNames) => {
 
   watch(
     () => route.query,
-    (query) => {
-      if (route.name !== page) return;
-      const filters = locationQueryToProjectFilters(query);
+    (query, prevQuery) => {
+      if (_.isEqual(query, prevQuery)) return;
 
+      const filters = locationQueryToProjectFilters(query);
       store.setFilters(filters);
       store.getProjectList();
     },

@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <footer id="footer" class="footer">
     <BaseContainer size="lg" class="container">
       <div>
         <RouterLink class="clear-link" :to="{ name: RouteNames.HOME }">

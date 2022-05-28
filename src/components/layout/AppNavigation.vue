@@ -8,6 +8,14 @@
           </RouterLink>
         </li>
       </template>
+      <li class="nav-item">
+        <RouterLink
+          class="nav-link contacts-link"
+          :to="{ ...$route, hash: '#footer' }"
+        >
+          контакты
+        </RouterLink>
+      </li>
     </ul>
   </nav>
 </template>
@@ -55,7 +63,7 @@
     border-bottom: 0.25rem solid transparent;
   }
 
-  .nav-link.router-link-exact-active {
+  .nav-link.router-link-exact-active:not(.contacts-link) {
     border-bottom-color: var(--accent-color-2);
   }
 
