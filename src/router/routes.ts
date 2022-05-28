@@ -19,6 +19,9 @@ const UserParticipations = () =>
 // Home page
 const HomePage = () => import('@/pages/HomePage.vue');
 
+// FAQ page
+const FaqPage = () => import('@/pages/FaqPage.vue');
+
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -109,7 +112,7 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     path: '/faq',
-    redirect: { name: RouteNames.HOME },
+    component: FaqPage,
     name: RouteNames.FAQ,
     meta: {
       type: 'main-nav',

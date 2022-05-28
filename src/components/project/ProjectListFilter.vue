@@ -1,6 +1,6 @@
 <template>
   <form class="filters" @submit.prevent="filter">
-    <BaseAccordion>
+    <ProjectFilterAccordion>
       <template #title>
         <span v-if="statesLoading" class="multiselect-spinner"></span>
         <span>Статус проекта</span>
@@ -19,11 +19,11 @@
           {{ error }}
         </div>
       </template>
-    </BaseAccordion>
+    </ProjectFilterAccordion>
 
     <div class="divider"></div>
 
-    <BaseAccordion class="loading">
+    <ProjectFilterAccordion class="loading">
       <template #title>Теги проекта</template>
       <template #content>
         <VMultiselect
@@ -56,11 +56,11 @@
           {{ error }}
         </div>
       </template>
-    </BaseAccordion>
+    </ProjectFilterAccordion>
 
     <div class="divider"></div>
 
-    <BaseAccordion>
+    <ProjectFilterAccordion>
       <template #title>Уровни сложности</template>
       <template #content>
         <BaseCheckbox
@@ -85,7 +85,7 @@
           {{ DifficultyText[Difficulty.High] }}
         </BaseCheckbox>
       </template>
-    </BaseAccordion>
+    </ProjectFilterAccordion>
 
     <footer class="footer">
       <BaseButton case="uppercase" full-width :disabled="loading">
@@ -107,16 +107,16 @@
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
-  import VMultiselect from '@vueform/multiselect';
   import { capitalizeFirstLetter } from '@/helpers/string';
   import { SkillKeys } from '@/values/models-keys';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useProjectFilters } from '@/hooks/useProjectFilters';
   import { DifficultyText, Difficulty } from '@/models/ProjectDifficulty';
   // components
-  import BaseAccordion from '../ui/BaseAccordion.vue';
-  import BaseCheckbox from '../ui/BaseCheckbox.vue';
-  import BaseButton from '../ui/BaseButton.vue';
+  import VMultiselect from '@vueform/multiselect';
+  import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
+  import BaseButton from '@/components/ui/BaseButton.vue';
+  import ProjectFilterAccordion from '../ui/accordion/ProjectFilterAccordion.vue';
 
   const { additionalProjectData, loading, error, tagsLoading, statesLoading } =
     storeToRefs(useProjectsStore());
