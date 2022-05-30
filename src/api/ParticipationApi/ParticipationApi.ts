@@ -32,9 +32,7 @@ export default class ParticipationApi extends IParticipationApi {
     projectId: number,
   ): Promise<void> {
     return baseKyInstance
-      .post(`api/participations/${projectId}`, {
-        body: JSON.stringify({ priority }),
-      })
+      .post(`api/participations/${projectId}`, { json: { priority } })
       .json();
   }
 }
