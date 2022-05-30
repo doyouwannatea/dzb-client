@@ -16,14 +16,14 @@ export default class ParticipationApi extends IParticipationApi {
   }
 
   async deleteParticipation(id: number): Promise<void> {
-    return baseKyInstance.delete(`api/participations${id}`).json();
+    return baseKyInstance.delete(`api/participations/${id}`).json();
   }
 
   async updateParticipation(
     participationId: number,
     priority: Priority,
   ): Promise<void> {
-    const participationApiMock = new ParticipationApiMock();
+    const participationApiMock = new ParticipationApiMock(); // TODO: https://app.swaggerhub.com/apis/CoolSheff/Yarmarka/1#/Participation/patch_api_participations__Id_
     return participationApiMock.updateParticipation(participationId, priority);
   }
 
@@ -32,7 +32,7 @@ export default class ParticipationApi extends IParticipationApi {
     projectId: number,
   ): Promise<void> {
     return baseKyInstance
-      .post(`api/participations${projectId}`, {
+      .post(`api/participations/${projectId}`, {
         body: JSON.stringify({ priority }),
       })
       .json();
