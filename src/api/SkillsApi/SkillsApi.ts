@@ -11,6 +11,6 @@ export default class SkillsApi extends ISkillsApi {
 
   async updateUserSkills(skills: Skill[]): Promise<void> {
     const campusAuthApiMock = new SkillsApiMock();
-    return campusAuthApiMock.updateUserSkills(skills);
+    return campusAuthApiMock.updateUserSkills(skills); // TODO: https://app.swaggerhub.com/apis/CoolSheff/Yarmarka/1#/Candidate/put_api_candidate
   }
 }

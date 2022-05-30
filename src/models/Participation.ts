@@ -1,3 +1,4 @@
+import { Candidate } from './Candidate';
 import { Project } from './Project';
 
 export const enum Priority {
@@ -9,6 +10,7 @@ export const enum Priority {
 export interface Participation {
   id: number;
   candidate_id: number;
+  candidate: Candidate;
   state_id: number;
   project_id: number;
   priority: Priority;

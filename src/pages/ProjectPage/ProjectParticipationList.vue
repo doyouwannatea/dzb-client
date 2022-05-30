@@ -1,41 +1,26 @@
 <template>
-  <BasePanel v-if="project && !loading && !error" class="list-panel">
+  <BasePanel
+    v-if="project?.participations.length && !loading && !error"
+    class="list-panel"
+  >
     <table>
       <tr>
         <th>№</th>
         <th>ФИО</th>
         <th>Группа</th>
         <th>Приоритетность</th>
+        <th>Время подачи заявки</th>
       </tr>
-      <tr class="accepted">
-        <td>1</td>
-        <td>Булгатов Александ</td>
-        <td>ИСТб-19-1</td>
-        <td>1</td>
-      </tr>
-      <tr class="accepted">
-        <td>2</td>
-        <td>Колосов Вячеслав</td>
-        <td>ИСТб-19-1</td>
-        <td>1</td>
-      </tr>
-      <tr class="accepted">
-        <td>3</td>
-        <td>Никульшеев Александ</td>
-        <td>АСУб-19-1</td>
-        <td>1</td>
-      </tr>
-      <tr class="accepted">
-        <td>4</td>
-        <td>Карбушев Иван</td>
-        <td>ИСТб-19-2</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>Барбаш Елизавета</td>
-        <td>ИСТб-19-1</td>
-        <td>2</td>
+      <tr
+        v-for="(participation, idx) in project.participations"
+        :key="participation.id"
+        :class="{ accepted: idx + 1 <= project.places }"
+      >
+        <td>{{ idx + 1 }}</td>
+        <td>{{ participation.candidate.fio }}</td>
+        <td>{{ participation.candidate.training_group }}</td>
+        <td>{{ participation.priority }}</td>
+        <td>{{ toJSONLocal(new Date(participation.created_at)) }}</td>
       </tr>
     </table>
   </BasePanel>
@@ -46,10 +31,15 @@
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
+  import { toJSONLocal } from '@/helpers/string';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import ProjectParticipationListStub from './ProjectParticipationListStub.vue';
+
+  // TODO: отсортировать по времени и приоритету
+  // TODO: добавить время подачи заявки до минут
+  // TODO: после отправки заявки повторно запрашивать проект
 
   const {
     openedProject: project,

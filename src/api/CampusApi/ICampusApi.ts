@@ -11,4 +11,5 @@ export default abstract class ICampusApi {
 
   abstract auth(): Promise<void>;
   abstract getUserInfo(): Promise<Candidate>;
+  abstract getUserByID(userId: number): Promise<Candidate>;
 }

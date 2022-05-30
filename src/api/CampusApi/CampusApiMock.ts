@@ -19,4 +19,8 @@ export default class CampusApiMock extends ICampusApi {
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
     return delayRes(deepClone(candidate), 300);
   }
+
+  async getUserByID(userId: number): Promise<Candidate> {
+    return delayRes(deepClone(candidate), 300); // TODO: возвращать пользователя по ID
+  }
 }

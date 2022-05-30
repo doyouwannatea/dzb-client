@@ -5,7 +5,6 @@ import {
 } from '@/models/Participation';
 import { baseKyInstance } from '../baseKy';
 import IParticipationApi from './IParticipationApi';
-import ParticipationApiMock from './ParticipationApiMock';
 
 export default class ParticipationApi extends IParticipationApi {
   async getParticipationList(): Promise<ParticipationWithProject[]> {
@@ -23,8 +22,9 @@ export default class ParticipationApi extends IParticipationApi {
     participationId: number,
     priority: Priority,
   ): Promise<void> {
-    const participationApiMock = new ParticipationApiMock(); // TODO: https://app.swaggerhub.com/apis/CoolSheff/Yarmarka/1#/Participation/patch_api_participations__Id_
-    return participationApiMock.updateParticipation(participationId, priority);
+    return baseKyInstance
+      .patch(`api/participations/${participationId}`, { json: { priority } })
+      .json();
   }
 
   async createProjectParticipation(

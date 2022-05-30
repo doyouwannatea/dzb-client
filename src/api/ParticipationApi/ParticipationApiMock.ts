@@ -71,8 +71,9 @@ export default class ParticipationApiMock extends IParticipationApi {
     const candidate = await campusApi.getUserInfo();
     participationList.push({
       id: Math.floor(Math.random() * 100),
-      candidate_id: candidate.id,
+      candidate,
       priority,
+      candidate_id: candidate.id,
       project_id: project.id,
       state_id: 0,
       review: 'review',

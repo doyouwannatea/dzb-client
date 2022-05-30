@@ -6,6 +6,7 @@ import type {
 } from '@/models/Project';
 import { State } from '@/models/ProjectState';
 import { Supervisor } from '@/models/Supervisor';
+import { campusApi } from '../CampusApi';
 
 export interface ProjectListResponse {
   data: Project[];

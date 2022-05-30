@@ -1,3 +1,5 @@
+<!-- TODO: захардкодить дату -->
+
 <template>
   <div class="timer">
     <div class="title">3 дня 10:12:54</div>

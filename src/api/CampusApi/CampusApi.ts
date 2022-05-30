@@ -13,4 +13,8 @@ export default class CampusApi extends ICampusApi {
   async getUserInfo(): Promise<Candidate> {
     return baseKyInstance.get('api/candidate').json();
   }
+
+  async getUserByID(userId: number): Promise<Candidate> {
+    return baseKyInstance.get(`api/candidates/${userId}`).json();
+  }
 }
