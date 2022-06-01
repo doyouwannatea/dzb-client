@@ -28,7 +28,7 @@ export const checkUserSpeciality: NavigationGuard = async (to, from, next) => {
   if (!authStore.profileData) return next();
   if (!projectsStore.openedProject) return next();
   if (
-    projectIncludesCandidateSpeciality(
+    await projectIncludesCandidateSpeciality(
       authStore.profileData,
       projectsStore.openedProject,
     )

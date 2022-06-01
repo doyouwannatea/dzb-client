@@ -1,4 +1,5 @@
 import { projectApi } from '@/api/ProjectApi';
+import { asyncFilter } from '@/helpers/array';
 import { projectIncludesCandidateSpeciality } from '@/helpers/project';
 import { projectFiltersToSearchParams } from '@/helpers/query';
 import { Project, ProjectFilters } from '@/models/Project';
@@ -51,11 +52,12 @@ export const useProjectsStore = () => {
           );
           const projectCount = projectListResponse.projectCount;
           let projectList = projectListResponse.data;
+
           if (authStore.profileData) {
             const profileData = authStore.profileData;
-            projectList = projectList.filter((project) =>
+            projectList = (await asyncFilter(projectList, (project) =>
               projectIncludesCandidateSpeciality(profileData, project),
-            );
+            )) as Project[];
           }
           this.setProjectList(projectList, projectCount);
         } catch (error) {

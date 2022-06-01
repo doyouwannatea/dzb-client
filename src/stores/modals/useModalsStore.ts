@@ -9,7 +9,7 @@ export const useModalsStore = defineStore('modals', {
   state,
   actions: {
     // OPEN PARTICIPATION MODAL
-    openParticipationModal(project: Project) {
+    async openParticipationModal(project: Project) {
       const authStore = useAuthStore();
       const projectsStore = useProjectsStore();
 
@@ -20,7 +20,10 @@ export const useModalsStore = defineStore('modals', {
 
       if (
         authStore.profileData &&
-        !projectIncludesCandidateSpeciality(authStore.profileData, project)
+        !(await projectIncludesCandidateSpeciality(
+          authStore.profileData,
+          project,
+        ))
       ) {
         window.alert(
           'Вы не можете подавать заявки на проекты другой специальности 😥',
