@@ -12,7 +12,7 @@
         <th>Время подачи заявки</th>
       </tr>
       <tr
-        v-for="(participation, idx) in project.participations"
+        v-for="(participation, idx) in sortedParticipations"
         :key="participation.id"
         :class="{ accepted: idx + 1 <= project.places }"
       >
@@ -20,7 +20,9 @@
         <td>{{ participation.candidate.fio }}</td>
         <td>{{ participation.candidate.training_group }}</td>
         <td>{{ participation.priority }}</td>
-        <td>{{ toJSONLocal(new Date(participation.created_at)) }}</td>
+        <td>
+          {{ formatParticipationApplicationTime(participation.created_at) }}
+        </td>
       </tr>
     </table>
   </BasePanel>
@@ -31,21 +33,38 @@
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
-  import { toJSONLocal } from '@/helpers/string';
+  import { DateTime } from 'luxon';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import ProjectParticipationListStub from './ProjectParticipationListStub.vue';
-
-  // TODO: отсортировать по времени и приоритету
-  // TODO: добавить время подачи заявки до минут
-  // TODO: после отправки заявки повторно запрашивать проект
+  import { computed } from 'vue';
+  import { Participation } from '@/models/Participation';
 
   const {
     openedProject: project,
     loading,
     error,
   } = storeToRefs(useProjectsStore());
+
+  function formatParticipationApplicationTime(time: string) {
+    const dt = DateTime.fromISO(time, { locale: 'ru-RU' });
+    return dt.toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
+  }
+
+  function sortParticipations(participations: Participation[]) {
+    return [...participations].sort(
+      (a, b) =>
+        new Date(a.created_at).getTime() * a.priority -
+        new Date(b.created_at).getTime() * b.priority,
+    );
+  }
+
+  const sortedParticipations = computed<Participation[] | undefined>(() => {
+    const participations = project?.value?.participations;
+    if (!participations) return undefined;
+    return sortParticipations(participations);
+  });
 </script>
 
 <style scoped>

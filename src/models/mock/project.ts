@@ -1,6 +1,7 @@
 import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
 import { Type } from '../Project';
 import { State, StateID } from '../ProjectState';
+import { candidateList } from './candidate';
 import { skills } from './project-skills';
 
 const recruitingState: State = {
@@ -52,7 +53,63 @@ export const projectListResponse: ProjectListResponse = {
       difficulty: 2,
       goal: 'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ',
       id: 1,
-      participations: [],
+      participations: [
+        {
+          id: 1,
+          candidate: candidateList[0],
+          candidate_id: candidateList[0].id,
+          created_at: '2022-06-01T04:58:25.177Z',
+          updated_at: '2022-06-01T04:58:25.177Z',
+          priority: 1,
+          project_id: 1,
+          review: '',
+          state_id: recruitingState.id,
+        },
+        {
+          id: 2,
+          candidate: candidateList[1],
+          candidate_id: candidateList[1].id,
+          created_at: '2022-06-01T05:06:43.792Z',
+          updated_at: '2022-06-01T05:06:43.792Z',
+          priority: 1,
+          project_id: 1,
+          review: '',
+          state_id: recruitingState.id,
+        },
+        {
+          id: 3,
+          candidate: candidateList[2],
+          candidate_id: candidateList[2].id,
+          created_at: '2022-06-01T05:01:58.261Z',
+          updated_at: '2022-06-01T05:01:58.261Z',
+          priority: 1,
+          project_id: 1,
+          review: '',
+          state_id: recruitingState.id,
+        },
+        {
+          id: 4,
+          candidate: candidateList[3],
+          candidate_id: candidateList[3].id,
+          created_at: '2022-06-01T04:58:25.177Z',
+          updated_at: '2022-06-01T04:58:25.177Z',
+          priority: 2,
+          project_id: 1,
+          review: '',
+          state_id: recruitingState.id,
+        },
+        {
+          id: 5,
+          candidate: candidateList[4],
+          candidate_id: candidateList[4].id,
+          created_at: '2022-06-01T05:34:01.738Z',
+          updated_at: '2022-06-01T05:34:01.738Z',
+          priority: 2,
+          project_id: 1,
+          review: '',
+          state_id: recruitingState.id,
+        },
+      ],
       places: 4,
       product_result:
         'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ, адаптированная под разные их виды',
