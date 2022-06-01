@@ -39,6 +39,7 @@ export const useAuthStore = defineStore('auth', {
     exit() {
       this.profileData = undefined;
       ICampusApi.deleteAuthToken();
+      window.location.reload();
     },
     // EXIT
 
