@@ -2,7 +2,7 @@
   <BaseButton
     v-if="!hideBtn"
     case="uppercase"
-    variant="outlined"
+    :variant="props.variant"
     @click="modalsStore.openParticipationModal(props.project)"
   >
     Подать заявку
@@ -16,13 +16,13 @@
   import { computed } from 'vue';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   // components
-  import BaseButton from '../ui/BaseButton.vue';
+  import BaseButton, { Variant } from '../ui/BaseButton.vue';
 
-  type Props = { project: Project };
+  type Props = { project: Project; variant?: Variant };
 
   const modalsStore = useModalsStore();
   const authStore = useAuthStore();
-  const props = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), { variant: 'outlined' });
 
   const hideBtn = computed(
     () =>

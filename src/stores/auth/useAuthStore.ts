@@ -8,6 +8,7 @@ import { participationApi } from '@/api/ParticipationApi';
 import { projectApi } from '@/api/ProjectApi';
 import { skillsApi } from '@/api/SkillsApi';
 import ICampusApi from '@/api/CampusApi/ICampusApi';
+import { useProjectsStore } from '../projects/useProjectsStore';
 
 export const useAuthStore = defineStore('auth', {
   state,
@@ -41,10 +42,12 @@ export const useAuthStore = defineStore('auth', {
     // CREATE PATRICIPATION
     createPatricipation(priority: Priority, projectId: number) {
       const modalsStore = useModalsStore();
+      const projectsStore = useProjectsStore();
 
       return this._onAsync(async () => {
         await participationApi.createProjectParticipation(priority, projectId);
         this.participationList = await participationApi.getParticipationList();
+        await projectsStore.getSingleProject(projectId);
         modalsStore.participationSuccessModal = true;
         modalsStore.participationModal = false;
       });

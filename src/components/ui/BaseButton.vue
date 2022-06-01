@@ -17,7 +17,7 @@
 <script setup lang="ts">
   import { withDefaults } from '@vue/runtime-core';
 
-  type Variant = 'outlined' | 'link' | 'inline-link' | 'primary';
+  export type Variant = 'outlined' | 'link' | 'inline-link' | 'primary';
   type Is = 'button' | 'router-link' | 'a';
   type Case = 'uppercase' | 'lowercase';
   type Color = 'red';
