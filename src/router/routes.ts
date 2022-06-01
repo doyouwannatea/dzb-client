@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 import { RouteNames } from './types/route-names';
 import { validatePage } from './guards/validatePage';
+import { checkUserSpeciality } from './guards/checkUserRole';
 
 // Project page
 const ProjectPage = () => import('@/pages/ProjectPage/index.vue');
@@ -56,6 +57,7 @@ export const routes: RouteRecordRaw[] = [
         },
       },
     ],
+    beforeEnter: [checkUserSpeciality],
   },
   {
     path: '/profile',

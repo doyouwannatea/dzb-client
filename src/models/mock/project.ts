@@ -53,6 +53,7 @@ export const projectListResponse: ProjectListResponse = {
       difficulty: 2,
       goal: 'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ',
       id: 1,
+      specialities: [{ id: 2, name: 'НвГДСз' }],
       participations: [
         {
           id: 1,
@@ -147,6 +148,7 @@ export const projectListResponse: ProjectListResponse = {
       goal: 'На основе данных ИЭСБК создать профиль потребителя энергоресурсов',
       id: 2,
       participations: [],
+      specialities: [{ id: 2, name: 'НвГДСз' }],
       places: 12,
       product_result:
         'Разработан набор характеристик каждого профиля, алгоритм дополнения БД недостающими характеристиками, критерии кластеризации потребителей по профилям',
@@ -182,6 +184,7 @@ export const projectListResponse: ProjectListResponse = {
       goal: 'Применение знаний и получение навыков в организации работы предприятия',
       id: 3,
       participations: [],
+      specialities: [{ id: 1, name: 'НГДСз' }],
       places: 12,
       product_result:
         'Создание мобильного приложения по Well-being в стиле Agile, с возможностью дополнения инициатив в виде конструктора',
@@ -218,6 +221,7 @@ export const projectListResponse: ProjectListResponse = {
       goal: 'Исследование влияния предпринимательских качеств на профессиональные достижения, финансовое вознаграждение и нематериальную «выгоду» научных работников',
       id: 4,
       participations: [],
+      specialities: [{ id: 1, name: 'НГДСз' }],
       places: 12,
       product_result:
         'Практические рекомендации по развитию определённых soft skills у различных категорий научных работников',
@@ -253,6 +257,7 @@ export const projectListResponse: ProjectListResponse = {
       goal: 'Стратегическое управление ключевыми потенциалами развития территориальных социально-экономических систем',
       id: 5,
       participations: [],
+      specialities: [{ id: 1, name: 'НГДСз' }],
       places: 12,
       product_result:
         'Создание мобильного приложения по Well-being в стиле Agile, с возможностью дополнения инициатив в виде конструктора',
@@ -289,6 +294,7 @@ export const projectListResponse: ProjectListResponse = {
       goal: 'Применение знаний и получение навыков в организации работы предприятия',
       id: 3,
       participations: [],
+      specialities: [{ id: 1, name: 'НГДСз' }],
       places: 12,
       product_result:
         'Создание мобильного приложения по Well-being в стиле Agile, с возможностью дополнения инициатив в виде конструктора',
@@ -325,6 +331,7 @@ export const projectListResponse: ProjectListResponse = {
       goal: 'Разработка развлекательных, познавательных и научных материалов в социальных сетях ИРНИТУ. ',
       id: 3,
       participations: [],
+      specialities: [{ id: 1, name: 'НГДСз' }],
       places: 12,
       product_result:
         'Короткометражные повторяющиеся и не повторяющиеся видеопередачи (выпуски), юмористического и познавательного содержания, призванные привлекать внимание целевых и потенциальных целевых групп.',
@@ -361,6 +368,7 @@ export const projectListResponse: ProjectListResponse = {
       goal: 'Разработка развлекательных, познавательных и научных материалов в социальных сетях ИРНИТУ. ',
       id: 3,
       participations: [],
+      specialities: [{ id: 1, name: 'НГДСз' }],
       places: 12,
       product_result:
         'Короткометражные повторяющиеся и не повторяющиеся видеопередачи (выпуски), юмористического и познавательного содержания, призванные привлекать внимание целевых и потенциальных целевых групп.',

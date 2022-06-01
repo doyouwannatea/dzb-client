@@ -1,3 +1,4 @@
+import { Institute } from './Institute';
 import { Skill } from './Project';
 
 export interface Candidate {
@@ -9,6 +10,18 @@ export interface Candidate {
   phone: string;
   course: number;
   training_group: string;
+  group: {
+    id: number;
+    name: string;
+    specialitiyCource_id: number;
+    specialitiy_cource: {
+      id: number;
+      cource: number;
+      specialitiy: Institute;
+      specialitiy_id: number;
+    };
+  };
+  group_id: number;
   skills: Skill[];
   is_student: boolean;
   is_teacher: boolean;

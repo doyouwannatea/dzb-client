@@ -1,3 +1,4 @@
+import { Institute } from './Institute';
 import { Participation } from './Participation';
 import { Difficulty } from './ProjectDifficulty';
 import { State } from './ProjectState';
@@ -25,6 +26,7 @@ export interface Project {
   goal: string;
   id: number;
   participations: Participation[];
+  specialities: Institute[];
   places: number;
   product_result: string;
   requirements: string;

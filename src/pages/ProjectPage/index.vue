@@ -34,9 +34,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onBeforeMount } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useRoute } from 'vue-router';
   import { RouterView } from 'vue-router';
   import { RouteNames } from '@/router/types/route-names';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
@@ -46,13 +44,8 @@
   import ProjectTabs from '@/components/project/ProjectTabs.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
 
-  const route = useRoute();
   const projectsStore = useProjectsStore();
   const { loading, error, openedProject: project } = storeToRefs(projectsStore);
-
-  onBeforeMount(() => {
-    projectsStore.getSingleProject(Number(route.params.id));
-  });
 </script>
 
 <style scoped>
