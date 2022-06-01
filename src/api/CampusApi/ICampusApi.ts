@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import { Candidate } from '@/models/Candidate';
+import { Supervisor } from '@/models/Supervisor';
 
 export default abstract class ICampusApi {
   static AUTH_TOKEN_NAME = 'x-api-key';
@@ -10,6 +11,5 @@ export default abstract class ICampusApi {
   static deleteAuthToken = () => Cookies.remove(ICampusApi.AUTH_TOKEN_NAME);
 
   abstract auth(): Promise<void>;
-  abstract getUserInfo(): Promise<Candidate>;
-  abstract getUserByID(userId: number): Promise<Candidate>;
+  abstract getUserInfo(): Promise<Candidate | Supervisor>;
 }

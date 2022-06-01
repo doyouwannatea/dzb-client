@@ -2,6 +2,7 @@ import { deepClone } from '@/helpers/array';
 import { delayRes } from '@/helpers/promise';
 import { Candidate } from '@/models/Candidate';
 import { candidate } from '@/models/mock/candidate';
+import { Supervisor } from '@/models/Supervisor';
 import { AUTH_TOKEN_REQUIRED } from '@/values/error-messages';
 import ICampusApi from './ICampusApi';
 
@@ -14,13 +15,9 @@ export default class CampusApiMock extends ICampusApi {
     return delayRes(undefined, 300);
   }
 
-  async getUserInfo(): Promise<Candidate> {
+  async getUserInfo(): Promise<Candidate | Supervisor> {
     const authToken = ICampusApi.getAuthToken();
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
     return delayRes(deepClone(candidate), 300);
-  }
-
-  async getUserByID(userId: number): Promise<Candidate> {
-    return delayRes(deepClone(candidate), 300); // TODO: возвращать пользователя по ID
   }
 }

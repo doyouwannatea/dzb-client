@@ -1,5 +1,6 @@
 import { deepClone } from '@/helpers/array';
 import { delayRes } from '@/helpers/promise';
+import { isSupervisor } from '@/helpers/typeCheck';
 import { participationList } from '@/models/mock/participation';
 import { projectListResponse } from '@/models/mock/project';
 import { ParticipationWithProject, Priority } from '@/models/Participation';
@@ -69,6 +70,7 @@ export default class ParticipationApiMock extends IParticipationApi {
     }
 
     const candidate = await campusApi.getUserInfo();
+    if (isSupervisor(candidate)) return;
     participationList.push({
       id: Math.floor(Math.random() * 100),
       candidate,

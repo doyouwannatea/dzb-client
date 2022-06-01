@@ -9,6 +9,7 @@ import { projectApi } from '@/api/ProjectApi';
 import { skillsApi } from '@/api/SkillsApi';
 import ICampusApi from '@/api/CampusApi/ICampusApi';
 import { useProjectsStore } from '../projects/useProjectsStore';
+import { isSupervisor } from '@/helpers/typeCheck';
 
 export const useAuthStore = defineStore('auth', {
   state,
@@ -24,7 +25,9 @@ export const useAuthStore = defineStore('auth', {
     // FETCH USER DATA
     fetchUserData() {
       return this._onAsync(async () => {
-        this.profileData = await campusApi.getUserInfo();
+        const profileData = await campusApi.getUserInfo();
+        if (isSupervisor(profileData)) return;
+        this.profileData = profileData;
         this.participationList = await participationApi.getParticipationList();
         this.projectList = await projectApi.getUserProjectList();
         this.userSkills = await skillsApi.getUserSkills();
@@ -85,7 +88,9 @@ export const useAuthStore = defineStore('auth', {
       return this._onAsync(async () => {
         await skillsApi.updateUserSkills(skills);
         await this.getUserSkills();
-        this.profileData = await campusApi.getUserInfo();
+        const profileData = await campusApi.getUserInfo();
+        if (isSupervisor(profileData)) return;
+        this.profileData = profileData;
       });
     },
     // GET USER SKILLS
