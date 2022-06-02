@@ -36,10 +36,8 @@ export const useAuthStore = defineStore('auth', {
     // FETCH USER DATA
 
     // EXIT
-    exit() {
-      this.profileData = undefined;
-      ICampusApi.deleteAuthToken();
-      window.location.reload();
+    async exit() {
+      await campusApi.logout();
     },
     // EXIT
 

@@ -11,5 +11,6 @@ export default abstract class ICampusApi {
   static deleteAuthToken = () => Cookies.remove(ICampusApi.AUTH_TOKEN_NAME);
 
   abstract auth(): Promise<void>;
+  abstract logout(): Promise<void>;
   abstract getUserInfo(): Promise<Candidate | Supervisor>;
 }

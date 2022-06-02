@@ -11,6 +11,11 @@ export default class CampusApi extends ICampusApi {
     document.location.replace(data.url);
   }
 
+  async logout(): Promise<void> {
+    await baseKyInstance.get('campus_out');
+    document.location.reload();
+  }
+
   async getUserInfo(): Promise<Candidate | Supervisor> {
     const res = await baseKyInstance.get('api/candidate');
     if (res.status === 202) {
