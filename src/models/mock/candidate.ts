@@ -29,7 +29,7 @@ export const candidate: Candidate = {
       cource: 1,
       id: 1,
       specialitiy: {
-        id: 2,
+        id: 1,
         name: 'НГДСз',
       },
       specialitiy_id: 1,

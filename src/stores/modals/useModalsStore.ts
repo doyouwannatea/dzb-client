@@ -1,4 +1,3 @@
-import { projectIncludesCandidateSpeciality } from '@/helpers/project';
 import { Project } from '@/models/Project';
 import { defineStore } from 'pinia';
 import { useAuthStore } from '../auth/useAuthStore';
@@ -9,25 +8,12 @@ export const useModalsStore = defineStore('modals', {
   state,
   actions: {
     // OPEN PARTICIPATION MODAL
-    async openParticipationModal(project: Project) {
+    openParticipationModal(project: Project) {
       const authStore = useAuthStore();
       const projectsStore = useProjectsStore();
 
       if (!authStore.isAuth) {
         this.authModal = true;
-        return;
-      }
-
-      if (
-        authStore.profileData &&
-        !(await projectIncludesCandidateSpeciality(
-          authStore.profileData,
-          project,
-        ))
-      ) {
-        window.alert(
-          'Вы не можете подавать заявки на проекты другой специальности 😥',
-        );
         return;
       }
 

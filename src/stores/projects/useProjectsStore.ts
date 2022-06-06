@@ -1,12 +1,9 @@
 import { projectApi } from '@/api/ProjectApi';
-import { asyncFilter } from '@/helpers/array';
-import { projectIncludesCandidateSpeciality } from '@/helpers/project';
 import { projectFiltersToSearchParams } from '@/helpers/query';
 import { Project, ProjectFilters } from '@/models/Project';
 import { RouteNames } from '@/router/types/route-names';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '../auth/useAuthStore';
 import { state } from './state';
 
 export const useProjectsStore = () => {
@@ -42,7 +39,6 @@ export const useProjectsStore = () => {
       },
       // GET PROJECT LIST
       async getProjectList() {
-        const authStore = useAuthStore();
         this.setProjectList();
         this.loading = true;
         this.error = '';
@@ -51,14 +47,7 @@ export const useProjectsStore = () => {
             this.filters,
           );
           const projectCount = projectListResponse.projectCount;
-          let projectList = projectListResponse.data;
-
-          if (authStore.profileData) {
-            const profileData = authStore.profileData;
-            projectList = (await asyncFilter(projectList, (project) =>
-              projectIncludesCandidateSpeciality(profileData, project),
-            )) as Project[];
-          }
+          const projectList = projectListResponse.data;
           this.setProjectList(projectList, projectCount);
         } catch (error) {
           this.error = String(error);
