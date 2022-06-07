@@ -13,7 +13,6 @@ export default class CampusApi extends ICampusApi {
 
   async logout(): Promise<void> {
     await baseKyInstance.get('campus_out');
-    document.location.reload();
   }
 
   async getUserInfo(): Promise<Candidate | Supervisor> {
