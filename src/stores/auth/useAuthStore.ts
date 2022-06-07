@@ -7,9 +7,10 @@ import { campusApi } from '@/api/CampusApi';
 import { participationApi } from '@/api/ParticipationApi';
 import { projectApi } from '@/api/ProjectApi';
 import { skillsApi } from '@/api/SkillsApi';
-import ICampusApi from '@/api/CampusApi/ICampusApi';
 import { useProjectsStore } from '../projects/useProjectsStore';
 import { isSupervisor } from '@/helpers/typeCheck';
+import { useRouter } from 'vue-router';
+import { RouteNames } from '@/router/types/route-names';
 
 export const useAuthStore = defineStore('auth', {
   state,
@@ -37,7 +38,10 @@ export const useAuthStore = defineStore('auth', {
 
     // EXIT
     async exit() {
+      const router = useRouter();
       await campusApi.logout();
+
+      router.replace(RouteNames.HOME);
       window.location.reload();
     },
     // EXIT
