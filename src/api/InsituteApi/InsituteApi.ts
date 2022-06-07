@@ -12,7 +12,7 @@ export default class InsituteApi extends IInsituteApi {
   ): Promise<boolean> {
     const res: IsInSameInstitute = await baseKyInstance
       .get(
-        `/api/institutes/isInSameInstitute/${specialityName1}/${specialityName2}`,
+        `api/institutes/isInSameInstitute/${specialityName1}/${specialityName2}`,
       )
       .json();
 
