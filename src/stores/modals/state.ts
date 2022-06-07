@@ -4,6 +4,7 @@ export interface State {
   participationSuccessModal: boolean;
   participationModal: boolean;
   projectFeedbackModal: boolean;
+  wrongInstitutionModal: boolean;
 }
 
 export const state = (): State => ({
@@ -12,4 +13,5 @@ export const state = (): State => ({
   participationModal: false,
   participationSuccessModal: false,
   projectFeedbackModal: false,
+  wrongInstitutionModal: false,
 });

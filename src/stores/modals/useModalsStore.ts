@@ -1,3 +1,5 @@
+import { insituteApi } from '@/api/InsituteApi';
+import { projectIncludesCandidateSpeciality } from '@/helpers/project';
 import { Project } from '@/models/Project';
 import { defineStore } from 'pinia';
 import { useAuthStore } from '../auth/useAuthStore';
@@ -8,12 +10,22 @@ export const useModalsStore = defineStore('modals', {
   state,
   actions: {
     // OPEN PARTICIPATION MODAL
-    openParticipationModal(project: Project) {
+    async openParticipationModal(project: Project) {
       const authStore = useAuthStore();
       const projectsStore = useProjectsStore();
 
-      if (!authStore.isAuth) {
+      if (!authStore.isAuth || !authStore.profileData) {
         this.authModal = true;
+        return;
+      }
+
+      const isSameInstitute = await projectIncludesCandidateSpeciality(
+        authStore.profileData,
+        project,
+      );
+
+      if (!isSameInstitute) {
+        this.wrongInstitutionModal = true;
         return;
       }
 
