@@ -6,6 +6,6 @@ export default class InsituteApiMock extends IInsituteApi {
     specialityName1: string,
     specialityName2: string,
   ): Promise<boolean> {
-    return delayRes(specialityName1 === specialityName2, 30);
+    return delayRes(specialityName1 === specialityName2, 500);
   }
 }

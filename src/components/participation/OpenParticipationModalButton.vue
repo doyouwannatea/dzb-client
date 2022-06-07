@@ -3,6 +3,7 @@
     v-if="!hideBtn"
     case="uppercase"
     :variant="props.variant"
+    :disabled="modalsStore.loading"
     @click="modalsStore.openParticipationModal(props.project)"
   >
     Подать заявку

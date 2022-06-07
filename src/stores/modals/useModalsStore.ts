@@ -19,16 +19,6 @@ export const useModalsStore = defineStore('modals', {
         return;
       }
 
-      const isSameInstitute = await projectIncludesCandidateSpeciality(
-        authStore.profileData,
-        project,
-      );
-
-      if (!isSameInstitute) {
-        this.wrongInstitutionModal = true;
-        return;
-      }
-
       if (authStore.participationList) {
         for (const participation of authStore.participationList) {
           if (participation.project_id === project.id) {
@@ -36,6 +26,15 @@ export const useModalsStore = defineStore('modals', {
             return;
           }
         }
+      }
+
+      const isSameInstitute = await this._onAsync(() =>
+        projectIncludesCandidateSpeciality(authStore.profileData!, project),
+      );
+
+      if (!isSameInstitute) {
+        this.wrongInstitutionModal = true;
+        return;
       }
 
       projectsStore.openedProject = project;
@@ -57,5 +56,18 @@ export const useModalsStore = defineStore('modals', {
       this.projectFeedbackModal = true;
     },
     // OPEN FEEDBACK MODAL
+
+    // ON ASYNC
+    async _onAsync<T>(callback: () => Promise<T>) {
+      try {
+        this.loading = true;
+        return await callback();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+    // ON ASYNC
   },
 });
