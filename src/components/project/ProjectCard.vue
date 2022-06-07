@@ -6,7 +6,7 @@
       </h2>
       <ProjectStatus class="status" :state="project.state" />
       <div class="subtitle">
-        {{ project.supervisors.map((s) => s.fio).join(', ') }}
+        {{ project?.supervisors.length ? project.supervisors.join(', ') : '' }}
       </div>
     </header>
     <div class="divider"></div>

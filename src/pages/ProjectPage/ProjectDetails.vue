@@ -8,7 +8,9 @@
           :items="[
             {
               title: 'Руководители проекта',
-              content: project.supervisors.map((s) => s.fio).join(', '),
+              content: project?.supervisors.length
+                ? project.supervisors.join(', ')
+                : '',
             },
             {
               title: 'Старт проекта',
