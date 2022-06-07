@@ -15,8 +15,9 @@
     <div class="author">
       <div class="avatar"><img :src="userMockUrl" alt="" /></div>
       <div>
-        <div class="name">{{ project?.supervisor.fio }}</div>
-        <div class="position">{{ project?.supervisor.position }}</div>
+        <!-- TODO: по идее тут должен быть один руководитель который написал отзыв -->
+        <!-- <div class="name">{{ project?.supervisor.fio }}</div>
+        <div class="position">{{ project?.supervisor.position }}</div> -->
       </div>
     </div>
 

@@ -5,7 +5,9 @@
         {{ project.title }}
       </h2>
       <ProjectStatus class="status" :state="project.state" />
-      <div class="subtitle">{{ project.supervisor.fio }}</div>
+      <div class="subtitle">
+        {{ project.supervisors.map((s) => s.fio).join(', ') }}
+      </div>
     </header>
     <div class="divider"></div>
     <div class="body container">

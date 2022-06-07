@@ -7,8 +7,8 @@
         <AppList
           :items="[
             {
-              title: 'Руководитель проекта',
-              content: project.supervisor.fio,
+              title: 'Руководители проекта',
+              content: project.supervisors.map((s) => s.fio).join(', '),
             },
             {
               title: 'Старт проекта',

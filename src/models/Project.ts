@@ -33,7 +33,7 @@ export interface Project {
   skills: Skill[];
   state: State;
   study_result: string;
-  supervisor: Supervisor;
+  supervisors: Supervisor[];
   title: string;
   type: Type;
   idea: string;
