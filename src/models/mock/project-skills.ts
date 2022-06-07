@@ -38,7 +38,7 @@ export const skills: Skill[] = [
   },
 ];
 
-export const specialities: Skill[] = [
+export const specialties: Skill[] = [
   {
     id: 13,
     skill: 'ИСТ',
@@ -56,7 +56,7 @@ export const specialities: Skill[] = [
   },
 ];
 
-export const generalSkills: Skill[] = [
+export const skillCategories: Skill[] = [
   {
     id: 8,
     skill: 'Построение графиков',

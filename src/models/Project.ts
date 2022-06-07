@@ -44,7 +44,7 @@ export interface Project {
 export interface ProjectFilters {
   state?: number[]; // массив id
   skills?: number[]; // массив id
-  specialities?: number[]; // массив id
+  specialties?: number[]; // массив id
   difficulty?: Difficulty[]; // Массив сложностей
   title?: string; // Поиск по подстроке в названии
   page?: number;
@@ -52,8 +52,8 @@ export interface ProjectFilters {
 
 export interface ProjectTags {
   skills: Skill[];
-  specialities: Skill[];
-  general: Skill[];
+  specialties: Skill[];
+  skillCategories: Skill[];
 }
 
 export interface AdditionalProjectData {

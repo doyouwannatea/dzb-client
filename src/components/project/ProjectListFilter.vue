@@ -27,13 +27,13 @@
       <template #title>Теги проекта</template>
       <template #content>
         <VMultiselect
-          v-model="filters.specialities"
+          v-model="filters.specialties"
           mode="tags"
           placeholder="По специальности"
           class="miltiselect"
           :close-on-select="false"
           :searchable="true"
-          :options="additionalProjectData.tags?.specialities"
+          :options="additionalProjectData.tags?.specialties"
           :loading="tagsLoading"
           :label="SkillKeys.skill"
           :track-by="SkillKeys.skill"

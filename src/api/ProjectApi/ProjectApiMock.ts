@@ -13,8 +13,8 @@ import { State } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
 import { Supervisor } from '@/models/Supervisor';
 import {
-  generalSkills,
-  specialities,
+  skillCategories,
+  specialties,
   skills,
 } from '@/models/mock/project-skills';
 import { deepClone } from '@/helpers/array';
@@ -70,7 +70,7 @@ export default class ProjectApiMock extends IProjectApi {
   }
 
   async getAllProjectTags(): Promise<ProjectTags> {
-    return delayRes({ general: generalSkills, skills, specialities }, 300);
+    return delayRes({ skillCategories, skills, specialties }, 300);
   }
 
   async getAllSupervisors(): Promise<Supervisor[]> {

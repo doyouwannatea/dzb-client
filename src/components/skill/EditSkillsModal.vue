@@ -35,7 +35,7 @@
         <span v-if="projectsStore.tagsLoading">loading...</span>
         <ul v-else class="skills-list by-direction-skills">
           <li
-            v-for="skill in filteredGeneralSkills"
+            v-for="skill in filteredCategories"
             :key="skill.id"
             class="tag-item"
           >
@@ -116,15 +116,17 @@
     const skills: Skill[] =
       projectsStore.additionalProjectData.tags?.skills || [];
     const generalSkills: Skill[] =
-      projectsStore.additionalProjectData.tags?.general || [];
+      projectsStore.additionalProjectData.tags?.skillCategories || [];
     return [
       ...skills.filter((skill) => !userHasSkill(skill)),
       ...generalSkills.filter((skill) => !userHasSkill(skill)),
     ];
   });
   // filtered general skills
-  const filteredGeneralSkills = computed<Skill[] | undefined>(() =>
-    projectsStore.additionalProjectData.tags?.general.filter(searchSkills),
+  const filteredCategories = computed<Skill[] | undefined>(() =>
+    projectsStore.additionalProjectData.tags?.skillCategories.filter(
+      searchSkills,
+    ),
   );
   // filtered common skills
   const filteredCommonSkills = computed<Skill[] | undefined>(() =>
