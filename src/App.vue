@@ -4,6 +4,7 @@
   <ParticipationModal />
   <ParticipationSuccessModal />
   <ProjectFeedbackModal />
+  <ToUpButton />
   <RouterView></RouterView>
 </template>
 
@@ -14,4 +15,5 @@
   import ParticipationSuccessModal from './components/participation/ParticipationSuccessModal.vue';
   import ProjectFeedbackModal from './components/feedback/ProjectFeedbackModal.vue';
   import WrongInstitutionModal from './components/participation/WrongInstitutionModal.vue';
+  import ToUpButton from './components/ui/ToUpButton.vue';
 </script>
