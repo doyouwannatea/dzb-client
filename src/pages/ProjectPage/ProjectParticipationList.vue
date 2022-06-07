@@ -21,7 +21,7 @@
         <td>{{ participation.candidate.training_group }}</td>
         <td>{{ participation.priority }}</td>
         <td>
-          {{ formatParticipationApplicationTime(participation.created_at) }}
+          {{ formatParticipationApplicationTime(participation.updated_at) }}
         </td>
       </tr>
     </table>
@@ -55,8 +55,8 @@
   function sortParticipations(participations: Participation[]) {
     return [...participations].sort(
       (a, b) =>
-        new Date(a.created_at).getTime() * a.priority -
-        new Date(b.created_at).getTime() * b.priority,
+        new Date(a.updated_at).getTime() * a.priority -
+        new Date(b.updated_at).getTime() * b.priority,
     );
   }
 
