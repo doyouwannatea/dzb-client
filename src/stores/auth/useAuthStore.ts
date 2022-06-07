@@ -38,6 +38,7 @@ export const useAuthStore = defineStore('auth', {
     // EXIT
     async exit() {
       await campusApi.logout();
+      window.location.reload();
     },
     // EXIT
 

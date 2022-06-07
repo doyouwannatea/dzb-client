@@ -19,6 +19,7 @@ export default class CampusApi extends ICampusApi {
   async getUserInfo(): Promise<Candidate | Supervisor> {
     const res = await baseKyInstance.get('api/candidate');
     if (res.status === 202) {
+      await this.logout();
       const errorMsg =
         'Внимание!\n В настоящее время функционал проекта частично готов только для студента';
       window.alert(errorMsg);
