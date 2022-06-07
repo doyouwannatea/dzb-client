@@ -1,4 +1,5 @@
 <template>
+  <WrongInstitutionModal />
   <AuthModal />
   <ParticipationModal />
   <ParticipationSuccessModal />
@@ -12,4 +13,5 @@
   import ParticipationModal from './components/participation/ParticipationModal.vue';
   import ParticipationSuccessModal from './components/participation/ParticipationSuccessModal.vue';
   import ProjectFeedbackModal from './components/feedback/ProjectFeedbackModal.vue';
+  import WrongInstitutionModal from './components/participation/WrongInstitutionModal.vue';
 </script>

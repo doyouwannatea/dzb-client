@@ -6,10 +6,18 @@
   >
     <!-- MAIN CONTENT -->
     <div class="success-modal">
-      <h1>Вы не можете подать заявку</h1>
+      <h1>Ошибка</h1>
       <p class="message">
-        Вы не можете подавать заявку на проект другого института!
+        Вы не можете отправлять заявки на проекты другого института
       </p>
+    </div>
+    <div class="modal-buttons">
+      <BaseButton
+        case="uppercase"
+        @click="modalsStore.wrongInstitutionModal = false"
+      >
+        закрыть окно
+      </BaseButton>
     </div>
     <!-- MAIN CONTENT -->
   </BaseModal>
