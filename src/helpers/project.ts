@@ -24,7 +24,7 @@ export async function projectIncludesCandidateSpeciality(
     project.specialities.map((speciality) =>
       insituteApi.isInSameInstitute(
         speciality.name,
-        candidate.group.specialitiy_cource.specialitiy.name,
+        candidate.training_group.split('-')[0],
       ),
     ),
   );
