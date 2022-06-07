@@ -41,7 +41,13 @@
       </div>
     </div>
     <footer class="footer container">
-      <SkillList :skills="props.project.skills" />
+      <SkillList
+        :skills="
+          props.project.skills.filter(
+            (skill) => skill.name.split(' ').length < 10,
+          )
+        "
+      />
       <div class="actions">
         <OpenParticipationModalButton :project="props.project" />
         <OpenFeedbackModalButton :project="props.project" />
