@@ -35,8 +35,8 @@
           :searchable="true"
           :options="additionalProjectData.tags?.specialties"
           :loading="tagsLoading"
-          :label="SkillKeys.skill"
-          :track-by="SkillKeys.skill"
+          :label="SkillKeys.name"
+          :track-by="SkillKeys.name"
           :value-prop="SkillKeys.id"
         />
         <VMultiselect
@@ -48,8 +48,8 @@
           :searchable="true"
           :options="additionalProjectData.tags?.skills"
           :loading="tagsLoading"
-          :label="SkillKeys.skill"
-          :track-by="SkillKeys.skill"
+          :label="SkillKeys.name"
+          :track-by="SkillKeys.name"
           :value-prop="SkillKeys.id"
         />
         <div v-if="error" class="mt-2">

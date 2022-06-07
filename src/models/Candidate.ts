@@ -1,5 +1,5 @@
 import { Institute } from './Institute';
-import { Skill } from './Project';
+import { Tag } from './Project';
 
 export interface Candidate {
   id: number;
@@ -22,12 +22,12 @@ export interface Candidate {
     };
   };
   group_id: number;
-  skills: Skill[];
+  skills: Tag[];
   is_student: boolean;
   is_teacher: boolean;
 }
 
 export interface UserSkills {
-  common: Skill[];
-  personal: Skill[];
+  common: Tag[];
+  personal: Tag[];
 }

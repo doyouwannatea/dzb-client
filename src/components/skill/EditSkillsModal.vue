@@ -43,7 +43,7 @@
               :class="['tag-btn', { selected: userHasSkill(skill) }]"
               @click="onTagClick(skill)"
             >
-              {{ skill.skill }}
+              {{ skill.name }}
             </button>
           </li>
         </ul>
@@ -61,7 +61,7 @@
               :class="['tag-btn', { selected: userHasSkill(skill) }]"
               @click="onTagClick(skill)"
             >
-              {{ skill.skill }}
+              {{ skill.name }}
             </button>
           </li>
         </ul>
@@ -82,7 +82,7 @@
 <script setup lang="ts">
   import VMultiselect from '@vueform/multiselect';
   import { computed, ref, watch } from 'vue';
-  import { Skill } from '@/models/Project';
+  import { Tag } from '@/models/Project';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
@@ -100,7 +100,7 @@
 
   // <REFS>
   const searchValue = ref('');
-  const skills = ref<Skill[]>([]);
+  const skills = ref<Tag[]>([]);
   // </REFS>
 
   // <WATCHERS>
@@ -112,10 +112,10 @@
 
   // <COMPUTED VALUES>
   // available skills
-  const availableSkills = computed<Skill[]>(() => {
-    const skills: Skill[] =
+  const availableSkills = computed<Tag[]>(() => {
+    const skills: Tag[] =
       projectsStore.additionalProjectData.tags?.skills || [];
-    const generalSkills: Skill[] =
+    const generalSkills: Tag[] =
       projectsStore.additionalProjectData.tags?.skillCategories || [];
     return [
       ...skills.filter((skill) => !userHasSkill(skill)),
@@ -123,13 +123,13 @@
     ];
   });
   // filtered general skills
-  const filteredCategories = computed<Skill[] | undefined>(() =>
+  const filteredCategories = computed<Tag[] | undefined>(() =>
     projectsStore.additionalProjectData.tags?.skillCategories.filter(
       searchSkills,
     ),
   );
   // filtered common skills
-  const filteredCommonSkills = computed<Skill[] | undefined>(() =>
+  const filteredCommonSkills = computed<Tag[] | undefined>(() =>
     projectsStore.additionalProjectData.tags?.skills.filter(searchSkills),
   );
   // disable save button
@@ -142,13 +142,13 @@
   // </COMPUTED VALUES>
 
   // <FUNCTIONS>
-  function searchSkills(skill: Skill) {
+  function searchSkills(skill: Tag) {
     return (
       !searchValue.value ||
-      skill.skill.toLowerCase() === searchValue.value.toLowerCase()
+      skill.name.toLowerCase() === searchValue.value.toLowerCase()
     );
   }
-  function userHasSkill(skill: Skill): boolean {
+  function userHasSkill(skill: Tag): boolean {
     return (
       Boolean(skills.value.find((s) => s.id === skill.id)) ||
       Boolean(authStore.userSkills?.common.find((s) => s.id === skill.id))
@@ -160,7 +160,7 @@
   // </FUNCTIONS>
 
   // <EVENTS>
-  function onTagClick(skill: Skill) {
+  function onTagClick(skill: Tag) {
     if (userHasSkill(skill)) return;
     searchValue.value = '';
     skills.value.push(skill);
@@ -169,7 +169,7 @@
     authStore.updateUserSkills(skills.value);
   }
 
-  function onDeleteSkill(skill: Skill) {
+  function onDeleteSkill(skill: Tag) {
     const idx = skills.value.findIndex((s) => s.id === skill.id);
     skills.value.splice(idx, 1);
   }

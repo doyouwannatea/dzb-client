@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { state } from './state';
 import { useModalsStore } from '../modals/useModalsStore';
 import { ParticipationWithProject, Priority } from '@/models/Participation';
-import { Skill } from '@/models/Project';
+import { Tag } from '@/models/Project';
 import { campusApi } from '@/api/CampusApi';
 import { participationApi } from '@/api/ParticipationApi';
 import { projectApi } from '@/api/ProjectApi';
@@ -84,7 +84,7 @@ export const useAuthStore = defineStore('auth', {
     // GET USER SKILLS
 
     // UPDATE USER SKILLS
-    updateUserSkills(skills: Skill[]) {
+    updateUserSkills(skills: Tag[]) {
       return this._onAsync(async () => {
         await skillsApi.updateUserSkills(skills);
         await this.getUserSkills();

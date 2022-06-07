@@ -4,9 +4,9 @@ import { Difficulty } from './ProjectDifficulty';
 import { State } from './ProjectState';
 import { Supervisor } from './Supervisor';
 
-export interface Skill {
+export interface Tag {
   id: number;
-  skill: string;
+  name: string;
   skillCategory_id: number;
 }
 
@@ -30,7 +30,7 @@ export interface Project {
   places: number;
   product_result: string;
   requirements: string;
-  skills: Skill[];
+  skills: Tag[];
   state: State;
   study_result: string;
   supervisors: Supervisor[];
@@ -51,9 +51,9 @@ export interface ProjectFilters {
 }
 
 export interface ProjectTags {
-  skills: Skill[];
-  specialties: Skill[];
-  skillCategories: Skill[];
+  skills: Tag[];
+  specialties: Tag[];
+  skillCategories: Tag[];
 }
 
 export interface AdditionalProjectData {

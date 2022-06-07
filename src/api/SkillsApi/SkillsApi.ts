@@ -1,5 +1,5 @@
 import { UserSkills } from '@/models/Candidate';
-import { Skill } from '@/models/Project';
+import { Tag } from '@/models/Project';
 import SkillsApiMock from './SkillsApiMock';
 import ISkillsApi from './ISkillsApi';
 
@@ -9,7 +9,7 @@ export default class SkillsApi extends ISkillsApi {
     return campusAuthApiMock.getUserSkills();
   }
 
-  async updateUserSkills(skills: Skill[]): Promise<void> {
+  async updateUserSkills(skills: Tag[]): Promise<void> {
     const campusAuthApiMock = new SkillsApiMock();
     return campusAuthApiMock.updateUserSkills(skills); // TODO: https://app.swaggerhub.com/apis/CoolSheff/Yarmarka/1#/Candidate/put_api_candidate
   }

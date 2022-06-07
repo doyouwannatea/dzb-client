@@ -6,7 +6,7 @@
         :deletable="deletable"
         @delete="$emit('delete', skill)"
       >
-        {{ skill.skill }}
+        {{ skill.name }}
       </BaseTag>
     </li>
     <li v-if="showBtnVisible" class="show-btn-wrapper">
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Skill } from '@/models/Project';
+  import { Tag } from '@/models/Project';
   import { computed, ref, withDefaults } from 'vue';
   import { declOfNum } from '@/helpers/string';
   // components
@@ -30,7 +30,7 @@
   import BaseButton from '../ui/BaseButton.vue';
 
   type Props = {
-    skills: Skill[];
+    skills: Tag[];
     showAll?: boolean;
     defaultVisible?: number;
     disableAll?: boolean;
@@ -38,7 +38,7 @@
   };
 
   type Emits = {
-    (e: 'delete', skill: Skill): void;
+    (e: 'delete', skill: Tag): void;
   };
 
   const props = withDefaults(defineProps<Props>(), {

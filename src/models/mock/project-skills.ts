@@ -1,85 +1,85 @@
-import { Skill } from '../Project';
+import { Tag } from '../Project';
 
-export const skills: Skill[] = [
+export const skills: Tag[] = [
   {
     id: 1,
-    skill: 'Web',
+    name: 'Web',
     skillCategory_id: 0,
   },
   {
     id: 2,
-    skill: 'Mobile',
+    name: 'Mobile',
     skillCategory_id: 0,
   },
   {
     id: 3,
-    skill: 'Конференция',
+    name: 'Конференция',
     skillCategory_id: 0,
   },
   {
     id: 4,
-    skill: 'Обучение',
+    name: 'Обучение',
     skillCategory_id: 0,
   },
   {
     id: 5,
-    skill: 'Коммерческий',
+    name: 'Коммерческий',
     skillCategory_id: 0,
   },
   {
     id: 6,
-    skill: 'Долгосрочный',
+    name: 'Долгосрочный',
     skillCategory_id: 0,
   },
   {
     id: 7,
-    skill: 'Неординарный',
+    name: 'Неординарный',
     skillCategory_id: 0,
   },
 ];
 
-export const specialties: Skill[] = [
+export const specialties: Tag[] = [
   {
     id: 13,
-    skill: 'ИСТ',
+    name: 'ИСТ',
     skillCategory_id: 0,
   },
   {
     id: 14,
-    skill: 'ЭВМ',
+    name: 'ЭВМ',
     skillCategory_id: 0,
   },
   {
     id: 15,
-    skill: 'АСУ',
+    name: 'АСУ',
     skillCategory_id: 0,
   },
 ];
 
-export const skillCategories: Skill[] = [
+export const skillCategories: Tag[] = [
   {
     id: 8,
-    skill: 'Построение графиков',
+    name: 'Построение графиков',
     skillCategory_id: 0,
   },
   {
     id: 9,
-    skill: 'Информационная безопасность',
+    name: 'Информационная безопасность',
     skillCategory_id: 0,
   },
   {
     id: 10,
-    skill: 'Web-разработка',
+    name: 'Web-разработка',
     skillCategory_id: 0,
   },
   {
     id: 11,
-    skill: 'Высшая математика',
+    name: 'Высшая математика',
     skillCategory_id: 0,
   },
   {
     id: 12,
-    skill: 'Инфокоммуникация',
+    name: 'Инфокоммуникация',
     skillCategory_id: 0,
   },
 ];
