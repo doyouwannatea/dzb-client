@@ -18,7 +18,7 @@
 
 <style scoped>
   .panel {
-    padding: 0;
+    padding: 0 !important;
     overflow: hidden;
     font-family: 'Mont', Arial, Helvetica, sans-serif;
   }
