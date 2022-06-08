@@ -9,7 +9,6 @@ import { projectApi } from '@/api/ProjectApi';
 import { skillsApi } from '@/api/SkillsApi';
 import { useProjectsStore } from '../projects/useProjectsStore';
 import { isSupervisor } from '@/helpers/typeCheck';
-import { useRouter } from 'vue-router';
 import { RouteNames } from '@/router/types/route-names';
 
 export const useAuthStore = defineStore('auth', {
@@ -38,11 +37,9 @@ export const useAuthStore = defineStore('auth', {
 
     // EXIT
     async exit() {
-      const router = useRouter();
       await campusApi.logout();
-
-      router.replace(RouteNames.HOME);
-      window.location.reload();
+      this.router.replace({ name: RouteNames.HOME });
+      this.profileData = undefined;
     },
     // EXIT
 

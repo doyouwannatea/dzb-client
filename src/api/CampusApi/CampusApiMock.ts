@@ -18,7 +18,6 @@ export default class CampusApiMock extends ICampusApi {
   async logout(): Promise<void> {
     await delayRes(undefined, 200);
     ICampusApi.deleteAuthToken();
-    window.location.reload();
   }
 
   async getUserInfo(): Promise<Candidate | Supervisor> {
