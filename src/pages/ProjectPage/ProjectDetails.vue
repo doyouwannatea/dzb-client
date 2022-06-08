@@ -92,7 +92,7 @@
     </BasePanel>
 
     <!-- Panel -->
-    <BasePanel>
+    <BasePanel v-if="project?.skills.length > 0">
       <!-- Information list -->
       <AppList>
         <AppListItem :bold="false" :wide="true">

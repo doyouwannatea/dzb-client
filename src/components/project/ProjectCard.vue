@@ -12,15 +12,15 @@
     <div class="divider"></div>
     <div class="body container">
       <ul class="list">
-        <li class="list-item">
+        <li v-if="project.goal" class="list-item">
           <b>Цель:</b>
           {{ project.goal }}
         </li>
-        <li class="list-item">
+        <li v-if="project.requirements" class="list-item">
           <b>Требования к студентам:</b>
           {{ project.requirements }}
         </li>
-        <li class="list-item">
+        <li v-if="project.date_start" class="list-item">
           <b>Старт проекта:</b> {{ project.date_start }}
         </li>
       </ul>
