@@ -1,16 +1,21 @@
 <template>
-  <BaseButton
-    v-if="fromBottom !== undefined && fromBottom < 100"
-    class="btn"
-    @click="scroll"
-  />
+  <BaseButton v-if="visible" class="btn" @click="scroll" />
 </template>
 
 <script setup lang="ts">
-  import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
+  import { computed, onBeforeMount, onBeforeUnmount, ref } from 'vue';
   import BaseButton from './BaseButton.vue';
 
+  const bottomOffset = 100;
   const fromBottom = ref<number | undefined>(undefined);
+  const visible = computed(
+    () =>
+      fromBottom.value !== undefined &&
+      fromBottom.value < bottomOffset &&
+      document.documentElement.scrollHeight -
+        document.documentElement.clientHeight >=
+        bottomOffset,
+  );
 
   function scroll() {
     window.scrollTo({ behavior: 'smooth', left: 0, top: 0 });
@@ -22,7 +27,6 @@
         document.documentElement.clientHeight -
         scrollY,
     );
-    console.log(fromBottom.value);
   }
 
   onBeforeMount(() => {
@@ -48,5 +52,6 @@
     background-position: 50% 45%;
     background-size: 50%;
     border-radius: 50%;
+    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
   }
 </style>
