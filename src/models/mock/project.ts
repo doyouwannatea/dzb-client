@@ -53,7 +53,11 @@ export const projectListResponse: ProjectListResponse = {
       difficulty: 2,
       goal: 'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ',
       id: 1,
-      specialities: [{ id: 2, name: 'НвГДСз' }],
+      specialities: [
+        { id: 2, name: 'НвГДСз' },
+        { id: 4, name: 'ЭВМ' },
+        { id: 3, name: 'ИСТб' },
+      ],
       participations: [
         {
           id: 1,

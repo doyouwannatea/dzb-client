@@ -5,8 +5,11 @@
         {{ project.title }}
       </h2>
       <ProjectStatus class="status" :state="project.state" />
-      <div class="subtitle">
-        {{ project?.supervisors.length ? project.supervisors.join(', ') : '' }}
+      <div v-if="project?.supervisors.length > 0" class="subtitle">
+        {{ project.supervisors.join(', ') }}
+      </div>
+      <div v-if="project?.specialities.length > 0" class="subtitle">
+        {{ project.specialities.map((ins) => ins.name).join(', ') }}
       </div>
     </header>
     <div class="divider"></div>
@@ -176,6 +179,7 @@
   }
 
   .subtitle {
+    grid-column: 1 / -1;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.25rem;
