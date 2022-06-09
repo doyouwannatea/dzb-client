@@ -27,7 +27,7 @@
 
   const hideBtn = computed(
     () =>
-      props.project.state.id === StateID.ArchivedState ||
+      props.project.state.id !== StateID.RecruitingState ||
       authStore.profileData?.is_teacher,
   );
 </script>
