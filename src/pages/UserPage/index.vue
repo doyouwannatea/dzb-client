@@ -6,10 +6,8 @@
     <SidebarContainer>
       <template #sidebar>
         <UserNavigation />
-        <!-- TODO: доделать таймер -->
-        <!-- <DeadlineTimer /> -->
+        <DeadlineTimer />
       </template>
-
       <template #main>
         <RouterView></RouterView>
       </template>

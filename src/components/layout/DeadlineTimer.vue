@@ -1,11 +1,37 @@
-<!-- TODO: захардкодить дату -->
-
 <template>
   <div class="timer">
-    <div class="title">3 дня 10:12:54</div>
+    <div class="title">{{ duration }}</div>
     <div>до конца приема заявок на проектное обучение</div>
   </div>
 </template>
+
+<script setup lang="ts">
+  import { onMounted, onUnmounted, ref } from 'vue';
+  import { Duration } from 'luxon';
+
+  const DEADLINE = new Date('2022/06/30');
+  const timer = ref<number | undefined>(undefined);
+  const duration = ref<string>('');
+
+  function calcTime() {
+    const diff = new Date(DEADLINE.getTime() - Date.now());
+
+    duration.value = Duration.fromObject({
+      day: diff.getDate(),
+      hour: diff.getHours(),
+      minutes: diff.getMinutes(),
+    }).toHuman();
+  }
+
+  onMounted(() => {
+    calcTime();
+    timer.value = window.setInterval(calcTime, 1000);
+  });
+
+  onUnmounted(() => {
+    window.clearInterval(timer.value);
+  });
+</script>
 
 <style scoped>
   .timer {
