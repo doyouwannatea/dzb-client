@@ -41,8 +41,8 @@
 <style scoped>
   .btn {
     position: fixed;
-    bottom: 24rem;
     right: 5.625rem;
+    bottom: 24rem;
     z-index: 9999;
     width: 4rem;
     height: 4rem;
