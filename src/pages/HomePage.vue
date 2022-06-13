@@ -33,10 +33,14 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, watch } from 'vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useFilteredProjectList } from '@/hooks/useProjectFilters';
   import { useFetchAdditionalProjectData } from '@/hooks/useFetchAdditionalProjectData';
+  import {
+    useHomePageSavedScrollPosition,
+    useSaveHomePageScrollPosition,
+  } from '@/hooks/useHomePageScrollPosition';
   // components
   import ProjectSearch from '@/components/project/ProjectSearch.vue';
   import ProjectListSort from '@/components/project/ProjectListSort.vue';
@@ -48,12 +52,14 @@
 
   useFilteredProjectList();
   useFetchAdditionalProjectData();
-  const store = useProjectsStore();
+  useSaveHomePageScrollPosition();
+  useHomePageSavedScrollPosition();
 
-  const error = computed(() => store.error);
-  const loading = computed(() => store.loading);
-  const projectList = computed(() => store.projectList);
-  const projectCount = computed(() => store.projectCount);
+  const useProjectStore = useProjectsStore();
+  const error = computed(() => useProjectStore.error);
+  const loading = computed(() => useProjectStore.loading);
+  const projectList = computed(() => useProjectStore.projectList);
+  const projectCount = computed(() => useProjectStore.projectCount);
 </script>
 
 <style scoped>
