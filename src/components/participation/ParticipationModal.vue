@@ -24,7 +24,7 @@
           :value="authStore.profileData?.fio"
           class="input"
           disabled
-          :icon="authStore.profileData?.fio ? checkedIconUrl : errorIconUrl"
+          :icon="authStore.profileData?.fio ? checkedIconUrl : undefined"
         />
       </fieldset>
       <!-- fio -->
@@ -37,7 +37,7 @@
           :value="authStore.profileData?.email"
           class="input"
           disabled
-          :icon="authStore.profileData?.email ? checkedIconUrl : errorIconUrl"
+          :icon="authStore.profileData?.email ? checkedIconUrl : undefined"
         />
       </fieldset>
       <!-- mail -->
@@ -51,9 +51,7 @@
           class="input"
           disabled
           :icon="
-            authStore.profileData?.training_group
-              ? checkedIconUrl
-              : errorIconUrl
+            authStore.profileData?.training_group ? checkedIconUrl : undefined
           "
         />
       </fieldset>
@@ -67,7 +65,7 @@
           :value="authStore.profileData?.phone"
           class="input"
           disabled
-          :icon="authStore.profileData?.phone ? checkedIconUrl : errorIconUrl"
+          :icon="authStore.profileData?.phone ? checkedIconUrl : undefined"
         />
       </fieldset>
       <!-- phone number -->
@@ -77,10 +75,13 @@
     <!-- ACTIONS -->
     <template #actions>
       <BaseTooltip :message="priorityTooltipMsg">
-        <span class="input-label subtitle">Приоритетность проекта</span>
+        <span class="input-label subtitle">
+          <span class="required">*</span>
+          Приоритетность проекта
+        </span>
       </BaseTooltip>
       <div class="actions-grid">
-        <div>
+        <div class="priority-fieldset">
           <!-- 1 (HIGH) -->
           <BaseRadioButton
             v-model="priorityValue"
@@ -129,10 +130,11 @@
           </BaseRadioButton>
           <!-- 3 (LOW) -->
         </div>
+        <div v-if="error" class="required error">{{ error }}</div>
         <BaseButton
           case="uppercase"
           class="participation-btn"
-          :disabled="authStore.loading || !priorityValue"
+          :disabled="authStore.loading"
           @click="onCreateParticipation"
         >
           Подать заявку
@@ -162,6 +164,7 @@
   const authStore = useAuthStore();
   const modalsStore = useModalsStore();
 
+  const error = ref('');
   const priorityValue = ref<Priority>();
   const highSelected = ref(false);
   const mediumSelected = ref(false);
@@ -196,7 +199,13 @@
   );
 
   function onCreateParticipation() {
-    if (projectsStore.openedProject && priorityValue.value) {
+    error.value = '';
+    if (!priorityValue.value) {
+      error.value = 'выберите приоритет проекта';
+      return;
+    }
+
+    if (projectsStore.openedProject) {
       authStore.createPatricipation(
         priorityValue.value,
         projectsStore.openedProject.id,
@@ -208,6 +217,7 @@
   function onCloseModal() {
     modalsStore.participationModal = false;
     priorityValue.value = undefined;
+    error.value = '';
   }
 </script>
 
@@ -228,6 +238,8 @@
   }
 
   .participation-btn {
+    grid-row: 2;
+    grid-column: 2;
     align-self: flex-end;
   }
 
@@ -253,8 +265,27 @@
 
   .actions-grid {
     display: grid;
+    grid-template-rows: 1fr 1fr;
     grid-template-columns: auto 1fr;
-    gap: 18rem;
+
+    row-gap: 0.5rem;
+    column-gap: 18rem;
     margin-top: 0.9375rem;
+  }
+
+  .required {
+    font-weight: bold;
+    color: var(--red-color-1);
+  }
+
+  .error {
+    grid-row: 1;
+    grid-column: 2;
+    align-self: flex-end;
+    margin-bottom: 0.5rem;
+  }
+
+  .priority-fieldset {
+    grid-row: span 2;
   }
 </style>
