@@ -6,15 +6,10 @@
   import { computed, onBeforeMount, onBeforeUnmount, ref } from 'vue';
   import BaseButton from './BaseButton.vue';
 
-  const bottomOffset = 100;
-  const fromBottom = ref<number | undefined>(undefined);
+  const topOffset = 0;
+  const fromTop = ref<number | undefined>(undefined);
   const visible = computed(
-    () =>
-      fromBottom.value !== undefined &&
-      fromBottom.value < bottomOffset &&
-      document.documentElement.scrollHeight -
-        document.documentElement.clientHeight >=
-        bottomOffset,
+    () => fromTop.value !== undefined && fromTop.value > topOffset,
   );
 
   function scroll() {
@@ -22,11 +17,7 @@
   }
 
   function onScroll() {
-    fromBottom.value = Math.floor(
-      document.documentElement.scrollHeight -
-        document.documentElement.clientHeight -
-        scrollY,
-    );
+    fromTop.value = Math.floor(scrollY);
   }
 
   onBeforeMount(() => {
@@ -41,9 +32,9 @@
 <style scoped>
   .btn {
     position: fixed;
-    right: 5.625rem;
-    bottom: 24rem;
-    z-index: 9999;
+    right: 5rem;
+    bottom: 7rem;
+    z-index: 999;
     width: 4rem;
     height: 4rem;
     padding: 0;

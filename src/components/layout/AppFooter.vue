@@ -103,6 +103,7 @@
   .footer {
     position: sticky;
     top: 100vh;
+    z-index: 1000;
     padding-top: 3.5rem;
     padding-bottom: 2.25rem;
     margin-top: 8.75rem;
