@@ -36,8 +36,7 @@
   import { computed } from 'vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useFilteredProjectList } from '@/hooks/useProjectFilters';
-  import { RouteNames } from '@/router/types/route-names';
-  import { useFetchAdditionalProjectDataOnce } from '@/hooks/useFetchAdditionalProjectDataOnce';
+  import { useFetchAdditionalProjectData } from '@/hooks/useFetchAdditionalProjectData';
   // components
   import ProjectSearch from '@/components/project/ProjectSearch.vue';
   import ProjectListSort from '@/components/project/ProjectListSort.vue';
@@ -47,8 +46,8 @@
   import ProjectListPagination from '@/components/project/ProjectListPagination.vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
 
-  useFilteredProjectList(RouteNames.HOME);
-  useFetchAdditionalProjectDataOnce();
+  useFilteredProjectList();
+  useFetchAdditionalProjectData();
   const store = useProjectsStore();
 
   const error = computed(() => store.error);
