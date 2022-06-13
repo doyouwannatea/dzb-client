@@ -39,9 +39,12 @@ export const useAuthStore = defineStore('auth', {
 
     // EXIT
     async exit() {
+      const projectStore = useProjectsStore();
+
       await campusApi.logout();
       this.router.replace({ name: RouteNames.HOME });
       this.profileData = undefined;
+      await projectStore.getAddProjectData();
     },
     // EXIT
 
