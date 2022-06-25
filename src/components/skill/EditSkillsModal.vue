@@ -32,7 +32,7 @@
     <div class="skills">
       <div class="col">
         <h3 class="tags-title">По направлению</h3>
-        <span v-if="projectsStore.tagsLoading">loading...</span>
+        <span v-if="projectsStore.tagsLoading">загрузка...</span>
         <ul v-else class="skills-list by-direction-skills">
           <li
             v-for="skill in filteredCategories"
@@ -50,7 +50,7 @@
       </div>
       <div class="col right-col">
         <h3 class="tags-title">По алфавиту</h3>
-        <span v-if="projectsStore.tagsLoading">loading...</span>
+        <span v-if="projectsStore.tagsLoading">загрузка...</span>
         <ul v-else class="skills-list">
           <li
             v-for="skill in filteredCommonSkills"
@@ -72,7 +72,7 @@
     <!-- ACTIONS -->
     <div class="actions">
       <BaseButton case="uppercase" :disabled="disableSaveBtn" @click="onSave">
-        {{ authStore.loading ? 'loading...' : 'сохранить' }}
+        {{ authStore.loading ? 'загрузка...' : 'сохранить' }}
       </BaseButton>
     </div>
     <!-- ACTIONS -->

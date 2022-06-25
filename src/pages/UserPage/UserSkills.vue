@@ -13,7 +13,7 @@
         :show-all="true"
         :disable-all="true"
       />
-      <div v-if="authStore.loading">loading...</div>
+      <div v-if="authStore.loading">загрузка...</div>
       <div class="divider"></div>
       <BaseTooltip :message="individualSkillsMsg">
         <h2 class="subtitle">Индивидуальные навыки</h2>
@@ -23,7 +23,7 @@
         :skills="authStore.userSkills?.personal"
         :show-all="true"
       />
-      <div v-if="authStore.loading">loading...</div>
+      <div v-if="authStore.loading">загрузка...</div>
       <BaseButton
         class="edit-btn"
         case="uppercase"

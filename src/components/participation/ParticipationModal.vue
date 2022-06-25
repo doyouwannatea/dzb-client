@@ -9,7 +9,7 @@
     <template #header>
       <h1 class="title">Подача заявки на проект</h1>
       <h2>{{ projectsStore.openedProject?.title }}</h2>
-      <h3 v-if="authStore.loading">loading...</h3>
+      <h3 v-if="authStore.loading">загрузка...</h3>
       <h3 v-if="authStore.error">{{ authStore.error }}</h3>
     </template>
     <!-- HEADER -->

@@ -15,7 +15,7 @@
         <ProjectListFilter />
       </template>
       <template #main>
-        <div v-if="loading">loading...</div>
+        <div v-if="loading">загрузка...</div>
         <div v-if="error">{{ error }}</div>
         <div v-if="projectList && !projectList.length">ничего не найдено</div>
         <template v-if="!loading && !error && projectList">

@@ -19,7 +19,7 @@
     </Draggable>
   </div>
   <UserParticipationListStub v-else />
-  <div v-if="authStore.loading">loading...</div>
+  <div v-if="authStore.loading">загрузка...</div>
   <div v-if="authStore.error">{{ authStore.error }}</div>
 
   <div v-if="authStore.isParticipationList" class="actions">
