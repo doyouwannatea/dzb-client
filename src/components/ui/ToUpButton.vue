@@ -1,5 +1,7 @@
 <template>
-  <BaseButton v-if="visible" class="btn" @click="scroll" />
+  <transition name="btn">
+    <BaseButton v-if="visible" class="btn" @click="scroll" />
+  </transition>
 </template>
 
 <script setup lang="ts">
@@ -44,5 +46,15 @@
     background-size: 50%;
     border-radius: 50%;
     box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
+  }
+
+  .btn-enter-active,
+  .btn-leave-active {
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-enter-from,
+  .btn-leave-to {
+    opacity: 0;
   }
 </style>
