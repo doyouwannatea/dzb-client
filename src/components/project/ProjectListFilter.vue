@@ -29,7 +29,7 @@
         <VMultiselect
           v-model="filters.specialties"
           mode="tags"
-          placeholder="По специальности"
+          placeholder="Введите специальности"
           class="miltiselect"
           :close-on-select="false"
           :searchable="true"
@@ -42,7 +42,7 @@
         <VMultiselect
           v-model="filters.skills"
           mode="tags"
-          placeholder="По навыкам"
+          placeholder="Введите навыки"
           class="miltiselect"
           :close-on-select="false"
           :searchable="true"

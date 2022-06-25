@@ -1,5 +1,11 @@
 import { projectFiltersToSearchParams } from '@/helpers/query';
-import { Project, ProjectFilters, Type, ProjectTags } from '@/models/Project';
+import {
+  Project,
+  ProjectFilters,
+  Type,
+  ProjectTags,
+  Tag,
+} from '@/models/Project';
 import IProjectApi, { ProjectListResponse } from './IProjectApi';
 import { State } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
@@ -27,7 +33,23 @@ export default class ProjectApi extends IProjectApi {
   }
 
   async getAllProjectTags(): Promise<ProjectTags> {
-    return baseKyInstance.get('api/skills').json();
+    const tags: Record<string, Tag[]> = await baseKyInstance
+      .get('api/skills')
+      .json();
+
+    // сортировка по алфавиту
+    for (const key in tags) {
+      tags[key].sort((a, b) => {
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+        return 0;
+      });
+    }
+
+    // костыль, т.к. TS не даёт итерироваться по ProjectTags, пришлось привести его к Record<string, Tag>
+    return tags as unknown as ProjectTags;
   }
 
   async getAllSupervisors(): Promise<Supervisor[]> {
