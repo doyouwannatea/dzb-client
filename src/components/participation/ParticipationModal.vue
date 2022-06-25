@@ -130,11 +130,10 @@
           </BaseRadioButton>
           <!-- 3 (LOW) -->
         </div>
-        <div v-if="error" class="required error">{{ error }}</div>
         <BaseButton
           case="uppercase"
           class="participation-btn"
-          :disabled="authStore.loading"
+          :disabled="authStore.loading || !priorityValue"
           @click="onCreateParticipation"
         >
           Подать заявку
@@ -146,11 +145,10 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
+  import { onBeforeMount, ref, watch } from 'vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { PriorityText, Priority } from '@/models/Participation';
   import checkedIconUrl from '@/assets/icons/checked.svg?url';
-  import errorIconUrl from '@/assets/icons/close-red.png?url';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   // components
@@ -164,7 +162,6 @@
   const authStore = useAuthStore();
   const modalsStore = useModalsStore();
 
-  const error = ref('');
   const priorityValue = ref<Priority>();
   const highSelected = ref(false);
   const mediumSelected = ref(false);
@@ -172,36 +169,45 @@
   const priorityTooltipMsg =
     'Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас распределить в проект, в который вы хотите попасть с большей вероятностью, вы ставите ему больший приоритет. Вы сможете поменять приоритет проекта в личном кабинете после отправки заявки';
 
-  watch(
-    () => authStore.participationList,
-    () => {
-      if (authStore.participationList) {
-        highSelected.value = false;
-        mediumSelected.value = false;
-        lowSelected.value = false;
+  watch(() => authStore.participationList, initParticipations, {
+    immediate: true,
+    deep: true,
+  });
 
-        for (const participation of authStore.participationList) {
-          switch (participation.priority) {
-            case 1:
-              highSelected.value = true;
-              break;
-            case 2:
-              mediumSelected.value = true;
-              break;
-            case 3:
-              lowSelected.value = true;
-              break;
-          }
+  watch(() => modalsStore.participationModal, initParticipations);
+
+  function initParticipations() {
+    if (authStore.participationList) {
+      highSelected.value = false;
+      mediumSelected.value = false;
+      lowSelected.value = false;
+
+      for (const participation of authStore.participationList) {
+        switch (participation.priority) {
+          case 1:
+            highSelected.value = true;
+            break;
+          case 2:
+            mediumSelected.value = true;
+            break;
+          case 3:
+            lowSelected.value = true;
+            break;
         }
       }
-    },
-    { immediate: true, deep: true },
-  );
+
+      if (!highSelected.value) {
+        priorityValue.value = Priority.High;
+      } else if (!mediumSelected.value) {
+        priorityValue.value = Priority.Medium;
+      } else if (!lowSelected.value) {
+        priorityValue.value = Priority.Low;
+      }
+    }
+  }
 
   function onCreateParticipation() {
-    error.value = '';
     if (!priorityValue.value) {
-      error.value = 'выберите приоритет проекта';
       return;
     }
 
@@ -217,7 +223,6 @@
   function onCloseModal() {
     modalsStore.participationModal = false;
     priorityValue.value = undefined;
-    error.value = '';
   }
 </script>
 
@@ -276,13 +281,6 @@
   .required {
     font-weight: bold;
     color: var(--red-color-1);
-  }
-
-  .error {
-    grid-row: 1;
-    grid-column: 2;
-    align-self: flex-end;
-    margin-bottom: 0.5rem;
   }
 
   .priority-fieldset {
