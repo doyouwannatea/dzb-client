@@ -28,7 +28,7 @@
     padding: 1.875rem;
     font-size: 1.5rem;
     font-weight: 800;
-    line-height: 1.9375rem;
+    line-height: 2.5rem;
     color: var(--accent-color-1);
     cursor: pointer;
     border-radius: 0.625rem;
