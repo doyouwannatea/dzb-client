@@ -1,7 +1,11 @@
 <template>
   <div class="timer">
-    <div class="title">{{ duration }}</div>
-    <div>до конца приема заявок на проектное обучение</div>
+    <div class="title">
+      Прием заявок на проектное обучение закончен, добор в проекты будет открыт
+      в августе 2022
+    </div>
+    <!-- <div class="title">{{ duration }}</div>-->
+    <!-- <div>второй этап откроется в августе</div> -->
   </div>
 </template>
 
@@ -24,12 +28,12 @@
   }
 
   onMounted(() => {
-    calcTime();
-    timer.value = window.setInterval(calcTime, 1000);
+    // calcTime();
+    // timer.value = window.setInterval(calcTime, 1000);
   });
 
   onUnmounted(() => {
-    window.clearInterval(timer.value);
+    // window.clearInterval(timer.value);
   });
 </script>
 
@@ -49,7 +53,7 @@
 
   .title {
     margin-bottom: 0.75rem;
-    font-size: 2.25rem;
+    font-size: 1.65rem;
     font-weight: 800;
     line-height: 2.875rem;
     color: var(--accent-color-1);
