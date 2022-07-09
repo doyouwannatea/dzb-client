@@ -11,6 +11,11 @@
       <div v-if="project?.specialities.length > 0" class="subtitle">
         {{ project.specialities.map((ins) => ins.name).join(', ') }}
       </div>
+      <ProjectCardInfo
+        class="info--mobile-s"
+        :places="project.places"
+        :difficulty="project.difficulty"
+      />
     </header>
     <div class="divider"></div>
     <div class="body container">
@@ -27,21 +32,11 @@
           <b>Старт проекта:</b> {{ project.date_start }}
         </li>
       </ul>
-      <div class="info">
-        <ProjectTeamCounter class="team-counter" :total="project.places" />
-        <div
-          v-if="checkProjectDifficulty(project.difficulty)"
-          class="difficulty"
-        >
-          <template
-            v-for="(_, idx) in Array.from(new Array(project.difficulty))"
-            :key="idx"
-          >
-            <span class="icon star-icon"></span>
-          </template>
-          <span>{{ difficultyText }}</span>
-        </div>
-      </div>
+      <ProjectCardInfo
+        class="info--desktop-s"
+        :places="project.places"
+        :difficulty="project.difficulty"
+      />
     </div>
     <footer class="footer container">
       <SkillList
@@ -71,22 +66,22 @@
   import { DifficultyText } from '@/models/ProjectDifficulty';
   import { StateClass } from '@/models/ProjectState';
   import { RouteNames } from '@/router/types/route-names';
-  import { checkProjectDifficulty } from '@/helpers/project';
   // components
   import ProjectStatus from './ProjectStatus.vue';
-  import ProjectTeamCounter from './ProjectTeamCounter.vue';
   import SkillList from '../skill/SkillList.vue';
   import OpenParticipationModalButton from '../participation/OpenParticipationModalButton.vue';
   import OpenFeedbackModalButton from '../feedback/OpenFeedbackModalButton.vue';
   import BaseButton from '../ui/BaseButton.vue';
+  import ProjectCardInfo from './ProjectCardInfo.vue';
 
   const props = defineProps<{ project: Project }>();
 
   const stateClass = StateClass[props.project.state.id];
-  const difficultyText = DifficultyText[props.project.difficulty];
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@breakpoints';
+
   .card {
     --border-left-color: var(--accent-color-1);
 
@@ -97,6 +92,10 @@
     border-left: 1.25rem solid var(--border-left-color);
     border-radius: 0.625rem;
     box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
+
+    @media (max-width: $mobile-s) {
+      border-left: none;
+    }
   }
 
   .card.active {
@@ -116,6 +115,12 @@
     gap: 3.375rem;
     align-items: center;
     justify-content: space-between;
+
+    @media (max-width: $mobile-s) {
+      align-items: initial;
+      gap: 18px;
+      flex-direction: column;
+    }
   }
 
   .header {
@@ -131,32 +136,32 @@
     gap: 0.75rem;
     align-self: flex-end;
     margin-left: auto;
+
+    @media (max-width: $mobile-s) {
+      flex-direction: column;
+      margin-left: 0;
+      align-self: initial;
+      align-items: initial;
+    }
   }
 
   .info {
-    display: flex;
-    gap: 1.375rem;
-    justify-content: flex-end;
-    margin-top: 0.625rem;
-    font-size: 1.125rem;
-    line-height: 1.4375rem;
-  }
+    &--mobile-s {
+      display: none;
+      grid-column: 1;
+      grid-row: 4;
+      margin-top: 0;
 
-  .difficulty {
-    display: flex;
-    gap: 0.5625rem;
-    align-items: center;
-    color: var(--text-color);
-  }
+      @media (max-width: $mobile-s) {
+        display: flex;
+      }
+    }
 
-  .icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    background: center / contain no-repeat;
-  }
-
-  .star-icon {
-    background-image: url('@/assets/icons/star.svg');
+    &--desktop-s {
+      @media (max-width: $mobile-s) {
+        display: none;
+      }
+    }
   }
 
   .container {
@@ -176,6 +181,11 @@
     font-weight: 600;
     line-height: 1.9375rem;
     color: #4f5569;
+
+    @media (max-width: $mobile-s) {
+      grid-column: 1 / -1;
+      max-width: auto;
+    }
   }
 
   .subtitle {
@@ -184,11 +194,23 @@
     font-weight: 400;
     line-height: 1.25rem;
     color: #4f5569;
+
+    &:nth-child(3) {
+      grid-row: 2;
+    }
+    &:nth-child(4) {
+      grid-row: 3;
+    }
   }
 
   .status {
+    white-space: nowrap;
     align-self: flex-start;
     justify-self: flex-end;
+
+    @media (max-width: $mobile-s) {
+      grid-column: 2;
+    }
   }
 
   .body {

@@ -1,3 +1,5 @@
+@import '@breakpoints';
+
 html,
 body,
 #app {
@@ -8,15 +10,9 @@ html {
   font-size: 16px;
 }
 
-@media (max-width: 1536px) {
+@media (max-width: $desktop-s) {
   html {
     font-size: 14px;
-  }
-}
-
-@media (max-width: 425px) {
-  html {
-    font-size: 16px;
   }
 }
 

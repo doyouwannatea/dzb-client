@@ -12,6 +12,7 @@ export default ({ mode }) => {
     resolve: {
       alias: {
         '@': join(__dirname, 'src'),
+        '@breakpoints': join(__dirname, 'src/styles/breakpoints.scss'),
       },
     },
     base: process.env.VITE_BASE_URL,
