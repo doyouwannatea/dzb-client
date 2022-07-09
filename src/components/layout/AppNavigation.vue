@@ -8,14 +8,6 @@
           </RouterLink>
         </li>
       </template>
-      <li class="nav-item">
-        <RouterLink
-          class="nav-link contacts-link"
-          :to="{ ...$route, hash: '#footer' }"
-        >
-          контакты
-        </RouterLink>
-      </li>
     </ul>
   </nav>
 </template>

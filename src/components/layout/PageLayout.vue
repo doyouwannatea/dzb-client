@@ -2,6 +2,7 @@
   <BaseLayout>
     <template #header>
       <AppHeader />
+      <BottomNavigationBar />
     </template>
     <template #content>
       <BaseContainer size="md">
@@ -20,4 +21,5 @@
   import AppHeader from './AppHeader.vue';
   import AppFooter from './AppFooter.vue';
   import BaseContainer from '../ui/BaseContainer.vue';
+  import BottomNavigationBar from './mobile/BottomNavigationBar.vue';
 </script>
