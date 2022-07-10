@@ -109,10 +109,16 @@
   import QuestionAccordion from '../components/ui/accordion/QuestionAccordion.vue';
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .header {
     margin-top: 4.75rem;
     margin-bottom: 2.8125rem;
+
+    @media (max-width: $mobile-s) {
+      margin-top: 1.875rem;
+    }
   }
 
   .subtitle {
