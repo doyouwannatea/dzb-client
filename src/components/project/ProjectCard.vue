@@ -80,7 +80,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@breakpoints';
+  @import '@styles/breakpoints.scss';
 
   .card {
     --border-left-color: var(--accent-color-1);

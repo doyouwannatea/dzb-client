@@ -3,7 +3,7 @@
     <BaseInput
       v-model="term"
       :icon="searchIconUrl"
-      placeholder="Введите название проекта для поиска..."
+      placeholder="Поиск по проектам..."
       class="search-input"
     />
   </form>

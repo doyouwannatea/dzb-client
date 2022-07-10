@@ -18,7 +18,7 @@
   const mobileRoutes = useMobileNavigationRoutes();
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .navigation {
     position: fixed;
     right: 0;
@@ -45,40 +45,33 @@
     flex-direction: column;
     gap: 0.5625rem;
     align-items: center;
-    min-width: 100px;
+    min-width: 70px;
     font-family: 'Mont', Arial, Helvetica, sans-serif;
     font-size: 0.625rem;
     font-weight: 600;
     color: var(--gray-color-2);
 
     text-decoration: none;
-  }
 
-  .link:hover,
-  .link:active,
-  .link.router-link-exact-active {
-    color: var(--accent-color-1);
-  }
+    &:deep(svg) {
+      width: 1.875rem;
+      height: 1.875rem;
+    }
 
-  .link:deep(svg) {
-    width: 1.875rem;
-    height: 1.875rem;
-  }
+    &:deep(path) {
+      stroke: var(--gray-color-2);
+    }
 
-  .link:deep(path) {
-    stroke: var(--gray-color-2);
-  }
+    &:hover,
+    &:active,
+    &:focus-visible,
+    &.router-link-exact-active {
+      color: var(--accent-color-1);
 
-  .link:hover:deep(path),
-  .link:focus-visible:deep(path) {
-    stroke: var(--accent-color-1);
-  }
-
-  .link.router-link-exact-active {
-    color: var(--accent-color-1);
-  }
-
-  .link.router-link-exact-active:deep(path) {
-    stroke: var(--accent-color-1);
+      &:deep(svg),
+      &:deep(path) {
+        stroke: var(--accent-color-1);
+      }
+    }
   }
 </style>

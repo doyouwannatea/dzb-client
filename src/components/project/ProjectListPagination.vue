@@ -108,7 +108,9 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .pagination {
     margin-top: 0.9375rem;
     margin-bottom: 0.9375rem;
@@ -122,6 +124,10 @@
     gap: 2.25rem;
     justify-content: center;
     list-style: none;
+
+    @media (max-width: $mobile-s) {
+      gap: 1.25rem;
+    }
   }
 
   .pagination-item {

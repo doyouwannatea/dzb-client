@@ -7,7 +7,9 @@
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .logo {
     --width: 3.125rem;
     --height: 3.125rem;
@@ -23,6 +25,14 @@
     color: var(--accent-color-1);
     text-decoration: none;
     text-transform: uppercase;
+
+    @media (max-width: $mobile-s) {
+      --width: 1.875rem;
+      --height: 1.875rem;
+
+      font-size: 1rem;
+      gap: 0.75rem;
+    }
   }
 
   .logo-icon {

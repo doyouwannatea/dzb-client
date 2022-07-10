@@ -24,7 +24,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@breakpoints';
+  @import '@styles/breakpoints.scss';
 
   .info {
     display: flex;

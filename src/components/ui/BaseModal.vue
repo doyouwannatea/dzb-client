@@ -59,7 +59,9 @@
   );
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .modal {
     --side-p: 2.75rem;
     --top-p: 2.1875rem;
@@ -81,6 +83,14 @@
 
   .modal.m {
     max-width: 60rem;
+
+    @media (max-width: $mobile-s) {
+      --top-p: 4.188rem;
+      --bottom-p: 1rem;
+
+      min-height: 100%;
+      border-radius: 0;
+    }
   }
 
   /* common content styles */
@@ -124,6 +134,10 @@
     padding: 1rem 0;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
+
+    @media (max-width: $mobile-s) {
+      padding: 0;
+    }
   }
 
   .close-icon {

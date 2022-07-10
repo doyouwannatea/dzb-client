@@ -2,7 +2,7 @@
   <BaseLayout>
     <template #header>
       <AppHeader />
-      <BottomNavigationBar />
+      <BottomNavigationBar class="mobile-nav-bar" />
     </template>
     <template #content>
       <BaseContainer size="md">
@@ -23,3 +23,15 @@
   import BaseContainer from '../ui/BaseContainer.vue';
   import BottomNavigationBar from './mobile/BottomNavigationBar.vue';
 </script>
+
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
+  .mobile-nav-bar {
+    display: none;
+
+    @media (max-width: $mobile-s) {
+      display: block;
+    }
+  }
+</style>

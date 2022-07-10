@@ -1,4 +1,3 @@
-import { insituteApi } from '@/api/InsituteApi';
 import { projectIncludesCandidateSpeciality } from '@/helpers/project';
 import { Project } from '@/models/Project';
 import { defineStore } from 'pinia';
