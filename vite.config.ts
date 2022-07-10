@@ -12,7 +12,7 @@ export default ({ mode }) => {
     resolve: {
       alias: {
         '@': join(__dirname, 'src'),
-        '@breakpoints': join(__dirname, 'src/styles/breakpoints.scss'),
+        '@styles': join(__dirname, 'src/styles'),
       },
     },
     base: process.env.VITE_BASE_URL,
@@ -24,6 +24,9 @@ export default ({ mode }) => {
           assetFileNames: `assets/[name].[ext]`,
         },
       },
+    },
+    server: {
+      host: true,
     },
   });
 };
