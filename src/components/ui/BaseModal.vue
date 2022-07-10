@@ -79,6 +79,11 @@
   .modal.s {
     --top-p: 4rem;
     max-width: 43.125rem;
+
+    @media (max-width: $mobile-s) {
+      margin-left: 1.6875rem;
+      margin-right: 1.6875rem;
+    }
   }
 
   .modal.m {
