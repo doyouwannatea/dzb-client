@@ -54,10 +54,17 @@
   });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .page-title {
     margin-top: 1.625rem;
     margin-bottom: 1.5rem;
+
+    @media (max-width: $mobile-s) {
+      font-size: 1.75rem;
+      line-height: 2.5rem;
+    }
   }
 
   .breadcrumbs {

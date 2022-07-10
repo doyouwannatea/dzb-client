@@ -9,6 +9,8 @@
     --border-color: var(--accent-color-1);
     --text-color: var(--accent-color-1);
 
+    display: flex;
+    align-items: center;
     padding: 0.625rem 2rem;
     font-size: 1rem;
     font-weight: 600;

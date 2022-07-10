@@ -67,7 +67,9 @@
   });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   table {
     width: 100%;
     font-size: 1.25rem;
@@ -86,6 +88,12 @@
     padding-top: 1.4375rem;
     padding-bottom: 1.4375rem;
     border-bottom: 1px solid #e5f1ea;
+
+    @media (max-width: $mobile-s) {
+      padding-right: 0.8rem;
+      padding-left: 0.8rem;
+      white-space: nowrap;
+    }
   }
 
   th:first-child,
@@ -103,6 +111,10 @@
     padding-top: 0;
     padding-right: 0;
     padding-left: 0;
+
+    @media (max-width: $mobile-s) {
+      overflow-x: scroll;
+    }
   }
 
   .accepted {

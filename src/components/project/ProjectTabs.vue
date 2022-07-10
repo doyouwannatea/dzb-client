@@ -17,13 +17,19 @@
   import { RouterLink } from 'vue-router';
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .project-tab {
     display: inline-block;
     padding: 1rem 3rem;
     color: var(--text-color);
     text-decoration: none;
     text-transform: uppercase;
+
+    @media (max-width: $mobile-s) {
+      padding: 1rem 2rem;
+    }
   }
 
   .project-tab.router-link-exact-active {
