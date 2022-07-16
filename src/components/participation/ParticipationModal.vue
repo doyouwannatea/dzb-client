@@ -211,7 +211,9 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .title {
     margin-bottom: 0.625rem;
   }
@@ -249,6 +251,10 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5625rem 4.375rem;
+
+    @media (max-width: $mobile-s) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .actions-grid {
@@ -256,5 +262,10 @@
     grid-template-columns: auto 1fr;
     gap: 18rem;
     margin-top: 0.9375rem;
+
+    @media (max-width: $mobile-s) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
   }
 </style>

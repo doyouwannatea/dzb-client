@@ -92,6 +92,7 @@
     @media (max-width: $mobile-s) {
       --top-p: 4.188rem;
       --bottom-p: 1rem;
+      --side-p: 1rem;
 
       min-height: 100%;
       border-radius: 0;
