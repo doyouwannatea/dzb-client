@@ -109,6 +109,8 @@
     color: var(--accent-color-1);
 
     &.mobile {
+      border-bottom: 2px solid transparent;
+
       @media (max-width: $mobile-s) {
         border-bottom: 2px solid var(--accent-color-1);
       }

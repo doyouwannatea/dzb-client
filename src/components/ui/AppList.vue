@@ -21,16 +21,16 @@
   // components
   import AppListItem from './AppListItem.vue';
 
-  interface Item {
+  export interface AppListItemType {
     title: string;
-    content: string;
+    content?: string;
     wide?: boolean;
     bold?: boolean;
   }
 
   withDefaults(
     defineProps<{
-      items?: Item[];
+      items?: AppListItemType[];
       rowGap?: 'm' | 'l';
     }>(),
     {
