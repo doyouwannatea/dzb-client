@@ -3,7 +3,7 @@
     <header class="header">
       <h1 class="title page-title">Профиль пользователя</h1>
     </header>
-    <SidebarContainer>
+    <SidebarContainer class="sidebar-container">
       <template #sidebar>
         <UserNavigation />
         <DeadlineTimer />
@@ -41,10 +41,27 @@
   );
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
+  .sidebar-container {
+    @media (max-width: $mobile-s) {
+      margin-top: 1.875rem;
+      grid-template-columns: auto;
+
+      & > :deep(.aside) {
+        display: none;
+      }
+    }
+  }
+
   .header {
     margin-top: 4.75rem;
     margin-bottom: 2.8125rem;
+
+    @media (max-width: $mobile-s) {
+      display: none;
+    }
   }
 
   .title {
