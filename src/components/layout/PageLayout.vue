@@ -36,9 +36,18 @@
 <style lang="scss" scoped>
   @import '@styles/breakpoints.scss';
 
+  .mobile-nav-bar,
   .mobile-user-nav {
     display: none;
+  }
 
+  .mobile-nav-bar {
+    @media (max-width: $mobile-s) {
+      display: block;
+    }
+  }
+
+  .mobile-user-nav {
     @media (max-width: $mobile-s) {
       display: flex;
     }

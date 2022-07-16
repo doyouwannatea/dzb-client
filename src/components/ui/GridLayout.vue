@@ -3,7 +3,7 @@
     :class="[
       'row',
       {
-        mobile: String($props.cols).split('').length === 1 || !$props.cols,
+        mobile: !$props.cols || $props.cols === 1,
       },
     ]"
     :style="{

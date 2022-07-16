@@ -1,5 +1,8 @@
 <template>
-  <div v-if="authStore.isParticipationList">
+  <div
+    v-if="authStore.isParticipationList"
+    :class="['participations-wrapper', { draggible: !dragDisabled }]"
+  >
     <Draggable
       v-model="editableParticipationList"
       v-bind="dragOptions"
@@ -184,22 +187,45 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
+  .participations-wrapper {
+    &.draggible {
+      @media (max-width: $mobile-s) {
+        padding-right: 3.5rem;
+      }
+    }
+  }
+
   .actions {
     display: flex;
     gap: 0.5rem;
     align-items: flex-start;
     justify-content: flex-end;
+
+    @media (max-width: $mobile-s) {
+      flex-direction: column;
+    }
   }
 
   .buttons {
     display: flex;
     gap: 0.5rem;
+
+    @media (max-width: $mobile-s) {
+      width: 100%;
+    }
   }
 
   .edit-btn {
     width: 100%;
     max-width: 25rem;
+
+    @media (max-width: $mobile-s) {
+      max-width: unset;
+      width: 100%;
+    }
   }
 
   .info {
@@ -209,6 +235,10 @@
 
     line-height: 150%;
     color: var(--gray-color-2);
+
+    @media (max-width: $mobile-s) {
+      margin-bottom: 1.25rem;
+    }
   }
 
   .cursor-icon {

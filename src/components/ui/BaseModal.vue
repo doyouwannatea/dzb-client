@@ -105,6 +105,11 @@
     font-size: 2.5rem;
     font-weight: 800;
     line-height: 3.1875rem;
+
+    @media (max-width: $mobile-s) {
+      font-size: 2rem;
+      line-height: normal;
+    }
   }
 
   .modal:deep(h2) {
