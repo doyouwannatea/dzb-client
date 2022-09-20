@@ -6,7 +6,11 @@
     <SidebarContainer class="sidebar-container">
       <template #sidebar>
         <UserNavigation />
-        <DeadlineTimer />
+        <DeadlineTimer
+          :deadline="new Date('2022/08/21 22:06:00')"
+          timer-text="идёт добор заявок в проекты"
+          after-timer-text="Прием заявок на проектное обучение закончен, добор в проекты будет открыт в августе 2022"
+        />
       </template>
       <template #main>
         <RouterView></RouterView>
