@@ -26,6 +26,7 @@ export const useModalsStore = defineStore('modals', {
           }
         }
       }
+      // dasdjkas
 
       const isSameInstitute = await this._onAsync(() =>
         projectIncludesCandidateSpeciality(authStore.profileData!, project),
