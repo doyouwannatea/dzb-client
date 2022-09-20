@@ -1,11 +1,12 @@
 <template>
   <div class="timer">
-    <div class="title">
-      Прием заявок на проектное обучение закончен, добор в проекты будет открыт
-      в августе 2022
-    </div>
-    <!-- <div class="title">{{ duration }}</div>-->
-    <!-- <div>второй этап откроется в августе</div> -->
+    <template v-if="!isTimePass">
+      <div class="title">{{ duration }}</div>
+      <div>{{ props.timerText }}</div>
+    </template>
+    <template v-if="isTimePass">
+      <div class="title">{{ props.afterTimerText }}</div>
+    </template>
   </div>
 </template>
 
@@ -13,28 +14,37 @@
   import { onMounted, onUnmounted, ref } from 'vue';
   import { Duration } from 'luxon';
 
-  const DEADLINE = new Date('2022/06/30');
+  type Props = { deadline: Date; timerText: string; afterTimerText: string };
+
+  const props = defineProps<Props>();
+
   const timer = ref<number | undefined>(undefined);
   const duration = ref<string>('');
+  const isTimePass = ref<boolean>(false);
 
   function calcTime() {
-    const diff = new Date(DEADLINE.getTime() - Date.now());
-
+    const diff = props.deadline.getTime() - Date.now();
+    if (diff <= 0) {
+      isTimePass.value = true;
+      return clearTimer();
+    }
     duration.value = Duration.fromObject({
-      day: diff.getDate(),
-      hour: diff.getHours(),
-      minutes: diff.getMinutes(),
+      day: Math.floor(Duration.fromMillis(diff).as('days')),
+      hour: Math.floor(Duration.fromMillis(diff).as('hours')),
+      minutes: Math.floor(Duration.fromMillis(diff).as('minutes')),
     }).toHuman();
   }
 
+  function clearTimer() {
+    window.clearInterval(timer.value);
+  }
+
   onMounted(() => {
-    // calcTime();
-    // timer.value = window.setInterval(calcTime, 1000);
+    calcTime();
+    timer.value = window.setInterval(calcTime, 1000);
   });
 
-  onUnmounted(() => {
-    // window.clearInterval(timer.value);
-  });
+  onUnmounted(clearTimer);
 </script>
 
 <style scoped>
@@ -43,7 +53,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2.1875rem 3.5rem 1.375rem;
+    padding: 2.1875rem 2.5rem 1.375rem;
     margin-top: 1.25rem;
     text-align: center;
     background: #f1f4fe;
