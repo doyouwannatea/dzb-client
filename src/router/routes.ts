@@ -22,6 +22,9 @@ const HomePage = () => import('@/pages/HomePage.vue');
 // FAQ page
 const FaqPage = () => import('@/pages/FaqPage.vue');
 
+// Contact page
+const ContactPage = () => import('@/pages/ContactPage.vue');
+
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -143,8 +146,8 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     path: '/contacts',
+    component: ContactPage,
     name: RouteNames.CONTACTS,
-    redirect: { name: RouteNames.HOME },
     meta: {
       type: ['main-nav', 'mobile-nav'],
       order: 2,
