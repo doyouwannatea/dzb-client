@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "dev:mock": "vite --mode mock",
-    "build": "npm run lint && vite build",
+    "build": "vite build",
+    "build:mock": "vite build --mode mock",
     "deploy:gh-pages": "bash gh-pages-deploy.sh",
     "serve": "vite preview",
     "type-check": "vue-tsc --noEmit",
