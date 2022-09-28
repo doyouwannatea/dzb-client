@@ -13,8 +13,7 @@ const UserPage = () => import('@/pages/UserPage/index.vue');
 const UserProfile = () => import('@/pages/UserPage/UserProfile.vue');
 const UserSkills = () => import('@/pages/UserPage/UserSkills.vue');
 const UserProjects = () => import('@/pages/UserPage/UserProjects.vue');
-const UserParticipations = () =>
-  import('@/pages/UserPage/UserParticipations.vue');
+import UserParticipations from '@/pages/UserPage/UserParticipations.vue';
 
 // Home page
 const HomePage = () => import('@/pages/HomePage.vue');
