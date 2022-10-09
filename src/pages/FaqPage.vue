@@ -101,14 +101,14 @@
         >.
       </template>
     </QuestionAccordion>
-    <MsgForm />
+    <ContactForm />
   </PageLayout>
 </template>
 
 <script setup lang="ts">
   import PageLayout from '@/components/layout/PageLayout.vue';
   import QuestionAccordion from '../components/ui/accordion/QuestionAccordion.vue';
-  import MsgForm from '@/components/layout/MsgForm.vue';
+  import ContactForm from '@/components/layout/contact/ContactForm.vue';
 </script>
 
 <style lang="scss" scoped>

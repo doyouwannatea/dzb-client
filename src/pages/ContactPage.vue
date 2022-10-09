@@ -45,13 +45,13 @@
       class="map"
       src="https://yandex.ru/map-widget/v1/?um=constructor%3A558543cc285d8850a5c05b2748ad09cfb5e82086d6bcc879e2d182e6044c0e47&amp;source=constructor"
     ></iframe>
-    <MsgForm />
+    <ContactForm />
   </PageLayout>
 </template>
 
 <script setup lang="ts">
   import PageLayout from '@/components/layout/PageLayout.vue';
-  import MsgForm from '@/components/layout/MsgForm.vue';
+  import ContactForm from '@/components/layout/contact/ContactForm.vue';
 </script>
 
 <style lang="scss" scoped>
@@ -66,30 +66,30 @@
     }
   }
   .contact-content {
-    display: flexbox;
     margin-right: 4.9375rem;
-    float: left;
-    width: 24.1875rem;
+    display: inline-table;
+    width: 100%;
+    max-width: 24.1875rem;
   }
   .contact-content h2 {
     font-weight: 600;
     font-size: 1.5rem;
     line-height: 1.9375rem;
-    color: #a4a4a4;
+    color: var(--gray-color-2);
     margin-bottom: 1.7525rem;
   }
   .contact-content p {
     font-weight: normal;
     font-size: 1.25rem;
     line-height: 1.625rem;
-    color: #383838;
+    color: var(--text-color);
     margin-bottom: 1.0531rem;
   }
   .link {
     font-weight: normal;
     font-size: 1.25rem;
     line-height: 1.625rem;
-    color: #383838;
+    color: var(--text-color);
     margin-bottom: 1.0531rem;
     display: block;
     text-decoration: none;
@@ -105,14 +105,14 @@
     font-weight: 600;
     font-size: 1.25rem;
     line-height: 1.625rem;
-    color: #383838;
+    color: var(--text-color);
   }
   .contact-content-block p {
     margin: 0;
   }
   .map {
     width: 100%;
-    height: 30.275rem;
+    min-height: 30.275rem;
     margin-top: 1.7794rem;
     border: none;
   }
