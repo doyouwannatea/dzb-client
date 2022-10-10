@@ -4,41 +4,43 @@
     <header class="header">
       <h1 class="title page-title">Контакты</h1>
     </header>
-    <div class="contact-content">
-      <h2>Адрес</h2>
-      <p>
-        664074, г. Иркутск, ул. Лермонтова, 83 <br />
-        ИРНИТУ
-      </p>
-      <div class="contact-content-block">
-        <h3>Режим работы</h3>
+    <div class="row">
+      <div class="contact-content">
+        <h2>Адрес</h2>
         <p>
-          Пн-Пт с 9:00 до 16:00 <br />
-          Перерыв с 12:30 до 13:00
+          664074, г. Иркутск, ул. Лермонтова, 83 <br />
+          ИРНИТУ
         </p>
+        <div class="contact-content-block">
+          <h3>Режим работы</h3>
+          <p>
+            Пн-Пт с 9:00 до 16:00 <br />
+            Перерыв с 12:30 до 13:00
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="contact-content">
-      <h2>Телефон</h2>
-      <a class="link" href="tel:+73952405164">+7 (3952) 40-51-64</a>
-      <div class="contact-content-block">
-        <h3>Справочная</h3>
-        <a class="link" href="tel:+73952405009">+7 (3952) 405-009</a>
+      <div class="contact-content">
+        <h2>Телефон</h2>
+        <a class="link" href="tel:+73952405164">+7 (3952) 40-51-64</a>
+        <div class="contact-content-block">
+          <h3>Справочная</h3>
+          <a class="link" href="tel:+73952405009">+7 (3952) 405-009</a>
+        </div>
+        <div class="contact-content-block">
+          <h3>Факс</h3>
+          <a class="link" href="tel:+73952405100">+7 (3952) 405-100</a>
+        </div>
       </div>
-      <div class="contact-content-block">
-        <h3>Факс</h3>
-        <a class="link" href="tel:+73952405100">+7 (3952) 405-100</a>
-      </div>
-    </div>
-    <div class="contact-content">
-      <h2>E-mail</h2>
-      <div class="contact-content-block">
-        <h3>Отдел Проектной деятельности</h3>
-        <a class="link" href="mailto:info@istu.edu">info@istu.edu</a>
-      </div>
-      <div class="contact-content-block">
-        <h3>Администратор сайта</h3>
-        <a class="link" href="mailto:admin@admin.ru">admin@admin.ru</a>
+      <div class="contact-content">
+        <h2>E-mail</h2>
+        <div class="contact-content-block">
+          <h3>Отдел Проектной деятельности</h3>
+          <a class="link" href="mailto:info@istu.edu">info@istu.edu</a>
+        </div>
+        <div class="contact-content-block">
+          <h3>Администратор сайта</h3>
+          <a class="link" href="mailto:admin@admin.ru">admin@admin.ru</a>
+        </div>
       </div>
     </div>
     <iframe
@@ -62,14 +64,16 @@
     margin-bottom: 6.7325rem;
 
     @media (max-width: $mobile-s) {
-      margin-top: 1.875rem;
+      margin-top: 30px;
+      margin-bottom: 36px;
     }
   }
+  .row {
+    display: flex;
+    gap: 2.75rem;
+  }
   .contact-content {
-    margin-right: 4.9375rem;
-    display: inline-table;
     width: 100%;
-    max-width: 24.1875rem;
   }
   .contact-content h2 {
     font-weight: 600;
@@ -77,6 +81,10 @@
     line-height: 1.9375rem;
     color: var(--gray-color-2);
     margin-bottom: 1.7525rem;
+
+    @media (max-width: $mobile-s) {
+      font-size: 16px;
+    }
   }
   .contact-content p {
     font-weight: normal;
@@ -102,6 +110,7 @@
     margin-right: 1.9375rem;
   }
   .contact-content-block h3 {
+    margin-bottom: 0.375rem;
     font-weight: 600;
     font-size: 1.25rem;
     line-height: 1.625rem;
@@ -113,7 +122,7 @@
   .map {
     width: 100%;
     min-height: 30.275rem;
-    margin-top: 1.7794rem;
+    margin-top: 3.125rem;
     border: none;
   }
 </style>
