@@ -1,8 +1,8 @@
 <template>
-  <form class="contact-form">
-    <div class="contact-form-text">
-      <h1>Остались вопросы? Обнаружили неполадку?</h1>
-      <p>
+  <form class="form">
+    <div class="left-column">
+      <p class="title">Остались вопросы? Обнаружили неполадку?</p>
+      <p class="form-description">
         Задайте нам свой вопрос или опишите проблему, и мы ответим на указанную
         почту или разместим ответ в разделе <br />
         <RouterLink class="link" :to="{ name: RouteNames.FAQ }"
@@ -10,29 +10,33 @@
         >
       </p>
     </div>
-    <div class="contact-form-msg">
-      <div class="contact-form-msg-block">
-        <h2>E-mail</h2>
-        <input type="text" placeholder="something@example.ru" />
-      </div>
-      <div class="contact-form-msg-block">
-        <h2>Ваша деятельность</h2>
-        <div class="select">
-          <select>
-            <option value="">Студент</option>
-            <option value="">Преподаватель</option>
-          </select>
-          <i class="fa fa-chevron-down" aria-hidden="true"></i>
+
+    <div class="right-column">
+      <div class="row controls-row">
+        <BaseInput
+          inputmode="email"
+          type="text"
+          placeholder="something@example.ru"
+          label="E-mail"
+        />
+        <div>
+          <p class="multiselect-label">Ваша деятельность</p>
+          <VMultiselect
+            class="multiselect"
+            placeholder="По специальности"
+            :options="['Студент', 'Преподаватель']"
+          />
         </div>
       </div>
-      <div class="contact-form-msg-block">
-        <h2>Ваш вопрос</h2>
-        <textarea
-          placeholder="Я перевёлся на другую специальность, что будет с моим проектом?"
-        ></textarea>
-      </div>
-      <div class="text">
-        <p>
+
+      <BaseTextarea
+        :class="$style.textarea"
+        resize="vertical"
+        placeholder="Я перевёлся на другую специальность, что будет с моим проектом?"
+        label="Ваш вопрос"
+      />
+      <div class="row policy-row">
+        <p class="policy">
           Нажимая кнопку “Отправить”, вы автоматически даёте своё согласие на
           <RouterLink class="link-orange" :to="{ name: RouteNames.HOME }"
             >Обработку персональных данных</RouterLink
@@ -42,7 +46,9 @@
             >Политику Конфиденциальности</RouterLink
           >
         </p>
-        <button>Отправить</button>
+        <BaseButton case="uppercase" variant="outlined" color="white">
+          Отправить
+        </BaseButton>
       </div>
     </div>
   </form>
@@ -51,133 +57,111 @@
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
   import { RouteNames } from '@/router/types/route-names';
+  import VMultiselect from '@vueform/multiselect';
+  import BaseInput from '@/components/ui/BaseInput.vue';
+  import BaseTextarea from '@/components/ui/BaseTextarea.vue';
+  import BaseButton from '@/components/ui/BaseButton.vue';
 </script>
+
+<style lang="scss" module>
+  .textarea {
+    min-height: 6.625rem;
+  }
+</style>
 
 <style lang="scss" scoped>
   @import '@styles/breakpoints.scss';
-  .contact-form {
+
+  .form {
     display: flex;
-    min-height: 25.875rem;
+    justify-content: space-between;
     margin-top: 2.3181rem;
     background-color: var(--accent-color-1);
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 1.125rem;
     border-radius: 0.625rem;
+    padding: 1.75rem 2.375rem;
   }
-  .contact-form-text {
+  .left-column {
     max-width: 40.625rem;
     width: 100%;
-    padding: 3.4325rem 0 0 1.9225rem;
-    margin-right: 7.57rem;
   }
-  h1 {
+
+  .right-column {
+    max-width: 36.4694rem;
+    width: 100%;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+  }
+
+  .controls-row {
+    margin-bottom: 2.5rem;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+
+    & > * {
+      flex: 1 230px;
+    }
+  }
+
+  .policy-row {
+    margin-top: 1.875rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.625rem;
+  }
+
+  .multiselect {
+    min-height: 3.213rem;
+    align-self: flex-end;
+
+    &:deep(.multiselect-single-label) {
+      line-height: 3.213rem;
+    }
+  }
+
+  .multiselect-label {
+    cursor: default;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--light-color);
+  }
+
+  .title {
     font-size: 2.875rem;
     line-height: 109.8%;
     margin-bottom: 3.2631rem;
+    color: var(--light-color);
   }
-  .contact-form p {
+
+  .form-description {
     font-size: 1.4602rem;
     line-height: 1.875rem;
     max-width: 34.21rem;
     width: 100%;
+    color: var(--light-color);
+
+    .link {
+      color: inherit;
+    }
   }
-  .link {
-    color: #ffffff;
-  }
-  .contact-form-msg {
-    max-width: 36.4694rem;
-    width: 100%;
-    margin-right: 2.425rem;
-  }
-  .contact-form-msg-block {
-    display: inline-table;
-  }
-  h2 {
-    font-weight: bold;
-    line-height: 1.6875rem;
-    font-size: 1.125rem;
-    min-height: 2.3912rem;
-    margin-top: 1.7637rem;
-  }
-  input {
-    border-radius: 0.3125rem;
-    border: none;
-    max-width: 15.6069rem;
-    width: 100%;
-    min-height: 3.625rem;
-    padding-left: 0.9194rem;
-    color: var(--gray-color-2);
-    margin-right: 3.2rem;
-  }
-  input:focus {
-    outline: none;
-    color: #000000;
-  }
-  select {
-    width: 18.125rem;
-    min-height: 3.625rem;
-    border-radius: 0.3125rem;
-    border: none;
-    line-height: 1.4375rem;
-    appearance: none;
-    padding-left: 0.9194rem;
-  }
-  select:focus {
-    outline: none;
-  }
-  .fa {
-    position: absolute;
-    color: #000000;
-    right: 0.9375rem;
-    top: 1.25rem;
-    font-size: 1rem;
-  }
-  .select {
-    position: relative;
-  }
-  textarea {
-    width: 36.4694rem;
-    min-height: 6.6875rem;
-    border: none;
-    border-radius: 0.3125rem;
-    line-height: 1.625rem;
-    padding: 1rem 0 0 1rem;
-    margin-bottom: 1.5625rem;
-    resize: vertical;
-  }
-  textarea:focus {
-    outline: none;
-  }
-  .text {
-    display: flex;
-  }
-  .text p {
-    display: inline-table;
-    padding-top: 0.375rem;
+
+  .policy {
     max-width: 20.6919rem;
-    width: 100%;
     font-weight: normal;
-    font-size: 0.625rem;
+    font-size: 10px;
     line-height: 146.8%;
+    color: var(--light-color);
   }
-  button {
-    max-width: 12.1875rem;
-    width: 100%;
-    min-height: 3.25rem;
-    background-color: transparent;
-    border: 0.125rem solid #ffffff;
-    border-radius: 0.3125rem;
-    color: #ffffff;
-    font-size: 1rem;
-    text-transform: uppercase;
-    margin-left: 3.5rem;
-  }
+
   .link-orange {
-    color: #ffb938;
+    color: var(--orange-color-1);
     text-decoration: none;
-  }
-  .link-orange:hover {
-    text-decoration: underline;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 </style>
