@@ -20,7 +20,7 @@
   export type Variant = 'outlined' | 'link' | 'inline-link' | 'primary';
   type Is = 'button' | 'router-link' | 'a';
   type Case = 'uppercase' | 'lowercase';
-  type Color = 'red';
+  type Color = 'red' | 'white';
 
   type Props = {
     variant?: Variant;
@@ -56,7 +56,7 @@
     font-size: 1rem;
     font-weight: 600;
     line-height: normal;
-    color: #ffffff;
+    color: var(--light-color);
     text-align: center;
     text-decoration: none;
     white-space: nowrap;
@@ -71,6 +71,12 @@
     --background-color: var(--red-color-1);
     --hover-color: var(--red-color-1);
     --active-color: var(--red-color-2);
+  }
+
+  .btn.white {
+    --background-color: #fff;
+    --hover-color: var(--gray-color-1);
+    --active-color: var(--gray-color-2);
   }
 
   .btn:disabled {
@@ -118,10 +124,18 @@
     border-color: var(--hover-color);
   }
 
+  .outlined.white:hover {
+    color: var(--text-color);
+  }
+
   .outlined:active {
     color: #fff;
     background-color: var(--active-color);
     border-color: var(--active-color);
+  }
+
+  .outlined.white:active {
+    color: var(--text-color);
   }
 
   .outlined:disabled {

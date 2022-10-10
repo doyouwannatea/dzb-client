@@ -1,25 +1,24 @@
 <template>
   <label class="label">
     <p v-if="props.label" class="label-text">{{ props.label }}</p>
-    <input
+    <textarea
       v-bind="$attrs"
       :value="props.modelValue"
-      :class="['input', { 'with-icon': props.icon }]"
-      :style="{
-        backgroundImage: props.icon && `url(${props.icon})`,
-      }"
+      class="input"
+      :style="{ resize: props.resize }"
       @input="onInput"
-    />
+    >
+    </textarea>
   </label>
 </template>
 
 <script setup lang="ts">
-  import { InputHTMLAttributes, withDefaults } from 'vue';
+  import { TextareaHTMLAttributes, withDefaults } from 'vue';
 
-  interface Props extends InputHTMLAttributes {
+  interface Props extends TextareaHTMLAttributes {
     modelValue?: string;
-    icon?: string;
     label?: string;
+    resize: 'horizontal' | 'vertical' | 'both' | 'none';
   }
 
   interface Emits {
@@ -28,8 +27,8 @@
 
   const props = withDefaults(defineProps<Props>(), {
     modelValue: '',
-    icon: undefined,
     label: undefined,
+    resize: 'none',
   });
   const emit = defineEmits<Emits>();
 
@@ -68,17 +67,6 @@
     border: 1px solid var(--gray-color-1);
     border-radius: 0.3125rem;
     transition: border 100ms ease;
-  }
-
-  .input.with-icon {
-    padding-right: 4.25rem;
-    background: calc(100% - 1rem) center / 2rem no-repeat #ffffff;
-  }
-
-  .input[type='date']::-webkit-inner-spin-button,
-  .input[type='date']::-webkit-calendar-picker-indicator {
-    margin: 0;
-    opacity: 0.3;
   }
 
   .input::placeholder {
