@@ -1,5 +1,5 @@
 <template>
-  <form class="form">
+  <form v-if="false" class="form">
     <div class="left-column">
       <p class="title">Остались вопросы? Обнаружили неполадку?</p>
       <p class="form-description">
