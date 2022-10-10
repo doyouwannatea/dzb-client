@@ -69,8 +69,13 @@
     }
   }
   .row {
+    flex-wrap: wrap;
     display: flex;
     gap: 2.75rem;
+
+    & > * {
+      flex: 1 12.5rem;
+    }
   }
   .contact-content {
     width: 100%;
@@ -84,6 +89,7 @@
 
     @media (max-width: $mobile-s) {
       font-size: 16px;
+      margin-bottom: 7px;
     }
   }
   .contact-content p {
@@ -92,6 +98,10 @@
     line-height: 1.625rem;
     color: var(--text-color);
     margin-bottom: 1.0531rem;
+
+    @media (max-width: $mobile-s) {
+      font-size: 16px;
+    }
   }
   .link {
     font-weight: normal;
@@ -110,7 +120,7 @@
     margin-right: 1.9375rem;
   }
   .contact-content-block h3 {
-    margin-bottom: 0.375rem;
+    margin-bottom: 8px;
     font-weight: 600;
     font-size: 1.25rem;
     line-height: 1.625rem;
