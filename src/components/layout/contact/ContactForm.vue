@@ -5,9 +5,9 @@
       <p class="form-description">
         Задайте нам свой вопрос или опишите проблему, и мы ответим на указанную
         почту или разместим ответ в разделе <br />
-        <RouterLink class="link" :to="{ name: RouteNames.FAQ }"
-          >“Вопрос-ответ”</RouterLink
-        >
+        <RouterLink class="link" :to="{ name: RouteNames.FAQ }">
+          “Вопрос-ответ”
+        </RouterLink>
       </p>
     </div>
 
@@ -46,7 +46,12 @@
             >Политику Конфиденциальности</RouterLink
           >
         </p>
-        <BaseButton case="uppercase" variant="outlined" color="white">
+        <BaseButton
+          :full-width="isMobileS"
+          case="uppercase"
+          variant="outlined"
+          color="white"
+        >
           Отправить
         </BaseButton>
       </div>
@@ -61,6 +66,9 @@
   import BaseInput from '@/components/ui/BaseInput.vue';
   import BaseTextarea from '@/components/ui/BaseTextarea.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
+  import { useMobileS } from '@/helpers/breakpoints';
+
+  const isMobileS = useMobileS();
 </script>
 
 <style lang="scss" module>
@@ -79,6 +87,13 @@
     background-color: var(--accent-color-1);
     border-radius: 0.625rem;
     padding: 1.75rem 2.375rem;
+    gap: 2rem;
+
+    @media (max-width: $mobile-s) {
+      margin-top: 16px;
+      padding: 22px 20px;
+      flex-direction: column;
+    }
   }
   .left-column {
     max-width: 40.625rem;
@@ -96,20 +111,25 @@
   }
 
   .controls-row {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2.2rem;
     gap: 2.5rem;
     flex-wrap: wrap;
 
     & > * {
       flex: 1 230px;
     }
+
+    @media (max-width: $mobile-s) {
+      margin-bottom: 32px;
+      gap: 32px;
+    }
   }
 
   .policy-row {
-    margin-top: 1.875rem;
+    margin-top: 1.375rem;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 0.625rem;
+    gap: 1.5rem;
   }
 
   .multiselect {
@@ -134,6 +154,12 @@
     line-height: 109.8%;
     margin-bottom: 3.2631rem;
     color: var(--light-color);
+
+    @media (max-width: $mobile-s) {
+      font-size: 24px;
+      margin-bottom: 16px;
+      max-width: 80%;
+    }
   }
 
   .form-description {
@@ -145,6 +171,11 @@
 
     .link {
       color: inherit;
+    }
+
+    @media (max-width: $mobile-s) {
+      font-size: 12px;
+      line-height: 17px;
     }
   }
 
