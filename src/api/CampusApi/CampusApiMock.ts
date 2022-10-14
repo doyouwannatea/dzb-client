@@ -11,7 +11,7 @@ export default class CampusApiMock extends ICampusApi {
     ICampusApi.setAuthToken(
       '6956a5x2a38zf27ad9ce3b9b464b73d2131e4bd01053333e758ae00a6fddf995',
     );
-    window.location.replace('/');
+    window.location.reload();
     return delayRes(undefined, 300);
   }
 
