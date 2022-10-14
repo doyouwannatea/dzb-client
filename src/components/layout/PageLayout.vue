@@ -2,12 +2,7 @@
   <BaseLayout>
     <template #header>
       <AppHeader />
-      <UserNavigation
-        v-if="authStore.isAuth"
-        variant="mobile"
-        class="mobile-user-nav"
-      />
-      <BottomNavigationBar class="mobile-nav-bar" />
+      <BottomNavigationBar v-if="isMobile" />
     </template>
     <template #content>
       <BaseContainer size="md">
@@ -21,35 +16,13 @@
 </template>
 
 <script setup lang="ts">
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
   // components
   import BaseLayout from '../ui/BaseLayout.vue';
   import AppHeader from './AppHeader.vue';
   import AppFooter from './AppFooter.vue';
   import BaseContainer from '../ui/BaseContainer.vue';
   import BottomNavigationBar from './mobile/BottomNavigationBar.vue';
-  import UserNavigation from '@/pages/UserPage/UserNavigation.vue';
+  import { useMobileS } from '@/helpers/breakpoints';
 
-  const authStore = useAuthStore();
+  const isMobile = useMobileS();
 </script>
-
-<style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
-
-  .mobile-nav-bar,
-  .mobile-user-nav {
-    display: none;
-  }
-
-  .mobile-nav-bar {
-    @media (max-width: $mobile-s) {
-      display: block;
-    }
-  }
-
-  .mobile-user-nav {
-    @media (max-width: $mobile-s) {
-      display: flex;
-    }
-  }
-</style>
