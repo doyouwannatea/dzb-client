@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading">loading...</div>
+  <div v-if="loading">загрузка...</div>
   <div v-if="error">{{ error }}</div>
   <div v-if="projectList && !projectList.length">у вас еще нет проектов</div>
   <ProjectList

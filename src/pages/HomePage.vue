@@ -16,7 +16,7 @@
         <ProjectListFilter />
       </template>
       <template #main>
-        <div v-if="loading">loading...</div>
+        <div v-if="loading">загрузка...</div>
         <div v-if="error">{{ error }}</div>
         <div v-if="projectList && !projectList.length">
           Проекты не найдены 😥
@@ -44,11 +44,14 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, watch } from 'vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useFilteredProjectList } from '@/hooks/useProjectFilters';
-  import { RouteNames } from '@/router/types/route-names';
-  import { useFetchAdditionalProjectDataOnce } from '@/hooks/useFetchAdditionalProjectDataOnce';
+  import { useFetchAdditionalProjectData } from '@/hooks/useFetchAdditionalProjectData';
+  import {
+    useHomePageSavedScrollPosition,
+    useSaveHomePageScrollPosition,
+  } from '@/hooks/useHomePageScrollPosition';
   // components
   import ProjectSearch from '@/components/project/ProjectSearch.vue';
   import SidebarContainer from '@/components/layout/SidebarContainer.vue';
@@ -59,14 +62,16 @@
   import OpenProjectFilterModalButton from '@/components/project/OpenProjectFilterModalButton.vue';
   import ProjectListFilterModal from '../components/project/ProjectListFilterModal.vue';
 
-  useFilteredProjectList(RouteNames.HOME);
-  useFetchAdditionalProjectDataOnce();
-  const store = useProjectsStore();
+  useFilteredProjectList();
+  useFetchAdditionalProjectData();
+  useSaveHomePageScrollPosition();
+  useHomePageSavedScrollPosition();
 
-  const error = computed(() => store.error);
-  const loading = computed(() => store.loading);
-  const projectList = computed(() => store.projectList);
-  const projectCount = computed(() => store.projectCount);
+  const useProjectStore = useProjectsStore();
+  const error = computed(() => useProjectStore.error);
+  const loading = computed(() => useProjectStore.loading);
+  const projectList = computed(() => useProjectStore.projectList);
+  const projectCount = computed(() => useProjectStore.projectCount);
 </script>
 
 <style lang="scss" scoped>

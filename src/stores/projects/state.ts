@@ -21,12 +21,12 @@ export const state = (): State => ({
   projectCount: 0,
   openedProject: undefined,
   filters: {
-    difficulty: [],
-    state: [],
-    skills: [],
-    specialties: [],
-    title: '',
-    page: 1,
+    difficulty: undefined,
+    state: undefined,
+    skills: undefined,
+    specialties: undefined,
+    title: undefined,
+    page: undefined,
   },
   additionalProjectData: {
     states: undefined,

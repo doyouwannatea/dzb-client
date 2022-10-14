@@ -13,7 +13,7 @@
         :show-all="true"
         :disable-all="true"
       />
-      <div v-if="authStore.loading">loading...</div>
+      <div v-if="authStore.loading">загрузка...</div>
       <div class="divider"></div>
       <BaseTooltip :message="individualSkillsMsg">
         <h2 class="subtitle">Индивидуальные навыки</h2>
@@ -23,7 +23,7 @@
         :skills="authStore.userSkills?.personal"
         :show-all="true"
       />
-      <div v-if="authStore.loading">loading...</div>
+      <div v-if="authStore.loading">загрузка...</div>
       <BaseButton
         class="edit-btn"
         case="uppercase"
@@ -41,7 +41,7 @@
 <script setup lang="ts">
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { useFetchAdditionalProjectDataOnce } from '@/hooks/useFetchAdditionalProjectDataOnce';
+  import { useFetchAdditionalProjectData } from '@/hooks/useFetchAdditionalProjectData';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseTooltip from '@/components/ui/BaseTooltip.vue';
@@ -49,7 +49,7 @@
   import BaseButton from '@/components/ui/BaseButton.vue';
   import EditSkillsModal from '@/components/skill/EditSkillsModal.vue';
 
-  useFetchAdditionalProjectDataOnce();
+  useFetchAdditionalProjectData();
   const modalsStore = useModalsStore();
   const authStore = useAuthStore();
 

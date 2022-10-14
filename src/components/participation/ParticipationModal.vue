@@ -9,7 +9,7 @@
     <template #header>
       <h1 class="title">Подача заявки на проект</h1>
       <h2>{{ projectsStore.openedProject?.title }}</h2>
-      <h3 v-if="authStore.loading">loading...</h3>
+      <h3 v-if="authStore.loading">загрузка...</h3>
       <h3 v-if="authStore.error">{{ authStore.error }}</h3>
     </template>
     <!-- HEADER -->
@@ -24,7 +24,7 @@
           :value="authStore.profileData?.fio"
           class="input"
           disabled
-          :icon="authStore.profileData?.fio ? checkedIconUrl : errorIconUrl"
+          :icon="authStore.profileData?.fio ? checkedIconUrl : undefined"
         />
       </fieldset>
       <!-- fio -->
@@ -37,7 +37,7 @@
           :value="authStore.profileData?.email"
           class="input"
           disabled
-          :icon="authStore.profileData?.email ? checkedIconUrl : errorIconUrl"
+          :icon="authStore.profileData?.email ? checkedIconUrl : undefined"
         />
       </fieldset>
       <!-- mail -->
@@ -51,9 +51,7 @@
           class="input"
           disabled
           :icon="
-            authStore.profileData?.training_group
-              ? checkedIconUrl
-              : errorIconUrl
+            authStore.profileData?.training_group ? checkedIconUrl : undefined
           "
         />
       </fieldset>
@@ -67,7 +65,7 @@
           :value="authStore.profileData?.phone"
           class="input"
           disabled
-          :icon="authStore.profileData?.phone ? checkedIconUrl : errorIconUrl"
+          :icon="authStore.profileData?.phone ? checkedIconUrl : undefined"
         />
       </fieldset>
       <!-- phone number -->
@@ -77,10 +75,13 @@
     <!-- ACTIONS -->
     <template #actions>
       <BaseTooltip :message="priorityTooltipMsg">
-        <span class="input-label subtitle">Приоритетность проекта</span>
+        <span class="input-label subtitle">
+          <span class="required">*</span>
+          Приоритетность проекта
+        </span>
       </BaseTooltip>
       <div class="actions-grid">
-        <div>
+        <div class="priority-fieldset">
           <!-- 1 (HIGH) -->
           <BaseRadioButton
             v-model="priorityValue"
@@ -144,11 +145,10 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
+  import { onBeforeMount, ref, watch } from 'vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { PriorityText, Priority } from '@/models/Participation';
   import checkedIconUrl from '@/assets/icons/checked.svg?url';
-  import errorIconUrl from '@/assets/icons/close-red.png?url';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   // components
@@ -169,34 +169,49 @@
   const priorityTooltipMsg =
     'Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас распределить в проект, в который вы хотите попасть с большей вероятностью, вы ставите ему больший приоритет. Вы сможете поменять приоритет проекта в личном кабинете после отправки заявки';
 
-  watch(
-    () => authStore.participationList,
-    () => {
-      if (authStore.participationList) {
-        highSelected.value = false;
-        mediumSelected.value = false;
-        lowSelected.value = false;
+  watch(() => authStore.participationList, initParticipations, {
+    immediate: true,
+    deep: true,
+  });
 
-        for (const participation of authStore.participationList) {
-          switch (participation.priority) {
-            case 1:
-              highSelected.value = true;
-              break;
-            case 2:
-              mediumSelected.value = true;
-              break;
-            case 3:
-              lowSelected.value = true;
-              break;
-          }
+  watch(() => modalsStore.participationModal, initParticipations);
+
+  function initParticipations() {
+    if (authStore.participationList) {
+      highSelected.value = false;
+      mediumSelected.value = false;
+      lowSelected.value = false;
+
+      for (const participation of authStore.participationList) {
+        switch (participation.priority) {
+          case 1:
+            highSelected.value = true;
+            break;
+          case 2:
+            mediumSelected.value = true;
+            break;
+          case 3:
+            lowSelected.value = true;
+            break;
         }
       }
-    },
-    { immediate: true, deep: true },
-  );
+
+      if (!highSelected.value) {
+        priorityValue.value = Priority.High;
+      } else if (!mediumSelected.value) {
+        priorityValue.value = Priority.Medium;
+      } else if (!lowSelected.value) {
+        priorityValue.value = Priority.Low;
+      }
+    }
+  }
 
   function onCreateParticipation() {
-    if (projectsStore.openedProject && priorityValue.value) {
+    if (!priorityValue.value) {
+      return;
+    }
+
+    if (projectsStore.openedProject) {
       authStore.createPatricipation(
         priorityValue.value,
         projectsStore.openedProject.id,
@@ -230,6 +245,8 @@
   }
 
   .participation-btn {
+    grid-row: 2;
+    grid-column: 2;
     align-self: flex-end;
   }
 
@@ -259,13 +276,25 @@
 
   .actions-grid {
     display: grid;
+    grid-template-rows: 1fr 1fr;
     grid-template-columns: auto 1fr;
-    gap: 18rem;
+
+    row-gap: 0.5rem;
+    column-gap: 18rem;
     margin-top: 0.9375rem;
 
     @media (max-width: $mobile-s) {
       grid-template-columns: 1fr;
       gap: 2rem;
     }
+  }
+
+  .required {
+    font-weight: bold;
+    color: var(--red-color-1);
+  }
+
+  .priority-fieldset {
+    grid-row: span 2;
   }
 </style>

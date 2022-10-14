@@ -10,6 +10,7 @@ import { skillsApi } from '@/api/SkillsApi';
 import { useProjectsStore } from '../projects/useProjectsStore';
 import { isSupervisor } from '@/helpers/typeCheck';
 import { RouteNames } from '@/router/types/route-names';
+import { useSaveCurrentRoute } from '@/hooks/useSaveRoute';
 
 export const useAuthStore = defineStore('auth', {
   state,
@@ -17,6 +18,7 @@ export const useAuthStore = defineStore('auth', {
     // AUTH
     auth() {
       return this._onAsync(async () => {
+        useSaveCurrentRoute(this.router);
         await campusApi.auth();
       });
     },
@@ -37,9 +39,12 @@ export const useAuthStore = defineStore('auth', {
 
     // EXIT
     async exit() {
+      const projectStore = useProjectsStore();
+
       await campusApi.logout();
       this.router.replace({ name: RouteNames.HOME });
       this.profileData = undefined;
+      await projectStore.getAddProjectData();
     },
     // EXIT
 

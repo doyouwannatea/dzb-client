@@ -1,20 +1,17 @@
 <template>
-  <BaseButton v-if="visible" class="btn" @click="scroll" />
+  <transition name="btn">
+    <BaseButton v-if="visible" class="btn" @click="scroll" />
+  </transition>
 </template>
 
 <script setup lang="ts">
   import { computed, onBeforeMount, onBeforeUnmount, ref } from 'vue';
   import BaseButton from './BaseButton.vue';
 
-  const bottomOffset = 100;
-  const fromBottom = ref<number | undefined>(undefined);
+  const topOffset = 0;
+  const fromTop = ref<number | undefined>(undefined);
   const visible = computed(
-    () =>
-      fromBottom.value !== undefined &&
-      fromBottom.value < bottomOffset &&
-      document.documentElement.scrollHeight -
-        document.documentElement.clientHeight >=
-        bottomOffset,
+    () => fromTop.value !== undefined && fromTop.value > topOffset,
   );
 
   function scroll() {
@@ -22,11 +19,7 @@
   }
 
   function onScroll() {
-    fromBottom.value = Math.floor(
-      document.documentElement.scrollHeight -
-        document.documentElement.clientHeight -
-        scrollY,
-    );
+    fromTop.value = Math.floor(scrollY);
   }
 
   onBeforeMount(() => {
@@ -43,9 +36,9 @@
 
   .btn {
     position: fixed;
-    right: 5.625rem;
-    bottom: 24rem;
-    z-index: 9999;
+    right: 5rem;
+    bottom: 7rem;
+    z-index: 999;
     width: 4rem;
     height: 4rem;
     padding: 0;
@@ -59,5 +52,15 @@
     @media (max-width: $mobile-s) {
       display: none;
     }
+  }
+
+  .btn-enter-active,
+  .btn-leave-active {
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-enter-from,
+  .btn-leave-to {
+    opacity: 0;
   }
 </style>

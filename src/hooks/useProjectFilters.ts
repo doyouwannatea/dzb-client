@@ -1,23 +1,33 @@
 import { ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import _ from 'lodash';
-import { useRoute } from 'vue-router';
 import { locationQueryToProjectFilters } from '@/helpers/query';
-import { RouteNames } from '@/router/types/route-names';
 import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 import { ProjectFilters } from '@/models/Project';
 
-export const useFilteredProjectList = (page: RouteNames) => {
+export const useFilteredProjectList = () => {
+  const router = useRouter();
   const route = useRoute();
-  const store = useProjectsStore();
+  const projectStore = useProjectsStore();
 
   watch(
     () => route.query,
     (query, prevQuery) => {
       if (_.isEqual(query, prevQuery)) return;
+      const storedFilters = projectStore.filters;
+      const queryFilters = locationQueryToProjectFilters(query);
 
-      const filters = locationQueryToProjectFilters(query);
-      store.setFilters(filters);
-      store.getProjectList();
+      const isEqual = _.isEqual(storedFilters, queryFilters);
+      const storedFiltersNotEmpty = Object.values(storedFilters).some(
+        (filter) => filter !== undefined,
+      );
+
+      if (!isEqual && storedFiltersNotEmpty) {
+        return router.push({ ...route, query: storedFilters });
+      }
+
+      projectStore.setFilters(queryFilters);
+      projectStore.getProjectList();
     },
     { immediate: true },
   );
