@@ -21,7 +21,7 @@
         <label class="input-label" for="fio">ФИО</label>
         <BaseInput
           id="fio"
-          :value="authStore.profileData?.fio"
+          :model-value="authStore.profileData?.fio"
           class="input"
           disabled
           :icon="authStore.profileData?.fio ? checkedIconUrl : undefined"
@@ -34,7 +34,7 @@
         <label class="input-label" for="mail">E-mail</label>
         <BaseInput
           id="mail"
-          :value="authStore.profileData?.email"
+          :model-value="authStore.profileData?.email"
           class="input"
           disabled
           :icon="authStore.profileData?.email ? checkedIconUrl : undefined"
@@ -47,7 +47,7 @@
         <label class="input-label" for="study-group">Учебная группа</label>
         <BaseInput
           id="study-group"
-          :value="authStore.profileData?.training_group"
+          :model-value="authStore.profileData?.training_group"
           class="input"
           disabled
           :icon="
@@ -62,7 +62,7 @@
         <label class="input-label" for="phone-number">Номер телефона</label>
         <BaseInput
           id="phone-number"
-          :value="authStore.profileData?.phone"
+          :model-value="authStore.profileData?.phone"
           class="input"
           disabled
           :icon="authStore.profileData?.phone ? checkedIconUrl : undefined"
@@ -226,7 +226,9 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .title {
     margin-bottom: 0.625rem;
   }
@@ -266,6 +268,10 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5625rem 4.375rem;
+
+    @media (max-width: $mobile-s) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .actions-grid {
@@ -276,6 +282,11 @@
     row-gap: 0.5rem;
     column-gap: 18rem;
     margin-top: 0.9375rem;
+
+    @media (max-width: $mobile-s) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
   }
 
   .required {

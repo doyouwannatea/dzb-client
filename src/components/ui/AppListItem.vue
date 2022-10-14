@@ -24,7 +24,9 @@
   );
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .bold {
     font-weight: 700;
     line-height: 1.4375rem;
@@ -42,11 +44,15 @@
     line-height: 1.6875rem;
   }
 
-  .info-list-value {
-    padding-left: 1em;
-  }
+  .info-list-item {
+    gap: 1em;
 
-  .info-list-item.wide {
-    grid-template-columns: minmax(auto, 14.375rem) auto;
+    &.wide {
+      grid-template-columns: minmax(auto, 14.375rem) auto;
+
+      @media (max-width: $mobile-s) {
+        grid-template-columns: auto;
+      }
+    }
   }
 </style>

@@ -12,8 +12,21 @@ export default ({ mode }) => {
     resolve: {
       alias: {
         '@': join(__dirname, 'src'),
+        '@styles': join(__dirname, 'src/styles'),
       },
     },
     base: process.env.VITE_BASE_URL,
+    build: {
+      rollupOptions: {
+        output: {
+          entryFileNames: `assets/[name].js`,
+          chunkFileNames: `assets/[name].js`,
+          assetFileNames: `assets/[name].[ext]`,
+        },
+      },
+    },
+    server: {
+      host: true,
+    },
   });
 };

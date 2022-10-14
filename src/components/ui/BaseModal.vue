@@ -59,7 +59,9 @@
   );
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .modal {
     --side-p: 2.75rem;
     --top-p: 2.1875rem;
@@ -77,10 +79,24 @@
   .modal.s {
     --top-p: 4rem;
     max-width: 43.125rem;
+
+    @media (max-width: $mobile-s) {
+      margin-left: 1.6875rem;
+      margin-right: 1.6875rem;
+    }
   }
 
   .modal.m {
     max-width: 60rem;
+
+    @media (max-width: $mobile-s) {
+      --top-p: 4.188rem;
+      --bottom-p: 1rem;
+      --side-p: 1rem;
+
+      min-height: 100%;
+      border-radius: 0;
+    }
   }
 
   /* common content styles */
@@ -89,6 +105,11 @@
     font-size: 2.5rem;
     font-weight: 800;
     line-height: 3.1875rem;
+
+    @media (max-width: $mobile-s) {
+      font-size: 2rem;
+      line-height: normal;
+    }
   }
 
   .modal:deep(h2) {
@@ -124,6 +145,10 @@
     padding: 1rem 0;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
+
+    @media (max-width: $mobile-s) {
+      padding: 0;
+    }
   }
 
   .close-icon {

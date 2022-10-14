@@ -1,6 +1,11 @@
 <template>
   <div
-    class="row"
+    :class="[
+      'row',
+      {
+        mobile: !$props.cols || $props.cols === 1,
+      },
+    ]"
     :style="{
       gridTemplateColumns: gridTemplateCols($props.cols),
     }"
@@ -24,7 +29,7 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .row {
     --gap: 1.875rem;
     --border-color: var(--gray-color-1);
@@ -32,11 +37,21 @@
     display: grid;
     grid-template-columns: 1fr;
     row-gap: var(--gap);
-  }
 
-  .row > :deep(*:not(:last-child)) {
-    padding-right: var(--gap);
-    margin-right: var(--gap);
-    border-right: 1px solid var(--border-color);
+    & > :deep(*:not(:last-child)) {
+      padding-right: var(--gap);
+      margin-right: var(--gap);
+      border-right: 1px solid var(--border-color);
+    }
+
+    &.mobile {
+      & > :deep(*:not(:last-child)) {
+        padding-right: 0;
+        margin-right: 0;
+        border-right: none;
+        padding-bottom: var(--gap);
+        border-bottom: 1px solid var(--border-color);
+      }
+    }
   }
 </style>

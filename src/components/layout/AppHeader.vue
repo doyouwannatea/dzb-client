@@ -2,13 +2,13 @@
   <header class="header">
     <BaseContainer class="container" size="lg">
       <RouterLink
-        class="clear-link align-self-center"
+        class="logo clear-link align-self-center"
         :to="{ name: RouteNames.HOME }"
       >
         <AppLogo />
       </RouterLink>
-      <AppNavigation />
-      <HeaderUserActions />
+      <AppNavigation class="navigation" />
+      <HeaderUserActions class="actions" />
     </BaseContainer>
   </header>
 </template>
@@ -23,12 +23,20 @@
   import HeaderUserActions from '../user/HeaderUserActions.vue';
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   /* Container */
   .container {
     display: flex;
     justify-content: space-between;
     height: 7rem;
+
+    @media (max-width: $mobile-s) {
+      height: initial;
+      padding-bottom: 0.875rem;
+      padding-top: 0.875rem;
+    }
   }
 
   /* Header */
@@ -43,5 +51,12 @@
     height: 1.5px;
     content: '';
     background-color: var(--gray-color-1);
+  }
+
+  .navigation,
+  .actions {
+    @media (max-width: $mobile-s) {
+      display: none;
+    }
   }
 </style>

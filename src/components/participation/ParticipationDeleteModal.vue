@@ -49,7 +49,9 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .delete-participation-modal {
     text-align: center;
   }
@@ -58,6 +60,10 @@
     padding: 0 5rem;
     margin-top: 0.75rem;
     font-size: 1.125rem;
+
+    @media (max-width: $mobile-s) {
+      padding: 0;
+    }
   }
   .actions {
     display: flex;

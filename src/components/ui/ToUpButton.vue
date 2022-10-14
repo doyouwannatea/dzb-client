@@ -31,11 +31,13 @@
   });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .btn {
     position: fixed;
     right: 5rem;
-    bottom: 7rem;
+    bottom: 4rem;
     z-index: 999;
     width: 4rem;
     height: 4rem;
@@ -46,6 +48,10 @@
     background-size: 50%;
     border-radius: 50%;
     box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
+
+    @media (max-width: $mobile-s) {
+      display: none;
+    }
   }
 
   .btn-enter-active,

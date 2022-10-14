@@ -72,21 +72,55 @@
         Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас
         распределить в проект, в который вы хотите попасть с большей
         вероятностью, вы ставите ему больший приоритет. Вы сможете поменять
-        приоритет проекта в личном кабинете после отправки заявки
+        приоритет проекта в личном кабинете после отправки заявки.
       </template>
     </QuestionAccordion>
+
+    <QuestionAccordion>
+      <template #title>
+        Будет ли еще возможность выбрать проект после окончания срока приема
+        заявок?
+      </template>
+      <template #content>
+        За несколько недель до начала учебного года откроется возможность подать
+        заявку или изменить свой выбор.
+      </template>
+    </QuestionAccordion>
+
+    <QuestionAccordion>
+      <template #title>
+        Я перевелся в другой институт (то есть учусь сейчас не по тому профилю
+        обучения на который поступал в ИРНИТУ изначально) и не вижу списки
+        проектов своего нового института, что мне делать?
+      </template>
+      <template #content>
+        Вам необходимо привязать ваш аккаунт на Кампусе ИРНИТУ к новому
+        институту, для этого обратитесь в
+        <a target="_blank" href="https://int.istu.edu/register/help/">
+          службу поддержки Кампуса </a
+        >.
+      </template>
+    </QuestionAccordion>
+    <ContactForm />
   </PageLayout>
 </template>
 
 <script setup lang="ts">
   import PageLayout from '@/components/layout/PageLayout.vue';
   import QuestionAccordion from '../components/ui/accordion/QuestionAccordion.vue';
+  import ContactForm from '@/components/layout/contact/ContactForm.vue';
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .header {
     margin-top: 4.75rem;
     margin-bottom: 2.8125rem;
+
+    @media (max-width: $mobile-s) {
+      margin-top: 1.875rem;
+    }
   }
 
   .subtitle {

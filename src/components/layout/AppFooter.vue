@@ -99,17 +99,21 @@
   const userRoutes = useRoledUserNavigationRoutes();
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .footer {
     position: sticky;
     top: 100vh;
-    z-index: 1000;
     padding-top: 3.5rem;
     padding-bottom: 2.25rem;
     margin-top: 8.75rem;
     color: #fff;
-
     background-color: var(--text-color);
+
+    @media (max-width: $mobile-s) {
+      margin-top: 2.8125rem;
+    }
   }
 
   .title {
@@ -125,6 +129,13 @@
     grid-column: span 2;
     max-width: 16.875rem;
     color: #fff;
+
+    @media (max-width: $mobile-s) {
+      --width: 3.375rem;
+      --height: 3.375rem;
+
+      line-height: 1.2em;
+    }
   }
 
   .initials {
@@ -134,6 +145,10 @@
     font-weight: 300;
     line-height: 155.3%;
     text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+
+    @media (max-width: $mobile-s) {
+      margin-top: 1em;
+    }
   }
 
   .initials .thin {
@@ -144,12 +159,24 @@
     display: grid;
     grid-template-columns: 1fr repeat(5, auto);
     column-gap: 4.375rem;
+
+    @media (max-width: $mobile-s) {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 7rem;
+      gap: 2rem;
+    }
   }
 
   .divider {
     width: 1px;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.8);
+
+    @media (max-width: $mobile-s) {
+      width: 100%;
+      height: 1px;
+    }
   }
 
   /* Info block */

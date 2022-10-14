@@ -1,14 +1,16 @@
+@import '@styles/breakpoints.scss';
+
 html,
 body,
 #app {
-  height: 100%;
+  min-height: 100%;
 }
 
 html {
   font-size: 16px;
 }
 
-@media (max-width: 1536px) {
+@media (max-width: $desktop-s) {
   html {
     font-size: 14px;
   }

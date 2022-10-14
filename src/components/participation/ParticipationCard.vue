@@ -27,7 +27,7 @@
       </div>
 
       <BaseBadge class="status">
-        {{ PriorityText[priority] }} приоритет
+        <span class="status-text">{{ PriorityText[priority] }} приоритет</span>
         <div class="priority">
           {{ repeatString('I', priority) }}
         </div>
@@ -94,7 +94,9 @@
   defineEmits<Emits>();
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .card {
     padding: 1.375rem 1.3125rem;
   }
@@ -117,6 +119,11 @@
     grid-template-columns: auto minmax(min-content, 16.25rem) min-content;
     column-gap: 0.9375rem;
     align-items: flex-start;
+
+    @media (max-width: $mobile-s) {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
   }
 
   .title {
@@ -128,6 +135,10 @@
     line-height: 1.9375rem;
     color: #4f5569;
     text-decoration: none;
+
+    @media (max-width: $mobile-s) {
+      grid-row: 2;
+    }
   }
 
   .title:hover {
@@ -140,6 +151,16 @@
     margin-top: 0.625rem;
     font-size: 1.125rem;
     line-height: 150%;
+
+    @media (max-width: $mobile-s) {
+      grid-row: 3;
+      margin-top: 0;
+      font-size: 1rem;
+    }
+  }
+
+  .status-text {
+    margin: 0 auto;
   }
 
   .priority {
@@ -150,7 +171,6 @@
     width: 2.8125rem;
     height: 2.8125rem;
     margin-right: -2px;
-    margin-left: auto;
     font-size: 1.5rem;
 
     /* text */
@@ -160,6 +180,10 @@
     text-align: center;
     background-color: var(--accent-color-1);
     border-radius: 50%;
+
+    @media (max-width: $mobile-s) {
+      grid-row: 2;
+    }
   }
 
   .stub:deep(.priority) {
@@ -191,11 +215,22 @@
     aspect-ratio: 1 / 1;
     padding: 0.425rem;
     margin-top: 1rem;
-  }
 
-  .delete-btn:hover:deep(.delete-btn-path),
-  .delete-btn:active:deep(.delete-btn-path) {
-    stroke: #fff;
+    svg {
+      min-width: 25px;
+      height: 25px;
+    }
+
+    &:hover,
+    &:active {
+      .delete-btn-path {
+        stroke: #fff;
+      }
+    }
+
+    @media (max-width: $mobile-s) {
+      margin-top: 0;
+    }
   }
 
   .stub-title {
@@ -214,5 +249,10 @@
     grid-row: 2;
     gap: 0.5rem;
     margin-top: 0.75rem;
+
+    @media (max-width: $mobile-s) {
+      grid-row: 3;
+      margin-top: 0;
+    }
   }
 </style>

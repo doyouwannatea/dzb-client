@@ -46,7 +46,7 @@
   }
 
   .icon {
-    width: 1.7rem;
+    min-width: 1.7rem;
     height: 1.7rem;
   }
 

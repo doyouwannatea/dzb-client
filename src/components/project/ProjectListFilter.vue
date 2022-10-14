@@ -1,5 +1,11 @@
 <template>
-  <form class="filters" @submit.prevent="filter">
+  <form
+    class="filters"
+    @submit.prevent="
+      filter();
+      modalsStore.projectFilterModal = false;
+    "
+  >
     <ProjectFilterAccordion>
       <template #title>
         <span v-if="statesLoading" class="multiselect-spinner"></span>
@@ -97,7 +103,10 @@
         full-width
         variant="link"
         :disabled="loading"
-        @click="clearFilter"
+        @click="
+          clearFilter();
+          modalsStore.projectFilterModal = false;
+        "
       >
         сбросить фильтр
       </BaseButton>
@@ -117,7 +126,9 @@
   import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
   import ProjectFilterAccordion from '../ui/accordion/ProjectFilterAccordion.vue';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
 
+  const modalsStore = useModalsStore();
   const { additionalProjectData, loading, error, tagsLoading, statesLoading } =
     storeToRefs(useProjectsStore());
   const { clearFilter, filter, filters } = useProjectFilters();

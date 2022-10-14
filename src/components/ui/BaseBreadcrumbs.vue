@@ -38,12 +38,19 @@
   }>();
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .breadcrumbs {
     display: flex;
     padding-left: 0;
     list-style: none;
+
+    @media (max-width: $mobile-s) {
+      flex-wrap: wrap;
+    }
   }
+
   .breadcrumbs-item {
     font-family: 'Montserrat', Arial, Helvetica, sans-serif;
     font-size: 0.875rem;
@@ -51,6 +58,12 @@
     line-height: normal;
 
     color: #7b7b7b;
+
+    @media (max-width: $mobile-s) {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
   }
   .breadcrumbs-item:not(:last-child)::after {
     margin-right: 0.375rem;
