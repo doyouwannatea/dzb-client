@@ -37,7 +37,7 @@
   .btn {
     position: fixed;
     right: 5rem;
-    bottom: 7rem;
+    bottom: 4rem;
     z-index: 999;
     width: 4rem;
     height: 4rem;
