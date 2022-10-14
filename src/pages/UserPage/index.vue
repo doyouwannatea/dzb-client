@@ -1,11 +1,12 @@
 <template>
   <PageLayout>
+    <UserNavigation v-if="isMobile" variant="mobile" />
     <header class="header">
       <h1 class="title page-title">Профиль пользователя</h1>
     </header>
     <SidebarContainer class="sidebar-container">
       <template #sidebar>
-        <UserNavigation />
+        <UserNavigation variant="desktop" />
         <DeadlineTimer
           :deadline="new Date('2022/08/21 22:06:00')"
           timer-text="идёт добор заявок в проекты"
@@ -29,7 +30,9 @@
   import UserNavigation from './UserNavigation.vue';
   import DeadlineTimer from '@/components/layout/DeadlineTimer.vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
+  import { useMobileS } from '@/helpers/breakpoints';
 
+  const isMobile = useMobileS();
   const authStore = useAuthStore();
   const router = useRouter();
 

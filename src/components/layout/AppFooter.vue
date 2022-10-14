@@ -163,7 +163,6 @@
     @media (max-width: $mobile-s) {
       display: flex;
       flex-direction: column;
-      padding-bottom: 7rem;
       gap: 2rem;
     }
   }
