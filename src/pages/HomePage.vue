@@ -91,7 +91,7 @@
 
   .sidebar-container {
     @media (max-width: $mobile-s) {
-      grid-template-columns: auto;
+      grid-template-columns: auto !important;
 
       & > :deep(.aside) {
         display: none;

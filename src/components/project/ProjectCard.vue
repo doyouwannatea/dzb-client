@@ -210,6 +210,8 @@
 
     @media (max-width: $mobile-s) {
       grid-column: 2;
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
   }
 
