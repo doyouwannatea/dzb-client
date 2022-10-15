@@ -41,7 +41,6 @@
 
     &.mobile {
       @media (max-width: $mobile-s) {
-        padding: 0 4.375rem;
         border: none;
         border-radius: 0;
 
