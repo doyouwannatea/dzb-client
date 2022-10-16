@@ -1,9 +1,12 @@
 <template>
   <article :class="['card', stateClass]">
     <header class="header container">
-      <h2 class="title">
+      <RouterLink
+        class="title"
+        :to="{ name: RouteNames.PROJECT_DETAILS, params: { id: project.id } }"
+      >
         {{ project.title }}
-      </h2>
+      </RouterLink>
       <ProjectStatus class="status" :state="project.state" />
       <div v-if="project?.supervisors.length > 0" class="subtitle">
         {{ project.supervisors.join(', ') }}
@@ -62,6 +65,7 @@
 </template>
 
 <script setup lang="ts">
+  import { RouterLink } from 'vue-router';
   import { Project } from '@/models/Project';
   import { DifficultyText } from '@/models/ProjectDifficulty';
   import { StateClass } from '@/models/ProjectState';
@@ -181,7 +185,13 @@
     font-weight: 600;
     line-height: 1.9375rem;
     color: #4f5569;
-
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+    &:focus-visible {
+      text-decoration: underline;
+    }
     @media (max-width: $mobile-s) {
       grid-column: 1 / -1;
       max-width: auto;
