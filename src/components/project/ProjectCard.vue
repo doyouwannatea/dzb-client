@@ -2,9 +2,7 @@
   <article :class="['card', stateClass]">
     <header class="header container">
       <RouterLink
-        is="router-link"
         class="title"
-        case="uppercase"
         :to="{ name: RouteNames.PROJECT_DETAILS, params: { id: project.id } }"
       >
         {{ project.title }}
