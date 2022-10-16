@@ -3,6 +3,7 @@
     <p v-if="props.label" class="label-text">{{ props.label }}</p>
     <input
       v-bind="$attrs"
+      :ref="props.inputRef"
       :value="props.modelValue"
       :class="['input', { 'with-icon': props.icon }]"
       :style="{
@@ -14,12 +15,13 @@
 </template>
 
 <script setup lang="ts">
-  import { InputHTMLAttributes, withDefaults } from 'vue';
+  import { Ref, InputHTMLAttributes, withDefaults } from 'vue';
 
   interface Props extends InputHTMLAttributes {
     modelValue?: string;
     icon?: string;
     label?: string;
+    inputRef?: Ref<HTMLInputElement | null>;
   }
 
   interface Emits {
@@ -30,6 +32,7 @@
     modelValue: '',
     icon: undefined,
     label: undefined,
+    inputRef: undefined,
   });
   const emit = defineEmits<Emits>();
 

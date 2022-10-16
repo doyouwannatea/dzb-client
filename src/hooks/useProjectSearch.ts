@@ -9,6 +9,7 @@ type Options = {
 export const useProjectSearch = ({ triggerOnInput }: Options) => {
   const store = useProjectsStore();
   const term = ref('');
+  const inputRef = ref<HTMLInputElement | null>(null);
 
   watch(
     () => store.filters.title,
@@ -36,12 +37,18 @@ export const useProjectSearch = ({ triggerOnInput }: Options) => {
     store.updateFilters();
   }
 
+  function submitSearch() {
+    inputRef.value?.blur();
+    search();
+  }
+
   const debouncedInput = debounce(search, 600);
-  const debouncedSubmit = debounce(search, 50);
+  const debouncedSubmit = debounce(submitSearch, 50);
 
   return {
     term,
     debouncedInput,
     debouncedSubmit,
+    getInputRef: () => inputRef,
   };
 };

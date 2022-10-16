@@ -2,9 +2,12 @@
   <form class="search-form" @submit.prevent="debouncedSubmit">
     <BaseInput
       v-model="term"
+      :input-ref="getInputRef()"
       :icon="searchIconUrl"
       placeholder="Поиск по проектам..."
       class="search-input"
+      type="text"
+      inputmode="email"
     />
   </form>
 </template>
@@ -15,7 +18,7 @@
   // components
   import BaseInput from '../ui/BaseInput.vue';
 
-  const { debouncedSubmit, term } = useProjectSearch({
+  const { debouncedSubmit, term, getInputRef } = useProjectSearch({
     triggerOnInput: true,
   });
 </script>
