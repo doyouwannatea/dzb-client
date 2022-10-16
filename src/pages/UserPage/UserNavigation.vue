@@ -38,7 +38,6 @@
     border-radius: 0.625rem;
 
     &.mobile {
-      padding: 0 4.375rem;
       border: none;
       border-radius: 0;
 
