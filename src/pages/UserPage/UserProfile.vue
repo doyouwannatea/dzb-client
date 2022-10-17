@@ -55,11 +55,17 @@
   const contactInfo: AppListItemType[] = [
     {
       title: 'E-Mail:',
-      content: profileData?.email,
+      content: (() => {
+        if (profileData?.email == null) return '-';
+        else return String(profileData?.email);
+      })(),
     },
     {
       title: 'Телефон:',
-      content: profileData?.phone,
+      content: (() => {
+        if (profileData?.phone == null) return '-';
+        else return profileData?.phone;
+      })(),
     },
   ];
 
