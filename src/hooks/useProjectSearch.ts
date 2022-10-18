@@ -10,10 +10,12 @@ export const useProjectSearch = ({ triggerOnInput }: Options) => {
   const store = useProjectsStore();
   const term = ref('');
   const inputRef = ref<HTMLInputElement | null>(null);
+  const isClearFilters = ref<boolean>(false);
 
   watch(
     () => store.filters.title,
     (title) => {
+      if (!title) isClearFilters.value = true;
       term.value = title || '';
     },
     { immediate: true },
@@ -23,6 +25,10 @@ export const useProjectSearch = ({ triggerOnInput }: Options) => {
     () => term.value,
     () => {
       if (!triggerOnInput) return;
+      if (isClearFilters.value) {
+        isClearFilters.value = false;
+        return;
+      }
       debouncedInput();
     },
   );
@@ -30,10 +36,7 @@ export const useProjectSearch = ({ triggerOnInput }: Options) => {
   function search() {
     term.value = term.value.trim();
 
-    store.setFilters({
-      title: term.value,
-      page: 1,
-    });
+    store.setFilters({ title: term.value });
     store.updateFilters();
   }
 
