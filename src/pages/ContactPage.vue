@@ -32,14 +32,26 @@
         </div>
       </div>
       <div class="contact-content">
-        <h2>E-mail</h2>
+        <h2>Персоналии</h2>
         <div class="contact-content-block">
           <h3>Отдел Проектной деятельности</h3>
-          <a class="link" href="mailto:info@istu.edu">info@istu.edu</a>
+          <a
+            class="link"
+            href="https://www.istu.edu/ob_irnitu/person/chimitov_pavel_evgenevich"
+            target="_blank"
+          >
+            Чимитов Павел Евгеньевич
+          </a>
         </div>
         <div class="contact-content-block">
           <h3>Администратор сайта</h3>
-          <a class="link" href="mailto:admin@admin.ru">admin@admin.ru</a>
+          <a
+            class="link"
+            href="https://www.istu.edu/ob_irnitu/person/arshinskiy_vadim_leonidovich"
+            target="_blank"
+          >
+            Аршинский Вадим Леонидович
+          </a>
         </div>
       </div>
     </div>
