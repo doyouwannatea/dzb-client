@@ -55,22 +55,22 @@
   const contactInfo: AppListItemType[] = [
     {
       title: 'E-Mail:',
-      content: profileData?.email,
+      content: profileData?.email ? profileData.email : '-',
     },
     {
       title: 'Телефон:',
-      content: profileData?.phone,
+      content: profileData?.phone ? profileData.phone : '-',
     },
   ];
 
   const addInfo: AppListItemType[] = [
     {
       title: 'Учебная группа:',
-      content: profileData?.training_group,
+      content: profileData?.training_group ? profileData.training_group : '-',
     },
     {
       title: 'Курс:',
-      content: String(profileData?.course),
+      content: String(profileData?.course ? profileData.course : '-'),
     },
   ];
 
