@@ -1,7 +1,7 @@
 export interface State {
   loading: boolean;
   authModal: boolean;
-  SelectedProjectModal: boolean;
+  selectedProjectModal: boolean;
   editSkillsModal: boolean;
   participationSuccessModal: boolean;
   participationModal: boolean;
@@ -13,7 +13,7 @@ export interface State {
 export const state = (): State => ({
   loading: false,
   authModal: false,
-  SelectedProjectModal: false,
+  selectedProjectModal: false,
   editSkillsModal: false,
   participationModal: false,
   participationSuccessModal: false,

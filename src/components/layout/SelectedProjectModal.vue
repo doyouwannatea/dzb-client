@@ -1,16 +1,16 @@
 <template>
   <!-- auth modal -->
   <BaseModal
-    :is-show="modalsStore.SelectedProjectModal"
-    @close="modalsStore.SelectedProjectModal = false"
+    :is-show="modalsStore.selectedProjectModal"
+    @close="modalsStore.selectedProjectModal = false"
   >
     <!-- MAIN CONTENT -->
-    <div class="success-modal">
+    <div class="modal-content">
       <h1>Вы уже подали заявку на этот проект</h1>
       <div class="modal-buttons">
         <BaseButton
           case="uppercase"
-          @click="modalsStore.SelectedProjectModal = false"
+          @click="modalsStore.selectedProjectModal = false"
         >
           Понятно
         </BaseButton>
@@ -30,7 +30,7 @@
 </script>
 
 <style scoped>
-  .success-modal {
+  .modal-content {
     text-align: center;
   }
 

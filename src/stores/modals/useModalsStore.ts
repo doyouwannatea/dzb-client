@@ -21,7 +21,7 @@ export const useModalsStore = defineStore('modals', {
       if (authStore.participationList) {
         for (const participation of authStore.participationList) {
           if (participation.project_id === project.id) {
-            this.SelectedProjectModal = true;
+            this.selectedProjectModal = true;
             return;
           }
         }
