@@ -6,7 +6,7 @@
           <AppLogo class="logo" />
         </RouterLink>
 
-        <p class="initials">
+        <a class="initials" href="https://www.istu.edu/" target="_blank">
           <span class="thin">
             Федеральное Государственное Бюджетное Образовательное Учреждение
             высшего образования
@@ -15,7 +15,7 @@
           <span>
             "Иркутский Национальный Исследовательский Технический Университет"
           </span>
-        </p>
+        </a>
       </div>
 
       <nav>
@@ -139,20 +139,27 @@
   }
 
   .initials {
+    display: block;
+    font-size: 0.88rem;
     max-width: 30em;
     margin-top: 7em;
-    font-size: 0.88rem;
     font-weight: 300;
     line-height: 155.3%;
     text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      text-decoration: underline;
+    }
 
     @media (max-width: $mobile-s) {
       margin-top: 1em;
     }
-  }
 
-  .initials .thin {
-    font-weight: 100;
+    .thin {
+      font-weight: 100;
+    }
   }
 
   .container {
