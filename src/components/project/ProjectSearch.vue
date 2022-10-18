@@ -8,6 +8,7 @@
       class="search-input"
       type="text"
       inputmode="email"
+      maxlength="100"
     />
   </form>
 </template>
