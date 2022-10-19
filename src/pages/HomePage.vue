@@ -16,7 +16,9 @@
         <ProjectListFilter />
       </template>
       <template #main>
-        <div v-if="loading">загрузка...</div>
+        <div v-if="loading">
+          <ProjectCardEmpty />
+        </div>
         <div v-if="error">{{ error }}</div>
         <div v-if="projectList && !projectList.length">
           <ProjectSearchBadStub />
@@ -53,6 +55,7 @@
     useSaveHomePageScrollPosition,
   } from '@/hooks/useHomePageScrollPosition';
   // components
+  import ProjectCardEmpty from '@/components/project/ProjectCardEmpty.vue';
   import ProjectSearch from '@/components/project/ProjectSearch.vue';
   import ProjectSearchBadStub from '@/components/project/ProjectSearchBadStub.vue';
   import SidebarContainer from '@/components/layout/SidebarContainer.vue';
