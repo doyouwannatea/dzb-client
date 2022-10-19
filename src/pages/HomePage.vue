@@ -20,9 +20,7 @@
           <ProjectCardEmpty />
         </div>
         <div v-if="error">{{ error }}</div>
-        <div v-if="projectList && !projectList.length">
-          <ProjectSearchBadStub />
-        </div>
+        <ProjectSearchBadStub v-if="projectList && !projectList.length" />
         <template v-if="!loading && !error && projectList">
           <ProjectList :project-list="projectList" />
           <template v-if="projectList && projectList.length">
