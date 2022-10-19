@@ -1,5 +1,5 @@
 <template>
-  <ProjectListFilterModal class="project-filter-modal" />
+  <ProjectListFilterModal v-if="isMobile" />
   <PageLayout>
     <header class="header">
       <h1 class="title page-title">Все проекты</h1>
@@ -7,36 +7,32 @@
         На этой странице размещены проекты преподавателей и руководителей ИРНИТУ
       </p>
     </header>
-    <aside class="top-filters">
+    <aside class="header-controls">
       <ProjectSearch />
-      <OpenProjectFilterModalButton class="open-project-filter-btn" />
+      <OpenProjectFilterModalButton v-if="isMobile" />
     </aside>
     <SidebarContainer class="sidebar-container">
       <template #sidebar>
         <ProjectListFilter />
       </template>
       <template #main>
-        <div v-if="loading">
-          <ProjectCardEmpty />
-        </div>
+        <ProjectList
+          v-if="loading"
+          :loading="loading"
+          :loading-cards-length="PROJECTS_PER_PAGE"
+        />
         <div v-if="error">{{ error }}</div>
         <ProjectSearchBadStub v-if="projectList && !projectList.length" />
         <template v-if="!loading && !error && projectList">
           <ProjectList :project-list="projectList" />
-          <template v-if="projectList && projectList.length">
-            <ProjectListPagination
-              class="desktop-pagination"
-              :page-size="7"
-              :pages-visible="7"
-              :total-items="projectCount"
-            />
-            <ProjectListPagination
-              class="mobile-pagination"
-              :page-size="7"
-              :pages-visible="4"
-              :total-items="projectCount"
-            />
-          </template>
+          <ProjectListPagination
+            v-if="projectList && projectList.length"
+            :page-size="PROJECTS_PER_PAGE"
+            :pages-visible="
+              isMobile ? PAGES_VISIBLE_MOBILE : PAGES_VISIBLE_DESKTOP
+            "
+            :total-items="projectCount"
+          />
         </template>
       </template>
     </SidebarContainer>
@@ -44,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, watch } from 'vue';
+  import { computed } from 'vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useFilteredProjectList } from '@/hooks/useProjectFilters';
   import { useFetchAdditionalProjectData } from '@/hooks/useFetchAdditionalProjectData';
@@ -53,7 +49,6 @@
     useSaveHomePageScrollPosition,
   } from '@/hooks/useHomePageScrollPosition';
   // components
-  import ProjectCardEmpty from '@/components/project/ProjectCardEmpty.vue';
   import ProjectSearch from '@/components/project/ProjectSearch.vue';
   import ProjectSearchBadStub from '@/components/project/ProjectSearchBadStub.vue';
   import SidebarContainer from '@/components/layout/SidebarContainer.vue';
@@ -63,6 +58,7 @@
   import PageLayout from '@/components/layout/PageLayout.vue';
   import OpenProjectFilterModalButton from '@/components/project/OpenProjectFilterModalButton.vue';
   import ProjectListFilterModal from '../components/project/ProjectListFilterModal.vue';
+  import { useMobileS } from '@/helpers/breakpoints';
 
   useFilteredProjectList();
   useFetchAdditionalProjectData();
@@ -74,21 +70,17 @@
   const loading = computed(() => useProjectStore.loading);
   const projectList = computed(() => useProjectStore.projectList);
   const projectCount = computed(() => useProjectStore.projectCount);
+  const isMobile = useMobileS();
+
+  const PROJECTS_PER_PAGE = 7;
+  const PAGES_VISIBLE_DESKTOP = 7;
+  const PAGES_VISIBLE_MOBILE = 4;
 </script>
 
 <style lang="scss" scoped>
   @import '@styles/breakpoints.scss';
 
-  .open-project-filter-btn,
-  .project-filter-modal {
-    display: none;
-
-    @media (max-width: $mobile-s) {
-      display: flex;
-    }
-  }
-
-  .top-filters {
+  .header-controls {
     display: flex;
     gap: 2.1875rem;
     align-items: center;
@@ -103,20 +95,6 @@
       & > :deep(.aside) {
         display: none;
       }
-    }
-  }
-
-  .desktop-pagination {
-    @media (max-width: $mobile-s) {
-      display: none;
-    }
-  }
-
-  .mobile-pagination {
-    display: none;
-
-    @media (max-width: $mobile-s) {
-      display: block;
     }
   }
 

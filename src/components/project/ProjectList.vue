@@ -1,8 +1,15 @@
 <template>
   <ul class="project-list">
-    <li v-for="project of projectList" :key="project.id">
-      <ProjectCard :project="project" />
-    </li>
+    <template v-if="loading">
+      <li v-for="index of loadingCardsLength" :key="index">
+        <ProjectCardEmpty />
+      </li>
+    </template>
+    <template v-else>
+      <li v-for="project of projectList" :key="project.id">
+        <ProjectCard :project="project" />
+      </li>
+    </template>
   </ul>
 </template>
 
@@ -10,8 +17,19 @@
   import type { Project } from '@/models/Project';
   // components
   import ProjectCard from './ProjectCard.vue';
+  import ProjectCardEmpty from './ProjectCardEmpty.vue';
 
-  defineProps<{ projectList: Project[] }>();
+  interface Props {
+    projectList: Project[];
+    loading?: boolean;
+    loadingCardsLength?: number;
+  }
+
+  withDefaults(defineProps<Props>(), {
+    loading: false,
+    loadingCardsLength: 1,
+    projectList: () => [],
+  });
 </script>
 
 <style scoped>
