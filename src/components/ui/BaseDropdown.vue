@@ -49,6 +49,6 @@
     top: 80%;
     right: 0;
     width: 15rem;
-    padding: 1.0625rem 0 !important;
+    padding: 0.6rem 0 !important;
   }
 </style>
