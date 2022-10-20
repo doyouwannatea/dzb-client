@@ -53,6 +53,7 @@
   .radio {
     position: relative;
     width: 1.25rem;
+    min-width: 1.25rem;
     height: 1.25rem;
     border: 1px solid var(--gray-color-2);
     border-radius: 50%;
