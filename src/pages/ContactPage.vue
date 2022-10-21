@@ -168,5 +168,6 @@
     margin-top: 3.125rem;
     border: none;
     border-radius: 0.625rem;
+    background-color: var(--gray-color-1);
   }
 </style>
