@@ -164,7 +164,8 @@
   }
   .map {
     width: 100%;
-    min-height: 30.275rem;
+    height: 60vh;
+    min-height: 12.5rem;
     margin-top: 3.125rem;
     border: none;
     border-radius: 0.625rem;
