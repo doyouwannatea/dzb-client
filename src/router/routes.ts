@@ -23,6 +23,9 @@ const FaqPage = () => import('@/pages/FaqPage.vue');
 // Contact page
 const ContactPage = () => import('@/pages/ContactPage.vue');
 
+// 404 page
+const NotFound = () => import('@/pages/NotFoundPage.vue');
+
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -163,5 +166,9 @@ export const routes: RouteRecordRaw[] = [
       </svg>
       `,
     },
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: NotFound,
   },
 ];
