@@ -5,6 +5,7 @@ import { RouteNames } from '@/router/types/route-names';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import { state } from './state';
+import ky from 'ky';
 
 export const useProjectsStore = () => {
   const router = useRouter();
@@ -41,10 +42,12 @@ export const useProjectsStore = () => {
       async getProjectList() {
         this.setProjectList();
         this.loading = true;
-        this.error = '';
         try {
           const projectListResponse = await projectApi.filterProjectList(
             this.filters,
+            (progress) => {
+              this.projectProgress = progress.percent;
+            },
           );
           const projectCount = projectListResponse.projectCount;
           const projectList = projectListResponse.data;
@@ -53,6 +56,7 @@ export const useProjectsStore = () => {
           this.error = String(error);
         } finally {
           this.loading = false;
+          this.projectProgress = 0;
         }
       },
       // GET PROJECT LIST
@@ -79,7 +83,6 @@ export const useProjectsStore = () => {
           states: undefined,
           tags: undefined,
         };
-        this.loading = true;
         this.error = '';
         try {
           this.additionalProjectData.tags =
@@ -88,18 +91,16 @@ export const useProjectsStore = () => {
             await projectApi.getAllProjectStates();
         } catch (error) {
           this.error = String(error);
-        } finally {
-          this.loading = false;
         }
       },
       // GET SINGLE PROJECT
     },
     getters: {
       tagsLoading(): boolean {
-        return this.loading && !this.additionalProjectData.tags;
+        return !this.additionalProjectData.tags && !this.error;
       },
       statesLoading(): boolean {
-        return this.loading && !this.additionalProjectData.states;
+        return !this.additionalProjectData.states && !this.error;
       },
     },
   })();

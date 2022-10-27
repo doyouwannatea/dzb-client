@@ -1,3 +1,4 @@
+import { DownloadProgress } from 'ky';
 import type {
   Project,
   ProjectFilters,
@@ -12,9 +13,15 @@ export interface ProjectListResponse {
   projectCount: number;
 }
 
+export type OnDownloadProgress = (
+  progress: DownloadProgress,
+  chunk: Uint8Array,
+) => void;
+
 export default abstract class IProjectApi {
   abstract filterProjectList(
     filters: ProjectFilters,
+    onDownloadProgress?: OnDownloadProgress,
   ): Promise<ProjectListResponse>;
   abstract getSingleProject(projectId: number): Promise<Project>;
   abstract getAllProjectTags(): Promise<ProjectTags>;
