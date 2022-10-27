@@ -69,6 +69,7 @@
 
     @media (max-width: $mobile-s) {
       padding: 1rem;
+      padding-top: 0rem;
       font-size: 1.2rem;
     }
   }
