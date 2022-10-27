@@ -1,3 +1,4 @@
+import { DownloadProgress } from 'ky';
 import type {
   Project,
   ProjectFilters,
@@ -6,15 +7,16 @@ import type {
 } from '@/models/Project';
 import { State } from '@/models/ProjectState';
 import { Supervisor } from '@/models/Supervisor';
-import { DownloadProgress } from 'ky';
-export type OnDownloadProgress = (
-  progress: DownloadProgress,
-  chunk: Uint8Array,
-) => void;
+
 export interface ProjectListResponse {
   data: Project[];
   projectCount: number;
 }
+
+export type OnDownloadProgress = (
+  progress: DownloadProgress,
+  chunk: Uint8Array,
+) => void;
 
 export default abstract class IProjectApi {
   abstract filterProjectList(

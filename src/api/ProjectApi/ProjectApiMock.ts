@@ -1,3 +1,4 @@
+import { DownloadProgress } from 'ky';
 import { OnDownloadProgress, ProjectListResponse } from './IProjectApi';
 import type {
   Project,
@@ -18,6 +19,14 @@ import {
   skills,
 } from '@/models/mock/project-skills';
 import { deepClone } from '@/helpers/array';
+
+const createDownloadProgress =
+  (totalBytes: number) =>
+  (percent: number): DownloadProgress => ({
+    percent: percent,
+    totalBytes: totalBytes,
+    transferredBytes: totalBytes * percent,
+  });
 
 export default class ProjectApiMock extends IProjectApi {
   async filterProjectList(
@@ -56,40 +65,18 @@ export default class ProjectApiMock extends IProjectApi {
 
     filteredList = filteredList.map(formatProjectDate);
 
-    if (onDownloadProgress)
-      onDownloadProgress(
-        { percent: 0, totalBytes: 1506, transferredBytes: 0 },
-        new Uint8Array(),
-      );
+    const getDownloadProgress = createDownloadProgress(1000);
 
     await sleep(100);
-
-    if (onDownloadProgress)
-      onDownloadProgress(
-        { percent: 0.33, totalBytes: 1506, transferredBytes: 502 },
-        new Uint8Array(),
-      );
+    onDownloadProgress?.(getDownloadProgress(0.25), new Uint8Array());
 
     await sleep(200);
+    onDownloadProgress?.(getDownloadProgress(0.7), new Uint8Array());
 
-    if (onDownloadProgress)
-      onDownloadProgress(
-        { percent: 0.66, totalBytes: 1506, transferredBytes: 1004 },
-        new Uint8Array(),
-      );
+    await sleep(100);
+    onDownloadProgress?.(getDownloadProgress(1), new Uint8Array());
 
-    await sleep(300);
-
-    if (onDownloadProgress)
-      onDownloadProgress(
-        { percent: 1, totalBytes: 1506, transferredBytes: 1506 },
-        new Uint8Array(),
-      );
-
-    return delayRes(
-      { projectCount: filteredList.length, data: filteredList },
-      400,
-    );
+    return { projectCount: filteredList.length, data: filteredList };
   }
 
   async getSingleProject(projectId: number): Promise<Project> {

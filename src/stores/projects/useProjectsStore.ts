@@ -46,7 +46,7 @@ export const useProjectsStore = () => {
           const projectListResponse = await projectApi.filterProjectList(
             this.filters,
             (progress) => {
-              this.progress = progress.percent;
+              this.projectProgress = progress.percent;
             },
           );
           const projectCount = projectListResponse.projectCount;
@@ -56,6 +56,7 @@ export const useProjectsStore = () => {
           this.error = String(error);
         } finally {
           this.loading = false;
+          this.projectProgress = 0;
         }
       },
       // GET PROJECT LIST
@@ -82,7 +83,6 @@ export const useProjectsStore = () => {
           states: undefined,
           tags: undefined,
         };
-        this.loading = true;
         this.error = '';
         try {
           this.additionalProjectData.tags =
@@ -91,18 +91,16 @@ export const useProjectsStore = () => {
             await projectApi.getAllProjectStates();
         } catch (error) {
           this.error = String(error);
-        } finally {
-          this.loading = false;
         }
       },
       // GET SINGLE PROJECT
     },
     getters: {
       tagsLoading(): boolean {
-        return this.loading && !this.additionalProjectData.tags;
+        return !this.additionalProjectData.tags && !this.error;
       },
       statesLoading(): boolean {
-        return this.loading && !this.additionalProjectData.states;
+        return !this.additionalProjectData.states && !this.error;
       },
     },
   })();

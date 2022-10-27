@@ -12,7 +12,7 @@ interface State {
   openedProject?: Project;
   filters: ProjectFilters;
   additionalProjectData: AdditionalProjectData;
-  progress: number;
+  projectProgress: number;
 }
 
 export const state = (): State => ({
@@ -33,5 +33,5 @@ export const state = (): State => ({
     states: undefined,
     tags: undefined,
   },
-  progress: 0,
+  projectProgress: 0,
 });

@@ -15,7 +15,6 @@ import { formatProjectDate } from '@/helpers/project';
 import { Supervisor } from '@/models/Supervisor';
 import { baseKyInstance } from '../baseKy';
 import ProjectApiMock from './ProjectApiMock';
-import { DownloadProgress } from 'ky';
 
 export default class ProjectApi extends IProjectApi {
   async getSingleProject(projectId: number): Promise<Project> {

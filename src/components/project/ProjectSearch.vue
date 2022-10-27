@@ -35,7 +35,7 @@
   const { debouncedSubmit, term, getInputRef } = useProjectSearch({
     triggerOnInput: true,
   });
-  const progress = computed(() => useProjectStore.progress);
+  const progress = computed(() => useProjectStore.projectProgress);
 </script>
 
 <style scoped>
@@ -57,24 +57,26 @@
     left: 1px;
     height: 0.265rem;
     padding-left: 1.0625rem;
-    background-color: #26ab5b;
+    background-color: var(--green-color-1);
     border-radius: 0 0.3125rem 0.3125rem 0.3125rem;
-    transition: 0.2s ease-in;
+    transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+    transition-delay: 0.1s;
+    transform-origin: right;
   }
 
   .loading-enter-active {
     border-radius: 0 0.3125rem 0.3125rem 0.3125rem;
-    transition: 0;
     transform: scaleX(1);
   }
   .loading-leave-active {
     border-radius: 0.3125rem 0.3125rem 0.3125rem 0.3125rem;
-    transition: 1s ease-in-out;
+    transition: opacity 0.7s ease-in, transform 0.7s ease-in;
+    transition-delay: 0.4s;
     transform: scaleX(0);
   }
 
   .loading-enter-from,
   .loading-leave-to {
-    opacity: 0%;
+    opacity: 0;
   }
 </style>
