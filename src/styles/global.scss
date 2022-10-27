@@ -6,6 +6,11 @@ body,
   min-height: 100%;
 }
 
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
 html {
   font-size: 16px;
 }
@@ -35,6 +40,7 @@ body {
 
 .page-subtitle {
   font-size: 1.125rem;
+  font-weight: 400;
   line-height: 1.4375rem;
   color: #707070;
 }
