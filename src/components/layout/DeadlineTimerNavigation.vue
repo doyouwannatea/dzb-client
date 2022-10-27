@@ -1,55 +1,17 @@
 <template>
-  <template v-if="!isTimePass">
-    <div class="timer">
-      <div class="text">{{ props.timerText }}</div>
-      <div class="time">{{ duration }}</div>
-    </div>
-  </template>
+  <div v-if="!isTimePass" class="timer">
+    <div class="text">{{ props.timerText }}</div>
+    <div class="time">{{ duration }}</div>
+  </div>
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted, ref } from 'vue';
-  import { Duration } from 'luxon';
-  import { declOfNum } from '@/helpers/string';
+  import { useDuration } from '@/hooks/useDuration';
 
   type Props = { deadline: Date; timerText: string };
-
   const props = defineProps<Props>();
 
-  const timer = ref<number | undefined>(undefined);
-  const duration = ref<string>('');
-  const isTimePass = ref<boolean>(false);
-
-  function calcTime() {
-    const diff = props.deadline.getTime() - Date.now();
-    if (diff <= 0) {
-      isTimePass.value = true;
-      return clearTimer();
-    }
-    duration.value = Duration.fromObject({
-      day: Math.floor(Duration.fromMillis(diff).as('days')),
-      hour: Math.floor(Duration.fromMillis(diff).as('hours') % 24),
-      minutes: Math.floor(Duration.fromMillis(diff).as('minutes') % 60),
-      seconds: Math.floor(Duration.fromMillis(diff).as('seconds') % 60),
-    }).toFormat(
-      `d ${declOfNum(Math.floor(Duration.fromMillis(diff).as('days')), [
-        'день',
-        'дня',
-        'дней',
-      ])} hh:mm:ss`,
-    );
-  }
-
-  function clearTimer() {
-    window.clearInterval(timer.value);
-  }
-
-  onMounted(() => {
-    calcTime();
-    timer.value = window.setInterval(calcTime, 1000);
-  });
-
-  onUnmounted(clearTimer);
+  const { duration, isTimePass } = useDuration(props.deadline);
 </script>
 
 <style scoped>
@@ -58,17 +20,21 @@
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
+    white-space: nowrap;
   }
+
   .text {
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: normal;
-    line-height: 15px;
+    line-height: 0.9375rem;
     color: var(--gray-color-2);
   }
+
   .time {
-    font-size: 18px;
+    margin-top: 0.125rem;
+    font-size: 1.125rem;
     font-weight: 600;
-    line-height: 23px;
+    line-height: 1.4375rem;
     color: var(--accent-color-1);
   }
 </style>
