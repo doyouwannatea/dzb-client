@@ -62,7 +62,6 @@
     padding: 0;
     padding: 1.875rem;
     padding-top: 0;
-    margin-top: 0.625rem;
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 150%;
@@ -70,6 +69,7 @@
 
     @media (max-width: $mobile-s) {
       padding: 1rem;
+      padding-top: 0rem;
       font-size: 1.2rem;
     }
   }
