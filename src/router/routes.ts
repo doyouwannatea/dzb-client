@@ -170,5 +170,6 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/:pathMatch(.*)*',
     component: NotFound,
+    name: RouteNames.NOT_FOUND,
   },
 ];
