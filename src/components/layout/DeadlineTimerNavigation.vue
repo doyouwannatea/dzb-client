@@ -1,13 +1,10 @@
 <template>
-  <div class="timer">
-    <template v-if="!isTimePass">
-      <div class="title">{{ duration }}</div>
-      <div>{{ props.timerText }}</div>
-    </template>
-    <template v-if="isTimePass">
-      <div class="title">{{ props.afterTimerText }}</div>
-    </template>
-  </div>
+  <template v-if="!isTimePass">
+    <div class="timer">
+      <div class="text">{{ props.timerText }}</div>
+      <div class="time">{{ duration }}</div>
+    </div>
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -15,7 +12,7 @@
   import { Duration } from 'luxon';
   import { declOfNum } from '@/helpers/string';
 
-  type Props = { deadline: Date; timerText: string; afterTimerText: string };
+  type Props = { deadline: Date; timerText: string };
 
   const props = defineProps<Props>();
 
@@ -59,21 +56,19 @@
   .timer {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    padding: 2.1875rem 2.5rem 1.375rem;
-    margin-top: 1.25rem;
-    text-align: center;
-    background: #f1f4fe;
-    border: 1px solid #d1dcfd;
-    border-radius: 0.625rem;
   }
-
-  .title {
-    margin-bottom: 0.75rem;
-    font-size: 1.65rem;
-    font-weight: 800;
-    line-height: 2.875rem;
+  .text {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 15px;
+    color: var(--gray-color-2);
+  }
+  .time {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23px;
     color: var(--accent-color-1);
   }
 </style>
