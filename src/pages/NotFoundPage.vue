@@ -209,12 +209,12 @@
         </svg>
       </div>
       <div class="column">
-        <text class="bigText">404</text>
-        <text class="mediumText">Страница не найдена</text>
-        <text class="smallText">
+        <span class="bigText">404</span>
+        <h1 class="mediumText">Страница не найдена</h1>
+        <p class="smallText">
           Возможно, она была перемещена, или вы, просто, неверно указали адрес
           страницы.
-        </text>
+        </p>
         <BaseButton
           is="router-link"
           case="uppercase"
@@ -241,11 +241,18 @@
 </style>
 
 <style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .row {
     margin-top: 7rem;
     display: flex;
     justify-content: space-evenly;
     gap: 6.25rem;
+
+    @media (max-width: $mobile-s) {
+      flex-direction: column;
+      margin-top: 2.8125rem;
+    }
   }
 
   .column {
@@ -255,6 +262,16 @@
     justify-content: center;
     max-width: 29.625rem;
     min-width: 18.75rem;
+
+    @media (max-width: $mobile-s) {
+      text-align: center;
+      align-items: center;
+      max-width: initial;
+
+      &:first-child {
+        display: none;
+      }
+    }
   }
 
   .bigText {
@@ -278,8 +295,8 @@
   }
 
   .smallText {
-    padding-top: 5%;
-    padding-bottom: 7.5%;
+    padding-top: 2.125rem;
+    padding-bottom: 2.125rem;
     font-size: 1.125rem;
     font-style: normal;
     font-weight: normal;
