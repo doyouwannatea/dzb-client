@@ -5,7 +5,7 @@
       <BottomNavigationBar v-if="isMobile" />
     </template>
     <template #content>
-      <BaseContainer size="md">
+      <BaseContainer v-bind="$attrs" size="md">
         <slot></slot>
       </BaseContainer>
     </template>
@@ -14,6 +14,13 @@
     </template>
   </BaseLayout>
 </template>
+
+<script lang="ts">
+  import { defineComponent } from 'vue';
+  export default defineComponent({
+    inheritAttrs: false,
+  });
+</script>
 
 <script setup lang="ts">
   // components
