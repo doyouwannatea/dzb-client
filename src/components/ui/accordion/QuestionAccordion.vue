@@ -62,7 +62,6 @@
     padding: 0;
     padding: 1.875rem;
     padding-top: 0;
-    margin-top: -1rem;
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 150%;
