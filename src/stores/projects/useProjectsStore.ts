@@ -5,6 +5,7 @@ import { RouteNames } from '@/router/types/route-names';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import { state } from './state';
+import ky from 'ky';
 
 export const useProjectsStore = () => {
   const router = useRouter();
@@ -41,10 +42,12 @@ export const useProjectsStore = () => {
       async getProjectList() {
         this.setProjectList();
         this.loading = true;
-        this.error = '';
         try {
           const projectListResponse = await projectApi.filterProjectList(
             this.filters,
+            (progress) => {
+              this.progress = progress.percent;
+            },
           );
           const projectCount = projectListResponse.projectCount;
           const projectList = projectListResponse.data;

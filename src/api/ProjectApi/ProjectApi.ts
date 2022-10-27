@@ -6,12 +6,16 @@ import {
   ProjectTags,
   Tag,
 } from '@/models/Project';
-import IProjectApi, { ProjectListResponse } from './IProjectApi';
+import IProjectApi, {
+  OnDownloadProgress,
+  ProjectListResponse,
+} from './IProjectApi';
 import { State } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
 import { Supervisor } from '@/models/Supervisor';
 import { baseKyInstance } from '../baseKy';
 import ProjectApiMock from './ProjectApiMock';
+import { DownloadProgress } from 'ky';
 
 export default class ProjectApi extends IProjectApi {
   async getSingleProject(projectId: number): Promise<Project> {
@@ -23,10 +27,14 @@ export default class ProjectApi extends IProjectApi {
 
   async filterProjectList(
     filters: ProjectFilters,
+    onDownloadProgress?: OnDownloadProgress,
   ): Promise<ProjectListResponse> {
     const searchParams = projectFiltersToSearchParams(filters);
     const projectListRes: ProjectListResponse = await baseKyInstance
-      .get('api/projects/filter', { searchParams })
+      .get('api/projects/filter', {
+        searchParams,
+        onDownloadProgress,
+      })
       .json();
     projectListRes.data = projectListRes.data.map(formatProjectDate);
     return projectListRes;

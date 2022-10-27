@@ -23,7 +23,7 @@ export const useFilteredProjectList = () => {
       );
 
       if (!isEqual && storedFiltersNotEmpty) {
-        return router.push({ ...route, query: storedFilters });
+        return router.replace({ ...route, query: storedFilters });
       }
 
       projectStore.setFilters(queryFilters);

@@ -1,4 +1,4 @@
-import { ProjectListResponse } from './IProjectApi';
+import { OnDownloadProgress, ProjectListResponse } from './IProjectApi';
 import type {
   Project,
   ProjectFilters,
@@ -6,7 +6,7 @@ import type {
   Type,
 } from '@/models/Project';
 import { projectListResponse, states, types } from '@/models/mock/project';
-import { delayRes } from '@/helpers/promise';
+import { delayRes, sleep } from '@/helpers/promise';
 import { supervisorList } from '@/models/mock/supervisor';
 import IProjectApi from './IProjectApi';
 import { State } from '@/models/ProjectState';
@@ -22,6 +22,7 @@ import { deepClone } from '@/helpers/array';
 export default class ProjectApiMock extends IProjectApi {
   async filterProjectList(
     filters: ProjectFilters,
+    onDownloadProgress?: OnDownloadProgress,
   ): Promise<ProjectListResponse> {
     let filteredList = projectListResponse.data;
     // DIFFICULTY
@@ -54,6 +55,36 @@ export default class ProjectApiMock extends IProjectApi {
     }
 
     filteredList = filteredList.map(formatProjectDate);
+
+    if (onDownloadProgress)
+      onDownloadProgress(
+        { percent: 0, totalBytes: 1506, transferredBytes: 0 },
+        new Uint8Array(),
+      );
+
+    await sleep(100);
+
+    if (onDownloadProgress)
+      onDownloadProgress(
+        { percent: 0.33, totalBytes: 1506, transferredBytes: 502 },
+        new Uint8Array(),
+      );
+
+    await sleep(200);
+
+    if (onDownloadProgress)
+      onDownloadProgress(
+        { percent: 0.66, totalBytes: 1506, transferredBytes: 1004 },
+        new Uint8Array(),
+      );
+
+    await sleep(300);
+
+    if (onDownloadProgress)
+      onDownloadProgress(
+        { percent: 1, totalBytes: 1506, transferredBytes: 1506 },
+        new Uint8Array(),
+      );
 
     return delayRes(
       { projectCount: filteredList.length, data: filteredList },
