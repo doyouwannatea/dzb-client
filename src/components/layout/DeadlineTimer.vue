@@ -1,7 +1,7 @@
 <template>
   <div class="timer">
     <template v-if="!isTimePass">
-      <div class="title">{{ duration }}</div>
+      <div class="time">{{ duration }}</div>
       <div>{{ props.timerText }}</div>
     </template>
     <template v-if="isTimePass">
@@ -37,6 +37,13 @@
     margin-bottom: 0.75rem;
     font-size: 1.65rem;
     font-weight: 800;
+    line-height: 2.875rem;
+    color: var(--accent-color-1);
+  }
+  .time {
+    margin-bottom: 0.75rem;
+    font-size: 2.25rem;
+    font-weight: bold;
     line-height: 2.875rem;
     color: var(--accent-color-1);
   }

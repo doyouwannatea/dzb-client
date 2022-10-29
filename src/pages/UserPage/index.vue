@@ -9,7 +9,7 @@
         <UserNavigation variant="desktop" />
         <DeadlineTimer
           :deadline="new Date('2022/11/01')"
-          timer-text="идёт добор заявок в проекты"
+          timer-text="до конца приема заявок на проектное обучение"
           after-timer-text="Прием заявок на проектное обучение закончен"
         />
       </template>
