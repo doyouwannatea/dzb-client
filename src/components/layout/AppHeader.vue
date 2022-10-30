@@ -8,6 +8,10 @@
         <AppLogo />
       </RouterLink>
       <AppNavigation class="navigation" />
+      <DeadlineTimerNavigation
+        :deadline="new Date('2022/11/01')"
+        timer-text="до конца приема заявок"
+      />
       <HeaderUserActions class="actions" />
     </BaseContainer>
   </header>
@@ -21,6 +25,7 @@
   import AppLogo from '../ui/AppLogo.vue';
   import AppNavigation from './AppNavigation.vue';
   import HeaderUserActions from '../user/HeaderUserActions.vue';
+  import DeadlineTimerNavigation from '@/components/layout/DeadlineTimerNavigation.vue';
 </script>
 
 <style lang="scss" scoped>
