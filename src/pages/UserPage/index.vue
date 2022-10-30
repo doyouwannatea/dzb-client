@@ -54,11 +54,6 @@
   .sidebar-container {
     @media (max-width: $mobile-s) {
       margin-top: 1.875rem;
-      grid-template-columns: auto;
-
-      & > :deep(.aside) {
-        display: none;
-      }
     }
   }
 

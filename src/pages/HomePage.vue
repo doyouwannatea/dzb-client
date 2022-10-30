@@ -11,7 +11,7 @@
       <ProjectSearch />
       <OpenProjectFilterModalButton v-if="isMobile" />
     </aside>
-    <SidebarContainer class="sidebar-container">
+    <SidebarContainer>
       <template #sidebar>
         <ProjectListFilter />
       </template>
@@ -86,16 +86,6 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.125rem;
-  }
-
-  .sidebar-container {
-    @media (max-width: $mobile-s) {
-      grid-template-columns: auto !important;
-
-      & > :deep(.aside) {
-        display: none;
-      }
-    }
   }
 
   .header {

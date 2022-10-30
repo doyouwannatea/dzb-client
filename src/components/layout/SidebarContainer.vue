@@ -9,14 +9,24 @@
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '@styles/breakpoints.scss';
+
   .container {
     display: grid;
     grid-template-columns: 382px auto;
     gap: 2.125rem;
+
+    @media (max-width: $mobile-s) {
+      grid-template-columns: auto;
+    }
   }
 
   .aside {
     align-self: flex-start;
+
+    @media (max-width: $mobile-s) {
+      display: none;
+    }
   }
 </style>
