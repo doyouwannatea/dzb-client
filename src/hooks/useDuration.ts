@@ -19,11 +19,13 @@ export const useDuration = (deadline: Date) => {
       minutes: Math.floor(Duration.fromMillis(diff).as('minutes') % 60),
       seconds: Math.floor(Duration.fromMillis(diff).as('seconds') % 60),
     }).toFormat(
-      `d ${declOfNum(Math.floor(Duration.fromMillis(diff).as('days')), [
-        'день',
-        'дня',
-        'дней',
-      ])} hh:mm:ss`,
+      Math.floor(Duration.fromMillis(diff).as('days')) > 0
+        ? `d ${declOfNum(Math.floor(Duration.fromMillis(diff).as('days')), [
+            'день',
+            'дня',
+            'дней',
+          ])} hh:mm:ss`
+        : `hh:mm:ss`,
     );
   }
 
