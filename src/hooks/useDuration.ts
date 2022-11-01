@@ -13,18 +13,25 @@ export const useDuration = (deadline: Date) => {
       isTimePass.value = true;
       return clearTimer();
     }
+
+    const durationObject = Duration.fromMillis(diff);
+
+    const day = Math.floor(durationObject.as('days'));
+    const hour = Math.floor(durationObject.as('hours') % 24);
+    const minutes = Math.floor(durationObject.as('minutes') % 60);
+    const seconds = Math.floor(durationObject.as('seconds') % 60);
+
+    const format: string =
+      day > 0
+        ? `d ${declOfNum(day, ['день', 'дня', 'дней'])} hh:mm:ss`
+        : `hh:mm:ss`;
+
     duration.value = Duration.fromObject({
-      day: Math.floor(Duration.fromMillis(diff).as('days')),
-      hour: Math.floor(Duration.fromMillis(diff).as('hours') % 24),
-      minutes: Math.floor(Duration.fromMillis(diff).as('minutes') % 60),
-      seconds: Math.floor(Duration.fromMillis(diff).as('seconds') % 60),
-    }).toFormat(
-      `d ${declOfNum(Math.floor(Duration.fromMillis(diff).as('days')), [
-        'день',
-        'дня',
-        'дней',
-      ])} hh:mm:ss`,
-    );
+      day,
+      hour,
+      minutes,
+      seconds,
+    }).toFormat(format);
   }
 
   function clearTimer() {

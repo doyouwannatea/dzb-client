@@ -9,7 +9,7 @@
       </RouterLink>
       <AppNavigation class="navigation" />
       <DeadlineTimerNavigation
-        :deadline="new Date('2022/11/01')"
+        :deadline="new Date('2022/11/02')"
         timer-text="до конца приема заявок"
       />
       <HeaderUserActions class="actions" />
