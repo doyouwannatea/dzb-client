@@ -56,7 +56,6 @@
     bottom: 1px;
     left: 1px;
     height: 0.265rem;
-    padding-left: 1.0625rem;
     background-color: var(--green-color-1);
     border-radius: 0 0.3125rem 0.3125rem 0.3125rem;
     transition: opacity 0.2s ease-in, transform 0.2s ease-in;

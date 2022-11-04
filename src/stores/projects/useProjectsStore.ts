@@ -46,7 +46,8 @@ export const useProjectsStore = () => {
           const projectListResponse = await projectApi.filterProjectList(
             this.filters,
             (progress) => {
-              this.projectProgress = progress.percent;
+              const { percent } = progress;
+              this.projectProgress = percent > 1 ? 1 : percent;
             },
           );
           const projectCount = projectListResponse.projectCount;
