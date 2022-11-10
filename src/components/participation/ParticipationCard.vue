@@ -6,17 +6,20 @@
     ]"
   >
     <div class="card-content">
-      <RouterLink
-        v-if="participation && project"
-        class="title"
-        :to="{
-          name: RouteNames.PROJECT_DETAILS,
-          params: { id: project.id },
-        }"
-        target="_blank"
-      >
-        {{ project.title }}
-      </RouterLink>
+      <template v-if="participation && project">
+        <p v-if="editable" class="title">{{ project.title }}</p>
+        <RouterLink
+          v-else
+          class="title"
+          :to="{
+            name: RouteNames.PROJECT_DETAILS,
+            params: { id: project.id },
+          }"
+          target="_blank"
+        >
+          {{ project.title }}
+        </RouterLink>
+      </template>
       <div v-else class="title stub-line stub-title">Проект не выбран</div>
       <p v-if="participation && project" class="desc">
         {{ project.goal }}
@@ -107,6 +110,13 @@
 
   .card.editable {
     cursor: grab;
+    user-select: none;
+
+    .card-content {
+      @media (max-width: $mobile-s) {
+        grid-template-columns: 1fr auto;
+      }
+    }
   }
 
   .card.stub {
@@ -138,10 +148,11 @@
 
     @media (max-width: $mobile-s) {
       grid-row: 2;
+      grid-column: 1 / -1;
     }
   }
 
-  .title:hover {
+  a.title:hover {
     text-decoration: underline;
   }
 
@@ -156,6 +167,7 @@
       grid-row: 3;
       margin-top: 0;
       font-size: 1rem;
+      grid-column: 1 / -1;
     }
   }
 

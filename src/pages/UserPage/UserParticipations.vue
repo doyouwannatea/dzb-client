@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="authStore.isParticipationList"
-    :class="['participations-wrapper', { draggible: !dragDisabled }]"
-  >
+  <div v-if="authStore.isParticipationList">
     <Draggable
       v-model="editableParticipationList"
       v-bind="dragOptions"
@@ -74,7 +71,7 @@
 
 <script setup lang="ts">
   import Draggable from 'vuedraggable';
-  import { ref, watch } from 'vue';
+  import { ref, watch, computed } from 'vue';
   import {
     Participation,
     Priority,
@@ -89,18 +86,24 @@
   import UserParticipationListStub from './UserParticipationListStub.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
   import ParticipationDeleteModal from '@/components/participation/ParticipationDeleteModal.vue';
+  import { useMobileS } from '@/helpers/breakpoints';
 
   type EditableListItem = {
     order: number;
     content?: ParticipationWithProject;
   };
 
-  const dragOptions = {
+  const isMobile = useMobileS();
+  const dragOptions = computed(() => ({
     animation: 200,
+    delay: isMobile.value ? 300 : 0,
+    forceFallback: true,
+    fallbackOnBody: true,
+    scrollSpeed: 20,
     ghostClass: 'ghost',
     itemKey: 'order',
     tag: 'transition-group',
-  };
+  }));
 
   const authStore = useAuthStore();
 
@@ -189,14 +192,6 @@
 
 <style lang="scss" scoped>
   @import '@styles/breakpoints.scss';
-
-  .participations-wrapper {
-    &.draggible {
-      @media (max-width: $mobile-s) {
-        padding-right: 3.5rem;
-      }
-    }
-  }
 
   .actions {
     display: flex;
