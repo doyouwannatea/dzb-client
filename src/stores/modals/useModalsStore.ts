@@ -2,6 +2,7 @@ import { projectIncludesCandidateSpeciality } from '@/helpers/project';
 import { Project } from '@/models/Project';
 import { defineStore } from 'pinia';
 import { useAuthStore } from '../auth/useAuthStore';
+import { useParticipationsStore } from '../participations/useParticipationsStore';
 import { useProjectsStore } from '../projects/useProjectsStore';
 import { state } from './state';
 
@@ -11,6 +12,7 @@ export const useModalsStore = defineStore('modals', {
     // OPEN PARTICIPATION MODAL
     async openParticipationModal(project: Project) {
       const authStore = useAuthStore();
+      const participationsStore = useParticipationsStore();
       const projectsStore = useProjectsStore();
 
       if (!authStore.isAuth || !authStore.profileData) {
@@ -18,8 +20,8 @@ export const useModalsStore = defineStore('modals', {
         return;
       }
 
-      if (authStore.participationList) {
-        for (const participation of authStore.participationList) {
+      if (participationsStore.participationList) {
+        for (const participation of participationsStore.participationList) {
           if (participation.project_id === project.id) {
             this.selectedProjectModal = true;
             return;
@@ -58,8 +60,8 @@ export const useModalsStore = defineStore('modals', {
 
     // ON ASYNC
     async _onAsync<T>(callback: () => Promise<T>) {
+      this.loading = true;
       try {
-        this.loading = true;
         return await callback();
       } catch (error) {
         console.log(error);

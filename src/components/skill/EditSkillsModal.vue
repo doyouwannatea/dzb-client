@@ -72,7 +72,7 @@
     <!-- ACTIONS -->
     <div class="actions">
       <BaseButton case="uppercase" :disabled="disableSaveBtn" @click="onSave">
-        {{ authStore.loading ? 'загрузка...' : 'сохранить' }}
+        {{ skillsStore.loading ? 'загрузка...' : 'сохранить' }}
       </BaseButton>
     </div>
     <!-- ACTIONS -->
@@ -84,9 +84,10 @@
   import { computed, ref, watch } from 'vue';
   import { Tag } from '@/models/Project';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useSkillsStore } from '@/stores/skills/useSkillsStore';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { deepClone } from '@/helpers/array';
+
   // components
   import BaseModal from '../ui/BaseModal.vue';
   import BaseButton from '../ui/BaseButton.vue';
@@ -94,7 +95,7 @@
 
   // <STORES>
   const modalsStore = useModalsStore();
-  const authStore = useAuthStore();
+  const skillsStore = useSkillsStore();
   const projectsStore = useProjectsStore();
   // </STORES>
 
@@ -104,7 +105,7 @@
   // </REFS>
 
   // <WATCHERS>
-  watch(() => authStore.userSkills?.personal, initSkills, {
+  watch(() => skillsStore.userSkills?.personal, initSkills, {
     immediate: true,
     deep: true,
   });
@@ -135,9 +136,9 @@
   // disable save button
   const disableSaveBtn = computed(
     () =>
-      authStore.loading ||
+      skillsStore.loading ||
       JSON.stringify(skills.value) ===
-        JSON.stringify(authStore.userSkills?.personal || []),
+        JSON.stringify(skillsStore.userSkills?.personal || []),
   );
   // </COMPUTED VALUES>
 
@@ -151,11 +152,11 @@
   function userHasSkill(skill: Tag): boolean {
     return (
       Boolean(skills.value.find((s) => s.id === skill.id)) ||
-      Boolean(authStore.userSkills?.common.find((s) => s.id === skill.id))
+      Boolean(skillsStore.userSkills?.common.find((s) => s.id === skill.id))
     );
   }
   function initSkills() {
-    skills.value = deepClone(authStore.userSkills?.personal || []);
+    skills.value = deepClone(skillsStore.userSkills?.personal || []);
   }
   // </FUNCTIONS>
 
@@ -166,7 +167,7 @@
     skills.value.push(skill);
   }
   function onSave() {
-    authStore.updateUserSkills(skills.value);
+    skillsStore.updateUserSkills(skills.value);
   }
 
   function onDeleteSkill(skill: Tag) {

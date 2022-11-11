@@ -8,6 +8,7 @@ interface State {
   loading: boolean;
   error: string;
   projectList?: Project[];
+  userProjectList?: Project[];
   projectCount: number;
   openedProject?: Project;
   filters: ProjectFilters;
@@ -19,6 +20,7 @@ export const state = (): State => ({
   loading: false,
   error: '',
   projectList: undefined,
+  userProjectList: undefined,
   projectCount: 0,
   openedProject: undefined,
   filters: {

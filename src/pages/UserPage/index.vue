@@ -21,31 +21,20 @@
 </template>
 
 <script setup lang="ts">
-  import { RouterView, useRouter } from 'vue-router';
-  import { watch } from 'vue';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { RouteNames } from '@/router/types/route-names';
+  import { RouterView } from 'vue-router';
   // components
   import SidebarContainer from '@/components/layout/SidebarContainer.vue';
   import UserNavigation from './UserNavigation.vue';
   import DeadlineTimer from '@/components/layout/DeadlineTimer.vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
   import { useMobileS } from '@/helpers/breakpoints';
+  import { useFetchStudentData } from '@/hooks/useFetchStudentData';
+  import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
 
   const isMobile = useMobileS();
-  const authStore = useAuthStore();
-  const router = useRouter();
 
-  watch(
-    () => authStore.isAuth,
-    (isAuth) => {
-      if (!isAuth) {
-        router.push({
-          name: RouteNames.HOME,
-        });
-      }
-    },
-  );
+  useFetchStudentData();
+  useWatchAuthorization();
 </script>
 
 <style lang="scss" scoped>

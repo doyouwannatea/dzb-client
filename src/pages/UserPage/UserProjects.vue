@@ -1,18 +1,23 @@
 <template>
-  <div v-if="loading">загрузка...</div>
+  <BaseStub
+    v-if="userProjectList && !userProjectList.length"
+    title="Проекты не найдены :("
+    subtitle="У вас пока нет ни одного активного или архивного проекта"
+  />
   <div v-if="error">{{ error }}</div>
-  <div v-if="projectList && !projectList.length">у вас еще нет проектов</div>
+  <ProjectList v-if="loading" loading :loading-cards-length="3" />
   <ProjectList
-    v-if="!loading && !error && projectList"
-    :project-list="projectList"
+    v-if="!loading && !error && userProjectList"
+    :project-list="userProjectList"
   />
 </template>
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   // components
   import ProjectList from '@/components/project/ProjectList.vue';
+  import BaseStub from '@/components/ui/BaseStub.vue';
 
-  const { projectList, loading, error } = storeToRefs(useAuthStore());
+  const { userProjectList, loading, error } = storeToRefs(useProjectsStore());
 </script>
