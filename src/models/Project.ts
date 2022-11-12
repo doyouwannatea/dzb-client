@@ -1,8 +1,8 @@
+import { Candidate } from './Candidate';
 import { Institute } from './Institute';
 import { Participation } from './Participation';
 import { Difficulty } from './ProjectDifficulty';
 import { State } from './ProjectState';
-import { Supervisor } from './Supervisor';
 
 export interface Tag {
   id: number;
@@ -26,6 +26,7 @@ export interface Project {
   goal: string;
   id: number;
   participations: Participation[];
+  participants: Candidate[];
   specialities: Institute[];
   places: number;
   product_result: string;

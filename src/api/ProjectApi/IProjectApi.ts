@@ -7,6 +7,7 @@ import type {
 } from '@/models/Project';
 import { State } from '@/models/ProjectState';
 import { Supervisor } from '@/models/Supervisor';
+import { Candidate } from '@/models/Candidate';
 
 export interface ProjectListResponse {
   data: Project[];
@@ -28,5 +29,7 @@ export default abstract class IProjectApi {
   abstract getAllSupervisors(): Promise<Supervisor[]>;
   abstract getAllProjectTypes(): Promise<Type[]>;
   abstract getAllProjectStates(): Promise<State[]>;
-  abstract getUserProjectList(): Promise<Project[]>;
+  abstract getProjectParticipants(projectId: number): Promise<Candidate[]>;
+  abstract getActiveUserProject(): Promise<Project | undefined>;
+  abstract getArhiveUserProjects(): Promise<Project[]>;
 }

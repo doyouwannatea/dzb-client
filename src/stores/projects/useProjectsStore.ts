@@ -64,7 +64,13 @@ export const useProjectsStore = () => {
       // GET USER PROJECT LIST
       async getUserProjectList() {
         return this._onAsync(async () => {
-          this.userProjectList = await projectApi.getUserProjectList();
+          const [activeProject, arhiveProjects] = await Promise.all([
+            projectApi.getActiveUserProject(),
+            projectApi.getArhiveUserProjects(),
+          ]);
+          this.userProjectList = [];
+          if (activeProject) this.userProjectList.push(activeProject);
+          this.userProjectList.push(...arhiveProjects);
         });
       },
       // GET USER PROJECT LIST

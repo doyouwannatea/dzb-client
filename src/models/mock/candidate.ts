@@ -40,6 +40,9 @@ export const candidate: Candidate = {
   is_teacher: false,
 };
 
+export const activeProjectId = 1;
+export const archiveProjectIdList = [8];
+
 export const candidateList: Candidate[] = [
   {
     id: 3,
