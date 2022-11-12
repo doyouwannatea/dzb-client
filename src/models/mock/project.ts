@@ -1,7 +1,7 @@
 import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
 import { Type } from '../Project';
 import { State, StateID } from '../ProjectState';
-import { candidateList } from './candidate';
+import { candidateList, candidate } from './candidate';
 import { skills } from './project-skills';
 
 const recruitingState: State = {
@@ -60,6 +60,17 @@ export const projectListResponse: ProjectListResponse = {
       ],
       participations: [
         {
+          id: 100,
+          candidate: candidate,
+          candidate_id: candidate.id,
+          created_at: '2022-11-12T08:10:37.891Z',
+          updated_at: '2022-11-12T08:10:37.891Z',
+          priority: 1,
+          project_id: 1,
+          review: '',
+          state_id: recruitingState.id,
+        },
+        {
           id: 1,
           candidate: candidateList[0],
           candidate_id: candidateList[0].id,
@@ -115,13 +126,14 @@ export const projectListResponse: ProjectListResponse = {
           state_id: recruitingState.id,
         },
       ],
+      participants: [candidate, candidateList[0], candidateList[1]],
       places: 4,
       product_result:
         'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ, адаптированная под разные их виды',
       requirements:
         'ПМб 38.03.02 Менеджмент Производственный менеджмент, УПб 38.03.02 Менеджмент Управление проектами',
       skills: [skills[0], skills[1], skills[2]],
-      state: recruitingState,
+      state: activeState,
       study_result:
         'Знания: эффективное делопроизводства в современных условиях функционирования организации Умения: отладка процессов эффективного движения документов внутри организации Навыки: грамотного распределения времени и ресурсов для нормального функционирования организации',
       supervisors: [
@@ -150,6 +162,7 @@ export const projectListResponse: ProjectListResponse = {
       goal: 'На основе данных ИЭСБК создать профиль потребителя энергоресурсов',
       id: 2,
       participations: [],
+      participants: [],
       specialities: [{ id: 2, name: 'НвГДСз' }],
       places: 12,
       product_result:
@@ -181,6 +194,7 @@ export const projectListResponse: ProjectListResponse = {
       goal: 'Применение знаний и получение навыков в организации работы предприятия',
       id: 3,
       participations: [],
+      participants: [],
       specialities: [{ id: 1, name: 'НГДСз' }],
       places: 12,
       product_result:
@@ -213,6 +227,7 @@ export const projectListResponse: ProjectListResponse = {
       goal: 'Исследование влияния предпринимательских качеств на профессиональные достижения, финансовое вознаграждение и нематериальную «выгоду» научных работников',
       id: 4,
       participations: [],
+      participants: [],
       specialities: [{ id: 1, name: 'НГДСз' }],
       places: 12,
       product_result:
@@ -244,6 +259,7 @@ export const projectListResponse: ProjectListResponse = {
       goal: 'Стратегическое управление ключевыми потенциалами развития территориальных социально-экономических систем',
       id: 5,
       participations: [],
+      participants: [],
       specialities: [{ id: 1, name: 'НГДСз' }],
       places: 12,
       product_result:
@@ -274,8 +290,9 @@ export const projectListResponse: ProjectListResponse = {
         'Забота о благополучии сотрудников – это выгодные инвестиции',
       difficulty: 3,
       goal: 'Применение знаний и получение навыков в организации работы предприятия',
-      id: 3,
+      id: 6,
       participations: [],
+      participants: [],
       specialities: [{ id: 1, name: 'НГДСз' }],
       places: 12,
       product_result:
@@ -306,8 +323,9 @@ export const projectListResponse: ProjectListResponse = {
         'Забота о благополучии сотрудников – это выгодные инвестиции',
       difficulty: 2,
       goal: 'Разработка развлекательных, познавательных и научных материалов в социальных сетях ИРНИТУ. ',
-      id: 3,
+      id: 7,
       participations: [],
+      participants: [],
       specialities: [{ id: 1, name: 'НГДСз' }],
       places: 12,
       product_result:
@@ -338,8 +356,9 @@ export const projectListResponse: ProjectListResponse = {
         'Забота о благополучии сотрудников – это выгодные инвестиции',
       difficulty: 2,
       goal: 'Разработка развлекательных, познавательных и научных материалов в социальных сетях ИРНИТУ. ',
-      id: 3,
+      id: 8,
       participations: [],
+      participants: [candidate],
       specialities: [{ id: 1, name: 'НГДСз' }],
       places: 12,
       product_result:

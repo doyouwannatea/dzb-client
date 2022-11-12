@@ -2,7 +2,7 @@
   <ul class="project-list">
     <template v-if="loading">
       <li v-for="index of loadingCardsLength" :key="index">
-        <ProjectCardEmpty />
+        <BaseEmptyCard />
       </li>
     </template>
     <template v-else>
@@ -17,10 +17,10 @@
   import type { Project } from '@/models/Project';
   // components
   import ProjectCard from './ProjectCard.vue';
-  import ProjectCardEmpty from './ProjectCardEmpty.vue';
+  import BaseEmptyCard from '../ui/BaseEmptyCard.vue';
 
   interface Props {
-    projectList: Project[];
+    projectList?: Project[];
     loading?: boolean;
     loadingCardsLength?: number;
   }

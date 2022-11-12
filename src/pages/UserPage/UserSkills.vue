@@ -9,26 +9,26 @@
       </BaseTooltip>
       <SkillList
         class="tags-list"
-        :skills="authStore.userSkills?.common"
+        :skills="skillsStore.userSkills?.common"
         :show-all="true"
         :disable-all="true"
       />
-      <div v-if="authStore.loading">загрузка...</div>
+      <div v-if="skillsStore.loading">загрузка...</div>
       <div class="divider"></div>
       <BaseTooltip :message="individualSkillsMsg">
         <h2 class="subtitle">Индивидуальные навыки</h2>
       </BaseTooltip>
       <SkillList
         class="tags-list"
-        :skills="authStore.userSkills?.personal"
+        :skills="skillsStore.userSkills?.personal"
         :show-all="true"
       />
-      <div v-if="authStore.loading">загрузка...</div>
+      <div v-if="skillsStore.loading">загрузка...</div>
       <BaseButton
         class="edit-btn"
         case="uppercase"
         variant="outlined"
-        :disabled="authStore.loading"
+        :disabled="skillsStore.loading"
         @click="modalsStore.editSkillsModal = true"
       >
         Редактировать навыки
@@ -42,6 +42,7 @@
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useFetchAdditionalProjectData } from '@/hooks/useFetchAdditionalProjectData';
+  import { useSkillsStore } from '@/stores/skills/useSkillsStore';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseTooltip from '@/components/ui/BaseTooltip.vue';
@@ -52,6 +53,7 @@
   useFetchAdditionalProjectData();
   const modalsStore = useModalsStore();
   const authStore = useAuthStore();
+  const skillsStore = useSkillsStore();
 
   const academicSkillsMsg = `Академические навыки - это набор практических умений студентов,
   которые позволяют им быстрее и лучше усваивать новый материал в университете,

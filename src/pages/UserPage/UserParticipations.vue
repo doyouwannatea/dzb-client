@@ -1,69 +1,86 @@
 <template>
-  <div
-    v-if="authStore.isParticipationList"
-    :class="['participations-wrapper', { draggible: !dragDisabled }]"
-  >
-    <Draggable
-      v-model="editableParticipationList"
-      v-bind="dragOptions"
-      :disabled="dragDisabled"
-      :move="onMove"
-    >
-      <template #item="{ element, index }">
-        <ParticipationCard
-          :key="element.order"
-          :editable="!dragDisabled"
-          :priority="index + 1"
-          :participation="element.content"
-          :project="element.content?.project"
-          @delete="openDeleteModal"
-        />
-      </template>
-    </Draggable>
-  </div>
-  <UserParticipationListStub v-else />
-  <div v-if="authStore.loading">загрузка...</div>
-  <div v-if="authStore.error">{{ authStore.error }}</div>
+  <!-- CONTENT -->
+  <section>
+    <!-- STUB -->
+    <UserParticipationListStub
+      v-if="!participationsStore.listNotEmpty && !participationsStore.loading"
+    />
+    <!-- STUB -->
 
-  <div v-if="authStore.isParticipationList" class="actions">
-    <p v-if="!dragDisabled" class="info">
-      <img class="cursor-icon" :src="cursorIconUrl" alt="" />
-      для изменения приоритета зажмите и перетащите карточку заявки в поле
-      другого приоритета
-    </p>
-    <div class="buttons">
-      <BaseButton
-        v-if="!dragDisabled"
-        class="btn"
-        case="uppercase"
-        :disabled="authStore.loading"
-        @click="onSave"
+    <!-- LOADING -->
+    <LoadingParticipationsList
+      v-if="participationsStore.loading && !participationsStore.listNotEmpty"
+    />
+    <!-- LOADING -->
+
+    <!-- ERROR -->
+    <div v-if="participationsStore.error">{{ participationsStore.error }}</div>
+    <!-- ERROR -->
+
+    <!-- PARTICIPATION LIST -->
+    <template v-if="participationsStore.listNotEmpty">
+      <Draggable
+        v-model="editableParticipationList"
+        v-bind="dragOptions"
+        :disabled="dragDisabled"
+        :move="onMove"
       >
-        сохранить изменения
-      </BaseButton>
-      <BaseButton
-        v-if="!dragDisabled"
-        class="btn"
-        case="uppercase"
-        variant="outlined"
-        color="red"
-        :disabled="authStore.loading"
-        @click="onCancelEdit"
-      >
-        отмена
-      </BaseButton>
-      <BaseButton
-        v-if="dragDisabled"
-        class="btn edit-btn"
-        variant="outlined"
-        case="uppercase"
-        :disabled="authStore.loading"
-        @click="onToggleEdit"
-      >
-        Редактировать заявки
-      </BaseButton>
-    </div>
-  </div>
+        <template #item="{ element, index }">
+          <ParticipationCard
+            :key="element.order"
+            :editable="!dragDisabled"
+            :priority="index + 1"
+            :participation="element.content"
+            :project="element.content?.project"
+            @delete="openDeleteModal"
+          />
+        </template>
+      </Draggable>
+
+      <footer class="footer">
+        <p v-if="!dragDisabled" class="info">
+          <img class="cursor-icon" :src="cursorIconUrl" alt="" />
+          для изменения приоритета зажмите и перетащите карточку заявки в поле
+          другого приоритета
+        </p>
+        <div class="actions">
+          <BaseButton
+            v-if="!dragDisabled"
+            class="btn"
+            case="uppercase"
+            :disabled="participationsStore.loading"
+            @click="onSave"
+          >
+            сохранить изменения
+          </BaseButton>
+          <BaseButton
+            v-if="!dragDisabled"
+            class="btn"
+            case="uppercase"
+            variant="outlined"
+            color="red"
+            :disabled="participationsStore.loading"
+            @click="onCancelEdit"
+          >
+            отмена
+          </BaseButton>
+          <BaseButton
+            v-if="dragDisabled"
+            class="btn edit-btn"
+            variant="outlined"
+            case="uppercase"
+            :disabled="participationsStore.loading"
+            @click="onToggleEdit"
+          >
+            Редактировать заявки
+          </BaseButton>
+        </div>
+      </footer>
+    </template>
+    <!-- PARTICIPATION LIST -->
+  </section>
+  <!-- CONTENT -->
+
   <ParticipationDeleteModal
     :is-show="deleteParticipationModalShow"
     :participation="currentDeleteableParticipation"
@@ -74,7 +91,7 @@
 
 <script setup lang="ts">
   import Draggable from 'vuedraggable';
-  import { ref, watch } from 'vue';
+  import { ref, watch, computed } from 'vue';
   import {
     Participation,
     Priority,
@@ -82,27 +99,34 @@
     ParticipationWithProject,
   } from '@/models/Participation';
   import { immutableSort } from '@/helpers/array';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
+  import { useMobileS } from '@/helpers/breakpoints';
   import cursorIconUrl from '@/assets/icons/cursor.svg?url';
   // components
   import ParticipationCard from '@/components/participation/ParticipationCard.vue';
   import UserParticipationListStub from './UserParticipationListStub.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
   import ParticipationDeleteModal from '@/components/participation/ParticipationDeleteModal.vue';
+  import LoadingParticipationsList from '@/pages/UserPage/LoadingParticipationsList.vue';
 
   type EditableListItem = {
     order: number;
     content?: ParticipationWithProject;
   };
 
-  const dragOptions = {
+  const isMobile = useMobileS();
+  const dragOptions = computed(() => ({
     animation: 200,
+    delay: isMobile.value ? 300 : 0,
+    forceFallback: true,
+    fallbackOnBody: true,
+    scrollSpeed: 20,
     ghostClass: 'ghost',
     itemKey: 'order',
     tag: 'transition-group',
-  };
+  }));
 
-  const authStore = useAuthStore();
+  const participationsStore = useParticipationsStore();
 
   const deleteParticipationModalShow = ref(false);
   const dragDisabled = ref(true);
@@ -111,17 +135,17 @@
   >(undefined);
   const editableParticipationList = ref<EditableListItem[]>([]);
 
-  watch(() => authStore.participationList, initEditableList, {
+  watch(() => participationsStore.participationList, initEditableList, {
     deep: true,
     immediate: true,
   });
 
   function initEditableList() {
-    if (authStore.participationList) {
+    if (participationsStore.participationList) {
       editableParticipationList.value = [];
       const existingPriorities = new Set<number>();
 
-      for (const participation of authStore.participationList) {
+      for (const participation of participationsStore.participationList) {
         editableParticipationList.value.push({
           order: participation.priority,
           content: participation,
@@ -171,7 +195,7 @@
             priority: (index + 1) as Priority,
           });
       }
-      authStore.updateParticipationsPriorities(participations);
+      participationsStore.updateParticipationsPriorities(participations);
     }
   }
 
@@ -182,7 +206,7 @@
 
   function deleteParticipation(participation: Participation) {
     if (editableParticipationList.value) {
-      authStore.deleteParticipation(participation.id);
+      participationsStore.deleteParticipation(participation.id);
     }
   }
 </script>
@@ -190,15 +214,7 @@
 <style lang="scss" scoped>
   @import '@styles/breakpoints.scss';
 
-  .participations-wrapper {
-    &.draggible {
-      @media (max-width: $mobile-s) {
-        padding-right: 3.5rem;
-      }
-    }
-  }
-
-  .actions {
+  .footer {
     display: flex;
     gap: 0.5rem;
     align-items: flex-start;
@@ -209,7 +225,7 @@
     }
   }
 
-  .buttons {
+  .actions {
     display: flex;
     gap: 0.5rem;
 

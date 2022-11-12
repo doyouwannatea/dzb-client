@@ -5,7 +5,6 @@ import { RouteNames } from '@/router/types/route-names';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import { state } from './state';
-import ky from 'ky';
 
 export const useProjectsStore = () => {
   const router = useRouter();
@@ -62,19 +61,26 @@ export const useProjectsStore = () => {
       },
       // GET PROJECT LIST
 
+      // GET USER PROJECT LIST
+      async getUserProjectList() {
+        return this._onAsync(async () => {
+          const [activeProject, arhiveProjects] = await Promise.all([
+            projectApi.getActiveUserProject(),
+            projectApi.getArhiveUserProjects(),
+          ]);
+          this.userProjectList = [];
+          if (activeProject) this.userProjectList.push(activeProject);
+          this.userProjectList.push(...arhiveProjects);
+        });
+      },
+      // GET USER PROJECT LIST
+
       // GET SINGLE PROJECT
       async getSingleProject(projectId: number) {
         this.openedProject = undefined;
-        this.loading = true;
-        this.error = '';
-        try {
-          const project = await projectApi.getSingleProject(projectId);
-          this.openedProject = project;
-        } catch (error) {
-          this.error = String(error);
-        } finally {
-          this.loading = false;
-        }
+        return this._onAsync(async () => {
+          this.openedProject = await projectApi.getSingleProject(projectId);
+        });
       },
       // GET SINGLE PROJECT
 
@@ -95,6 +101,20 @@ export const useProjectsStore = () => {
         }
       },
       // GET SINGLE PROJECT
+
+      // ON ASYNC
+      async _onAsync<T>(callback: () => Promise<T>) {
+        this.error = '';
+        this.loading = true;
+        try {
+          return await callback();
+        } catch (error) {
+          this.error = String(error);
+        } finally {
+          this.loading = false;
+        }
+      },
+      // ON ASYNC
     },
     getters: {
       tagsLoading(): boolean {

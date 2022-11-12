@@ -9,8 +9,8 @@
     <template #header>
       <h1 class="title">Подача заявки на проект</h1>
       <h2>{{ projectsStore.openedProject?.title }}</h2>
-      <h3 v-if="authStore.loading">загрузка...</h3>
-      <h3 v-if="authStore.error">{{ authStore.error }}</h3>
+      <h3 v-if="participationsStore.loading">загрузка...</h3>
+      <h3 v-if="participationsStore.error">{{ participationsStore.error }}</h3>
     </template>
     <!-- HEADER -->
 
@@ -133,7 +133,7 @@
         <BaseButton
           case="uppercase"
           class="participation-btn"
-          :disabled="authStore.loading || !priorityValue"
+          :disabled="participationsStore.loading || !priorityValue"
           @click="onCreateParticipation"
         >
           Подать заявку
@@ -145,12 +145,13 @@
 </template>
 
 <script setup lang="ts">
-  import { onBeforeMount, ref, watch } from 'vue';
+  import { ref, watch } from 'vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { PriorityText, Priority } from '@/models/Participation';
   import checkedIconUrl from '@/assets/icons/checked.svg?url';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
   // components
   import BaseModal from '../ui/BaseModal.vue';
   import BaseInput from '../ui/BaseInput.vue';
@@ -160,6 +161,7 @@
 
   const projectsStore = useProjectsStore();
   const authStore = useAuthStore();
+  const participationsStore = useParticipationsStore();
   const modalsStore = useModalsStore();
 
   const priorityValue = ref<Priority>();
@@ -169,7 +171,7 @@
   const priorityTooltipMsg =
     'Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас распределить в проект, в который вы хотите попасть с большей вероятностью, вы ставите ему больший приоритет. Вы сможете поменять приоритет проекта в личном кабинете после отправки заявки';
 
-  watch(() => authStore.participationList, initParticipations, {
+  watch(() => participationsStore.participationList, initParticipations, {
     immediate: true,
     deep: true,
   });
@@ -177,12 +179,12 @@
   watch(() => modalsStore.participationModal, initParticipations);
 
   function initParticipations() {
-    if (authStore.participationList) {
+    if (participationsStore.participationList) {
       highSelected.value = false;
       mediumSelected.value = false;
       lowSelected.value = false;
 
-      for (const participation of authStore.participationList) {
+      for (const participation of participationsStore.participationList) {
         switch (participation.priority) {
           case 1:
             highSelected.value = true;
@@ -212,7 +214,7 @@
     }
 
     if (projectsStore.openedProject) {
-      authStore.createPatricipation(
+      participationsStore.createPatricipation(
         priorityValue.value,
         projectsStore.openedProject.id,
       );

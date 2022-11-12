@@ -19,6 +19,8 @@ import {
   skills,
 } from '@/models/mock/project-skills';
 import { deepClone } from '@/helpers/array';
+import { Candidate } from '@/models/Candidate';
+import { activeProjectId, archiveProjectIdList } from '@/models/mock/candidate';
 
 const createDownloadProgress =
   (totalBytes: number) =>
@@ -103,10 +105,30 @@ export default class ProjectApiMock extends IProjectApi {
     return delayRes(states, 300);
   }
 
-  async getUserProjectList(): Promise<Project[]> {
-    const projects = projectListResponse.data.filter(
-      (project) => project.participant_feedback,
+  async getProjectParticipants(projectId: number): Promise<Candidate[]> {
+    const project = projectListResponse.data.find(
+      (project) => project.id === projectId,
     );
-    return delayRes(deepClone(projects.map(formatProjectDate)), 300);
+    return delayRes(project?.participants || [], 300);
+  }
+
+  async getActiveUserProject(): Promise<Project | undefined> {
+    const project = projectListResponse.data.find(
+      (project) => project.id === activeProjectId,
+    );
+    if (!project) return delayRes(project, 300);
+
+    return delayRes(deepClone(formatProjectDate(project)), 300);
+  }
+
+  async getArhiveUserProjects(): Promise<Project[]> {
+    return delayRes(
+      deepClone(
+        projectListResponse.data
+          .filter((project) => archiveProjectIdList.includes(project.id))
+          .map(formatProjectDate),
+      ),
+      300,
+    );
   }
 }

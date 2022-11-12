@@ -14,13 +14,14 @@ import { State } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
 import { Supervisor } from '@/models/Supervisor';
 import { baseKyInstance } from '../baseKy';
-import ProjectApiMock from './ProjectApiMock';
+import { Candidate } from '@/models/Candidate';
 
 export default class ProjectApi extends IProjectApi {
   async getSingleProject(projectId: number): Promise<Project> {
     const project: Project = await baseKyInstance
       .get(`api/projects/${projectId}`)
       .json();
+    project.participants = await this.getProjectParticipants(project.id);
     return formatProjectDate(project);
   }
 
@@ -71,8 +72,29 @@ export default class ProjectApi extends IProjectApi {
     return baseKyInstance.get('api/states').json();
   }
 
-  async getUserProjectList(): Promise<Project[]> {
-    const projectApiMock = new ProjectApiMock();
-    return projectApiMock.getUserProjectList();
+  async getProjectParticipants(projectId: number): Promise<Candidate[]> {
+    try {
+      return await baseKyInstance
+        .get(`api/projects/${projectId}/participants`)
+        .json();
+    } catch (error) {
+      return [];
+    }
+  }
+
+  async getActiveUserProject(): Promise<Project | undefined> {
+    try {
+      return await baseKyInstance.get('api/activeProject').json();
+    } catch (error) {
+      return undefined;
+    }
+  }
+
+  async getArhiveUserProjects(): Promise<Project[]> {
+    try {
+      return await baseKyInstance.get('api/arhiveProjects').json();
+    } catch (error) {
+      return [];
+    }
   }
 }

@@ -1,13 +1,13 @@
-import { Candidate } from '@/models/Candidate';
+import { UserSkills } from '@/models/Candidate';
 
 export interface State {
   loading: boolean;
   error: string;
-  profileData?: Candidate;
+  userSkills?: UserSkills;
 }
 
 export const state = (): State => ({
   loading: false,
   error: '',
-  profileData: undefined,
+  userSkills: undefined,
 });

@@ -107,16 +107,16 @@ export const routes: RouteRecordRaw[] = [
           role: ['student'],
         },
       },
-      // {
-      //   path: 'projects',
-      //   name: RouteNames.USER_PROJECTS,
-      //   component: UserProjects,
-      //   meta: {
-      //     type: 'user-nav',
-      //     order: 2,
-      //     title: 'Мои проекты',
-      //   },
-      // },
+      {
+        path: 'projects',
+        name: RouteNames.USER_PROJECTS,
+        component: UserProjects,
+        meta: {
+          type: ['user-nav'],
+          order: 2,
+          title: 'Мои проекты',
+        },
+      },
       // {
       //   path: 'skills',
       //   name: RouteNames.USER_SKILLS,
