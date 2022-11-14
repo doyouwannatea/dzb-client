@@ -1,51 +1,39 @@
 <template>
-  <BasePanel
-    v-if="project?.participations.length && !loading && !error"
-    class="list-panel"
+  <BaseTable
+    v-if="project && sortedParticipations.length > 0 && !loading && !error"
+    :headers="['№', 'ФИО', 'Группа', 'Приоритетность', 'Время подачи заявки']"
+    :rows="tableRows"
   >
-    <table>
-      <tr>
-        <th>№</th>
-        <th>ФИО</th>
-        <th>Группа</th>
-        <th>Приоритетность</th>
-        <th>Время подачи заявки</th>
-      </tr>
+    <template #row="{ row, index, key }">
       <tr
-        v-for="(participation, idx) in sortedParticipations"
-        :key="participation.id"
-        :class="{ accepted: idx + 1 <= project.places }"
+        :key="key || index"
+        :class="{ accepted: index + 1 <= project.places }"
       >
-        <td>{{ idx + 1 }}</td>
-        <td>{{ participation.candidate.fio }}</td>
-        <td>{{ participation.candidate.training_group }}</td>
-        <td>{{ participation.priority }}</td>
-        <td>
-          {{ formatParticipationApplicationTime(participation.updated_at) }}
+        <td v-for="(column, columnIndex) in row" :key="columnIndex">
+          {{ column }}
         </td>
       </tr>
-    </table>
-  </BasePanel>
+    </template>
+  </BaseTable>
+
   <BasePanel v-else>
     <ProjectParticipationListStub />
   </BasePanel>
 </template>
 
 <script setup lang="ts">
+  import { computed } from 'vue';
   import { storeToRefs } from 'pinia';
   import { DateTime } from 'luxon';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { Participation } from '@/models/Participation';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import ProjectParticipationListStub from './ProjectParticipationListStub.vue';
-  import { computed } from 'vue';
-  import { Participation } from '@/models/Participation';
+  import BaseTable, { RowData } from '@/components/ui/BaseTable.vue';
 
-  const {
-    openedProject: project,
-    loading,
-    error,
-  } = storeToRefs(useProjectsStore());
+  const projectsStore = useProjectsStore();
+  const { openedProject: project, loading, error } = storeToRefs(projectsStore);
 
   function formatParticipationApplicationTime(time: string) {
     const dt = DateTime.fromISO(time, { locale: 'ru-RU' });
@@ -60,68 +48,36 @@
     );
   }
 
-  const sortedParticipations = computed<Participation[] | undefined>(() => {
+  const sortedParticipations = computed<Participation[]>(() => {
     const participations = project?.value?.participations;
-    if (!participations) return undefined;
+    if (!participations) return [];
     return sortParticipations(participations);
   });
+
+  const tableRows = computed<RowData[]>(() =>
+    sortedParticipations.value.map(
+      ({ candidate, priority, updated_at, id }, index) => ({
+        key: String(id),
+        data: [
+          index + 1,
+          candidate.fio,
+          candidate.training_group,
+          priority,
+          formatParticipationApplicationTime(updated_at),
+        ],
+      }),
+    ),
+  );
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
-
-  table {
-    width: 100%;
-    font-size: 1.25rem;
-    color: #737373;
-    text-align: left;
-    border-collapse: collapse;
+  td:nth-child(1) {
+    width: 6%;
   }
-
-  th {
-    font-weight: 800;
-    color: var(--text-color);
-  }
-
-  td,
-  th {
-    padding-top: 1.4375rem;
-    padding-bottom: 1.4375rem;
-    border-bottom: 1px solid #e5f1ea;
-
-    @media (max-width: $mobile-s) {
-      padding-right: 0.8rem;
-      padding-left: 0.8rem;
-      white-space: nowrap;
-    }
-  }
-
-  th:first-child,
-  td:first-child {
-    padding-right: 0.625rem;
-    padding-left: 0.625rem;
-    text-align: center;
-  }
-
-  tr:last-child > td {
-    border-bottom: none;
-  }
-
-  .list-panel {
-    padding-top: 0;
-    padding-right: 0;
-    padding-left: 0;
-
-    @media (max-width: $mobile-s) {
-      overflow-x: scroll;
-    }
-  }
-
   .accepted {
     color: var(--text-color);
     background-color: #eef9f2;
   }
-
   .accepted > td:nth-child(2) {
     font-weight: 800;
   }

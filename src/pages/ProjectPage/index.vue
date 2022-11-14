@@ -19,7 +19,10 @@
         <span v-if="project">{{ project.title }}</span>
       </h1>
     </header>
-    <ProjectTabs v-if="!error && !loading" />
+    <ProjectTabs
+      v-if="!error && !loading && project"
+      :project-state="project.state"
+    />
     <RouterView></RouterView>
     <div class="d-flex justify-content-center mt-3">
       <BaseButton

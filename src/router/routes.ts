@@ -5,6 +5,8 @@ import { RouteNames } from './types/route-names';
 const ProjectPage = () => import('@/pages/ProjectPage/index.vue');
 const ProjectParticipationList = () =>
   import('@/pages/ProjectPage/ProjectParticipationList.vue');
+const ProjectParticipantsList = () =>
+  import('@/pages/ProjectPage/ProjectParticipantsList.vue');
 const ProjectDetails = () => import('@/pages/ProjectPage/ProjectDetails.vue');
 
 // User page
@@ -62,6 +64,14 @@ export const routes: RouteRecordRaw[] = [
         component: ProjectParticipationList,
         meta: {
           title: 'Список заявок',
+        },
+      },
+      {
+        path: 'participants',
+        name: RouteNames.PROJECT_PARTICIPANTS,
+        component: ProjectParticipantsList,
+        meta: {
+          title: 'Список участников',
         },
       },
     ],

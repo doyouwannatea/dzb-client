@@ -15,6 +15,7 @@ import { formatProjectDate } from '@/helpers/project';
 import { Supervisor } from '@/models/Supervisor';
 import { baseKyInstance } from '../baseKy';
 import { Candidate } from '@/models/Candidate';
+import { compareString } from '@/helpers/string';
 
 export default class ProjectApi extends IProjectApi {
   async getSingleProject(projectId: number): Promise<Project> {
@@ -47,13 +48,9 @@ export default class ProjectApi extends IProjectApi {
 
     // сортировка по алфавиту
     for (const key in tags) {
-      tags[key].sort((a, b) => {
-        const nameA = a.name.toLowerCase();
-        const nameB = b.name.toLowerCase();
-        if (nameA < nameB) return -1;
-        if (nameA > nameB) return 1;
-        return 0;
-      });
+      tags[key].sort((a, b) =>
+        compareString(a.name.toLowerCase(), b.name.toLowerCase()),
+      );
     }
 
     // костыль, т.к. TS не даёт итерироваться по ProjectTags, пришлось привести его к Record<string, Tag>
