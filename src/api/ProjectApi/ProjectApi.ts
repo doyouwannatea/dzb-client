@@ -19,10 +19,11 @@ import { compareString } from '@/helpers/string';
 
 export default class ProjectApi extends IProjectApi {
   async getSingleProject(projectId: number): Promise<Project> {
-    const project: Project = await baseKyInstance
-      .get(`api/projects/${projectId}`)
-      .json();
-    project.participants = await this.getProjectParticipants(project.id);
+    const [project, participants] = await Promise.all([
+      baseKyInstance.get(`api/projects/${projectId}`).json<Project>(),
+      this.getProjectParticipants(projectId),
+    ]);
+    project.participants = participants;
     return formatProjectDate(project);
   }
 
