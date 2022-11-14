@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     <RouterLink class="project-tab" :to="{ name: RouteNames.PROJECT_DETAILS }">
       о проекте
     </RouterLink>
@@ -33,15 +33,23 @@
 <style lang="scss" scoped>
   @import '@styles/breakpoints.scss';
 
+  .wrapper {
+    display: flex;
+  }
+
   .project-tab {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 1rem 3rem;
     color: var(--text-color);
     text-decoration: none;
     text-transform: uppercase;
+    text-align: center;
 
     @media (max-width: $mobile-s) {
-      padding: 1rem 2rem;
+      padding: 1rem 0.5rem;
+      flex: 1;
     }
   }
 
@@ -63,14 +71,24 @@
     border-radius: 0.625rem;
   }
 
-  .project-tab.router-link-exact-active:first-child:after {
-    position: absolute;
-    bottom: -0.5625rem;
-    left: 0;
-    width: 0.3125rem;
-    height: 0.5625rem;
-    content: '';
-    background-color: #fff;
+  .project-tab.router-link-exact-active {
+    &:first-child:after,
+    &:last-child:after {
+      position: absolute;
+      bottom: -0.5625rem;
+      width: 0.3125rem;
+      height: 0.5625rem;
+      content: '';
+      background-color: #fff;
+    }
+
+    &:first-child:after {
+      left: 0;
+    }
+
+    &:last-child:after {
+      right: 0;
+    }
   }
 
   .project-tab:hover {
