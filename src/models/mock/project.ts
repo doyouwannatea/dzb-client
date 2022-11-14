@@ -163,13 +163,16 @@ export const projectListResponse: ProjectListResponse = {
       id: 2,
       participations: [],
       participants: [],
-      specialities: [{ id: 2, name: 'НвГДСз' }],
+      specialities: [
+        { id: 2, name: 'НвГДСз' },
+        { id: 3, name: 'ИСТб' },
+      ],
       places: 12,
       product_result:
         'Разработан набор характеристик каждого профиля, алгоритм дополнения БД недостающими характеристиками, критерии кластеризации потребителей по профилям',
       requirements: 'Работа ПО MS Office',
       skills: skills,
-      state: recruitingState,
+      state: activeState,
       study_result:
         'Знать: особенности потребителя энергетической продукции, причины недополучения платы за энергоуслуги. Уметь: анализировать базы данных, синтезировать информацию Владеть навыками командной работы при решении проблемных ситуаций',
       supervisors: ['Осипова Ирина Михайловна'],
@@ -195,7 +198,10 @@ export const projectListResponse: ProjectListResponse = {
       id: 3,
       participations: [],
       participants: [],
-      specialities: [{ id: 1, name: 'НГДСз' }],
+      specialities: [
+        { id: 1, name: 'НГДСз' },
+        { id: 3, name: 'ИСТб' },
+      ],
       places: 12,
       product_result:
         'Создание мобильного приложения по Well-being в стиле Agile, с возможностью дополнения инициатив в виде конструктора',
