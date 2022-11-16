@@ -20,6 +20,11 @@ export const useModalsStore = defineStore('modals', {
         return;
       }
 
+      if (!authStore.profileData.canSendParticipations) {
+        this.timeoutModal = true;
+        return;
+      }
+
       if (participationsStore.participationList) {
         for (const participation of participationsStore.participationList) {
           if (participation.project_id === project.id) {

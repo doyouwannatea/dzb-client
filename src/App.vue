@@ -1,6 +1,7 @@
 <template>
   <WrongInstitutionModal />
   <AuthModal />
+  <TimeoutModal />
   <SelectedProjectModal />
   <ParticipationModal />
   <ParticipationSuccessModal />
@@ -12,6 +13,7 @@
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
   import AuthModal from './components/layout/AuthModal.vue';
+  import TimeoutModal from './components/layout/TimeoutModal.vue';
   import SelectedProjectModal from './components/layout/SelectedProjectModal.vue';
   import ParticipationModal from './components/participation/ParticipationModal.vue';
   import ParticipationSuccessModal from './components/participation/ParticipationSuccessModal.vue';
