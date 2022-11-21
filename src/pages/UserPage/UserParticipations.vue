@@ -18,7 +18,9 @@
     <!-- ERROR -->
 
     <!-- PARTICIPATION LIST -->
-    <template v-if="participationsStore.listNotEmpty">
+    <template
+      v-if="participationsStore.listNotEmpty && !modalsStore.timeoutModal"
+    >
       <Draggable
         v-model="editableParticipationList"
         v-bind="dragOptions"
@@ -101,6 +103,7 @@
   import { immutableSort } from '@/helpers/array';
   import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
   import { useMobileS } from '@/helpers/breakpoints';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
   import cursorIconUrl from '@/assets/icons/cursor.svg?url';
   // components
   import ParticipationCard from '@/components/participation/ParticipationCard.vue';
@@ -134,6 +137,7 @@
     ParticipationWithProject | undefined
   >(undefined);
   const editableParticipationList = ref<EditableListItem[]>([]);
+  const modalsStore = useModalsStore();
 
   watch(() => participationsStore.participationList, initEditableList, {
     deep: true,
