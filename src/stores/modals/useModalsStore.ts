@@ -1,4 +1,5 @@
 import { projectIncludesCandidateSpeciality } from '@/helpers/project';
+import { Candidate } from '@/models/Candidate';
 import { Project } from '@/models/Project';
 import { defineStore } from 'pinia';
 import { useAuthStore } from '../auth/useAuthStore';
@@ -20,7 +21,15 @@ export const useModalsStore = defineStore('modals', {
         return;
       }
 
-      if (!authStore.profileData.canSendParticipations) {
+      const hasCanSendParticipations = Object.prototype.hasOwnProperty.call<
+        Candidate,
+        [keyof Candidate],
+        boolean
+      >(authStore.profileData, 'canSendParticipations');
+      if (
+        hasCanSendParticipations &&
+        !authStore.profileData.canSendParticipations
+      ) {
         this.timeoutModal = true;
         return;
       }
