@@ -21,7 +21,7 @@ export const candidate: Candidate = {
   course: 3,
   training_group: 'ИСТб-19-1',
   group_id: 1,
-  canSendParticipations: false,
+  canSendParticipations: true,
   group: {
     id: 1,
     name: 'ИСТб-19-1',

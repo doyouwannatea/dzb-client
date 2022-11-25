@@ -63,6 +63,17 @@ export const useModalsStore = defineStore('modals', {
     },
     // OPEN FEEDBACK MODAL
 
+    // OPEN EDIT DISABLE MODAL
+    openEditDisableModal() {
+      const authStore = useAuthStore();
+
+      if (!authStore.profileData?.canSendParticipations) {
+        this.timeoutModal = true;
+        return;
+      }
+    },
+    // OPEN EDIT DISABLE MODAL
+
     // ON ASYNC
     async _onAsync<T>(callback: () => Promise<T>) {
       this.loading = true;

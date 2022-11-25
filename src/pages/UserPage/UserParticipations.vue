@@ -18,9 +18,7 @@
     <!-- ERROR -->
 
     <!-- PARTICIPATION LIST -->
-    <template
-      v-if="participationsStore.listNotEmpty && !modalsStore.timeoutModal"
-    >
+    <template v-if="participationsStore.listNotEmpty">
       <Draggable
         v-model="editableParticipationList"
         v-bind="dragOptions"
@@ -72,7 +70,11 @@
             variant="outlined"
             case="uppercase"
             :disabled="participationsStore.loading"
-            @click="onToggleEdit"
+            @click="
+              authStore.profileData?.canSendParticipations
+                ? onToggleEdit()
+                : modalsStore.openEditDisableModal()
+            "
           >
             Редактировать заявки
           </BaseButton>
@@ -103,7 +105,6 @@
   import { immutableSort } from '@/helpers/array';
   import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
   import { useMobileS } from '@/helpers/breakpoints';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
   import cursorIconUrl from '@/assets/icons/cursor.svg?url';
   // components
   import ParticipationCard from '@/components/participation/ParticipationCard.vue';
@@ -111,6 +112,8 @@
   import BaseButton from '@/components/ui/BaseButton.vue';
   import ParticipationDeleteModal from '@/components/participation/ParticipationDeleteModal.vue';
   import LoadingParticipationsList from '@/pages/UserPage/LoadingParticipationsList.vue';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
   type EditableListItem = {
     order: number;
@@ -118,6 +121,8 @@
   };
 
   const isMobile = useMobileS();
+  const modalsStore = useModalsStore();
+  const authStore = useAuthStore();
   const dragOptions = computed(() => ({
     animation: 200,
     delay: isMobile.value ? 300 : 0,
@@ -137,7 +142,6 @@
     ParticipationWithProject | undefined
   >(undefined);
   const editableParticipationList = ref<EditableListItem[]>([]);
-  const modalsStore = useModalsStore();
 
   watch(() => participationsStore.participationList, initEditableList, {
     deep: true,
