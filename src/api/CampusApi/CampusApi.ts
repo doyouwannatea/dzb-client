@@ -2,6 +2,7 @@ import { Candidate } from '@/models/Candidate';
 import ICampusApi from './ICampusApi';
 import { baseKyInstance } from '../baseKy';
 import { Supervisor } from '@/models/Supervisor';
+import { isCandidate } from '@/helpers/typeCheck';
 
 export default class CampusApi extends ICampusApi {
   async auth(): Promise<void> {
@@ -24,6 +25,19 @@ export default class CampusApi extends ICampusApi {
       window.alert(errorMsg);
       throw new Error(errorMsg);
     }
-    return res.json();
+    const userInfo: Candidate | Supervisor = await res.json();
+
+    if (isCandidate(userInfo)) {
+      const hasCanSendParticipations = Object.prototype.hasOwnProperty.call<
+        typeof userInfo,
+        [keyof typeof userInfo],
+        boolean
+      >(userInfo, 'canSendParticipations');
+      if (!hasCanSendParticipations) {
+        userInfo.canSendParticipations = false;
+      }
+    }
+
+    return userInfo;
   }
 }
