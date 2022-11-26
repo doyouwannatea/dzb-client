@@ -21,16 +21,9 @@ export const useModalsStore = defineStore('modals', {
         return;
       }
 
-      const hasCanSendParticipations = Object.prototype.hasOwnProperty.call<
-        Candidate,
-        [keyof Candidate],
-        boolean
-      >(authStore.profileData, 'canSendParticipations');
-      if (
-        hasCanSendParticipations &&
-        !authStore.profileData.canSendParticipations
-      ) {
-        this.timeoutModal = true;
+      if (!authStore.profileData.canSendParticipations) {
+        this.understandModalTitle =
+          'Сейчас вы не можете подать заявку на проект';
         return;
       }
 
@@ -48,7 +41,8 @@ export const useModalsStore = defineStore('modals', {
       );
 
       if (!isSameInstitute) {
-        this.wrongInstitutionModal = true;
+        this.understandModalTitle =
+          'Вы не можете отправлять заявки на проекты другого института';
         return;
       }
 
@@ -73,13 +67,9 @@ export const useModalsStore = defineStore('modals', {
     // OPEN FEEDBACK MODAL
 
     // OPEN EDIT DISABLE MODAL
-    openEditDisableModal() {
-      const authStore = useAuthStore();
-
-      if (!authStore.profileData?.canSendParticipations) {
-        this.timeoutModal = true;
-        return;
-      }
+    openEditParticipationsDisabledModal() {
+      this.understandModalTitle =
+        'На данный момент вы не можете изменять свои заявки';
     },
     // OPEN EDIT DISABLE MODAL
 

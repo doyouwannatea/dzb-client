@@ -1,18 +1,18 @@
 <template>
   <!-- auth modal -->
   <BaseModal
-    :is-show="modalsStore.editDisableModal"
-    @close="modalsStore.editDisableModal = false"
+    :is-show="Boolean(modalsStore.understandModalTitle)"
+    @close="modalsStore.understandModalTitle = undefined"
   >
     <!-- MAIN CONTENT -->
     <div class="modal-content">
-      <h1>На данный момент вы не можете изменять свои заявки</h1>
+      <h1>{{ modalsStore.understandModalTitle }}</h1>
       <div class="modal-buttons">
         <BaseButton
           case="uppercase"
-          @click="modalsStore.editDisableModal = false"
+          @click="modalsStore.understandModalTitle = undefined"
         >
-          Понятно
+          {{ buttonText }}
         </BaseButton>
       </div>
     </div>
@@ -21,12 +21,27 @@
 </template>
 
 <script setup lang="ts">
+  import { watch, ref } from 'vue';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { getRandomIntInclusive } from '@/helpers/number';
   // components
   import BaseModal from '../ui/BaseModal.vue';
   import BaseButton from '../ui/BaseButton.vue';
 
   const modalsStore = useModalsStore();
+  const buttonTextVariants = ['Понятно', 'Ясно', 'Хорошо', 'Закрыть'];
+  const buttonText = ref('');
+
+  watch(
+    () => modalsStore.understandModalTitle,
+    () => {
+      buttonText.value =
+        buttonTextVariants[
+          getRandomIntInclusive(0, buttonTextVariants.length - 1)
+        ];
+    },
+    { immediate: true },
+  );
 </script>
 
 <style scoped>

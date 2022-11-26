@@ -1,27 +1,23 @@
 export interface State {
   loading: boolean;
   authModal: boolean;
-  timeoutModal: boolean;
-  editDisableModal: boolean;
   selectedProjectModal: boolean;
   editSkillsModal: boolean;
   participationSuccessModal: boolean;
   participationModal: boolean;
   projectFeedbackModal: boolean;
-  wrongInstitutionModal: boolean;
   projectFilterModal: boolean;
+  understandModalTitle?: string;
 }
 
 export const state = (): State => ({
   loading: false,
   authModal: false,
-  timeoutModal: false,
-  editDisableModal: false,
   selectedProjectModal: false,
   editSkillsModal: false,
   participationModal: false,
   participationSuccessModal: false,
   projectFeedbackModal: false,
-  wrongInstitutionModal: false,
   projectFilterModal: false,
+  understandModalTitle: undefined,
 });

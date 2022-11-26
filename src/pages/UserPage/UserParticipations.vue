@@ -73,7 +73,7 @@
             @click="
               authStore.profileData?.canSendParticipations
                 ? onToggleEdit()
-                : modalsStore.openEditDisableModal()
+                : modalsStore.openEditParticipationsDisabledModal()
             "
           >
             Редактировать заявки
