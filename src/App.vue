@@ -19,6 +19,8 @@
   import ToUpButton from './components/ui/ToUpButton.vue';
   import UnderstandModal from './components/layout/UnderstandModal.vue';
   import { useSavedRoute } from './hooks/useSaveRoute';
+  import { useGetParticipationList } from './hooks/useFetchStudentData';
 
+  useGetParticipationList();
   useSavedRoute();
 </script>

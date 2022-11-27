@@ -15,9 +15,11 @@
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { useGetUserProjectList } from '@/hooks/useFetchStudentData';
   // components
   import ProjectList from '@/components/project/ProjectList.vue';
   import BaseStub from '@/components/ui/BaseStub.vue';
 
+  useGetUserProjectList();
   const { userProjectList, loading, error } = storeToRefs(useProjectsStore());
 </script>

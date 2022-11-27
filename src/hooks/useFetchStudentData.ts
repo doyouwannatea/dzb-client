@@ -3,14 +3,17 @@ import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 import { useSkillsStore } from '@/stores/skills/useSkillsStore';
 import { onBeforeMount } from 'vue';
 
-export const useFetchStudentData = () => {
+export const useGetParticipationList = () => {
   const participationsStore = useParticipationsStore();
-  const projectsStore = useProjectsStore();
-  const skillsStore = useSkillsStore();
+  onBeforeMount(() => participationsStore.getParticipationList());
+};
 
-  onBeforeMount(() => {
-    projectsStore.getUserProjectList();
-    participationsStore.getParticipationList();
-    skillsStore.getUserSkills();
-  });
+export const useGetUserProjectList = () => {
+  const projectsStore = useProjectsStore();
+  onBeforeMount(() => projectsStore.getUserProjectList());
+};
+
+export const useGetUserSkills = () => {
+  const skillsStore = useSkillsStore();
+  onBeforeMount(() => skillsStore.getUserSkills());
 };

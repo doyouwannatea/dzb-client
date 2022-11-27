@@ -22,18 +22,15 @@
 
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
+  import { useMobileS } from '@/helpers/breakpoints';
+  import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
   // components
   import SidebarContainer from '@/components/layout/SidebarContainer.vue';
   import UserNavigation from './UserNavigation.vue';
   import DeadlineTimer from '@/components/layout/DeadlineTimer.vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
-  import { useMobileS } from '@/helpers/breakpoints';
-  import { useFetchStudentData } from '@/hooks/useFetchStudentData';
-  import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
 
   const isMobile = useMobileS();
-
-  useFetchStudentData();
   useWatchAuthorization();
 </script>
 

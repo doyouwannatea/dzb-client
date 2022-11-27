@@ -43,6 +43,7 @@
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useFetchAdditionalProjectData } from '@/hooks/useFetchAdditionalProjectData';
   import { useSkillsStore } from '@/stores/skills/useSkillsStore';
+  import { useGetUserSkills } from '@/hooks/useFetchStudentData';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseTooltip from '@/components/ui/BaseTooltip.vue';
@@ -50,6 +51,7 @@
   import BaseButton from '@/components/ui/BaseButton.vue';
   import EditSkillsModal from '@/components/skill/EditSkillsModal.vue';
 
+  useGetUserSkills();
   useFetchAdditionalProjectData();
   const modalsStore = useModalsStore();
   const authStore = useAuthStore();
