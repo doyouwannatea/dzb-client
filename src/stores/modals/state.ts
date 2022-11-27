@@ -6,8 +6,8 @@ export interface State {
   participationSuccessModal: boolean;
   participationModal: boolean;
   projectFeedbackModal: boolean;
-  wrongInstitutionModal: boolean;
   projectFilterModal: boolean;
+  understandModalTitle?: string;
 }
 
 export const state = (): State => ({
@@ -18,6 +18,6 @@ export const state = (): State => ({
   participationModal: false,
   participationSuccessModal: false,
   projectFeedbackModal: false,
-  wrongInstitutionModal: false,
   projectFilterModal: false,
+  understandModalTitle: undefined,
 });

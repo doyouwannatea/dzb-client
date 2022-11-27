@@ -21,6 +21,7 @@ export const candidate: Candidate = {
   course: 3,
   training_group: 'ИСТб-19-1',
   group_id: 1,
+  canSendParticipations: true,
   group: {
     id: 1,
     name: 'ИСТб-19-1',
@@ -54,6 +55,7 @@ export const candidateList: Candidate[] = [
     course: 3,
     training_group: 'ИСТб-19-2',
     group_id: 1,
+    canSendParticipations: true,
     group: {
       id: 1,
       name: 'ИСТб-19-2',
@@ -82,6 +84,7 @@ export const candidateList: Candidate[] = [
     course: 3,
     training_group: 'ИСТб-19-2',
     group_id: 1,
+    canSendParticipations: true,
     group: {
       id: 1,
       name: 'ИСТб-19-2',
@@ -110,6 +113,7 @@ export const candidateList: Candidate[] = [
     course: 3,
     training_group: 'ИСТб-19-2',
     group_id: 1,
+    canSendParticipations: true,
     group: {
       id: 1,
       name: 'ИСТб-19-2',
@@ -138,6 +142,7 @@ export const candidateList: Candidate[] = [
     course: 3,
     training_group: 'ИСТб-19-2',
     group_id: 1,
+    canSendParticipations: true,
     group: {
       id: 1,
       name: 'ИСТб-19-2',
@@ -166,6 +171,7 @@ export const candidateList: Candidate[] = [
     course: 3,
     training_group: 'ИСТб-19-1',
     group_id: 1,
+    canSendParticipations: true,
     group: {
       id: 1,
       name: 'ИСТб-19-1',

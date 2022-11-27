@@ -70,7 +70,11 @@
             variant="outlined"
             case="uppercase"
             :disabled="participationsStore.loading"
-            @click="onToggleEdit"
+            @click="
+              authStore.profileData?.canSendParticipations
+                ? onToggleEdit()
+                : modalsStore.openEditParticipationsDisabledModal()
+            "
           >
             Редактировать заявки
           </BaseButton>
@@ -108,6 +112,8 @@
   import BaseButton from '@/components/ui/BaseButton.vue';
   import ParticipationDeleteModal from '@/components/participation/ParticipationDeleteModal.vue';
   import LoadingParticipationsList from '@/pages/UserPage/LoadingParticipationsList.vue';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
   type EditableListItem = {
     order: number;
@@ -115,6 +121,8 @@
   };
 
   const isMobile = useMobileS();
+  const modalsStore = useModalsStore();
+  const authStore = useAuthStore();
   const dragOptions = computed(() => ({
     animation: 200,
     delay: isMobile.value ? 300 : 0,

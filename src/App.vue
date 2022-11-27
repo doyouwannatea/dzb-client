@@ -1,10 +1,10 @@
 <template>
-  <WrongInstitutionModal />
   <AuthModal />
   <SelectedProjectModal />
   <ParticipationModal />
   <ParticipationSuccessModal />
   <ProjectFeedbackModal />
+  <UnderstandModal />
   <ToUpButton />
   <RouterView></RouterView>
 </template>
@@ -16,8 +16,8 @@
   import ParticipationModal from './components/participation/ParticipationModal.vue';
   import ParticipationSuccessModal from './components/participation/ParticipationSuccessModal.vue';
   import ProjectFeedbackModal from './components/feedback/ProjectFeedbackModal.vue';
-  import WrongInstitutionModal from './components/participation/WrongInstitutionModal.vue';
   import ToUpButton from './components/ui/ToUpButton.vue';
+  import UnderstandModal from './components/layout/UnderstandModal.vue';
   import { useSavedRoute } from './hooks/useSaveRoute';
 
   useSavedRoute();

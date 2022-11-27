@@ -10,6 +10,7 @@ export interface Candidate {
   phone: string;
   course: number;
   training_group: string;
+  canSendParticipations: boolean;
   group: {
     id: number;
     name: string;

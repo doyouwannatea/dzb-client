@@ -8,7 +8,7 @@
       <template #sidebar>
         <UserNavigation variant="desktop" />
         <DeadlineTimer
-          :deadline="new Date('2022/11/01')"
+          :deadline="new Date('2022/12/01')"
           timer-text="до конца приема заявок на проектное обучение"
           after-timer-text="Прием заявок на проектное обучение закончен"
         />

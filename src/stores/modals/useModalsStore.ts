@@ -1,4 +1,5 @@
 import { projectIncludesCandidateSpeciality } from '@/helpers/project';
+import { Candidate } from '@/models/Candidate';
 import { Project } from '@/models/Project';
 import { defineStore } from 'pinia';
 import { useAuthStore } from '../auth/useAuthStore';
@@ -20,6 +21,12 @@ export const useModalsStore = defineStore('modals', {
         return;
       }
 
+      if (!authStore.profileData.canSendParticipations) {
+        this.understandModalTitle =
+          'Сейчас вы не можете подать заявку на проект';
+        return;
+      }
+
       if (participationsStore.participationList) {
         for (const participation of participationsStore.participationList) {
           if (participation.project_id === project.id) {
@@ -34,7 +41,8 @@ export const useModalsStore = defineStore('modals', {
       );
 
       if (!isSameInstitute) {
-        this.wrongInstitutionModal = true;
+        this.understandModalTitle =
+          'Вы не можете отправлять заявки на проекты другого института';
         return;
       }
 
@@ -57,6 +65,13 @@ export const useModalsStore = defineStore('modals', {
       this.projectFeedbackModal = true;
     },
     // OPEN FEEDBACK MODAL
+
+    // OPEN EDIT DISABLE MODAL
+    openEditParticipationsDisabledModal() {
+      this.understandModalTitle =
+        'На данный момент вы не можете изменять свои заявки';
+    },
+    // OPEN EDIT DISABLE MODAL
 
     // ON ASYNC
     async _onAsync<T>(callback: () => Promise<T>) {
