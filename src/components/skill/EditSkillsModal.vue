@@ -204,6 +204,7 @@
 
   .search {
     --ms-bg: #f9f9f9;
+
     max-width: 21rem;
     margin-right: 0;
   }
@@ -245,10 +246,8 @@
 
   .tags-title {
     margin-bottom: 0.625rem;
-
     font-size: 0.75rem;
     line-height: 0.9375rem;
-
     color: var(--gray-color-2);
     text-transform: uppercase;
   }

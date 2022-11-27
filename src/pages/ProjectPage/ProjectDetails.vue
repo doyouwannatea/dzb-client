@@ -131,7 +131,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .desktop-details {
     @media (max-width: $mobile-s) {

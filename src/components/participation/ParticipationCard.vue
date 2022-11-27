@@ -98,7 +98,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .card {
     padding: 1.375rem 1.3125rem;
@@ -106,6 +106,18 @@
 
   .card.sortable-chosen {
     opacity: 0.5;
+  }
+
+  .card-content {
+    display: grid;
+    grid-template-columns: auto minmax(min-content, 16.25rem) min-content;
+    column-gap: 0.9375rem;
+    align-items: flex-start;
+
+    @media (max-width: $mobile-s) {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
   }
 
   .card.editable {
@@ -122,18 +134,6 @@
   .card.stub {
     background-color: var(--gray-color-1);
     opacity: 1;
-  }
-
-  .card-content {
-    display: grid;
-    grid-template-columns: auto minmax(min-content, 16.25rem) min-content;
-    column-gap: 0.9375rem;
-    align-items: flex-start;
-
-    @media (max-width: $mobile-s) {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
   }
 
   .title {
@@ -165,9 +165,9 @@
 
     @media (max-width: $mobile-s) {
       grid-row: 3;
+      grid-column: 1 / -1;
       margin-top: 0;
       font-size: 1rem;
-      grid-column: 1 / -1;
     }
   }
 

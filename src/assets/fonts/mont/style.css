@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: normal;
   font-weight: 900;
   src: url('Mont-Black.eot');
@@ -11,7 +11,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: italic;
   font-weight: 100;
   src: url('Mont-ThinItalic.eot');
@@ -23,7 +23,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: normal;
   font-weight: 200;
   src: url('Mont-ExtraLight.eot');
@@ -35,7 +35,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: normal;
   font-weight: bold;
   src: url('Mont-Bold.eot');
@@ -46,7 +46,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: italic;
   font-weight: 800;
   src: url('Mont-HeavyItalic.eot');
@@ -58,7 +58,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: italic;
   font-weight: 900;
   src: url('Mont-BlackItalic.eot');
@@ -70,7 +70,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: italic;
   font-weight: 200;
   src: url('Mont-ExtraLightItalic.eot');
@@ -82,7 +82,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: normal;
   font-weight: 800;
   src: url('Mont-Heavy.eot');
@@ -94,7 +94,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: normal;
   font-weight: 600;
   src: url('Mont-SemiBold.eot');
@@ -106,7 +106,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: italic;
   font-weight: normal;
   src: url('Mont-RegularItalic.eot');
@@ -118,7 +118,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: italic;
   font-weight: bold;
   src: url('Mont-BoldItalic.eot');
@@ -130,7 +130,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: italic;
   font-weight: 600;
   src: url('Mont-SemiBoldItalic.eot');
@@ -142,7 +142,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: italic;
   font-weight: 300;
   src: url('Mont-LightItalic.eot');
@@ -154,7 +154,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: normal;
   font-weight: 100;
   src: url('Mont-Thin.eot');
@@ -165,7 +165,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: normal;
   font-weight: normal;
   src: url('Mont-Regular.eot');
@@ -177,7 +177,7 @@
 }
 
 @font-face {
-  font-family: 'Mont';
+  font-family: Mont;
   font-style: normal;
   font-weight: 300;
   src: url('Mont-Light.eot');

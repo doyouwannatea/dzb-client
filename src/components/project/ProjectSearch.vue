@@ -57,18 +57,19 @@
     left: 1px;
     height: 0.265rem;
     background-color: var(--green-color-1);
-    border-radius: 0 0.3125rem 0.3125rem 0.3125rem;
+    border-radius: 0 0.3125rem 0.3125rem;
     transition: opacity 0.2s ease-in, transform 0.2s ease-in;
     transition-delay: 0.1s;
     transform-origin: right;
   }
 
   .loading-enter-active {
-    border-radius: 0 0.3125rem 0.3125rem 0.3125rem;
+    border-radius: 0 0.3125rem 0.3125rem;
     transform: scaleX(1);
   }
+
   .loading-leave-active {
-    border-radius: 0.3125rem 0.3125rem 0.3125rem 0.3125rem;
+    border-radius: 0.3125rem;
     transition: opacity 0.7s ease-in, transform 0.7s ease-in;
     transition-delay: 0.4s;
     transform: scaleX(0);

@@ -78,31 +78,32 @@
 </style>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .form {
     display: flex;
+    gap: 2rem;
     justify-content: space-between;
+    padding: 1.75rem 2.375rem;
     margin-top: 2.3181rem;
     background-color: var(--accent-color-1);
     border-radius: 0.625rem;
-    padding: 1.75rem 2.375rem;
-    gap: 2rem;
 
     @media (max-width: $mobile-s) {
-      margin-top: 16px;
-      padding: 22px 20px;
       flex-direction: column;
+      padding: 22px 20px;
+      margin-top: 16px;
     }
   }
+
   .left-column {
-    max-width: 40.625rem;
     width: 100%;
+    max-width: 40.625rem;
   }
 
   .right-column {
-    max-width: 36.4694rem;
     width: 100%;
+    max-width: 36.4694rem;
   }
 
   .row {
@@ -111,30 +112,30 @@
   }
 
   .controls-row {
-    margin-bottom: 2.2rem;
-    gap: 2.5rem;
     flex-wrap: wrap;
+    gap: 2.5rem;
+    margin-bottom: 2.2rem;
 
     & > * {
       flex: 1 230px;
     }
 
     @media (max-width: $mobile-s) {
-      margin-bottom: 32px;
       gap: 32px;
+      margin-bottom: 32px;
     }
   }
 
   .policy-row {
-    margin-top: 1.375rem;
     flex-wrap: wrap;
-    justify-content: space-between;
     gap: 1.5rem;
+    justify-content: space-between;
+    margin-top: 1.375rem;
   }
 
   .multiselect {
-    min-height: 3.213rem;
     align-self: flex-end;
+    min-height: 3.213rem;
 
     &:deep(.multiselect-single-label) {
       line-height: 3.213rem;
@@ -142,31 +143,31 @@
   }
 
   .multiselect-label {
-    cursor: default;
     margin-bottom: 0.75rem;
-    font-weight: 700;
     font-size: 1.125rem;
+    font-weight: 700;
     color: var(--light-color);
+    cursor: default;
   }
 
   .title {
+    margin-bottom: 3.2631rem;
     font-size: 2.875rem;
     line-height: 109.8%;
-    margin-bottom: 3.2631rem;
     color: var(--light-color);
 
     @media (max-width: $mobile-s) {
-      font-size: 24px;
-      margin-bottom: 16px;
       max-width: 80%;
+      margin-bottom: 16px;
+      font-size: 24px;
     }
   }
 
   .form-description {
+    width: 100%;
+    max-width: 34.21rem;
     font-size: 1.4602rem;
     line-height: 1.875rem;
-    max-width: 34.21rem;
-    width: 100%;
     color: var(--light-color);
 
     .link {
@@ -181,8 +182,8 @@
 
   .policy {
     max-width: 20.6919rem;
-    font-weight: normal;
     font-size: 10px;
+    font-weight: normal;
     line-height: 146.8%;
     color: var(--light-color);
   }

@@ -220,7 +220,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .footer {
     display: flex;
@@ -247,8 +247,8 @@
     max-width: 25rem;
 
     @media (max-width: $mobile-s) {
-      max-width: unset;
       width: 100%;
+      max-width: unset;
     }
   }
 
@@ -256,7 +256,6 @@
     display: flex;
     gap: 0.625rem;
     align-items: center;
-
     line-height: 150%;
     color: var(--gray-color-2);
 

@@ -20,7 +20,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .modal {
     @media (max-width: $mobile-s) {
@@ -29,8 +29,8 @@
       }
 
       &:deep(.filters) {
-        border: none;
         padding: 0;
+        border: none;
       }
     }
   }

@@ -40,6 +40,7 @@
     line-height: 2.875rem;
     color: var(--accent-color-1);
   }
+
   .time {
     font-size: 2.25rem;
   }

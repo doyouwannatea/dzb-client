@@ -8,8 +8,8 @@
   .panel {
     padding: 2rem;
     margin-bottom: 0.9375rem;
-    background: #ffffff;
+    background: #fff;
     border-radius: 0.625rem;
-    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
+    box-shadow: 0 0 0.3125rem rgb(0 0 0 / 18%);
   }
 </style>

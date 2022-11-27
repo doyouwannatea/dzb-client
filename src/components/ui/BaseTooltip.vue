@@ -15,7 +15,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .tooltip-msg {
     position: absolute;
@@ -29,15 +29,15 @@
     line-height: 180%;
     text-align: left;
     cursor: default;
-    background: #ffffff;
+    background: #fff;
     border: 1px solid var(--gray-color-1);
     border-radius: 0.625rem;
-    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
+    box-shadow: 0 0 0.3125rem rgb(0 0 0 / 18%);
 
     @media (max-width: $mobile-s) {
-      left: 0;
       right: 0;
       bottom: 130%;
+      left: 0;
     }
   }
 

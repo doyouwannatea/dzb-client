@@ -25,7 +25,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .bold {
     font-weight: 700;
@@ -37,15 +37,13 @@
     font-weight: 600;
     line-height: normal;
   }
+
   .info-list-item {
     display: grid;
     grid-template-columns: 5fr 6fr;
+    gap: 1em;
     align-items: flex-start;
     line-height: 1.6875rem;
-  }
-
-  .info-list-item {
-    gap: 1em;
 
     &.wide {
       grid-template-columns: minmax(auto, 14.375rem) auto;

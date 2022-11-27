@@ -29,7 +29,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   /* Container */
   .container {
@@ -39,8 +39,8 @@
 
     @media (max-width: $mobile-s) {
       height: initial;
-      padding-bottom: 0.875rem;
       padding-top: 0.875rem;
+      padding-bottom: 0.875rem;
     }
   }
 
@@ -49,6 +49,7 @@
     position: relative;
     background: #fff;
   }
+
   .header::before {
     position: absolute;
     bottom: 0;

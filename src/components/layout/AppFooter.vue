@@ -100,7 +100,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .footer {
     position: sticky;
@@ -126,6 +126,7 @@
   .logo {
     --width: 4.375rem;
     --height: 4.375rem;
+
     grid-column: span 2;
     max-width: 16.875rem;
     color: #fff;
@@ -140,14 +141,14 @@
 
   .initials {
     display: block;
-    font-size: 0.88rem;
     max-width: 30em;
     margin-top: 7em;
+    font-size: 0.88rem;
     font-weight: 300;
     line-height: 155.3%;
-    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
-    text-decoration: none;
     color: inherit;
+    text-decoration: none;
+    text-shadow: 1px 2px 4px rgb(0 0 0 / 25%);
 
     &:hover {
       text-decoration: underline;
@@ -177,7 +178,7 @@
   .divider {
     width: 1px;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(255 255 255 / 80%);
 
     @media (max-width: $mobile-s) {
       width: 100%;
@@ -227,6 +228,7 @@
     color: inherit;
     text-decoration: none;
   }
+
   .link:hover {
     text-decoration: underline;
   }

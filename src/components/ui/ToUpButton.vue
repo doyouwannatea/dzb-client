@@ -32,7 +32,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .btn {
     position: fixed;
@@ -47,7 +47,7 @@
     background-position: 50% 45%;
     background-size: 50%;
     border-radius: 50%;
-    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
+    box-shadow: 0 0 0.3125rem rgb(0 0 0 / 18%);
 
     @media (max-width: $mobile-s) {
       display: none;

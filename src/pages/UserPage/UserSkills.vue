@@ -74,6 +74,7 @@
     display: flex;
     min-height: 100%;
   }
+
   .container {
     display: flex;
     flex-direction: column;
@@ -93,6 +94,7 @@
     font-weight: 800;
     line-height: 2.375rem;
   }
+
   .subtitle {
     font-size: 1.25rem;
     font-weight: 600;

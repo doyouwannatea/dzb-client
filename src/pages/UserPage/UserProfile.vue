@@ -80,7 +80,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .panel {
     display: flex;
@@ -135,8 +135,8 @@
     margin-top: auto;
 
     @media (max-width: $mobile-s) {
-      margin-top: 2.5rem;
       width: 100%;
+      margin-top: 2.5rem;
     }
   }
 

@@ -26,10 +26,8 @@
     align-items: center;
     justify-content: center;
     padding: 0.4375rem 1.25rem;
-
     font-size: 0.875rem;
     line-height: 1.125rem;
-
     color: var(--accent-color-1);
     background: #f1f4fe;
     border-radius: 1.875rem;

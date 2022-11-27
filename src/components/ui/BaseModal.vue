@@ -60,7 +60,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .modal {
     --side-p: 2.75rem;
@@ -71,18 +71,19 @@
     width: 100%;
     padding-top: var(--top-p);
     padding-bottom: var(--bottom-p);
-    background: #ffffff;
+    background: #fff;
     border-radius: 0.625rem;
-    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
+    box-shadow: 0 0 0.3125rem rgb(0 0 0 / 18%);
   }
 
   .modal.s {
     --top-p: 4rem;
+
     max-width: 43.125rem;
 
     @media (max-width: $mobile-s) {
-      margin-left: 1.6875rem;
       margin-right: 1.6875rem;
+      margin-left: 1.6875rem;
     }
   }
 
@@ -100,6 +101,7 @@
   }
 
   /* common content styles */
+
   /* Headlines */
   .modal:deep(h1) {
     font-size: 2.5rem;
@@ -129,6 +131,7 @@
   .modal:deep(a) {
     font-size: 1.125rem;
   }
+
   /* common content styles */
 
   .modal-background {
@@ -144,7 +147,7 @@
     justify-content: center;
     padding: 1rem 0;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgb(0 0 0 / 40%);
 
     @media (max-width: $mobile-s) {
       padding: 0;

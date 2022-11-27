@@ -52,6 +52,7 @@
     align-items: center;
     margin-bottom: 1.875rem;
   }
+
   .name {
     font-size: 1.5rem;
     font-weight: 800;
@@ -60,7 +61,7 @@
   }
 
   .position {
-    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    font-family: Montserrat, Arial, Helvetica, sans-serif;
     font-size: 1.125rem;
     font-style: normal;
     font-weight: 500;

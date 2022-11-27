@@ -75,7 +75,7 @@
 
   .input.with-icon {
     padding-right: 4.25rem;
-    background: calc(100% - 1rem) center / 2rem no-repeat #ffffff;
+    background: calc(100% - 1rem) center / 2rem no-repeat #fff;
   }
 
   .input[type='date']::-webkit-inner-spin-button,

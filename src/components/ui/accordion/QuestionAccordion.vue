@@ -17,12 +17,12 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .panel {
     padding: 0 !important;
     overflow: hidden;
-    font-family: 'Mont', Arial, Helvetica, sans-serif;
+    font-family: Mont, Arial, Helvetica, sans-serif;
   }
 
   .question:deep(.title) {
@@ -69,7 +69,7 @@
 
     @media (max-width: $mobile-s) {
       padding: 1rem;
-      padding-top: 0rem;
+      padding-top: 0;
       font-size: 1.2rem;
     }
   }

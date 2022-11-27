@@ -77,7 +77,7 @@
     display: inline-block;
     width: 100%;
     padding: 0.625rem 1.3125rem;
-    font-family: 'Mont', Arial, Helvetica, sans-serif;
+    font-family: Mont, Arial, Helvetica, sans-serif;
     font-size: 1rem;
     font-style: normal;
     font-weight: 600;

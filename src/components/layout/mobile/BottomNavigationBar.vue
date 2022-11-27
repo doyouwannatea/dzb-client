@@ -45,9 +45,9 @@
     bottom: 0;
     left: 0;
     z-index: 100;
-    background: #ffffff;
-    border-radius: 1.25rem 1.25rem 0px 0px;
-    box-shadow: 0px -0.4375rem 1.25rem rgba(0, 0, 0, 0.07);
+    background: #fff;
+    border-radius: 1.25rem 1.25rem 0 0;
+    box-shadow: 0 -0.4375rem 1.25rem rgb(0 0 0 / 7%);
   }
 
   .nav-enter-active,
@@ -68,20 +68,17 @@
 
   .link {
     display: flex;
-
     flex: 1;
     flex-direction: column;
     gap: 0.5625rem;
     align-items: center;
     min-width: 70px;
-    font-family: 'Mont', Arial, Helvetica, sans-serif;
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
+    font-family: Mont, Arial, Helvetica, sans-serif;
     font-size: 0.625rem;
     font-weight: 600;
     color: var(--gray-color-2);
-
-    padding-top: 0.875rem;
-    padding-bottom: 0.875rem;
-
     text-decoration: none;
 
     &:deep(svg) {

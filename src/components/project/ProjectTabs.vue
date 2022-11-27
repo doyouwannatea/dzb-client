@@ -31,7 +31,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .wrapper {
     display: flex;
@@ -43,37 +43,35 @@
     justify-content: center;
     padding: 1rem 3rem;
     color: var(--text-color);
+    text-align: center;
     text-decoration: none;
     text-transform: uppercase;
-    text-align: center;
 
     @media (max-width: $mobile-s) {
-      padding: 1rem 0.5rem;
       flex: 1;
+      padding: 1rem 0.5rem;
     }
   }
 
   .project-tab.router-link-exact-active {
     position: relative;
-    background: #ffffff;
+    background: #fff;
     border-radius: 0.625rem 0.625rem 0 0;
-    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
-  }
+    box-shadow: 0 0 0.3125rem rgb(0 0 0 / 18%);
 
-  .project-tab.router-link-exact-active::before {
-    position: absolute;
-    bottom: -0.3125rem;
-    left: 0;
-    width: 100%;
-    height: 0.4rem;
-    content: '';
-    background-color: #fff;
-    border-radius: 0.625rem;
-  }
+    &::before {
+      position: absolute;
+      bottom: -0.3125rem;
+      left: 0;
+      width: 100%;
+      height: 0.4rem;
+      content: '';
+      background-color: #fff;
+      border-radius: 0.625rem;
+    }
 
-  .project-tab.router-link-exact-active {
-    &:first-child:after,
-    &:last-child:after {
+    &:first-child::after,
+    &:last-child::after {
       position: absolute;
       bottom: -0.5625rem;
       width: 0.3125rem;
@@ -82,11 +80,11 @@
       background-color: #fff;
     }
 
-    &:first-child:after {
+    &:first-child::after {
       left: 0;
     }
 
-    &:last-child:after {
+    &:last-child::after {
       right: 0;
     }
   }

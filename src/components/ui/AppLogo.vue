@@ -8,7 +8,7 @@
 </template>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .logo {
     --width: 3.125rem;
@@ -17,8 +17,7 @@
     display: flex;
     gap: 1.25rem;
     align-items: center;
-
-    font-family: 'Geometria', Arial, Helvetica, sans-serif;
+    font-family: Geometria, Arial, Helvetica, sans-serif;
     font-size: 1.4375rem;
     font-weight: bold;
     line-height: 1em;
@@ -30,8 +29,8 @@
       --width: 1.875rem;
       --height: 1.875rem;
 
-      font-size: 1rem;
       gap: 0.75rem;
+      font-size: 1rem;
     }
   }
 

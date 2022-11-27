@@ -119,10 +119,10 @@
 
   .status-wrapper {
     display: flex;
+    justify-content: space-between;
     padding-bottom: 1.25rem;
     margin-bottom: 1.25rem;
     border-bottom: 1px solid var(--gray-color-1);
-    justify-content: space-between;
   }
 
   .status {

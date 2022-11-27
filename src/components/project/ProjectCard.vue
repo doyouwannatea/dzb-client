@@ -84,7 +84,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .card {
     --border-left-color: var(--accent-color-1);
@@ -92,10 +92,10 @@
     width: 100%;
     padding-top: 1.375rem;
     padding-bottom: 1.375rem;
-    background: #ffffff;
+    background: #fff;
     border-left: 1.25rem solid var(--border-left-color);
     border-radius: 0.625rem;
-    box-shadow: 0px 0px 0.3125rem rgba(0, 0, 0, 0.18);
+    box-shadow: 0 0 0.3125rem rgb(0 0 0 / 18%);
 
     @media (max-width: $mobile-s) {
       border-left: none;
@@ -121,9 +121,9 @@
     justify-content: space-between;
 
     @media (max-width: $mobile-s) {
-      align-items: initial;
-      gap: 18px;
       flex-direction: column;
+      gap: 18px;
+      align-items: initial;
     }
   }
 
@@ -143,17 +143,17 @@
 
     @media (max-width: $mobile-s) {
       flex-direction: column;
-      margin-left: 0;
-      align-self: initial;
       align-items: initial;
+      align-self: initial;
+      margin-left: 0;
     }
   }
 
   .info {
     &--mobile-s {
       display: none;
-      grid-column: 1;
       grid-row: 4;
+      grid-column: 1;
       margin-top: 0;
 
       @media (max-width: $mobile-s) {
@@ -186,9 +186,11 @@
     line-height: 1.9375rem;
     color: #4f5569;
     text-decoration: none;
+
     &:hover {
       text-decoration: underline;
     }
+
     &:focus-visible {
       text-decoration: underline;
     }
@@ -208,20 +210,21 @@
     &:nth-child(3) {
       grid-row: 2;
     }
+
     &:nth-child(4) {
       grid-row: 3;
     }
   }
 
   .status {
-    white-space: nowrap;
     align-self: flex-start;
     justify-self: flex-end;
+    white-space: nowrap;
 
     @media (max-width: $mobile-s) {
       grid-column: 2;
-      padding-left: 1rem;
       padding-right: 1rem;
+      padding-left: 1rem;
     }
   }
 
@@ -241,6 +244,7 @@
     color: var(--text-color);
     list-style: none;
   }
+
   .list-item:not(:last-child) {
     margin-bottom: 1.0625rem;
   }

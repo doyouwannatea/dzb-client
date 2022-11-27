@@ -90,6 +90,7 @@
   .uppercase {
     text-transform: uppercase;
   }
+
   .lowercase {
     text-transform: lowercase;
   }

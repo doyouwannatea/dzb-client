@@ -23,6 +23,7 @@
   .nav {
     color: var(--text-color);
   }
+
   .nav-list {
     z-index: 1;
     display: flex;
@@ -42,7 +43,6 @@
     justify-content: center;
     height: 100%;
     padding-right: 1.9em;
-
     padding-left: 1.9em;
     font-family: inherit;
     font-size: 1rem;
@@ -51,7 +51,6 @@
     color: inherit;
     text-decoration: none;
     text-transform: uppercase;
-
     border-bottom: 0.25rem solid transparent;
   }
 

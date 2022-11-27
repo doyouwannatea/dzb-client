@@ -51,6 +51,7 @@
   .gap-m {
     row-gap: 1.0625rem;
   }
+
   .gap-l {
     row-gap: 2.8125rem;
   }

@@ -51,6 +51,6 @@
   }
 
   .icon-path {
-    stroke: currentColor;
+    stroke: currentcolor;
   }
 </style>

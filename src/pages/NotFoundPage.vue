@@ -209,9 +209,9 @@
         </svg>
       </div>
       <div class="column">
-        <span class="bigText">404</span>
-        <h1 class="mediumText">Страница не найдена</h1>
-        <p class="smallText">
+        <span class="big-text">404</span>
+        <h1 class="medium-text">Страница не найдена</h1>
+        <p class="small-text">
           Возможно, она была перемещена, или вы, просто, неверно указали адрес
           страницы.
         </p>
@@ -241,13 +241,13 @@
 </style>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .row {
-    margin-top: 7rem;
     display: flex;
-    justify-content: space-evenly;
     gap: 6.25rem;
+    justify-content: space-evenly;
+    margin-top: 7rem;
 
     @media (max-width: $mobile-s) {
       flex-direction: column;
@@ -260,13 +260,13 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    max-width: 29.625rem;
     min-width: 18.75rem;
+    max-width: 29.625rem;
 
     @media (max-width: $mobile-s) {
-      text-align: center;
       align-items: center;
       max-width: initial;
+      text-align: center;
 
       &:first-child {
         display: none;
@@ -274,19 +274,20 @@
     }
   }
 
-  .bigText {
+  .big-text {
     font-size: 6rem;
     font-style: normal;
     font-weight: 800;
     line-height: 7.6875rem;
     color: var(--accent-color-1);
   }
+
   .img {
     width: 26.25rem;
     height: 28.75rem;
   }
 
-  .mediumText {
+  .medium-text {
     font-size: 2rem;
     font-style: normal;
     font-weight: 700;
@@ -294,7 +295,7 @@
     color: var(--accent-color-1);
   }
 
-  .smallText {
+  .small-text {
     padding-top: 2.125rem;
     padding-bottom: 2.125rem;
     font-size: 1.125rem;

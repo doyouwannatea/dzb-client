@@ -90,7 +90,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .header {
     margin-top: 4.75rem;
@@ -101,74 +101,84 @@
       margin-bottom: 36px;
     }
   }
+
   .row {
-    flex-wrap: wrap;
     display: flex;
+    flex-wrap: wrap;
     gap: 2.75rem;
 
     & > * {
       flex: 1 12.5rem;
     }
   }
+
   .contact-content {
     width: 100%;
   }
+
   .contact-content h2 {
-    font-weight: 600;
+    margin-bottom: 1.7525rem;
     font-size: 1.5rem;
+    font-weight: 600;
     line-height: 1.9375rem;
     color: var(--gray-color-2);
-    margin-bottom: 1.7525rem;
 
     @media (max-width: $mobile-s) {
-      font-size: 16px;
       margin-bottom: 7px;
+      font-size: 16px;
     }
   }
+
   .contact-content p {
-    font-weight: normal;
+    margin-bottom: 1.0531rem;
     font-size: 1.25rem;
+    font-weight: normal;
     line-height: 1.625rem;
     color: var(--text-color);
-    margin-bottom: 1.0531rem;
 
     @media (max-width: $mobile-s) {
       font-size: 16px;
     }
   }
+
   .link {
-    font-weight: normal;
+    display: block;
+    margin-bottom: 1.0531rem;
     font-size: 1.25rem;
+    font-weight: normal;
     line-height: 1.625rem;
     color: var(--text-color);
-    margin-bottom: 1.0531rem;
-    display: block;
     text-decoration: none;
   }
+
   .link:hover {
     text-decoration: underline;
   }
+
   .contact-content-block {
     display: inline-block;
     margin-right: 1.9375rem;
   }
+
   .contact-content-block h3 {
     margin-bottom: 8px;
-    font-weight: 600;
     font-size: 1.25rem;
+    font-weight: 600;
     line-height: 1.625rem;
     color: var(--text-color);
   }
+
   .contact-content-block p {
     margin: 0;
   }
+
   .map {
     width: 100%;
     height: 60vh;
     min-height: 12.5rem;
     margin-top: 3.125rem;
+    background-color: var(--gray-color-1);
     border: none;
     border-radius: 0.625rem;
-    background-color: var(--gray-color-1);
   }
 </style>

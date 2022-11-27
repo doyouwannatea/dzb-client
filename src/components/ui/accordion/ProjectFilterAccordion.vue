@@ -31,6 +31,7 @@
     color: var(--text-color);
     cursor: pointer;
   }
+
   .accordion:deep(.title:hover) {
     color: var(--accent-color-1);
   }

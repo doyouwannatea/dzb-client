@@ -24,20 +24,20 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .info {
     display: flex;
-    column-gap: 1.375rem;
     row-gap: 0.375rem;
+    column-gap: 1.375rem;
     justify-content: flex-end;
     margin-top: 0.625rem;
     font-size: 1.125rem;
     line-height: 1.4375rem;
 
     @media (max-width: $mobile-s) {
-      justify-content: flex-start;
       flex-wrap: wrap;
+      justify-content: flex-start;
     }
   }
 

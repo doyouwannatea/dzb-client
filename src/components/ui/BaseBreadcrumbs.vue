@@ -39,7 +39,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .breadcrumbs {
     display: flex;
@@ -52,25 +52,26 @@
   }
 
   .breadcrumbs-item {
-    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    font-family: Montserrat, Arial, Helvetica, sans-serif;
     font-size: 0.875rem;
     font-weight: 400;
     line-height: normal;
-
     color: #7b7b7b;
 
     @media (max-width: $mobile-s) {
-      white-space: nowrap;
-      text-overflow: ellipsis;
       overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
+
   .breadcrumbs-item:not(:last-child)::after {
     margin-right: 0.375rem;
     margin-left: 0.375rem;
     color: var(--text-color);
     content: '/';
   }
+
   .breadcrumbs-link {
     padding: 0;
     color: var(--text-color);
@@ -78,6 +79,7 @@
     cursor: pointer;
     border: 0;
   }
+
   .breadcrumbs-link:hover {
     text-decoration: underline;
   }

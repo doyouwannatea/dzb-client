@@ -68,9 +68,11 @@
       color: var(--text-color);
       background-color: #eef9f2;
     }
+
     &:deep(td:nth-child(1)) {
       width: 6%;
     }
+
     &:deep(td:nth-child(2)) {
       font-weight: 800;
     }

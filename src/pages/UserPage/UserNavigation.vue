@@ -33,26 +33,24 @@
 <style lang="scss" scoped>
   .list {
     padding: 0 1.375rem;
-    background: #ffffff;
+    background: #fff;
     border: 1px solid var(--gray-color-1);
     border-radius: 0.625rem;
 
     &.mobile {
-      border: none;
-      border-radius: 0;
-
-      display: flex;
-      overflow-x: auto;
-      margin-top: -2px;
       position: sticky;
       top: 0;
       z-index: 10;
+      display: flex;
       gap: 1rem;
-      margin-left: calc(var(--side-padding) * -1);
-      margin-right: calc(var(--side-padding) * -1);
-
-      box-shadow: 0px 0.25rem 0.625rem rgba(0, 0, 0, 0.07);
       padding-bottom: 0.625rem;
+      margin-top: -2px;
+      margin-right: calc(var(--side-padding) * -1);
+      margin-left: calc(var(--side-padding) * -1);
+      overflow-x: auto;
+      border: none;
+      border-radius: 0;
+      box-shadow: 0 0.25rem 0.625rem rgb(0 0 0 / 7%);
     }
   }
 
@@ -88,10 +86,10 @@
     border: none;
 
     &.mobile {
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      color: var(--gray-color-2);
       padding: 1rem;
+      font-size: 0.9rem;
+      color: var(--gray-color-2);
+      text-transform: uppercase;
     }
   }
 

@@ -63,7 +63,7 @@
   .radio:checked {
     background-color: var(--accent-color-1);
     border-color: var(--accent-color-1);
-    box-shadow: inset 0 0 0px 0.1875rem #fff;
+    box-shadow: inset 0 0 0 0.1875rem #fff;
   }
 
   .label {

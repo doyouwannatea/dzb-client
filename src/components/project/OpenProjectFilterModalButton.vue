@@ -30,26 +30,26 @@
 
 <style lang="scss" scoped>
   .open-project-filter-btn {
-    font-family: 'Mont', Arial, Helvetica, sans-serif;
-    font-weight: 500;
-    font-size: 0.875rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    border-radius: 0.3125rem;
     padding: 0.3em 0.5em;
+    font-family: Mont, Arial, Helvetica, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    border-radius: 0.3125rem;
 
     &:hover,
     &:focus-visible {
-      background-color: rgba(0, 0, 0, 0.03);
+      background-color: rgb(0 0 0 / 3%);
     }
 
     &:active {
-      background-color: rgba(0, 0, 0, 0.05);
+      background-color: rgb(0 0 0 / 5%);
     }
 
     & > svg {

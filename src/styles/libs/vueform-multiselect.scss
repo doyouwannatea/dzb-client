@@ -1,4 +1,4 @@
-@import '../../../node_modules/@vueform/multiselect/themes/default.scss';
+@import '../../../node_modules/@vueform/multiselect/themes/default';
 
 .multiselect {
   --ms-bg: #f9f9f9;
@@ -8,6 +8,7 @@
   --ms-radius: 0.3125rem;
   --ms-option-font-size: 1.125rem;
   --ms-font-size: 1.125rem;
+
   min-height: 3.5625rem;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
@@ -15,11 +16,6 @@
 
 .multiselect.is-active {
   box-shadow: none;
-}
-
-.multiselect-tag {
-  overflow-wrap: anywhere;
-  white-space: normal;
 }
 
 .multiselect-tag-remove:hover {
@@ -41,11 +37,11 @@
 
 .multiselect-tag {
   padding: 0.4375rem 1.25rem;
-
   font-size: 0.875rem;
   line-height: 1.125rem;
-
   color: var(--accent-color-1);
+  overflow-wrap: anywhere;
+  white-space: normal;
   background: #f1f4fe;
   border-radius: 1.875rem;
 }

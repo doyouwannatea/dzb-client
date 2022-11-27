@@ -229,7 +229,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .title {
     margin-bottom: 0.625rem;
@@ -280,7 +280,6 @@
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: auto 1fr;
-
     row-gap: 0.5rem;
     column-gap: 18rem;
     margin-top: 0.9375rem;

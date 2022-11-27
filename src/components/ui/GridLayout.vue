@@ -47,9 +47,9 @@
     &.mobile {
       & > :deep(*:not(:last-child)) {
         padding-right: 0;
+        padding-bottom: var(--gap);
         margin-right: 0;
         border-right: none;
-        padding-bottom: var(--gap);
         border-bottom: 1px solid var(--border-color);
       }
     }

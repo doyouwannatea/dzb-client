@@ -74,10 +74,12 @@
   td:nth-child(1) {
     width: 6%;
   }
+
   .accepted {
     color: var(--text-color);
     background-color: #eef9f2;
   }
+
   .accepted > td:nth-child(2) {
     font-weight: 800;
   }

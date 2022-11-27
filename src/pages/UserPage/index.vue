@@ -35,7 +35,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .sidebar-container {
     @media (max-width: $mobile-s) {

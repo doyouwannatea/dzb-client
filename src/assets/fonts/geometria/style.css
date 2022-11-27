@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'Geometria';
+  font-family: Geometria;
   font-style: normal;
   font-weight: 400;
   src: url('./fonts/geometria.eot'); /* IE 9 Compatibility Mode */
@@ -13,7 +13,7 @@
 }
 
 @font-face {
-  font-family: 'Geometria-Italic';
+  font-family: Geometria-Italic;
   font-style: italic;
   font-weight: 400;
   src: url('./fonts/geometria-italic.eot'); /* IE 9 Compatibility Mode */
@@ -28,7 +28,7 @@
 }
 
 @font-face {
-  font-family: 'Geometria';
+  font-family: Geometria;
   font-style: normal;
   font-weight: 700;
   src: url('./fonts/geometria-bold.eot'); /* IE 9 Compatibility Mode */
@@ -43,7 +43,7 @@
 }
 
 @font-face {
-  font-family: 'Geometria';
+  font-family: Geometria;
   font-style: italic;
   font-weight: 700;
   src: url('./fonts/geometria-bolditalic.eot'); /* IE 9 Compatibility Mode */
@@ -59,7 +59,7 @@
 }
 
 @font-face {
-  font-family: 'Geometria';
+  font-family: Geometria;
   font-style: normal;
   font-weight: 800;
   src: url('./fonts/geometria-extrabold.eot'); /* IE 9 Compatibility Mode */
@@ -74,7 +74,7 @@
 }
 
 @font-face {
-  font-family: 'Geometria';
+  font-family: Geometria;
   font-style: italic;
   font-weight: 800;
   src: url('./fonts/geometria-extrabolditalic.eot'); /* IE 9 Compatibility Mode */
@@ -91,7 +91,7 @@
 }
 
 @font-face {
-  font-family: 'Geometria';
+  font-family: Geometria;
   font-style: normal;
   font-weight: 600;
   src: url('./fonts/geometria-medium.eot'); /* IE 9 Compatibility Mode */
@@ -106,7 +106,7 @@
 }
 
 @font-face {
-  font-family: 'Geometria';
+  font-family: Geometria;
   font-style: italic;
   font-weight: 600;
   src: url('./fonts/geometria-mediumitalic.eot'); /* IE 9 Compatibility Mode */

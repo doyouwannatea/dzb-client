@@ -50,7 +50,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints.scss';
+  @import '@styles/breakpoints';
 
   .delete-participation-modal {
     text-align: center;
@@ -65,6 +65,7 @@
       padding: 0;
     }
   }
+
   .actions {
     display: flex;
     gap: 0.5rem;
