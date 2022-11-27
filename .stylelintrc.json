@@ -1,8 +1,18 @@
 {
   "extends": [
+    "stylelint-config-standard-scss",
     "stylelint-config-recommended-vue",
     "stylelint-config-recess-order",
+    "stylelint-config-css-modules",
     "stylelint-config-prettier"
   ],
-  "plugins": ["stylelint-order"]
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global", "deep"]
+      }
+    ]
+  }
 }

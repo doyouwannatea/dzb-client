@@ -10,20 +10,20 @@
     "serve": "vite preview",
     "type-check": "vue-tsc --noEmit",
     "prettier": "prettier --ignore-unknown --write .",
-    "stylelint": "stylelint **/*.{vue,css}",
-    "stylelint:fix": "stylelint **/*.{vue,css} --fix",
-    "eslint": "eslint **/*.{vue,ts}",
-    "eslint:fix": "eslint **/*.{vue,ts} --fix",
+    "stylelint": "stylelint **/*.{vue,css,scss}",
+    "stylelint:fix": "stylelint **/*.{vue,css,scss} --fix",
+    "eslint": "eslint **/*.{vue,ts,js}",
+    "eslint:fix": "eslint **/*.{vue,ts,js} --fix",
     "lint": "npm run prettier && npm run stylelint && npm run eslint && npm run type-check",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*": "npm run prettier",
-    "*.{vue,ts}": [
+    "*.{vue,ts,js}": [
       "npm run eslint:fix",
       "bash -c 'npm run type-check'"
     ],
-    "*.{vue,css}": "npm run stylelint:fix"
+    "*.{vue,css,scss}": "npm run stylelint:fix"
   },
   "dependencies": {
     "@babel/core": "^7.16.0",
@@ -64,9 +64,11 @@
     "prettier": "^2.3.0",
     "sass": "^1.53.0",
     "stylelint": "^14.8.2",
+    "stylelint-config-css-modules": "^4.1.0",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-recess-order": "^3.0.0",
     "stylelint-config-recommended-vue": "^1.4.0",
+    "stylelint-config-standard-scss": "^6.1.0",
     "stylelint-order": "^5.0.0",
     "typescript": "^4.3.2",
     "vite": "^2.3.4",
