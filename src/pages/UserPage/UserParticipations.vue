@@ -238,6 +238,7 @@
     gap: 0.5rem;
 
     @media (max-width: $mobile-s) {
+      flex-wrap: wrap;
       width: 100%;
     }
   }
