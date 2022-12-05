@@ -120,9 +120,32 @@
     }
   }
 
+  .desc {
+    grid-row: 2;
+    grid-column: 1;
+    margin-top: 0.625rem;
+    font-size: 1.125rem;
+    line-height: 150%;
+
+    @media (max-width: $mobile-s) {
+      grid-row: 3;
+      grid-column: 1 / -1;
+      margin-top: 0;
+      font-size: 1rem;
+    }
+  }
+
   .card.editable {
     cursor: grab;
     user-select: none;
+
+    .desc {
+      @media (max-width: $mobile-s) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
 
     .card-content {
       @media (max-width: $mobile-s) {
@@ -154,21 +177,6 @@
 
   a.title:hover {
     text-decoration: underline;
-  }
-
-  .desc {
-    grid-row: 2;
-    grid-column: 1;
-    margin-top: 0.625rem;
-    font-size: 1.125rem;
-    line-height: 150%;
-
-    @media (max-width: $mobile-s) {
-      grid-row: 3;
-      grid-column: 1 / -1;
-      margin-top: 0;
-      font-size: 1rem;
-    }
   }
 
   .status-text {
