@@ -67,6 +67,7 @@
       border-bottom: 1px solid #e5f1ea;
 
       @media (max-width: $mobile-s) {
+        height: 3.75rem;
         padding: 0.35rem 1rem;
       }
     }
