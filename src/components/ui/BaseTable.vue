@@ -51,6 +51,10 @@
     text-align: left;
     border-collapse: collapse;
 
+    @media (max-width: $mobile-s) {
+      font-size: 1rem;
+    }
+
     &:deep(th) {
       font-weight: 800;
       color: var(--text-color);
@@ -63,9 +67,7 @@
       border-bottom: 1px solid #e5f1ea;
 
       @media (max-width: $mobile-s) {
-        padding-right: 0.8rem;
-        padding-left: 0.8rem;
-        white-space: nowrap;
+        padding: 0.35rem 1rem;
       }
     }
 
@@ -87,7 +89,7 @@
     padding-left: 0;
 
     @media (max-width: $mobile-s) {
-      overflow-x: scroll;
+      overflow-x: auto;
     }
   }
 </style>

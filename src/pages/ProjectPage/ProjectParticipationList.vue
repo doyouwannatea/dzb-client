@@ -1,6 +1,7 @@
 <template>
   <BaseTable
     v-if="project && sortedParticipations.length > 0 && !loading && !error"
+    class="table"
     :headers="['№', 'ФИО', 'Группа', 'Приоритетность', 'Время подачи заявки']"
     :rows="tableRows"
   >
@@ -71,8 +72,17 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '@styles/breakpoints';
+
   td:nth-child(1) {
     width: 6%;
+  }
+
+  .table:deep(th:nth-child(4)) {
+    @media (max-width: $mobile-s) {
+      min-width: 5.3em;
+      word-break: break-word;
+    }
   }
 
   .accepted {
