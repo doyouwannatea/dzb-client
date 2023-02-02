@@ -17,9 +17,10 @@
           :items="[
             {
               title: 'Руководители проекта',
-              content: project?.supervisors.length
-                ? project.supervisors.join(', ')
-                : '',
+              content:
+                project?.supervisorsNames || project?.supervisors.length
+                  ? project.supervisorsNames || project.supervisors.join(', ')
+                  : '',
             },
             {
               title: 'Старт проекта',

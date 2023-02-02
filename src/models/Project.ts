@@ -35,6 +35,7 @@ export interface Project {
   state: State;
   study_result: string;
   supervisors: string[];
+  supervisorsNames: string;
   title: string;
   type: Type;
   idea: string;

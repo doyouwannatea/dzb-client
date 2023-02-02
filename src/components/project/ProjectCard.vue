@@ -8,8 +8,11 @@
         {{ project.title }}
       </RouterLink>
       <ProjectStatus class="status" :state="project.state" />
-      <div v-if="project?.supervisors.length > 0" class="subtitle">
-        {{ project.supervisors.join(', ') }}
+      <div
+        v-if="project?.supervisorsNames || project?.supervisors.length > 0"
+        class="subtitle"
+      >
+        {{ project.supervisorsNames || project.supervisors.join(', ') }}
       </div>
       <div v-if="project?.specialities.length > 0" class="subtitle">
         {{ project.specialities.map((ins) => ins.name).join(', ') }}
