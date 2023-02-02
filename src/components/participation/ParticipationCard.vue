@@ -30,7 +30,9 @@
       </div>
 
       <BaseBadge class="status">
-        <span class="status-text">{{ PriorityText[priority] }} приоритет</span>
+        <span class="status-text"
+          >{{ ParticipationPriorityText[priority] }} приоритет</span
+        >
         <div class="priority">
           {{ repeatString('I', priority) }}
         </div>
@@ -74,8 +76,11 @@
 
 <script setup lang="ts">
   import { repeatString } from '@/helpers/string';
-  import { Participation, Priority } from '@/models/Participation';
-  import { PriorityText } from '@/models/Participation';
+  import {
+    Participation,
+    ParticipationPriority,
+    ParticipationPriorityText,
+  } from '@/models/Participation';
   import { Project } from '@/models/Project';
   import { RouteNames } from '@/router/types/route-names';
   import { RouterLink } from 'vue-router';
@@ -86,7 +91,7 @@
 
   type Props = {
     editable: boolean;
-    priority: Priority;
+    priority: ParticipationPriority;
     participation?: Participation;
     project?: Project;
   };

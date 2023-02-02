@@ -1,6 +1,6 @@
 <template>
   <BaseTable
-    v-if="project && sortedParticipations.length > 0 && !loading && !error"
+    v-if="project && clearedParticipations.length > 0 && !loading && !error"
     class="table"
     :headers="['№', 'ФИО', 'Группа', 'Приоритетность', 'Время подачи заявки']"
     :rows="tableRows"
@@ -27,7 +27,7 @@
   import { storeToRefs } from 'pinia';
   import { DateTime } from 'luxon';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { Participation } from '@/models/Participation';
+  import { Participation, ParticipationState } from '@/models/Participation';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import ProjectParticipationListStub from './ProjectParticipationListStub.vue';
@@ -49,14 +49,21 @@
     );
   }
 
-  const sortedParticipations = computed<Participation[]>(() => {
-    const participations = project?.value?.participations;
+  const clearedParticipations = computed<Participation[]>(() => {
+    let participations = project?.value?.participations;
     if (!participations) return [];
+    // не надо отображать архивные и отклонённые заявки
+    participations = participations.filter(
+      ({ state_id }) =>
+        state_id !== ParticipationState.Archived &&
+        state_id !== ParticipationState.Rejected,
+    );
+    // сортировка по приоритету
     return sortParticipations(participations);
   });
 
   const tableRows = computed<RowData[]>(() =>
-    sortedParticipations.value.map(
+    clearedParticipations.value.map(
       ({ candidate, priority, updated_at, id }, index) => ({
         key: String(id),
         data: [

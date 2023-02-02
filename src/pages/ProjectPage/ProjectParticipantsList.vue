@@ -21,7 +21,7 @@
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { compareString } from '@/helpers/string';
   import { Candidate } from '@/models/Candidate';
-  import { StateID } from '@/models/ProjectState';
+  import { ProjectStateID } from '@/models/ProjectState';
   import { RouteNames } from '@/router/types/route-names';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
@@ -36,7 +36,7 @@
     () => project?.value?.state.id,
     (stateId) => {
       if (!stateId) return;
-      if (stateId === StateID.RecruitingState) {
+      if (stateId === ProjectStateID.RecruitingState) {
         router.replace({
           name: RouteNames.PROJECT_DETAILS,
           params: { id: router.currentRoute.value.params.id },

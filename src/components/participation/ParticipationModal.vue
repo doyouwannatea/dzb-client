@@ -86,11 +86,12 @@
           <BaseRadioButton
             v-model="priorityValue"
             class="radio-label"
-            :value="Priority.High"
+            :value="ParticipationPriority.High"
             :disabled="highSelected"
           >
-            {{ Priority.High }}
-            ({{ PriorityText[Priority.High] }} приоритет)
+            {{ ParticipationPriority.High }}
+            ({{ ParticipationPriorityText[ParticipationPriority.High] }}
+            приоритет)
             <template v-if="highSelected">
               <br />
               *уже выбран на другой проект
@@ -102,11 +103,12 @@
           <BaseRadioButton
             v-model="priorityValue"
             class="radio-label"
-            :value="Priority.Medium"
+            :value="ParticipationPriority.Medium"
             :disabled="mediumSelected"
           >
-            {{ Priority.Medium }}
-            ({{ PriorityText[Priority.Medium] }} приоритет)
+            {{ ParticipationPriority.Medium }}
+            ({{ ParticipationPriorityText[ParticipationPriority.Medium] }}
+            приоритет)
             <template v-if="mediumSelected">
               <br />
               *уже выбран на другой проект
@@ -118,11 +120,12 @@
           <BaseRadioButton
             v-model="priorityValue"
             class="radio-label"
-            :value="Priority.Low"
+            :value="ParticipationPriority.Low"
             :disabled="lowSelected"
           >
-            {{ Priority.Low }}
-            ({{ PriorityText[Priority.Low] }} приоритет)
+            {{ ParticipationPriority.Low }}
+            ({{ ParticipationPriorityText[ParticipationPriority.Low] }}
+            приоритет)
             <template v-if="lowSelected">
               <br />
               *уже выбран на другой проект
@@ -147,7 +150,10 @@
 <script setup lang="ts">
   import { ref, watch } from 'vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { PriorityText, Priority } from '@/models/Participation';
+  import {
+    ParticipationPriorityText,
+    ParticipationPriority,
+  } from '@/models/Participation';
   import checkedIconUrl from '@/assets/icons/checked.svg?url';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
@@ -164,7 +170,7 @@
   const participationsStore = useParticipationsStore();
   const modalsStore = useModalsStore();
 
-  const priorityValue = ref<Priority>();
+  const priorityValue = ref<ParticipationPriority>();
   const highSelected = ref(false);
   const mediumSelected = ref(false);
   const lowSelected = ref(false);
@@ -199,11 +205,11 @@
       }
 
       if (!highSelected.value) {
-        priorityValue.value = Priority.High;
+        priorityValue.value = ParticipationPriority.High;
       } else if (!mediumSelected.value) {
-        priorityValue.value = Priority.Medium;
+        priorityValue.value = ParticipationPriority.Medium;
       } else if (!lowSelected.value) {
-        priorityValue.value = Priority.Low;
+        priorityValue.value = ParticipationPriority.Low;
       }
     }
   }

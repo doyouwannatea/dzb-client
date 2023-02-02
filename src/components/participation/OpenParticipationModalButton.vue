@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
   import { Project } from '@/models/Project';
-  import { StateID } from '@/models/ProjectState';
+  import { ProjectStateID } from '@/models/ProjectState';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { computed } from 'vue';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
@@ -27,7 +27,7 @@
 
   const hideBtn = computed(
     () =>
-      props.project.state.id !== StateID.RecruitingState ||
+      props.project.state.id !== ProjectStateID.RecruitingState ||
       authStore.profileData?.is_teacher,
   );
 </script>

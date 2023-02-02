@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia';
 import { participationApi } from '@/api/ParticipationApi';
-import { Priority, ParticipationWithProject } from '@/models/Participation';
+import {
+  ParticipationPriority,
+  ParticipationWithProject,
+} from '@/models/Participation';
 import { useModalsStore } from '../modals/useModalsStore';
 import { useProjectsStore } from '../projects/useProjectsStore';
 import { state } from './state';
@@ -17,7 +20,7 @@ export const useParticipationsStore = defineStore('participations', {
     // OPEN PARTICIPATION MODAL
 
     // CREATE PATRICIPATION
-    createPatricipation(priority: Priority, projectId: number) {
+    createPatricipation(priority: ParticipationPriority, projectId: number) {
       const modalsStore = useModalsStore();
       const projectsStore = useProjectsStore();
 

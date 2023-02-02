@@ -10,7 +10,7 @@
       список заявок
     </RouterLink>
     <RouterLink
-      v-if="$props.projectState.id !== StateID.RecruitingState"
+      v-if="$props.projectState.id !== ProjectStateID.RecruitingState"
       class="project-tab"
       :to="{ name: RouteNames.PROJECT_PARTICIPANTS }"
     >
@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import { State, StateID } from '@/models/ProjectState';
+  import { State, ProjectStateID } from '@/models/ProjectState';
   import { RouteNames } from '@/router/types/route-names';
 
   interface Props {

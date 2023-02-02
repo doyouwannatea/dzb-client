@@ -1,24 +1,25 @@
 import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
+import { ParticipationState } from '../Participation';
 import { Type } from '../Project';
-import { State, StateID } from '../ProjectState';
+import { State, ProjectStateID } from '../ProjectState';
 import { candidateList, candidate } from './candidate';
 import { skills } from './project-skills';
 
 const recruitingState: State = {
   state: 'идёт набор',
-  id: StateID.RecruitingState,
+  id: ProjectStateID.RecruitingState,
 };
 const activeState: State = {
   state: 'активный',
-  id: StateID.ActiveState,
+  id: ProjectStateID.ActiveState,
 };
 const extraState: State = {
   state: 'добор',
-  id: StateID.ExtraState,
+  id: ProjectStateID.ExtraState,
 };
 const archivedState: State = {
   state: 'в архиве',
-  id: StateID.ArchivedState,
+  id: ProjectStateID.ArchivedState,
 };
 
 export const states: State[] = [
@@ -68,7 +69,7 @@ export const projectListResponse: ProjectListResponse = {
           priority: 1,
           project_id: 1,
           review: '',
-          state_id: recruitingState.id,
+          state_id: ParticipationState.Active,
         },
         {
           id: 1,
@@ -79,7 +80,7 @@ export const projectListResponse: ProjectListResponse = {
           priority: 1,
           project_id: 1,
           review: '',
-          state_id: recruitingState.id,
+          state_id: ParticipationState.Active,
         },
         {
           id: 2,
@@ -90,7 +91,7 @@ export const projectListResponse: ProjectListResponse = {
           priority: 1,
           project_id: 1,
           review: '',
-          state_id: recruitingState.id,
+          state_id: ParticipationState.Active,
         },
         {
           id: 3,
@@ -101,7 +102,7 @@ export const projectListResponse: ProjectListResponse = {
           priority: 1,
           project_id: 1,
           review: '',
-          state_id: recruitingState.id,
+          state_id: ParticipationState.Active,
         },
         {
           id: 4,
@@ -112,7 +113,7 @@ export const projectListResponse: ProjectListResponse = {
           priority: 2,
           project_id: 1,
           review: '',
-          state_id: recruitingState.id,
+          state_id: ParticipationState.Active,
         },
         {
           id: 5,
@@ -123,7 +124,7 @@ export const projectListResponse: ProjectListResponse = {
           priority: 2,
           project_id: 1,
           review: '',
-          state_id: recruitingState.id,
+          state_id: ParticipationState.Active,
         },
       ],
       participants: [candidate, candidateList[0], candidateList[1]],

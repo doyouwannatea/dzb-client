@@ -3,7 +3,10 @@ import { delayRes } from '@/helpers/promise';
 import { isSupervisor } from '@/helpers/typeCheck';
 import { participationList } from '@/models/mock/participation';
 import { projectListResponse } from '@/models/mock/project';
-import { ParticipationWithProject, Priority } from '@/models/Participation';
+import {
+  ParticipationWithProject,
+  ParticipationPriority,
+} from '@/models/Participation';
 import { AUTH_TOKEN_REQUIRED } from '@/values/error-messages';
 import { campusApi } from '../CampusApi';
 import ICampusApi from '../CampusApi/ICampusApi';
@@ -34,7 +37,7 @@ export default class ParticipationApiMock extends IParticipationApi {
 
   async updateParticipation(
     participationId: number,
-    priority: Priority,
+    priority: ParticipationPriority,
   ): Promise<void> {
     const authToken = ICampusApi.getAuthToken();
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
@@ -50,7 +53,7 @@ export default class ParticipationApiMock extends IParticipationApi {
   }
 
   async createProjectParticipation(
-    priority: Priority,
+    priority: ParticipationPriority,
     projectId: number,
   ): Promise<void> {
     // проверки на стороне клиента

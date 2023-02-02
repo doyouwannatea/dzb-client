@@ -98,7 +98,7 @@
   import { ref, watch, computed } from 'vue';
   import {
     Participation,
-    Priority,
+    ParticipationPriority,
     ALL_PRIORITIES,
     ParticipationWithProject,
   } from '@/models/Participation';
@@ -200,7 +200,7 @@
         if (item.content)
           participations.push({
             ...item.content,
-            priority: (index + 1) as Priority,
+            priority: (index + 1) as ParticipationPriority,
           });
       }
       participationsStore.updateParticipationsPriorities(participations);

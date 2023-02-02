@@ -1,4 +1,4 @@
-export const enum StateID {
+export const enum ProjectStateID {
   RecruitingState = 1,
   ActiveState = 2,
   ExtraState = 3,
@@ -6,13 +6,13 @@ export const enum StateID {
 }
 
 export interface State {
-  id: StateID;
+  id: ProjectStateID;
   state: string;
 }
 
-export const StateClass: Record<StateID, string> = {
-  [StateID.RecruitingState]: 'recruiting',
-  [StateID.ActiveState]: 'active',
-  [StateID.ExtraState]: 'extra',
-  [StateID.ArchivedState]: 'archived',
+export const StateClass: Record<ProjectStateID, string> = {
+  [ProjectStateID.RecruitingState]: 'recruiting',
+  [ProjectStateID.ActiveState]: 'active',
+  [ProjectStateID.ExtraState]: 'extra',
+  [ProjectStateID.ArchivedState]: 'archived',
 };

@@ -1,7 +1,7 @@
 import {
   Participation,
   ParticipationWithProject,
-  Priority,
+  ParticipationPriority,
 } from '@/models/Participation';
 import { baseKyInstance } from '../baseKy';
 import IParticipationApi from './IParticipationApi';
@@ -20,7 +20,7 @@ export default class ParticipationApi extends IParticipationApi {
 
   async updateParticipation(
     participationId: number,
-    priority: Priority,
+    priority: ParticipationPriority,
   ): Promise<void> {
     return baseKyInstance
       .patch(`api/participations/${participationId}`, { json: { priority } })
@@ -28,7 +28,7 @@ export default class ParticipationApi extends IParticipationApi {
   }
 
   async createProjectParticipation(
-    priority: Priority,
+    priority: ParticipationPriority,
     projectId: number,
   ): Promise<void> {
     return baseKyInstance
