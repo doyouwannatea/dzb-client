@@ -9,7 +9,8 @@
       </RouterLink>
       <AppNavigation class="navigation" />
       <DeadlineTimerNavigation
-        :deadline="new Date('2022/12/02')"
+        v-if="participationsStore.participationDeadlineDate"
+        :deadline="new Date(participationsStore.participationDeadlineDate)"
         timer-text="до конца приема заявок"
       />
       <HeaderUserActions class="actions" />
@@ -26,6 +27,9 @@
   import AppNavigation from './AppNavigation.vue';
   import HeaderUserActions from '../user/HeaderUserActions.vue';
   import DeadlineTimerNavigation from '@/components/layout/DeadlineTimerNavigation.vue';
+  import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
+
+  const participationsStore = useParticipationsStore();
 </script>
 
 <style lang="scss" scoped>

@@ -6,6 +6,7 @@ import { projectApi } from '../ProjectApi';
 
 export default abstract class IParticipationApi {
   abstract getParticipationList(): Promise<ParticipationWithProject[]>;
+  abstract getParticipationDeadline(): Promise<string>;
 
   async getParticipationsWithProjects(
     participations: Participation[],

@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, watchEffect, onUnmounted } from 'vue';
 import { Duration } from 'luxon';
 import { declOfNum } from '@/helpers/string';
 
@@ -8,6 +8,7 @@ export const useDuration = (deadline: Date) => {
   const isTimePass = ref<boolean>(false);
 
   function calcTime() {
+    isTimePass.value = false;
     const diff = deadline.getTime() - Date.now();
     if (diff <= 0) {
       isTimePass.value = true;
@@ -38,7 +39,8 @@ export const useDuration = (deadline: Date) => {
     window.clearInterval(timer.value);
   }
 
-  onMounted(() => {
+  watchEffect(() => {
+    clearTimer();
     calcTime();
     timer.value = window.setInterval(calcTime, 1000);
   });

@@ -20,7 +20,9 @@
   import UnderstandModal from './components/layout/UnderstandModal.vue';
   import { useSavedRoute } from './hooks/useSaveRoute';
   import { useGetParticipationList } from './hooks/useFetchStudentData';
+  import { useGetParticipationDeadline } from './hooks/useGetParticipationDeadline';
 
   useGetParticipationList();
+  useGetParticipationDeadline();
   useSavedRoute();
 </script>

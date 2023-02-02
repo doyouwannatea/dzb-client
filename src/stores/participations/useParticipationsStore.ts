@@ -52,6 +52,13 @@ export const useParticipationsStore = defineStore('participations', {
     },
     // DELETE PARTICIPATION
 
+    // GET PARTICIPATION DEADLINE
+    async getParticipationDeadline() {
+      this.participationDeadlineDate =
+        await participationApi.getParticipationDeadline();
+    },
+    // GET PARTICIPATION DEADLINE
+
     // ON ASYNC
     async _onAsync<T>(callback: () => Promise<T>) {
       this.loading = true;

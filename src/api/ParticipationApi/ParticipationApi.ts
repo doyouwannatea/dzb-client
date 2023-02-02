@@ -7,6 +7,18 @@ import { baseKyInstance } from '../baseKy';
 import IParticipationApi from './IParticipationApi';
 
 export default class ParticipationApi extends IParticipationApi {
+  async getParticipationDeadline(): Promise<string> {
+    try {
+      const deadline: string = await baseKyInstance
+        .get(`api/participationsDeadline`)
+        .text();
+      return deadline;
+    } catch (error) {
+      console.log(error);
+      return new Date(Date.now()).toISOString();
+    }
+  }
+
   async getParticipationList(): Promise<ParticipationWithProject[]> {
     const participations: Participation[] = await baseKyInstance
       .get(`api/participations`)

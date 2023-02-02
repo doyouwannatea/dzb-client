@@ -8,7 +8,14 @@
       <template #sidebar>
         <UserNavigation variant="desktop" />
         <DeadlineTimer
-          :deadline="new Date('2022/12/01')"
+          v-if="!participationsStore.participationDeadlineDate"
+          :deadline="new Date(Date.now())"
+          timer-text=""
+          after-timer-text="Загрузка даты конца приёма заявок на проекты..."
+        />
+        <DeadlineTimer
+          v-if="participationsStore.participationDeadlineDate"
+          :deadline="new Date(participationsStore.participationDeadlineDate)"
           timer-text="до конца приема заявок на проектное обучение"
           after-timer-text="Прием заявок на проектное обучение закончен"
         />
@@ -29,8 +36,10 @@
   import UserNavigation from './UserNavigation.vue';
   import DeadlineTimer from '@/components/layout/DeadlineTimer.vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
+  import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
 
   const isMobile = useMobileS();
+  const participationsStore = useParticipationsStore();
   useWatchAuthorization();
 </script>
 

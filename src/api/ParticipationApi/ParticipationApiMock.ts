@@ -1,5 +1,5 @@
 import { deepClone } from '@/helpers/array';
-import { delayRes } from '@/helpers/promise';
+import { delayRes, sleep } from '@/helpers/promise';
 import { isSupervisor } from '@/helpers/typeCheck';
 import { participationList } from '@/models/mock/participation';
 import { projectListResponse } from '@/models/mock/project';
@@ -13,6 +13,11 @@ import ICampusApi from '../CampusApi/ICampusApi';
 import IParticipationApi from './IParticipationApi';
 
 export default class ParticipationApiMock extends IParticipationApi {
+  async getParticipationDeadline(): Promise<string> {
+    await sleep(4000);
+    return new Date(Date.now() + 100000000).toISOString();
+  }
+
   async getParticipationList(): Promise<ParticipationWithProject[]> {
     const authToken = ICampusApi.getAuthToken();
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
