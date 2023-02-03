@@ -28,14 +28,7 @@
         <div class="stub-line"></div>
         <div class="stub-line"></div>
       </div>
-
-      <BaseBadge class="status">
-        <span class="status-text">{{ priorityText }}</span>
-        <div class="priority">
-          {{ priorityTag }}
-        </div>
-      </BaseBadge>
-
+      <ParticipationCardBadge :priority="priority" :disabled="!project" />
       <BaseButton
         v-if="editable && participation"
         class="delete-btn"
@@ -73,24 +66,18 @@
 </template>
 
 <script setup lang="ts">
-  import { intToRoman } from '@/helpers/string';
-  import {
-    Participation,
-    ParticipationPriority,
-    ParticipationPriorityText,
-  } from '@/models/Participation';
+  import { Participation, ParticipationPriority } from '@/models/Participation';
   import { Project } from '@/models/Project';
   import { RouteNames } from '@/router/types/route-names';
   import { RouterLink } from 'vue-router';
   // components
   import BasePanel from '../ui/BasePanel.vue';
-  import BaseBadge from '../ui/BaseBadge.vue';
   import BaseButton from '../ui/BaseButton.vue';
+  import ParticipationCardBadge from './ParticipationCardBadge.vue';
 
   type Props = {
     editable: boolean;
-    priorityTag: string;
-    priorityText: string;
+    priority: ParticipationPriority;
     participation?: Participation;
     project?: Project;
   };
@@ -181,56 +168,6 @@
 
   a.title:hover {
     text-decoration: underline;
-  }
-
-  .status-text {
-    margin: 0 auto;
-  }
-
-  .priority {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    justify-self: flex-end;
-    width: 2.8125rem;
-    height: 2.8125rem;
-    margin-right: -2px;
-    font-size: 1.5rem;
-
-    /* text */
-    font-weight: 600;
-    line-height: normal;
-    color: #fff;
-    text-align: center;
-    background-color: var(--accent-color-1);
-    border-radius: 50%;
-
-    @media (max-width: $mobile-s) {
-      grid-row: 2;
-    }
-  }
-
-  .stub:deep(.priority) {
-    background-color: var(--gray-color-2);
-  }
-
-  .card:deep(.status) {
-    display: flex;
-    gap: 0.9375rem;
-    align-items: center;
-    height: 2.8125rem;
-    padding: 0;
-    padding-left: 1rem;
-    color: var(--accent-color-1);
-
-    /* text */
-    white-space: nowrap;
-    border-color: var(--accent-color-1);
-  }
-
-  .stub:deep(.status) {
-    color: var(--gray-color-2);
-    border-color: var(--gray-color-2);
   }
 
   .delete-btn {

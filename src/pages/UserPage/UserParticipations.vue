@@ -34,10 +34,6 @@
               :key="element.order"
               :editable="!dragDisabled"
               :priority="index + 1"
-              :priority-text="
-              ParticipationPriorityText[(index + 1) as ParticipationPriority] + ' приоритет'
-            "
-              :priority-tag="intToRoman(index + 1)"
               :participation="element.content"
               :project="element.content?.project"
               @delete="openDeleteModal"
@@ -58,12 +54,9 @@
           <ParticipationCard
             :key="element.order"
             :editable="!dragDisabled"
-            :priority-text="
-              ParticipationPriorityText[element.content?.priority as ParticipationPriority]
-            "
-            :priority-tag="intToRoman(element.content?.priority)"
             :participation="element.content"
             :project="element.content?.project"
+            :priority="element.content?.priority"
             @delete="openDeleteModal"
           />
         </template>
@@ -132,7 +125,6 @@
     ParticipationPriority,
     ALL_PRIORITIES,
     ParticipationWithProject,
-    ParticipationPriorityText,
   } from '@/models/Participation';
   import { immutableSort } from '@/helpers/array';
   import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
@@ -146,7 +138,6 @@
   import LoadingParticipationsList from '@/pages/UserPage/LoadingParticipationsList.vue';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { intToRoman } from '@/helpers/string';
 
   type EditableListItem = {
     order: number;
