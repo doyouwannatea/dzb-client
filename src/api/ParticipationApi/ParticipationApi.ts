@@ -20,9 +20,10 @@ export default class ParticipationApi extends IParticipationApi {
   }
 
   async getParticipationList(): Promise<ParticipationWithProject[]> {
-    const participations: Participation[] = await baseKyInstance
+    let participations: Participation[] = await baseKyInstance
       .get(`api/participations`)
       .json();
+    participations = this.filterValidParticipations(participations);
     return this.getParticipationsWithProjects(participations);
   }
 

@@ -22,7 +22,7 @@ export default class ParticipationApiMock extends IParticipationApi {
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
 
     const participationsWithProjects = await this.getParticipationsWithProjects(
-      participationList,
+      this.filterValidParticipations(participationList),
     );
 
     return delayRes(deepClone(participationsWithProjects), 300);
@@ -45,13 +45,11 @@ export default class ParticipationApiMock extends IParticipationApi {
   ): Promise<void> {
     const authToken = ICampusApi.getAuthToken();
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
-    if (priority < 1) throw new Error('Priority must be > 0');
-    if (priority > 3) throw new Error('Priority must be < 4');
 
     const participation = participationList.find(
       (participation) => participation.id === participationId,
     );
-    if (!participation) throw new Error('participation not found');
+    if (!participation) throw new Error('Заявка не найдена');
     participation.priority = priority;
     return delayRes(undefined, 300);
   }
@@ -63,8 +61,8 @@ export default class ParticipationApiMock extends IParticipationApi {
     // проверки на стороне клиента
     const authToken = ICampusApi.getAuthToken();
     if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
-    if (priority < 1) throw new Error('Priority must be > 0');
-    if (priority > 3) throw new Error('Priority must be < 4');
+    if (priority < 1) throw new Error('Приоритет должен быть > 0');
+    if (priority > 3) throw new Error('Приоритет должен быть > 0 < 4');
 
     // проверки на стороне бекенда
     const project = projectListResponse.data.find(
@@ -73,7 +71,7 @@ export default class ParticipationApiMock extends IParticipationApi {
     if (!project) throw new Error('Project not found');
     for (const participation of participationList) {
       if (participation.priority === priority)
-        throw new Error('The priority has already been selected');
+        throw new Error('Такой приоритет уже выбран');
     }
 
     const candidate = await campusApi.getUserInfo();

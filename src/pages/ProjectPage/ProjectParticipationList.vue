@@ -27,7 +27,7 @@
   import { storeToRefs } from 'pinia';
   import { DateTime } from 'luxon';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { Participation, ParticipationState } from '@/models/Participation';
+  import { Participation } from '@/models/Participation';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import ProjectParticipationListStub from './ProjectParticipationListStub.vue';
@@ -52,12 +52,6 @@
   const clearedParticipations = computed<Participation[]>(() => {
     let participations = project?.value?.participations;
     if (!participations) return [];
-    // не надо отображать архивные и отклонённые заявки
-    participations = participations.filter(
-      ({ state_id }) =>
-        state_id !== ParticipationState.Archived &&
-        state_id !== ParticipationState.Rejected,
-    );
     // сортировка по приоритету
     return sortParticipations(participations);
   });
