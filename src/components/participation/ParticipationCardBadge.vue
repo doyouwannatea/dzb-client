@@ -23,16 +23,15 @@
     ParticipationPriorityText,
   } from '@/models/Participation';
   import { intToRoman } from '@/helpers/string';
+  import { participationApi } from '@/api/ParticipationApi';
 
   type Props = {
     priority: ParticipationPriority;
     disabled: boolean;
   };
   const props = withDefaults(defineProps<Props>(), { disabled: false });
-  const isAuto = computed(
-    () =>
-      props.priority === ParticipationPriority.AutoWithApplication ||
-      props.priority === ParticipationPriority.AutoWithoutApplication,
+  const isAuto = computed(() =>
+    participationApi.isAutoParticipation(props.priority),
   );
   const statusText = computed(() =>
     isAuto.value

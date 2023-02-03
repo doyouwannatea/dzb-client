@@ -1,7 +1,7 @@
-import { projectIncludesCandidateSpeciality } from '@/helpers/project';
-import { Candidate } from '@/models/Candidate';
-import { Project } from '@/models/Project';
 import { defineStore } from 'pinia';
+import Cookies from 'js-cookie';
+import { projectIncludesCandidateSpeciality } from '@/helpers/project';
+import { Project } from '@/models/Project';
 import { useAuthStore } from '../auth/useAuthStore';
 import { useParticipationsStore } from '../participations/useParticipationsStore';
 import { useProjectsStore } from '../projects/useProjectsStore';
@@ -70,6 +70,18 @@ export const useModalsStore = defineStore('modals', {
     openEditParticipationsDisabledModal() {
       this.understandModalTitle =
         'На данный момент вы не можете изменять свои заявки';
+    },
+    // OPEN EDIT DISABLE MODAL
+
+    // OPEN EDIT DISABLE MODAL
+    openAutoParticipationInfoModal() {
+      const cookieKey = 'AUTO_PARTICIPATION_INFO_MODAL_IS_SHOWN';
+      const isShown = Cookies.get(cookieKey);
+      if (isShown) return;
+      Cookies.set(cookieKey, 'true');
+      this.understandModalTitle = 'Внимание';
+      this.understandModalSubtitle =
+        'У Вас есть автоматически созданная заявка на проект, в связи с тем, что в прошлом семестре Вы не заполнили заявки на проекты через Ярмарку проектов, Вас распределили на свободный, наиболее подходящий под Вашу специальность проект. Эта заявка имеет наименьший приоритет среди остальных заявок, Вы можете изменить её приоритет или удалить.';
     },
     // OPEN EDIT DISABLE MODAL
 

@@ -138,6 +138,7 @@
   import LoadingParticipationsList from '@/pages/UserPage/LoadingParticipationsList.vue';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { participationApi } from '@/api/ParticipationApi';
 
   type EditableListItem = {
     order: number;
@@ -167,10 +168,23 @@
   const editableParticipationListRef = ref<EditableListItem[]>([]);
   const editableAutoParticipationListRef = ref<EditableListItem[]>([]);
 
-  watch(() => participationsStore.participationList, initList, {
-    deep: true,
-    immediate: true,
-  });
+  watch(
+    () => participationsStore.participationList,
+    (participationList) => {
+      initList();
+      if (
+        participationList?.find((participation) =>
+          participationApi.isAutoParticipation(participation.priority),
+        )
+      ) {
+        modalsStore.openAutoParticipationInfoModal();
+      }
+    },
+    {
+      deep: true,
+      immediate: true,
+    },
+  );
 
   function editableParticipationsWithContent(
     list: EditableListItem[],

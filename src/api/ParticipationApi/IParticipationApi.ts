@@ -1,5 +1,6 @@
 import {
   Participation,
+  ParticipationPriority,
   ParticipationState,
   ParticipationWithProject,
 } from '@/models/Participation';
@@ -46,6 +47,13 @@ export default abstract class IParticipationApi {
       ({ state_id }) =>
         state_id !== ParticipationState.Archived &&
         state_id !== ParticipationState.Rejected,
+    );
+  }
+
+  isAutoParticipation(priority: ParticipationPriority): boolean {
+    return (
+      priority === ParticipationPriority.AutoWithApplication ||
+      priority === ParticipationPriority.AutoWithoutApplication
     );
   }
 }

@@ -7,6 +7,7 @@
     <!-- MAIN CONTENT -->
     <div class="modal-content">
       <h1>{{ modalsStore.understandModalTitle }}</h1>
+      <p class="subtitle">{{ modalsStore.understandModalSubtitle }}</p>
       <div class="modal-buttons">
         <BaseButton
           case="uppercase"
@@ -44,7 +45,7 @@
   );
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .modal-content {
     text-align: center;
   }
@@ -54,5 +55,14 @@
     flex-direction: column;
     align-items: center;
     margin-top: 2.1875rem;
+  }
+
+  .subtitle {
+    margin-top: 0.75rem;
+    font-size: 1.125rem;
+
+    &:empty {
+      margin: 0;
+    }
   }
 </style>
