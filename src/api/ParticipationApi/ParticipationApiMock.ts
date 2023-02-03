@@ -14,8 +14,7 @@ import IParticipationApi from './IParticipationApi';
 
 export default class ParticipationApiMock extends IParticipationApi {
   async getParticipationDeadline(): Promise<string> {
-    await sleep(4000);
-    return new Date(Date.now() + 100000000).toISOString();
+    return delayRes(new Date(Date.now() + 100000000).toISOString(), 1000);
   }
 
   async getParticipationList(): Promise<ParticipationWithProject[]> {
