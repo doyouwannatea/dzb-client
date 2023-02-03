@@ -2,6 +2,8 @@ import { Candidate } from './Candidate';
 import { Project } from './Project';
 
 export const enum ParticipationPriority {
+  AutoWithoutApplication = 5,
+  AutoWithApplication = 4,
   Low = 3,
   Medium = 2,
   High = 1,
@@ -12,8 +14,6 @@ export const enum ParticipationState {
   Active = 2,
   Archived = 3,
   Rejected = 4,
-  AutoWithApplication = 5,
-  AutoWithoutApplication = 6,
 }
 
 export interface Participation {
@@ -35,6 +35,8 @@ export const ParticipationPriorityText: Record<ParticipationPriority, string> =
     [ParticipationPriority.High]: 'Высший',
     [ParticipationPriority.Medium]: 'Средний',
     [ParticipationPriority.Low]: 'Низкий',
+    [ParticipationPriority.AutoWithApplication]: 'Автоматически',
+    [ParticipationPriority.AutoWithoutApplication]: 'Автоматически',
   };
 
 export const ALL_PRIORITIES = [
