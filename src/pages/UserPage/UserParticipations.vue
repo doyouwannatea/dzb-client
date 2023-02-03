@@ -19,24 +19,55 @@
 
     <!-- PARTICIPATION LIST -->
     <template v-if="participationsStore.listNotEmpty">
+      <!-- <div> нужен для DnD -->
+      <div>
+        <Draggable
+          v-model="editableParticipationListRef"
+          v-bind="dragOptions"
+          tag="transition-group"
+          :disabled="dragDisabled"
+          :move="onMove"
+          :group="{ name: 'participations', put: onPutIntoEditableList }"
+        >
+          <template #item="{ element, index }">
+            <ParticipationCard
+              :key="element.order"
+              :editable="!dragDisabled"
+              :priority="index + 1"
+              :priority-text="
+              ParticipationPriorityText[(index + 1) as ParticipationPriority] + ' приоритет'
+            "
+              :priority-tag="intToRoman(index + 1)"
+              :participation="element.content"
+              :project="element.content?.project"
+              @delete="openDeleteModal"
+            />
+          </template>
+        </Draggable>
+      </div>
+
       <Draggable
-        v-model="editableParticipationList"
+        v-model="editableAutoParticipationListRef"
         v-bind="dragOptions"
         :disabled="dragDisabled"
         :move="onMove"
+        :group="{ name: 'auto-participations', pull: true }"
+        @change="onChangeAutoParticipationsList"
       >
-        <template #item="{ element, index }">
+        <template #item="{ element }">
           <ParticipationCard
             :key="element.order"
             :editable="!dragDisabled"
-            :priority="index + 1"
+            :priority-text="
+              ParticipationPriorityText[element.content?.priority as ParticipationPriority]
+            "
+            :priority-tag="intToRoman(element.content?.priority)"
             :participation="element.content"
             :project="element.content?.project"
             @delete="openDeleteModal"
           />
         </template>
       </Draggable>
-
       <footer class="footer">
         <p v-if="!dragDisabled" class="info">
           <img class="cursor-icon" :src="cursorIconUrl" alt="" />
@@ -101,6 +132,7 @@
     ParticipationPriority,
     ALL_PRIORITIES,
     ParticipationWithProject,
+    ParticipationPriorityText,
   } from '@/models/Participation';
   import { immutableSort } from '@/helpers/array';
   import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
@@ -114,6 +146,7 @@
   import LoadingParticipationsList from '@/pages/UserPage/LoadingParticipationsList.vue';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { intToRoman } from '@/helpers/string';
 
   type EditableListItem = {
     order: number;
@@ -131,7 +164,6 @@
     scrollSpeed: 20,
     ghostClass: 'ghost',
     itemKey: 'order',
-    tag: 'transition-group',
   }));
 
   const participationsStore = useParticipationsStore();
@@ -141,42 +173,80 @@
   const currentDeleteableParticipation = ref<
     ParticipationWithProject | undefined
   >(undefined);
-  const editableParticipationList = ref<EditableListItem[]>([]);
+  const editableParticipationListRef = ref<EditableListItem[]>([]);
+  const editableAutoParticipationListRef = ref<EditableListItem[]>([]);
 
-  watch(() => participationsStore.participationList, initEditableList, {
+  watch(() => participationsStore.participationList, initList, {
     deep: true,
     immediate: true,
   });
 
-  function initEditableList() {
-    if (participationsStore.participationList) {
-      editableParticipationList.value = [];
-      const existingPriorities = new Set<number>();
+  function editableParticipationsWithContent(
+    list: EditableListItem[],
+  ): EditableListItem[] {
+    return list.filter((el) => el.content);
+  }
 
-      for (const participation of participationsStore.participationList) {
-        editableParticipationList.value.push({
-          order: participation.priority,
-          content: participation,
-        });
-        existingPriorities.add(participation.priority);
-      }
+  function initList() {
+    if (!participationsStore.participationList) return;
+    const editableParticipationList = createEditableList(
+      participationsStore.participationList,
+    );
+    editableParticipationListRef.value = immutableSort(
+      editableParticipationList.filter(
+        ({ content }) =>
+          content?.priority !== ParticipationPriority.AutoWithApplication &&
+          content?.priority !== ParticipationPriority.AutoWithoutApplication,
+      ),
+      'ASC',
+      'order',
+    );
+    editableAutoParticipationListRef.value = editableParticipationList.filter(
+      ({ content }) =>
+        content?.priority === ParticipationPriority.AutoWithApplication ||
+        content?.priority === ParticipationPriority.AutoWithoutApplication,
+    );
+  }
 
-      const missingPriorities = ALL_PRIORITIES.filter(
-        (priority) => !existingPriorities.has(priority),
-      );
+  function createEditableList(
+    participationList: ParticipationWithProject[],
+  ): EditableListItem[] {
+    const editableParticipationList: EditableListItem[] = [];
+    const existingPriorities = new Set<number>();
 
-      for (const priority of missingPriorities) {
-        editableParticipationList.value.push({
-          order: priority,
-        });
-      }
-
-      editableParticipationList.value = immutableSort(
-        editableParticipationList.value,
-        'ASC',
-        'order',
-      );
+    for (const participation of participationList) {
+      editableParticipationList.push({
+        order: participation.priority,
+        content: participation,
+      });
+      existingPriorities.add(participation.priority);
     }
+
+    const missingPriorities = ALL_PRIORITIES.filter(
+      (priority) => !existingPriorities.has(priority),
+    );
+
+    for (const priority of missingPriorities) {
+      editableParticipationList.push({
+        order: priority,
+      });
+    }
+
+    return editableParticipationList;
+  }
+
+  function onPutIntoEditableList() {
+    return (
+      editableParticipationsWithContent(editableParticipationListRef.value)
+        .length < ALL_PRIORITIES.length
+    );
+  }
+
+  function onChangeAutoParticipationsList() {
+    const list = editableParticipationsWithContent(
+      editableParticipationListRef.value,
+    );
+    editableParticipationListRef.value = list;
   }
 
   function onToggleEdit() {
@@ -185,7 +255,7 @@
 
   function onCancelEdit() {
     dragDisabled.value = true;
-    initEditableList();
+    initList();
   }
 
   function onMove(event: any) {
@@ -194,13 +264,28 @@
 
   function onSave() {
     dragDisabled.value = true;
-    if (editableParticipationList.value) {
+    if (editableParticipationListRef.value) {
       const participations: ParticipationWithProject[] = [];
-      for (const [index, item] of editableParticipationList.value.entries()) {
+      // Основные заявки
+      for (const [
+        index,
+        item,
+      ] of editableParticipationListRef.value.entries()) {
         if (item.content)
           participations.push({
             ...item.content,
             priority: (index + 1) as ParticipationPriority,
+          });
+      }
+      // Автоматически сгенерированные заявки
+      for (const [
+        index,
+        item,
+      ] of editableAutoParticipationListRef.value.entries()) {
+        if (item.content)
+          participations.push({
+            ...item.content,
+            priority: item.content.priority as ParticipationPriority,
           });
       }
       participationsStore.updateParticipationsPriorities(participations);
@@ -213,7 +298,7 @@
   }
 
   function deleteParticipation(participation: Participation) {
-    if (editableParticipationList.value) {
+    if (editableParticipationListRef.value) {
       participationsStore.deleteParticipation(participation.id);
     }
   }

@@ -30,11 +30,9 @@
       </div>
 
       <BaseBadge class="status">
-        <span class="status-text"
-          >{{ ParticipationPriorityText[priority] }} приоритет</span
-        >
+        <span class="status-text">{{ priorityText }}</span>
         <div class="priority">
-          {{ repeatString('I', priority) }}
+          {{ priorityTag }}
         </div>
       </BaseBadge>
 
@@ -75,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-  import { repeatString } from '@/helpers/string';
+  import { intToRoman } from '@/helpers/string';
   import {
     Participation,
     ParticipationPriority,
@@ -91,7 +89,8 @@
 
   type Props = {
     editable: boolean;
-    priority: ParticipationPriority;
+    priorityTag: string;
+    priorityText: string;
     participation?: Participation;
     project?: Project;
   };

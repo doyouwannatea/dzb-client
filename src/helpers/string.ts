@@ -26,14 +26,6 @@ export function toString(val: unknown): string {
   return String(val);
 }
 
-export function repeatString(str: string, n: number): string {
-  let result = '';
-  for (let i = 0; i < n; i++) {
-    result += str;
-  }
-  return result;
-}
-
 export function capitalizeFirstLetter(str: string) {
   const arr = str.split(' ');
   arr[0] = arr[0].slice(0, 1).toUpperCase() + arr[0].slice(1);
@@ -44,4 +36,37 @@ export function compareString(str1: string, str2: string): number {
   if (str1 < str2) return -1;
   if (str1 > str2) return 1;
   return 0;
+}
+
+export function intToRoman(num: number): string {
+  const map: Record<string, number> = {
+    M: 1000,
+    CM: 900,
+    D: 500,
+    CD: 400,
+    C: 100,
+    XC: 90,
+    L: 50,
+    XL: 40,
+    X: 10,
+    IX: 9,
+    V: 5,
+    IV: 4,
+    I: 1,
+  };
+  let result = '';
+
+  for (const key in map) {
+    const repeatCounter = Math.floor(num / map[key]);
+
+    if (repeatCounter !== 0) {
+      result += key.repeat(repeatCounter);
+    }
+
+    num %= map[key];
+
+    if (num === 0) return result;
+  }
+
+  return result;
 }
