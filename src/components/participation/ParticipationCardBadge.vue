@@ -81,8 +81,8 @@
   }
 
   .auto-participation {
-    --border-color: var(--green-color-1);
-    --text-color: var(--green-color-1);
+    --border-color: var(--orange-color-2);
+    --text-color: var(--orange-color-2);
   }
 
   .disabled {
