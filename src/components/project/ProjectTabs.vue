@@ -4,13 +4,14 @@
       о проекте
     </RouterLink>
     <RouterLink
+      v-if="canViewParticipations(projectState.id)"
       class="project-tab"
       :to="{ name: RouteNames.PROJECT_PARTICIPATIONS }"
     >
       список заявок
     </RouterLink>
     <RouterLink
-      v-if="$props.projectState.id !== ProjectStateID.RecruitingState"
+      v-if="canViewParticipants(projectState.id)"
       class="project-tab"
       :to="{ name: RouteNames.PROJECT_PARTICIPANTS }"
     >
@@ -20,14 +21,20 @@
 </template>
 
 <script setup lang="ts">
+  import { toRefs } from 'vue';
   import { RouterLink } from 'vue-router';
-  import { State, ProjectStateID } from '@/models/ProjectState';
+  import { State } from '@/models/ProjectState';
   import { RouteNames } from '@/router/types/route-names';
+  import {
+    canViewParticipants,
+    canViewParticipations,
+  } from '@/helpers/project';
 
   interface Props {
     projectState: State;
   }
-  defineProps<Props>();
+  const props = defineProps<Props>();
+  const { projectState } = toRefs(props);
 </script>
 
 <style lang="scss" scoped>

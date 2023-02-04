@@ -23,18 +23,33 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { computed, watchEffect } from 'vue';
   import { storeToRefs } from 'pinia';
   import { DateTime } from 'luxon';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { Participation } from '@/models/Participation';
+  import { canViewParticipations } from '@/helpers/project';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import ProjectParticipationListStub from './ProjectParticipationListStub.vue';
   import BaseTable, { RowData } from '@/components/ui/BaseTable.vue';
+  import { RouteNames } from '@/router/types/route-names';
 
+  const router = useRouter();
   const projectsStore = useProjectsStore();
   const { openedProject: project, loading, error } = storeToRefs(projectsStore);
+
+  watchEffect(() => {
+    const stateId = project?.value?.state.id;
+    const projectId = project?.value?.id;
+    if (stateId && !canViewParticipations(stateId)) {
+      router.replace({
+        name: RouteNames.PROJECT_DETAILS,
+        params: { id: projectId },
+      });
+    }
+  });
 
   function formatParticipationApplicationTime(time: string) {
     const dt = DateTime.fromISO(time, { locale: 'ru-RU' });

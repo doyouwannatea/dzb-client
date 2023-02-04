@@ -15,11 +15,12 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, watch } from 'vue';
+  import { computed, watchEffect } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useRouter } from 'vue-router';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { compareString } from '@/helpers/string';
+  import { canViewParticipants } from '@/helpers/project';
   import { Candidate } from '@/models/Candidate';
   import { ProjectStateID } from '@/models/ProjectState';
   import { RouteNames } from '@/router/types/route-names';
@@ -32,19 +33,16 @@
   const projectsStore = useProjectsStore();
   const { openedProject: project, loading, error } = storeToRefs(projectsStore);
 
-  watch(
-    () => project?.value?.state.id,
-    (stateId) => {
-      if (!stateId) return;
-      if (stateId === ProjectStateID.RecruitingState) {
-        router.replace({
-          name: RouteNames.PROJECT_DETAILS,
-          params: { id: router.currentRoute.value.params.id },
-        });
-      }
-    },
-    { immediate: true },
-  );
+  watchEffect(() => {
+    const stateId = project?.value?.state.id;
+    const projectId = project?.value?.id;
+    if (stateId && !canViewParticipants(stateId)) {
+      router.replace({
+        name: RouteNames.PROJECT_DETAILS,
+        params: { id: projectId },
+      });
+    }
+  });
 
   const sortedParticipants = computed<Candidate[]>(() => {
     if (!project?.value) return [];
