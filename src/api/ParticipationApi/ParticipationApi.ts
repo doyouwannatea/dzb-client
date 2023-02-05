@@ -12,9 +12,13 @@ export default class ParticipationApi extends IParticipationApi {
       const deadline: string = await baseKyInstance
         .get(`api/participationsDeadline`)
         .text();
+      const timestamp = Date.parse(deadline);
+      if (isNaN(timestamp)) {
+        throw new Error('неправильная дата из "api/participationsDeadline"');
+      }
+
       return deadline;
     } catch (error) {
-      console.log(error);
       return new Date(Date.now()).toISOString();
     }
   }
