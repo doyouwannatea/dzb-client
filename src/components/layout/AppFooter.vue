@@ -44,10 +44,7 @@
       <section class="info-block">
         <h3 class="title info-title">Центр проектного обучения:</h3>
         <ul class="info-list">
-          <li class="info-item">
-            Аудитория:
-            <a class="link">A-305</a>
-          </li>
+          <li class="info-item">Аудитория: A-305</li>
           <li class="info-item">
             Телефон:
             <a class="link" href="tel:+73952405736">+7 (3952) 40-57-36</a>
