@@ -42,7 +42,21 @@
       <div class="divider"></div>
 
       <section class="info-block">
-        <h3 class="title info-title">Контакты администратора:</h3>
+        <h3 class="title info-title">Центр проектного обучения:</h3>
+        <ul class="info-list">
+          <li class="info-item">Аудитория: A-305</li>
+          <li class="info-item">
+            Телефон:
+            <a class="link" href="tel:+73952405736">+7 (3952) 40-57-36</a>
+          </li>
+          <li class="info-item">
+            E-mail:
+            <a class="link" href="mailto:e-project@ex.istu.edu">
+              e-project@ex.istu.edu
+            </a>
+          </li>
+        </ul>
+        <h3 class="title info-title column-devider">Техническая поддержка:</h3>
         <ul class="info-list">
           <li class="info-item">
             Телефон:
@@ -52,6 +66,12 @@
             E-mail:
             <a class="link" href="mailto:arshinskyv@istu.edu">
               arshinskyv@istu.edu
+            </a>
+          </li>
+          <li class="info-item">
+            Telegram:
+            <a class="link" href="https://t.me/vlarsh" target="_blank">
+              @vlarsh
             </a>
           </li>
         </ul>
@@ -64,9 +84,6 @@
           <li class="info-item">
             Телефон:
             <a class="link" href="tel:+73952405000">+7 (3952) 405-000</a>
-          </li>
-          <li class="info-item">
-            Факс: <a class="link" href="tel:+73952405100">+7 (3952) 405-100</a>
           </li>
           <li class="info-item">
             Справочная:
@@ -184,6 +201,10 @@
       width: 100%;
       height: 1px;
     }
+  }
+
+  .column-devider {
+    margin-top: 1.5rem;
   }
 
   /* Info block */
