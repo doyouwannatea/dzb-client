@@ -228,9 +228,9 @@
   }
 
   .icon {
-    width: 1.4rem;
-    min-width: 1.4rem;
-    height: 1.4rem;
+    width: 1.1em;
+    min-width: 1.1em;
+    height: 1.1em;
   }
 
   .contact-content h2 {
@@ -261,6 +261,7 @@
   .link {
     display: flex;
     gap: 0.75rem;
+    align-items: center;
     margin-bottom: 1.0531rem;
     font-size: 1.25rem;
     font-weight: normal;
