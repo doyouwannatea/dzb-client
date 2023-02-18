@@ -53,4 +53,8 @@
       }
     }
   }
+
+  .info-list-value {
+    white-space: pre-line;
+  }
 </style>
