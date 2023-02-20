@@ -46,7 +46,7 @@
 
   const sortedParticipants = computed<Candidate[]>(() => {
     if (!project?.value) return [];
-    const participants = project.value.participants;
+    const participants = project.value.participants || [];
     return [...participants].sort((a, b) =>
       compareString(a.fio.toLowerCase(), b.fio.toLowerCase()),
     );
