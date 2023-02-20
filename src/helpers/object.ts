@@ -1,4 +1,4 @@
-export function immutableSort<T>(
+export function immutableArraySort<T>(
   arr: T[],
   sortBy?: 'ASC' | 'DESC',
   key?: keyof T,
@@ -20,4 +20,16 @@ export function immutableSort<T>(
 
 export function deepClone<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj));
+}
+
+export function isEmptyObject(object: Record<string, unknown>): boolean {
+  return Object.values(object).every(
+    (field) =>
+      field === undefined ||
+      field === null ||
+      field === '' ||
+      (typeof field === 'number' && isNaN(field)) ||
+      (Array.isArray(field) && field.length === 0) ||
+      (typeof field === 'object' && Object.keys(field).length === 0),
+  );
 }

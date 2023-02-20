@@ -18,7 +18,7 @@ import {
   specialties,
   skills,
 } from '@/models/mock/project-skills';
-import { deepClone } from '@/helpers/array';
+import { deepClone } from '@/helpers/object';
 import { Candidate } from '@/models/Candidate';
 import { activeProjectId, archiveProjectIdList } from '@/models/mock/candidate';
 

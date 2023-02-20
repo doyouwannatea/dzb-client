@@ -1,4 +1,4 @@
-import { deepClone } from '@/helpers/array';
+import { deepClone } from '@/helpers/object';
 import { delayRes } from '@/helpers/promise';
 import { Candidate } from '@/models/Candidate';
 import { candidate } from '@/models/mock/candidate';

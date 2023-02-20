@@ -126,7 +126,7 @@
     ALL_PRIORITIES,
     ParticipationWithProject,
   } from '@/models/Participation';
-  import { immutableSort } from '@/helpers/array';
+  import { immutableArraySort } from '@/helpers/object';
   import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
   import { useMobileS } from '@/helpers/breakpoints';
   import cursorIconUrl from '@/assets/icons/cursor.svg?url';
@@ -197,7 +197,7 @@
     const editableParticipationList = createEditableList(
       participationsStore.participationList,
     );
-    editableParticipationListRef.value = immutableSort(
+    editableParticipationListRef.value = immutableArraySort(
       editableParticipationList.filter(
         ({ content }) =>
           content?.priority !== ParticipationPriority.AutoWithApplication &&
