@@ -5,7 +5,9 @@
         <slot name="title"></slot>
       </template>
       <template #content>
-        <slot name="content"></slot>
+        <div class="content">
+          <slot name="content"></slot>
+        </div>
       </template>
     </ClosableAccordion>
   </BasePanel>
@@ -19,47 +21,48 @@
 <style lang="scss" scoped>
   @import '@styles/breakpoints';
 
+  .question {
+    &:deep(.icon) {
+      position: absolute;
+      top: 50%;
+      right: 2.5rem;
+      width: 1.25rem;
+      height: 0.6875rem;
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    &:deep(.title) {
+      position: relative;
+      padding: 1.875rem;
+      padding-right: 4rem;
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 2.5rem;
+      color: var(--accent-color-1);
+      cursor: pointer;
+      border-radius: 0.625rem;
+      outline-offset: -1px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: $mobile-s) {
+        padding: 1rem;
+        padding-right: 4rem;
+        font-size: 1.2rem;
+        line-height: 2rem;
+      }
+    }
+  }
+
   .panel {
     padding: 0 !important;
     overflow: hidden;
     font-family: Mont, Arial, Helvetica, sans-serif;
   }
 
-  .question:deep(.title) {
-    position: relative;
-    padding: 1.875rem;
-    padding-right: 4rem;
-    font-size: 1.5rem;
-    font-weight: 800;
-    line-height: 2.5rem;
-    color: var(--accent-color-1);
-    cursor: pointer;
-    border-radius: 0.625rem;
-    outline-offset: -1px;
-
-    @media (max-width: $mobile-s) {
-      padding: 1rem;
-      padding-right: 4rem;
-      font-size: 1.2rem;
-      line-height: 2rem;
-    }
-  }
-
-  .question:deep(.title:hover) {
-    text-decoration: underline;
-  }
-
-  .question:deep(.icon) {
-    position: absolute;
-    top: 50%;
-    right: 2.5rem;
-    width: 1.25rem;
-    height: 0.6875rem;
-    transform: translateY(-50%) rotate(180deg);
-  }
-
-  .question:deep(.content) {
-    padding: 0;
+  .content {
     padding: 1.875rem;
     padding-top: 0;
     font-size: 1.5rem;
