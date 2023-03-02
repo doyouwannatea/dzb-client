@@ -45,12 +45,16 @@ export function isExtraState(stateId: ProjectStateID): boolean {
 export function isArchivedState(stateId: ProjectStateID): boolean {
   return stateId === ProjectStateID.ArchivedState;
 }
+export function isProcessingState(stateId: ProjectStateID): boolean {
+  return stateId === ProjectStateID.ProcessingState;
+}
 
 export function canViewParticipations(stateId: ProjectStateID): boolean {
   return (
     isRecruitingState(stateId) ||
     isActiveState(stateId) ||
-    isExtraState(stateId)
+    isExtraState(stateId) ||
+    isProcessingState(stateId)
   );
 }
 
