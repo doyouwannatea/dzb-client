@@ -40,15 +40,22 @@
 
   onMounted(() => {
     const el = contentRef.value;
-    setDropdownHeight(el);
-    mutationObserver.value = new MutationObserver(() => setDropdownHeight(el));
+    function onContentChange() {
+      if (el) {
+        setDropdownHeight(el, props.opened);
+      }
+    }
 
-    if (contentRef.value)
-      mutationObserver.value.observe(contentRef.value, {
+    onContentChange();
+    mutationObserver.value = new MutationObserver(onContentChange);
+
+    if (el) {
+      mutationObserver.value.observe(el, {
         childList: true,
         characterData: true,
         subtree: true,
       });
+    }
   });
 
   onUnmounted(() => {
@@ -63,11 +70,9 @@
     el.style.height = '0px';
   }
 
-  function setDropdownHeight(el?: HTMLElement) {
-    if (el) {
-      if (props.opened) onEnter(el);
-      else onLeave(el);
-    }
+  function setDropdownHeight(el: HTMLElement, opened: boolean) {
+    if (opened) onEnter(el);
+    else onLeave(el);
   }
 </script>
 
