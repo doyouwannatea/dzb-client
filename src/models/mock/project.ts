@@ -21,6 +21,10 @@ const archivedState: State = {
   state: 'в архиве',
   id: ProjectStateID.ArchivedState,
 };
+const processingState: State = {
+  state: 'обработка заявок',
+  id: ProjectStateID.ProcessingState,
+};
 
 export const states: State[] = [
   recruitingState,
@@ -168,7 +172,7 @@ export const projectListResponse: ProjectListResponse = {
         'Разработан набор характеристик каждого профиля, алгоритм дополнения БД недостающими характеристиками, критерии кластеризации потребителей по профилям',
       requirements: 'Работа ПО MS Office',
       skills: skills,
-      state: activeState,
+      state: processingState,
       study_result:
         'Знать: особенности потребителя энергетической продукции, причины недополучения платы за энергоуслуги. Уметь: анализировать базы данных, синтезировать информацию Владеть навыками командной работы при решении проблемных ситуаций',
       supervisors: ['Осипова Ирина Михайловна'],
