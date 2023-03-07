@@ -49,6 +49,27 @@
         </GridLayout>
       </BasePanel>
 
+      <BasePanel>
+        <ProjectHistory
+          :items="[
+            {
+              title: 'Платформа для размещения вузовских олимпиад',
+              year: '2019-2020',
+            },
+            {
+              title: 'Мобильное приложение для размещения вузовских олимпиад',
+              year: '2020-2021',
+              current: true,
+            },
+            {
+              title: 'Мобильное приложение для размещения вузовских олимпиад',
+              year: '2021-2022',
+              last: true,
+            },
+          ]"
+        />
+      </BasePanel>
+
       <!-- Panel -->
       <BasePanel>
         <!-- Information list -->
@@ -126,6 +147,7 @@
   import AppListItem from '@/components/ui/AppListItem.vue';
   import SkillList from '@/components/skill/SkillList.vue';
   import ProjectMobileDetails from './ProjectMobileDetails.vue';
+  import ProjectHistory from '@/components/ui/ProjectHistory.vue';
 
   const projectsStore = useProjectsStore();
   const { openedProject: project, loading, error } = storeToRefs(projectsStore);
