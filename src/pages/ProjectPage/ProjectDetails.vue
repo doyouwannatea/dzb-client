@@ -48,19 +48,10 @@
             <AppListItem>
               <template #title>Версии проекта</template>
               <template #default>
-                <BaseButton
-                  v-if="history && history.length > 1"
-                  class="open-project-history-button"
-                  variant="inline-link"
-                  case="default"
+                <ProjectHistoryButton
+                  :history-length="history?.length"
                   @click="showHistoryModal = true"
-                >
-                  Открыть версии <br />
-                  проекта ↗
-                </BaseButton>
-                <template v-else>
-                  На данный момент это единственная версия проекта
-                </template>
+                />
               </template>
             </AppListItem>
           </AppList>
