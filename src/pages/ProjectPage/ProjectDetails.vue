@@ -8,7 +8,14 @@
       size="m"
       @close="showHistoryModal = false"
     />
-    <section class="desktop-details">
+    <ProjectMobileDetails
+      v-if="isMobileS"
+      :project="project"
+      :show-history-modal="showHistoryModal"
+      :history="history"
+      @show-history="showHistoryModal = true"
+    />
+    <section v-else>
       <!-- Panel -->
       <BasePanel>
         <GridLayout cols="4fr 4fr 2fr">
@@ -18,9 +25,7 @@
               {
                 title: 'Руководители проекта',
                 content:
-                  project?.supervisorsNames || project?.supervisors.length
-                    ? project.supervisorsNames || project.supervisors.join(', ')
-                    : '',
+                  project.supervisorsNames || project.supervisors.join(', '),
               },
               {
                 title: 'Старт проекта',
@@ -57,9 +62,9 @@
           </AppList>
 
           <div>
-            <h2 class="info-title">Статус проекта</h2>
+            <p class="info-title">Статус проекта</p>
             <ProjectStatus class="badge mt-2" :state="project.state" />
-            <h2 class="info-title mt-4">Максимальное количество студентов</h2>
+            <p class="info-title mt-4">Максимальное количество студентов</p>
             <ProjectTeamCounter class="mt-2" :total="project.places" />
             <OpenParticipationModalButton class="mt-4" :project="project" />
             <OpenFeedbackModalButton class="mt-4" :project="project" />
@@ -125,7 +130,6 @@
       </BasePanel>
     </section>
   </template>
-  <ProjectMobileDetails class="mobile-details" />
 </template>
 
 <script setup lang="ts">
@@ -133,6 +137,7 @@
   import { storeToRefs } from 'pinia';
   import { DifficultyText } from '@/models/ProjectDifficulty';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { useMobileS } from '@/helpers/breakpoints';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import GridLayout from '@/components/ui/GridLayout.vue';
@@ -145,8 +150,9 @@
   import SkillList from '@/components/skill/SkillList.vue';
   import ProjectMobileDetails from './ProjectMobileDetails.vue';
   import ProjectHistoryModal from '@/components/project/ProjectHistoryModal.vue';
-  import BaseButton from '@/components/ui/BaseButton.vue';
+  import ProjectHistoryButton from './ProjectHistoryButton.vue';
 
+  const isMobileS = useMobileS();
   const projectsStore = useProjectsStore();
   const showHistoryModal = ref(false);
   const {
@@ -166,20 +172,6 @@
 <style lang="scss" scoped>
   @import '@styles/breakpoints';
 
-  .desktop-details {
-    @media (max-width: $mobile-s) {
-      display: none;
-    }
-  }
-
-  .mobile-details {
-    display: none;
-
-    @media (max-width: $mobile-s) {
-      display: block;
-    }
-  }
-
   .badge {
     width: max-content;
   }
@@ -188,11 +180,5 @@
     font-size: inherit;
     font-weight: 600;
     line-height: normal;
-  }
-
-  .open-project-history-button {
-    font-size: inherit;
-    text-align: left;
-    white-space: normal;
   }
 </style>
