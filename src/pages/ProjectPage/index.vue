@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-  import { watchEffect } from 'vue';
+  import { watch } from 'vue';
   import { storeToRefs } from 'pinia';
   import { RouterView, useRoute } from 'vue-router';
   import { RouteNames } from '@/router/types/route-names';
@@ -52,11 +52,15 @@
   const projectsStore = useProjectsStore();
   const { loading, error, openedProject: project } = storeToRefs(projectsStore);
 
-  watchEffect(() => {
-    if (route.params.id) {
-      projectsStore.getSingleProject(Number(route.params.id));
-    }
-  });
+  watch(
+    () => route.params.id,
+    (projectId) => {
+      if (projectId) {
+        projectsStore.getSingleProject(Number(projectId));
+      }
+    },
+    { immediate: true },
+  );
 </script>
 
 <style lang="scss" scoped>
