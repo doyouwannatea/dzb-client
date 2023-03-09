@@ -19,7 +19,7 @@
 
   export type Variant = 'outlined' | 'link' | 'inline-link' | 'primary';
   type Is = 'button' | 'router-link' | 'a';
-  type Case = 'uppercase' | 'lowercase';
+  type Case = 'uppercase' | 'lowercase' | 'default';
   type Color = 'red' | 'white';
 
   type Props = {
