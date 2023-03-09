@@ -11,6 +11,7 @@ interface State {
   userProjectList?: Project[];
   projectCount: number;
   openedProject?: Project;
+  openedProjectHistory?: Project[];
   filters: ProjectFilters;
   additionalProjectData: AdditionalProjectData;
   projectProgress: number;
@@ -34,6 +35,7 @@ export const state = (): State => ({
   userProjectList: undefined,
   projectCount: 0,
   openedProject: undefined,
+  openedProjectHistory: undefined,
   filters: { ...DEFAULT_FILTERS },
   additionalProjectData: {
     states: undefined,

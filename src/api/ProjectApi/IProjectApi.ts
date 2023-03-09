@@ -30,6 +30,7 @@ export default abstract class IProjectApi {
   abstract getAllProjectTypes(): Promise<Type[]>;
   abstract getAllProjectStates(): Promise<State[]>;
   abstract getProjectParticipants(projectId: number): Promise<Candidate[]>;
+  abstract getProjectHistory(projectId: number): Promise<Project[]>;
   abstract getActiveUserProject(): Promise<Project | undefined>;
   abstract getArhiveUserProjects(): Promise<Project[]>;
 }

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { checkUserRole } from './guards/checkUserRole';
 import { fetchUserData } from './guards/fetchUserData';
 import { requiresAuth } from './guards/requiresAuth';
-import { scrollBehavior } from './guards/scrollBehavior';
+import { scrollBehavior } from './utils/scrollBehavior';
 import { routes } from './routes';
 
 export const router = createRouter({

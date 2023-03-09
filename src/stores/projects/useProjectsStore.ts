@@ -67,8 +67,14 @@ export const useProjectsStore = () => {
       // GET SINGLE PROJECT
       async getSingleProject(projectId: number) {
         this.openedProject = undefined;
+        this.openedProjectHistory = undefined;
         return this._onAsync(async () => {
-          this.openedProject = await projectApi.getSingleProject(projectId);
+          const [openedProject, openedProjectHistory] = await Promise.all([
+            projectApi.getSingleProject(projectId),
+            projectApi.getProjectHistory(projectId),
+          ]);
+          this.openedProject = openedProject;
+          this.openedProjectHistory = openedProjectHistory;
         });
       },
       // GET SINGLE PROJECT

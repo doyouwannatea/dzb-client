@@ -1,6 +1,21 @@
 <template>
   <template v-if="project && !loading && !error">
-    <section class="desktop-details">
+    <ProjectHistoryModal
+      v-if="history"
+      :current-project-id="project.id"
+      :is-show="showHistoryModal"
+      :project-list="history"
+      size="m"
+      @close="showHistoryModal = false"
+    />
+    <ProjectMobileDetails
+      v-if="isMobileS"
+      :project="project"
+      :show-history-modal="showHistoryModal"
+      :history="history"
+      @show-history="showHistoryModal = true"
+    />
+    <section v-else>
       <!-- Panel -->
       <BasePanel>
         <GridLayout cols="4fr 4fr 2fr">
@@ -10,9 +25,7 @@
               {
                 title: 'Руководители проекта',
                 content:
-                  project?.supervisorsNames || project?.supervisors.length
-                    ? project.supervisorsNames || project.supervisors.join(', ')
-                    : '',
+                  project.supervisorsNames || project.supervisors.join(', '),
               },
               {
                 title: 'Старт проекта',
@@ -29,19 +42,29 @@
             ]"
           />
           <!-- Information list -->
-          <AppList
-            :items="[
-              {
-                title: 'Цель проекта',
-                content: project.goal,
-              },
-            ]"
-          />
+          <AppList>
+            <AppListItem>
+              <template #title>Цель проекта</template>
+              <template #default>
+                {{ project.goal }}
+              </template>
+            </AppListItem>
+
+            <AppListItem>
+              <template #title>Версии проекта</template>
+              <template #default>
+                <ProjectHistoryButton
+                  :history-length="history?.length"
+                  @click="showHistoryModal = true"
+                />
+              </template>
+            </AppListItem>
+          </AppList>
 
           <div>
-            <h2 class="info-title">Статус проекта</h2>
+            <p class="info-title">Статус проекта</p>
             <ProjectStatus class="badge mt-2" :state="project.state" />
-            <h2 class="info-title mt-4">Максимальное количество студентов</h2>
+            <p class="info-title mt-4">Максимальное количество студентов</p>
             <ProjectTeamCounter class="mt-2" :total="project.places" />
             <OpenParticipationModalButton class="mt-4" :project="project" />
             <OpenFeedbackModalButton class="mt-4" :project="project" />
@@ -106,15 +129,15 @@
         </AppList>
       </BasePanel>
     </section>
-
-    <ProjectMobileDetails class="mobile-details" />
   </template>
 </template>
 
 <script setup lang="ts">
+  import { ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
   import { DifficultyText } from '@/models/ProjectDifficulty';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { useMobileS } from '@/helpers/breakpoints';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import GridLayout from '@/components/ui/GridLayout.vue';
@@ -126,27 +149,28 @@
   import AppListItem from '@/components/ui/AppListItem.vue';
   import SkillList from '@/components/skill/SkillList.vue';
   import ProjectMobileDetails from './ProjectMobileDetails.vue';
+  import ProjectHistoryModal from '@/components/project/ProjectHistoryModal.vue';
+  import ProjectHistoryButton from './ProjectHistoryButton.vue';
 
+  const isMobileS = useMobileS();
   const projectsStore = useProjectsStore();
-  const { openedProject: project, loading, error } = storeToRefs(projectsStore);
+  const showHistoryModal = ref(false);
+  const {
+    openedProject: project,
+    openedProjectHistory: history,
+    loading,
+    error,
+  } = storeToRefs(projectsStore);
+
+  watch(
+    () => project,
+    () => (showHistoryModal.value = false),
+    { deep: true },
+  );
 </script>
 
 <style lang="scss" scoped>
   @import '@styles/breakpoints';
-
-  .desktop-details {
-    @media (max-width: $mobile-s) {
-      display: none;
-    }
-  }
-
-  .mobile-details {
-    display: none;
-
-    @media (max-width: $mobile-s) {
-      display: block;
-    }
-  }
 
   .badge {
     width: max-content;
