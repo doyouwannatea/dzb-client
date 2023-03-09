@@ -1,97 +1,87 @@
 <template>
-  <div>
-    <h1>Версии проекта</h1>
-    <div class="content">
-      <div
-        v-for="{ title, year, link, last, current } in items"
-        :key="title + year"
-        :class="[last ? 'last' : '', current ? 'current' : '']"
-        class="block"
-      >
-        <div class="project">
-          <p>{{ year }}</p>
-          <RouterLink class="link" :to="{ link }">
-            <h2>{{ title }}</h2>
-          </RouterLink>
-        </div>
-      </div>
-    </div>
-  </div>
+  <ul class="container">
+    <li
+      v-for="{ title, year, projectId } in props.items"
+      :key="projectId"
+      :class="{ current: projectId === props.currentProjectId }"
+      class="project"
+    >
+      <p class="year">{{ year }}</p>
+      <RouterLink class="link" :to="toProjectRoute(projectId)">
+        {{ title }}
+      </RouterLink>
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">
-  import { withDefaults } from 'vue';
+  import { RouterLink } from 'vue-router';
+  import { toProjectRoute } from '@/router/utils/routes';
 
-  export interface Projects {
+  interface Project {
     title: string;
     year: string;
-    link?: string;
-    last?: boolean;
-    current?: boolean;
+    projectId: number;
   }
 
-  withDefaults(
-    defineProps<{
-      items?: Projects[];
-    }>(),
-    {
-      items: () => [],
-    },
-  );
+  interface Props {
+    items: Project[];
+    currentProjectId: number;
+  }
+
+  const props = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
-  h1 {
-    font-size: 40px;
-    font-weight: 800;
+  .container {
+    display: flex;
   }
 
-  h2 {
-    font-size: 18px;
-    line-height: 150%;
-  }
-
-  p {
-    margin: 27px 0 20px;
-    font-size: 18px;
+  .year {
+    margin: 1.6875rem 0 1.25rem;
+    font-size: 1.125rem;
     font-weight: 800;
     color: var(--gray-color-2);
   }
 
-  .content {
-    display: flex;
-    padding: 100px 0;
-    overflow-x: auto;
-    overflow-y: hidden;
+  .link {
+    display: block;
+    font-size: 1.125rem;
+    line-height: 150%;
+    color: var(--accent-color-1);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
-  .block {
+  .project {
     position: relative;
-    width: 300px;
-    border-top: 4px solid var(--gray-color-1);
+    width: 20.625rem;
+    padding-right: 1rem;
+    list-style: none;
+    border-top: 0.25rem solid var(--gray-color-1);
 
     &::before {
       position: absolute;
-      top: -10.5px;
-      display: block;
-      width: 17px;
-      height: 17px;
+      top: -0.6563rem;
+      width: 1.0625rem;
+      height: 1.0625rem;
       content: '';
       background-color: var(--gray-color-2);
       border-radius: 50%;
     }
-  }
 
-  .last {
-    border-color: white;
-  }
-
-  .project {
-    width: 250px;
+    &:last-child {
+      border-color: transparent;
+    }
   }
 
   .current {
+    font-size: 1.125rem;
     font-weight: 800;
+    color: var(--accent-color-1);
 
     &::before {
       background-color: var(--accent-color-1);
@@ -99,25 +89,13 @@
 
     &::after {
       position: absolute;
-      top: -33.5px;
-      left: -36px;
-      display: block;
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--accent-color-1);
+      top: -2.0938rem;
+      left: -2.25rem;
       content: 'Вы здесь';
     }
 
-    p {
-      color: var(--accent-color-1);
+    .year {
+      color: inherit;
     }
-
-    h2 {
-      font-weight: 800;
-    }
-  }
-
-  .link {
-    color: var(--accent-color-1);
   }
 </style>
