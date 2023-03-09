@@ -1,7 +1,7 @@
 <template>
   <ul class="container">
     <li
-      v-for="{ title, year, projectId } in props.items"
+      v-for="{ title, year, projectId } in props.projectList"
       :key="projectId"
       :class="{ current: projectId === props.currentProjectId }"
       class="project"
@@ -25,7 +25,7 @@
   }
 
   interface Props {
-    items: Project[];
+    projectList: Project[];
     currentProjectId: number;
   }
 
@@ -35,6 +35,24 @@
 <style lang="scss" scoped>
   .container {
     display: flex;
+    overflow-x: auto;
+
+    /* Works on Firefox */
+    scrollbar-color: var(--gray-color-3) transparent;
+
+    /* Works on Chrome, Edge, and Safari */
+    &::-webkit-scrollbar {
+      height: auto;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--gray-color-3);
+      border-right: 2.5rem solid #fff;
+    }
   }
 
   .year {
@@ -58,7 +76,7 @@
 
   .project {
     position: relative;
-    width: 20.625rem;
+    min-width: 20.625rem;
     padding-right: 1rem;
     list-style: none;
     border-top: 0.25rem solid var(--gray-color-1);
@@ -92,6 +110,12 @@
       top: -2.0938rem;
       left: -2.25rem;
       content: 'Вы здесь';
+    }
+
+    &:first-child {
+      &::after {
+        left: 0;
+      }
     }
 
     .year {

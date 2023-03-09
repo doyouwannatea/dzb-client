@@ -37,8 +37,8 @@
   import { UseFocusTrap } from '@vueuse/integrations/useFocusTrap/component';
   import { disableScroll, enableScroll } from '@/helpers/dom';
 
-  type Props = { isShow: boolean; size?: 's' | 'm' };
-  type Emits = { (e: 'close'): void };
+  export type Props = { isShow: boolean; size?: 's' | 'm' };
+  export type Emits = { (e: 'close'): void };
 
   const emit = defineEmits<Emits>();
   const props = withDefaults(defineProps<Props>(), {

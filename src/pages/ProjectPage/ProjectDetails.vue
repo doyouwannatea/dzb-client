@@ -1,5 +1,13 @@
 <template>
   <template v-if="project && !loading && !error">
+    <ProjectHistoryModal
+      v-if="history"
+      :current-project-id="project.id"
+      :is-show="showHistoryModal"
+      :project-list="history"
+      size="m"
+      @close="showHistoryModal = false"
+    />
     <section class="desktop-details">
       <!-- Panel -->
       <BasePanel>
@@ -29,14 +37,33 @@
             ]"
           />
           <!-- Information list -->
-          <AppList
-            :items="[
-              {
-                title: 'Цель проекта',
-                content: project.goal,
-              },
-            ]"
-          />
+          <AppList>
+            <AppListItem>
+              <template #title>Цель проекта</template>
+              <template #default>
+                {{ project.goal }}
+              </template>
+            </AppListItem>
+
+            <AppListItem>
+              <template #title>Версии проекта</template>
+              <template #default>
+                <BaseButton
+                  v-if="history && history.length > 1"
+                  class="open-project-history-button"
+                  variant="inline-link"
+                  case="default"
+                  @click="showHistoryModal = true"
+                >
+                  Открыть версии <br />
+                  проекта ↗
+                </BaseButton>
+                <template v-else>
+                  На данный момент это единственная версия проекта
+                </template>
+              </template>
+            </AppListItem>
+          </AppList>
 
           <div>
             <h2 class="info-title">Статус проекта</h2>
@@ -47,19 +74,6 @@
             <OpenFeedbackModalButton class="mt-4" :project="project" />
           </div>
         </GridLayout>
-      </BasePanel>
-
-      <BasePanel v-if="history">
-        <ProjectHistory
-          :items="
-            history.map((project) => ({
-              projectId: project.id,
-              title: project.title,
-              year: `${project.date_start} - ${project.date_end}`,
-            }))
-          "
-          :current-project-id="project.id"
-        />
       </BasePanel>
 
       <!-- Panel -->
@@ -119,12 +133,12 @@
         </AppList>
       </BasePanel>
     </section>
-
-    <ProjectMobileDetails class="mobile-details" />
   </template>
+  <ProjectMobileDetails class="mobile-details" />
 </template>
 
 <script setup lang="ts">
+  import { ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
   import { DifficultyText } from '@/models/ProjectDifficulty';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
@@ -139,15 +153,23 @@
   import AppListItem from '@/components/ui/AppListItem.vue';
   import SkillList from '@/components/skill/SkillList.vue';
   import ProjectMobileDetails from './ProjectMobileDetails.vue';
-  import ProjectHistory from '@/components/ui/ProjectHistory.vue';
+  import ProjectHistoryModal from '@/components/project/ProjectHistoryModal.vue';
+  import BaseButton from '@/components/ui/BaseButton.vue';
 
   const projectsStore = useProjectsStore();
+  const showHistoryModal = ref(false);
   const {
     openedProject: project,
     openedProjectHistory: history,
     loading,
     error,
   } = storeToRefs(projectsStore);
+
+  watch(
+    () => project,
+    () => (showHistoryModal.value = false),
+    { deep: true },
+  );
 </script>
 
 <style lang="scss" scoped>
@@ -175,5 +197,11 @@
     font-size: inherit;
     font-weight: 600;
     line-height: normal;
+  }
+
+  .open-project-history-button {
+    font-size: inherit;
+    text-align: left;
+    white-space: normal;
   }
 </style>

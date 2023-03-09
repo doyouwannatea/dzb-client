@@ -1,5 +1,13 @@
 <template>
   <section v-if="project && !loading && !error">
+    <ProjectHistoryModal
+      v-if="history"
+      :current-project-id="project.id"
+      :is-show="showHistoryModal"
+      :project-list="history"
+      size="m"
+      @close="showHistoryModal = false"
+    />
     <!-- Panel -->
     <BasePanel>
       <div class="status-wrapper">
@@ -13,29 +21,58 @@
         </div>
       </div>
       <GridLayout>
-        <AppList
-          :items="[
-            {
-              title: 'Руководители проекта',
-              content:
+        <AppList>
+          <AppListItem>
+            <template #title>Руководители проекта</template>
+            <template #default>
+              {{
                 project?.supervisorsNames || project?.supervisors.length
                   ? project.supervisorsNames || project.supervisors.join(', ')
-                  : '',
-            },
-            {
-              title: 'Старт проекта',
-              content: project.date_start,
-            },
-            {
-              title: 'Заказчик',
-              content: project.customer,
-            },
-            {
-              title: 'Сложность',
-              content: DifficultyText[project.difficulty],
-            },
-          ]"
-        />
+                  : '-'
+              }}
+            </template>
+          </AppListItem>
+
+          <AppListItem>
+            <template #title>Старт проекта</template>
+            <template #default>
+              {{ project.date_start || '-' }}
+            </template>
+          </AppListItem>
+
+          <AppListItem>
+            <template #title>Заказчик</template>
+            <template #default>
+              {{ project.customer || '-' }}
+            </template>
+          </AppListItem>
+
+          <AppListItem>
+            <template #title>Сложность</template>
+            <template #default>
+              {{ DifficultyText[project.difficulty] || '-' }}
+            </template>
+          </AppListItem>
+
+          <AppListItem>
+            <template #title>Версии проекта</template>
+            <template #default>
+              <BaseButton
+                v-if="history && history.length > 1"
+                class="open-project-history-button"
+                variant="inline-link"
+                case="default"
+                @click="showHistoryModal = true"
+              >
+                Открыть версии <br />
+                проекта ↗
+              </BaseButton>
+              <template v-else>
+                На данный момент это единственная версия проекта
+              </template>
+            </template>
+          </AppListItem>
+        </AppList>
 
         <AppList
           :items="[
@@ -91,6 +128,7 @@
 </template>
 
 <script setup lang="ts">
+  import { ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
   import { DifficultyText } from '@/models/ProjectDifficulty';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
@@ -103,11 +141,24 @@
   import OpenFeedbackModalButton from '@/components/feedback/OpenFeedbackModalButton.vue';
   import AppListItem from '@/components/ui/AppListItem.vue';
   import SkillList from '@/components/skill/SkillList.vue';
-  import ProjectCardInfo from '@/components/project/ProjectCardInfo.vue';
   import ProjectTeamCounter from '@/components/project/ProjectTeamCounter.vue';
+  import BaseButton from '@/components/ui/BaseButton.vue';
+  import ProjectHistoryModal from '@/components/project/ProjectHistoryModal.vue';
 
   const projectsStore = useProjectsStore();
-  const { openedProject: project, loading, error } = storeToRefs(projectsStore);
+  const showHistoryModal = ref(false);
+  const {
+    openedProject: project,
+    openedProjectHistory: history,
+    loading,
+    error,
+  } = storeToRefs(projectsStore);
+
+  watch(
+    () => project,
+    () => (showHistoryModal.value = false),
+    { deep: true },
+  );
 </script>
 
 <style lang="scss" scoped>
@@ -133,5 +184,11 @@
   .status,
   .counter {
     margin-top: 0.625rem;
+  }
+
+  .open-project-history-button {
+    font-size: inherit;
+    text-align: left;
+    white-space: normal;
   }
 </style>
