@@ -113,6 +113,10 @@
     --border-left-color: var(--gray-color-2);
   }
 
+  .card.processing {
+    --border-left-color: var(--accent-color-3);
+  }
+
   .footer {
     display: flex;
     gap: 3.375rem;

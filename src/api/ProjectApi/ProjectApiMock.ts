@@ -67,6 +67,16 @@ export default class ProjectApiMock extends IProjectApi {
 
     filteredList = filteredList.map(formatProjectDate);
 
+    // постраничная пагинация
+    const projectCount = filteredList.length;
+    const perPage = 7;
+    const page = filters.page || 1;
+    const paginatedList = filteredList.slice(
+      (page - 1) * perPage,
+      page * perPage,
+    );
+
+    // имитация загрузки
     const getDownloadProgress = createDownloadProgress(1000);
 
     await sleep(100);
@@ -78,7 +88,7 @@ export default class ProjectApiMock extends IProjectApi {
     await sleep(100);
     onDownloadProgress?.(getDownloadProgress(1), new Uint8Array());
 
-    return { projectCount: filteredList.length, data: filteredList };
+    return { projectCount, data: paginatedList };
   }
 
   async getSingleProject(projectId: number): Promise<Project> {
