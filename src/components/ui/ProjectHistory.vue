@@ -1,5 +1,5 @@
 <template>
-  <ul class="container">
+  <ul ref="containerRef" class="container" @wheel="scrollHorizontally">
     <li
       v-for="{ title, year, projectId } in props.projectList"
       :key="projectId"
@@ -15,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+  import { ref } from 'vue';
   import { RouterLink } from 'vue-router';
   import { toProjectRoute } from '@/router/utils/routes';
 
@@ -30,6 +31,25 @@
   }
 
   const props = defineProps<Props>();
+  const containerRef = ref<HTMLElement | null>(null);
+
+  // https://ru.stackoverflow.com/questions/722003/%D0%93%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F-%D0%BF%D1%80%D0%BE%D0%BA%D1%80%D1%83%D1%82%D0%BA%D0%B0-%D0%B1%D0%BB%D0%BE%D0%BA%D0%B0-%D0%BC%D1%8B%D1%88%D1%8C%D1%8E
+  function scrollHorizontally(event: WheelEvent) {
+    if (!containerRef.value) return;
+
+    let modifier = 1;
+    if (event.deltaMode === event.DOM_DELTA_LINE) {
+      modifier = parseInt(getComputedStyle(containerRef.value).lineHeight);
+    }
+    if (event.deltaMode === event.DOM_DELTA_PAGE) {
+      modifier = containerRef.value.clientHeight;
+    }
+    if (event.deltaY !== 0) {
+      // замена вертикальной прокрутки горизонтальной
+      containerRef.value.scrollLeft += modifier * event.deltaY;
+      event.preventDefault();
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
