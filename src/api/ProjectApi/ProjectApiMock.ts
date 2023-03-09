@@ -112,6 +112,40 @@ export default class ProjectApiMock extends IProjectApi {
     return delayRes(project?.participants || [], 300);
   }
 
+  async getProjectHistory(projectId: number): Promise<Project[]> {
+    const projects = projectListResponse.data;
+
+    function findPrevProject(projectId: number): Project | undefined {
+      return projects.find((project) => project.id === projectId);
+    }
+    function findNextProject(projectId: number): Project | undefined {
+      return projects.find((project) => project.prevProjectId === projectId);
+    }
+
+    const currentProject = findPrevProject(projectId);
+    if (!currentProject) return [];
+    const history: Project[] = [formatProjectDate(currentProject)];
+
+    // [...prev, current, ...next]
+    // поиск prev проектов
+    let prevProjectId: number | null = currentProject.prevProjectId;
+    while (prevProjectId) {
+      const project = findPrevProject(prevProjectId);
+      if (project) history.unshift(formatProjectDate(project));
+      prevProjectId = project?.prevProjectId || null;
+    }
+
+    // поиск next проектов
+    prevProjectId = projectId;
+    while (prevProjectId) {
+      const project = findNextProject(prevProjectId);
+      if (project) history.push(formatProjectDate(project));
+      prevProjectId = project?.id || null;
+    }
+
+    return history;
+  }
+
   async getActiveUserProject(): Promise<Project | undefined> {
     const project = projectListResponse.data.find(
       (project) => project.id === activeProjectId,

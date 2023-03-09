@@ -49,26 +49,16 @@
         </GridLayout>
       </BasePanel>
 
-      <BasePanel>
+      <BasePanel v-if="history">
         <ProjectHistory
-          :items="[
-            {
-              title: 'Платформа для размещения вузовских олимпиад',
-              year: '2019-2020',
-              projectId: 1,
-            },
-            {
-              title: 'Мобильное приложение для размещения вузовских олимпиад',
-              year: '2020-2021',
-              projectId: 2,
-            },
-            {
-              title: 'Мобильное приложение для размещения вузовских олимпиад',
-              year: '2021-2022',
-              projectId: 3,
-            },
-          ]"
-          :current-project-id="2"
+          :items="
+            history.map((project) => ({
+              projectId: project.id,
+              title: project.title,
+              year: `${project.date_start} - ${project.date_end}`,
+            }))
+          "
+          :current-project-id="project.id"
         />
       </BasePanel>
 
@@ -152,7 +142,12 @@
   import ProjectHistory from '@/components/ui/ProjectHistory.vue';
 
   const projectsStore = useProjectsStore();
-  const { openedProject: project, loading, error } = storeToRefs(projectsStore);
+  const {
+    openedProject: project,
+    openedProjectHistory: history,
+    loading,
+    error,
+  } = storeToRefs(projectsStore);
 </script>
 
 <style lang="scss" scoped>

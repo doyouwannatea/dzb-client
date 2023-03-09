@@ -17,7 +17,7 @@ export interface Type {
 
 export interface Project {
   id: number;
-  prevProjectId: number;
+  prevProjectId: number | null;
   title: string;
   places: number;
   goal: string;

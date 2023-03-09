@@ -45,7 +45,7 @@ export const projectListResponse: ProjectListResponse = {
   data: [
     {
       date_end: '2021-06-01',
-      prevProjectId: 2,
+      prevProjectId: null,
       date_start: '2021-01-29',
       description:
         'Проводимые в ИРНИТУ мероприятия различаются продолжительностью времени, необходимого для их подготовки, и пакетом оформляемых документов. На этапе подготовки мероприятия организаторы иногда упускают из вида некоторые факторы, значимые при составлении сметы и формирования других документов, необходимых для беспроблемного проведения мероприятия. Разработанная «дорожная карта» должна давать организаторам исчерпывающую информацию о каждом шаге подготовки мероприятия',
@@ -150,7 +150,217 @@ export const projectListResponse: ProjectListResponse = {
     },
     {
       date_end: '2021-06-01',
-      prevProjectId: 2,
+      prevProjectId: 1,
+      date_start: '2021-01-29',
+      description:
+        'Проводимые в ИРНИТУ мероприятия различаются продолжительностью времени, необходимого для их подготовки, и пакетом оформляемых документов. На этапе подготовки мероприятия организаторы иногда упускают из вида некоторые факторы, значимые при составлении сметы и формирования других документов, необходимых для беспроблемного проведения мероприятия. Разработанная «дорожная карта» должна давать организаторам исчерпывающую информацию о каждом шаге подготовки мероприятия',
+      difficulty: 2,
+      goal: 'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ',
+      id: 40,
+      specialities: [
+        { id: 2, name: 'НвГДСз' },
+        { id: 4, name: 'ЭВМ' },
+        { id: 3, name: 'ИСТб' },
+      ],
+      participations: [
+        {
+          id: 100,
+          candidate: candidate,
+          candidate_id: candidate.id,
+          created_at: '2022-11-12T08:10:37.891Z',
+          updated_at: '2022-11-12T08:10:37.891Z',
+          priority: 1,
+          project_id: 1,
+          review: '',
+          state_id: ParticipationState.Active,
+        },
+        {
+          id: 1,
+          candidate: candidateList[0],
+          candidate_id: candidateList[0].id,
+          created_at: '2022-06-01T04:58:25.177Z',
+          updated_at: '2022-06-01T04:58:25.177Z',
+          priority: 1,
+          project_id: 1,
+          review: '',
+          state_id: ParticipationState.Active,
+        },
+        {
+          id: 2,
+          candidate: candidateList[1],
+          candidate_id: candidateList[1].id,
+          created_at: '2022-06-01T05:06:43.792Z',
+          updated_at: '2022-06-01T05:06:43.792Z',
+          priority: 1,
+          project_id: 1,
+          review: '',
+          state_id: ParticipationState.Active,
+        },
+        {
+          id: 3,
+          candidate: candidateList[2],
+          candidate_id: candidateList[2].id,
+          created_at: '2022-06-01T05:01:58.261Z',
+          updated_at: '2022-06-01T05:01:58.261Z',
+          priority: 1,
+          project_id: 1,
+          review: '',
+          state_id: ParticipationState.Active,
+        },
+        {
+          id: 4,
+          candidate: candidateList[3],
+          candidate_id: candidateList[3].id,
+          created_at: '2022-06-01T04:58:25.177Z',
+          updated_at: '2022-06-01T04:58:25.177Z',
+          priority: 2,
+          project_id: 1,
+          review: '',
+          state_id: ParticipationState.Active,
+        },
+        {
+          id: 5,
+          candidate: candidateList[4],
+          candidate_id: candidateList[4].id,
+          created_at: '2022-06-01T05:34:01.738Z',
+          updated_at: '2022-06-01T05:34:01.738Z',
+          priority: 2,
+          project_id: 1,
+          review: '',
+          state_id: ParticipationState.Active,
+        },
+      ],
+      participants: [candidate, candidateList[0], candidateList[1]],
+      places: 4,
+      product_result:
+        'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ, адаптированная под разные их виды',
+      requirements:
+        'ПМб 38.03.02 Менеджмент Производственный менеджмент, УПб 38.03.02 Менеджмент Управление проектами',
+      skills: [skills[0], skills[1], skills[2]],
+      state: activeState,
+      study_result:
+        'Знания: эффективное делопроизводства в современных условиях функционирования организации Умения: отладка процессов эффективного движения документов внутри организации Навыки: грамотного распределения времени и ресурсов для нормального функционирования организации',
+      supervisors: [
+        'Чернышенко Марина Сергеевна',
+        'Владимир Александрович Александров',
+      ],
+      supervisorsNames: '',
+      title:
+        'Разработка автоматизированной «дорожной карты» подготовки и проведения мероприятий в ИРНИТУ',
+      type: {
+        id: 1,
+        type: 'Прикладной',
+      },
+      participant_feedback: '',
+    },
+    {
+      date_end: '2021-06-01',
+      prevProjectId: 40,
+      date_start: '2021-01-29',
+      description:
+        'Проводимые в ИРНИТУ мероприятия различаются продолжительностью времени, необходимого для их подготовки, и пакетом оформляемых документов. На этапе подготовки мероприятия организаторы иногда упускают из вида некоторые факторы, значимые при составлении сметы и формирования других документов, необходимых для беспроблемного проведения мероприятия. Разработанная «дорожная карта» должна давать организаторам исчерпывающую информацию о каждом шаге подготовки мероприятия',
+      difficulty: 2,
+      goal: 'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ',
+      id: 41,
+      specialities: [
+        { id: 2, name: 'НвГДСз' },
+        { id: 4, name: 'ЭВМ' },
+        { id: 3, name: 'ИСТб' },
+      ],
+      participations: [
+        {
+          id: 100,
+          candidate: candidate,
+          candidate_id: candidate.id,
+          created_at: '2022-11-12T08:10:37.891Z',
+          updated_at: '2022-11-12T08:10:37.891Z',
+          priority: 1,
+          project_id: 1,
+          review: '',
+          state_id: ParticipationState.Active,
+        },
+        {
+          id: 1,
+          candidate: candidateList[0],
+          candidate_id: candidateList[0].id,
+          created_at: '2022-06-01T04:58:25.177Z',
+          updated_at: '2022-06-01T04:58:25.177Z',
+          priority: 1,
+          project_id: 1,
+          review: '',
+          state_id: ParticipationState.Active,
+        },
+        {
+          id: 2,
+          candidate: candidateList[1],
+          candidate_id: candidateList[1].id,
+          created_at: '2022-06-01T05:06:43.792Z',
+          updated_at: '2022-06-01T05:06:43.792Z',
+          priority: 1,
+          project_id: 1,
+          review: '',
+          state_id: ParticipationState.Active,
+        },
+        {
+          id: 3,
+          candidate: candidateList[2],
+          candidate_id: candidateList[2].id,
+          created_at: '2022-06-01T05:01:58.261Z',
+          updated_at: '2022-06-01T05:01:58.261Z',
+          priority: 1,
+          project_id: 1,
+          review: '',
+          state_id: ParticipationState.Active,
+        },
+        {
+          id: 4,
+          candidate: candidateList[3],
+          candidate_id: candidateList[3].id,
+          created_at: '2022-06-01T04:58:25.177Z',
+          updated_at: '2022-06-01T04:58:25.177Z',
+          priority: 2,
+          project_id: 1,
+          review: '',
+          state_id: ParticipationState.Active,
+        },
+        {
+          id: 5,
+          candidate: candidateList[4],
+          candidate_id: candidateList[4].id,
+          created_at: '2022-06-01T05:34:01.738Z',
+          updated_at: '2022-06-01T05:34:01.738Z',
+          priority: 2,
+          project_id: 1,
+          review: '',
+          state_id: ParticipationState.Active,
+        },
+      ],
+      participants: [candidate, candidateList[0], candidateList[1]],
+      places: 4,
+      product_result:
+        'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ, адаптированная под разные их виды',
+      requirements:
+        'ПМб 38.03.02 Менеджмент Производственный менеджмент, УПб 38.03.02 Менеджмент Управление проектами',
+      skills: [skills[0], skills[1], skills[2]],
+      state: activeState,
+      study_result:
+        'Знания: эффективное делопроизводства в современных условиях функционирования организации Умения: отладка процессов эффективного движения документов внутри организации Навыки: грамотного распределения времени и ресурсов для нормального функционирования организации',
+      supervisors: [
+        'Чернышенко Марина Сергеевна',
+        'Владимир Александрович Александров',
+      ],
+      supervisorsNames: '',
+      title:
+        'Разработка автоматизированной «дорожной карты» подготовки и проведения мероприятий в ИРНИТУ',
+      type: {
+        id: 1,
+        type: 'Прикладной',
+      },
+      participant_feedback: '',
+    },
+    {
+      date_end: '2021-06-01',
+      prevProjectId: null,
       date_start: '2021-01-29',
       description:
         'Проанализировать базу данных параметров потребителя, которую собирает ИЭСБК, оценить, какими данными еще стоит ее наполнить и из каких источников (внешних/внутренних); разработать методику формирования профиля потребителя; сформировать типы профилей и их характеристики; провести сегментацию всех потребителей по профилям; разработать методику/набор инструментов для взаимодействия (в части контроля и взыскания задолженности) с потребителем в зависимости от его профиля',
@@ -182,7 +392,7 @@ export const projectListResponse: ProjectListResponse = {
     },
     {
       date_end: '2021-06-01',
-      prevProjectId: 2,
+      prevProjectId: null,
       date_start: '2021-01-29',
       description:
         'Забота о благополучии сотрудников – это выгодные инвестиции в управление производительностью, повышение конкурентоспособности и корпоративной культуры компании. Подобные стратегии полезны для крупного, малого и среднего бизнеса, который нацелен привлекать и удерживать ценные кадры, а также максимально раскрывать их потенциал в работе на благо компании',
@@ -215,7 +425,7 @@ export const projectListResponse: ProjectListResponse = {
     },
     {
       date_end: '2021-06-01',
-      prevProjectId: 2,
+      prevProjectId: null,
       date_start: '2021-01-29',
       description:
         'Проблема заключается в противоречии между возрастающим значением инновационных технологий и сохраняющейся слабостью механизмов коммерциализации знаний и инновационных разработок в России. Образовательные и научные организации чаще всего сталкиваются с низким уровнем обладания предпринимательскими способностями, которые к тому же неравномерно распределены среди научных работников. В этих условиях важно оценить влияние предпринимательских качеств на профессиональные достижения, финансовое вознаграждение и нематериальную «выгоду» научных работников',
@@ -244,7 +454,7 @@ export const projectListResponse: ProjectListResponse = {
     },
     {
       date_end: '2021-06-01',
-      prevProjectId: 2,
+      prevProjectId: null,
       date_start: '2021-01-29',
       description:
         'Стратегия необходима, поскольку будущее в основном непредсказуемо, абсолютной определенности относительно будущего нет. Современный темп изменений во внешней среде, увеличение количества знаний и информационных потоков настолько велики, что планирование стратегии представляется единственным способом формального прогнозирования будущих проблем и возможностей.Основой развития территориальной социально-экономической системы выступает ее потенциал, представляющий собой совокупные возможности, способности, скрытые не реализованные резервы экономической системы. При этом стратегическое управление предполагает выбор из всей совокупности структурных составляющих потенциала развития территориальной социально-экономической системы ключевых, концентрация на которых позволит достичь максимальных долгосрочных результатов с учетом ограниченных ресурсов территории',
@@ -274,7 +484,7 @@ export const projectListResponse: ProjectListResponse = {
     },
     {
       date_end: '2021-06-01',
-      prevProjectId: 2,
+      prevProjectId: null,
       date_start: '2021-01-29',
       description:
         'Забота о благополучии сотрудников – это выгодные инвестиции',
@@ -304,7 +514,7 @@ export const projectListResponse: ProjectListResponse = {
     },
     {
       date_end: '2021-06-01',
-      prevProjectId: 2,
+      prevProjectId: null,
       date_start: '2021-01-29',
       description:
         'Забота о благополучии сотрудников – это выгодные инвестиции',
@@ -334,7 +544,7 @@ export const projectListResponse: ProjectListResponse = {
     },
     {
       date_end: '2021-06-01',
-      prevProjectId: 2,
+      prevProjectId: null,
       date_start: '2021-01-29',
       description:
         'Забота о благополучии сотрудников – это выгодные инвестиции',
