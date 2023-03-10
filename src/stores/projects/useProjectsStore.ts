@@ -1,10 +1,8 @@
 import { projectApi } from '@/api/ProjectApi';
-import { projectFiltersToSearchParams } from '@/helpers/query';
 import { Project, ProjectFilters } from '@/models/Project';
-import { RouteNames } from '@/router/types/route-names';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
-import { state } from './state';
+import { DEFAULT_FILTERS, state } from './state';
 
 export const useProjectsStore = () => {
   const router = useRouter();
@@ -16,26 +14,17 @@ export const useProjectsStore = () => {
         this.projectList = projectList;
         this.projectCount = projectCount;
       },
-      setFilters(filters: ProjectFilters = {}) {
+      setFilters(filters: Partial<ProjectFilters>) {
         if (this.loading) return;
         this.filters = { ...this.filters, ...filters };
       },
       updateFilters() {
         if (this.loading) return;
-        router.push({
-          name: router.currentRoute.value.name || RouteNames.HOME,
-          query: projectFiltersToSearchParams(this.filters),
-        });
+        router.push({ ...router.currentRoute, query: this.filters });
       },
       clearFilters() {
         if (this.loading) return;
-        this.filters = {
-          difficulty: undefined,
-          page: undefined,
-          state: undefined,
-          skills: undefined,
-          title: undefined,
-        };
+        this.filters = { ...DEFAULT_FILTERS };
       },
       // GET PROJECT LIST
       async getProjectList() {
@@ -78,8 +67,14 @@ export const useProjectsStore = () => {
       // GET SINGLE PROJECT
       async getSingleProject(projectId: number) {
         this.openedProject = undefined;
+        this.openedProjectHistory = undefined;
         return this._onAsync(async () => {
-          this.openedProject = await projectApi.getSingleProject(projectId);
+          const [openedProject, openedProjectHistory] = await Promise.all([
+            projectApi.getSingleProject(projectId),
+            projectApi.getProjectHistory(projectId),
+          ]);
+          this.openedProject = openedProject;
+          this.openedProjectHistory = openedProjectHistory;
         });
       },
       // GET SINGLE PROJECT

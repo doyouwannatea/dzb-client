@@ -86,7 +86,7 @@
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useSkillsStore } from '@/stores/skills/useSkillsStore';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { deepClone } from '@/helpers/array';
+  import { deepClone } from '@/helpers/object';
 
   // components
   import BaseModal from '../ui/BaseModal.vue';

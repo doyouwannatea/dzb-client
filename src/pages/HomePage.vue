@@ -42,7 +42,7 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { useFilteredProjectList } from '@/hooks/useProjectFilters';
+  import { useWatchProjectQueries } from '@/hooks/useProjectFilters';
   import { useFetchAdditionalProjectData } from '@/hooks/useFetchAdditionalProjectData';
   import {
     useHomePageSavedScrollPosition,
@@ -59,8 +59,9 @@
   import OpenProjectFilterModalButton from '@/components/project/OpenProjectFilterModalButton.vue';
   import ProjectListFilterModal from '../components/project/ProjectListFilterModal.vue';
   import { useMobileS } from '@/helpers/breakpoints';
+  import { RouteNames } from '@/router/types/route-names';
 
-  useFilteredProjectList();
+  useWatchProjectQueries(RouteNames.HOME);
   useFetchAdditionalProjectData();
   useSaveHomePageScrollPosition();
   useHomePageSavedScrollPosition();

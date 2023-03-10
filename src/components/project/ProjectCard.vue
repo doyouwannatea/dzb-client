@@ -1,10 +1,7 @@
 <template>
   <article :class="['card', stateClass]">
     <header class="header container">
-      <RouterLink
-        class="title"
-        :to="{ name: RouteNames.PROJECT_DETAILS, params: { id: project.id } }"
-      >
+      <RouterLink class="title" :to="toProjectRoute(project.id)">
         {{ project.title }}
       </RouterLink>
       <ProjectStatus class="status" :state="project.state" />
@@ -58,7 +55,7 @@
         <BaseButton
           is="router-link"
           case="uppercase"
-          :to="{ name: RouteNames.PROJECT_DETAILS, params: { id: project.id } }"
+          :to="toProjectRoute(project.id)"
         >
           Подробнее
         </BaseButton>
@@ -70,9 +67,8 @@
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
   import { Project } from '@/models/Project';
-  import { DifficultyText } from '@/models/ProjectDifficulty';
   import { StateClass } from '@/models/ProjectState';
-  import { RouteNames } from '@/router/types/route-names';
+  import { toProjectRoute } from '@/router/utils/routes';
   // components
   import ProjectStatus from './ProjectStatus.vue';
   import SkillList from '../skill/SkillList.vue';
@@ -115,6 +111,10 @@
 
   .card.archived {
     --border-left-color: var(--gray-color-2);
+  }
+
+  .card.processing {
+    --border-left-color: var(--accent-color-3);
   }
 
   .footer {

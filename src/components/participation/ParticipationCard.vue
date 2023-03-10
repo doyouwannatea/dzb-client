@@ -11,10 +11,7 @@
         <RouterLink
           v-else
           class="title"
-          :to="{
-            name: RouteNames.PROJECT_DETAILS,
-            params: { id: project.id },
-          }"
+          :to="toProjectRoute(project.id)"
           target="_blank"
         >
           {{ project.title }}
@@ -66,10 +63,11 @@
 </template>
 
 <script setup lang="ts">
+  import { RouterLink } from 'vue-router';
+  import { toProjectRoute } from '@/router/utils/routes';
   import { Participation, ParticipationPriority } from '@/models/Participation';
   import { Project } from '@/models/Project';
   import { RouteNames } from '@/router/types/route-names';
-  import { RouterLink } from 'vue-router';
   // components
   import BasePanel from '../ui/BasePanel.vue';
   import BaseButton from '../ui/BaseButton.vue';

@@ -22,8 +22,7 @@
   import { compareString } from '@/helpers/string';
   import { canViewParticipants } from '@/helpers/project';
   import { Candidate } from '@/models/Candidate';
-  import { ProjectStateID } from '@/models/ProjectState';
-  import { RouteNames } from '@/router/types/route-names';
+  import { toProjectRoute } from '@/router/utils/routes';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseTable, { RowData } from '@/components/ui/BaseTable.vue';
@@ -36,17 +35,14 @@
   watchEffect(() => {
     const stateId = project?.value?.state.id;
     const projectId = project?.value?.id;
-    if (stateId && !canViewParticipants(stateId)) {
-      router.replace({
-        name: RouteNames.PROJECT_DETAILS,
-        params: { id: projectId },
-      });
+    if (projectId && stateId && !canViewParticipants(stateId)) {
+      router.replace(toProjectRoute(projectId));
     }
   });
 
   const sortedParticipants = computed<Candidate[]>(() => {
     if (!project?.value) return [];
-    const participants = project.value.participants;
+    const participants = project.value.participants || [];
     return [...participants].sort((a, b) =>
       compareString(a.fio.toLowerCase(), b.fio.toLowerCase()),
     );

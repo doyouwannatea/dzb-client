@@ -18,7 +18,7 @@ import {
   specialties,
   skills,
 } from '@/models/mock/project-skills';
-import { deepClone } from '@/helpers/array';
+import { deepClone } from '@/helpers/object';
 import { Candidate } from '@/models/Candidate';
 import { activeProjectId, archiveProjectIdList } from '@/models/mock/candidate';
 
@@ -67,6 +67,16 @@ export default class ProjectApiMock extends IProjectApi {
 
     filteredList = filteredList.map(formatProjectDate);
 
+    // постраничная пагинация
+    const projectCount = filteredList.length;
+    const perPage = 7;
+    const page = filters.page || 1;
+    const paginatedList = filteredList.slice(
+      (page - 1) * perPage,
+      page * perPage,
+    );
+
+    // имитация загрузки
     const getDownloadProgress = createDownloadProgress(1000);
 
     await sleep(100);
@@ -78,7 +88,7 @@ export default class ProjectApiMock extends IProjectApi {
     await sleep(100);
     onDownloadProgress?.(getDownloadProgress(1), new Uint8Array());
 
-    return { projectCount: filteredList.length, data: filteredList };
+    return { projectCount, data: paginatedList };
   }
 
   async getSingleProject(projectId: number): Promise<Project> {
@@ -110,6 +120,40 @@ export default class ProjectApiMock extends IProjectApi {
       (project) => project.id === projectId,
     );
     return delayRes(project?.participants || [], 300);
+  }
+
+  async getProjectHistory(projectId: number): Promise<Project[]> {
+    const projects = projectListResponse.data;
+
+    function findPrevProject(projectId: number): Project | undefined {
+      return projects.find((project) => project.id === projectId);
+    }
+    function findNextProject(projectId: number): Project | undefined {
+      return projects.find((project) => project.prevProjectId === projectId);
+    }
+
+    const currentProject = findPrevProject(projectId);
+    if (!currentProject) return [];
+    const history: Project[] = [formatProjectDate(currentProject)];
+
+    // [...prev, current, ...next]
+    // поиск prev проектов
+    let prevProjectId: number | null = currentProject.prevProjectId;
+    while (prevProjectId) {
+      const project = findPrevProject(prevProjectId);
+      if (project) history.unshift(formatProjectDate(project));
+      prevProjectId = project?.prevProjectId || null;
+    }
+
+    // поиск next проектов
+    prevProjectId = projectId;
+    while (prevProjectId) {
+      const project = findNextProject(prevProjectId);
+      if (project) history.push(formatProjectDate(project));
+      prevProjectId = project?.id || null;
+    }
+
+    return history;
   }
 
   async getActiveUserProject(): Promise<Project | undefined> {

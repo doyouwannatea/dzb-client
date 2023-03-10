@@ -4,29 +4,33 @@ import _ from 'lodash';
 import { locationQueryToProjectFilters } from '@/helpers/query';
 import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 import { ProjectFilters } from '@/models/Project';
+import { isEmptyObject } from '@/helpers/object';
+import { RouteNames } from '@/router/types/route-names';
 
-export const useFilteredProjectList = () => {
+export const useWatchProjectQueries = (routeName: RouteNames) => {
   const router = useRouter();
   const route = useRoute();
   const projectStore = useProjectsStore();
 
   watch(
     () => route.query,
-    (query, prevQuery) => {
-      if (_.isEqual(query, prevQuery)) return;
+    (query) => {
+      if (route.name !== routeName) return;
       const storedFilters = projectStore.filters;
       const queryFilters = locationQueryToProjectFilters(query);
 
-      const isEqual = _.isEqual(storedFilters, queryFilters);
-      const storedFiltersNotEmpty = Object.values(storedFilters).some(
-        (filter) => filter !== undefined,
-      );
-
-      if (!isEqual && storedFiltersNotEmpty) {
-        return router.replace({ ...route, query: storedFilters });
+      // если в строке поиска нет фильтров, то редиректим на эту же страницу, но с фильтрами из локального хранилища
+      if (isEmptyObject(queryFilters as unknown as Record<string, unknown>)) {
+        router.replace({ ...route, query: storedFilters });
+        return;
       }
 
-      projectStore.setFilters(queryFilters);
+      // если в строке поиска есть фильтры, но они не совпадают с теми, что в хранилище, то обновляем фильтры
+      const isEqual = _.isEqual(storedFilters, queryFilters);
+      if (!isEqual) {
+        projectStore.setFilters(queryFilters);
+      }
+
       projectStore.getProjectList();
     },
     { immediate: true },
@@ -35,13 +39,7 @@ export const useFilteredProjectList = () => {
 
 export const useProjectFilters = () => {
   const projectsStore = useProjectsStore();
-
-  const filters = ref<ProjectFilters>({
-    difficulty: [],
-    state: [],
-    skills: [],
-    specialties: [],
-  });
+  const filters = ref<ProjectFilters>({ ...projectsStore.filters });
 
   // наблюдаем за состоянием хранилища
   // обновляем локальное состояние если что-то поменялось

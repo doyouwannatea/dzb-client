@@ -15,7 +15,9 @@ function locationQueryValueToArrayNumber(
   queryValue: LocationQueryValue | LocationQueryValue[],
 ): number[] {
   try {
-    return JSON.parse(toString(queryValue)).map(locationQueryValueToNumber);
+    if (!queryValue) return [];
+    if (!Array.isArray(queryValue)) queryValue = [queryValue];
+    return queryValue.map(locationQueryValueToNumber);
   } catch (error) {
     return [];
   }
@@ -33,6 +35,8 @@ export function locationQueryToProjectFilters(
       query.difficulty,
     ) as Difficulty[],
     specialties: locationQueryValueToArrayNumber(query.specialties),
+    order: toString(query.order) as ProjectFilters['order'],
+    sortBy: toString(query.sortBy) as ProjectFilters['sortBy'],
   };
 }
 
@@ -46,5 +50,7 @@ export function projectFiltersToSearchParams(
     skills: toString(filters.skills),
     difficulty: toString(filters.difficulty),
     specialties: toString(filters.specialties),
+    order: toString(filters.order),
+    sortBy: toString(filters.sortBy),
   };
 }

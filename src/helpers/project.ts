@@ -3,7 +3,7 @@ import { Candidate } from '@/models/Candidate';
 import { Project } from '@/models/Project';
 import { Difficulty } from '@/models/ProjectDifficulty';
 import { ProjectStateID } from '@/models/ProjectState';
-import { deepClone } from './array';
+import { deepClone } from './object';
 import { formatDate } from './string';
 
 export function formatProjectDate(project: Project): Project {
@@ -45,12 +45,16 @@ export function isExtraState(stateId: ProjectStateID): boolean {
 export function isArchivedState(stateId: ProjectStateID): boolean {
   return stateId === ProjectStateID.ArchivedState;
 }
+export function isProcessingState(stateId: ProjectStateID): boolean {
+  return stateId === ProjectStateID.ProcessingState;
+}
 
 export function canViewParticipations(stateId: ProjectStateID): boolean {
   return (
     isRecruitingState(stateId) ||
     isActiveState(stateId) ||
-    isExtraState(stateId)
+    isExtraState(stateId) ||
+    isProcessingState(stateId)
   );
 }
 

@@ -16,40 +16,40 @@ export interface Type {
 }
 
 export interface Project {
-  additional_inf: string | null;
-  created_at: string;
-  customer: string;
-  date_end: string;
-  date_start: string;
+  id: number;
+  prevProjectId: number | null;
+  title: string;
+  places: number;
+  goal: string;
   description: string;
   difficulty: Difficulty;
-  goal: string;
-  id: number;
-  participations: Participation[];
-  participants: Candidate[];
-  specialities: Institute[];
-  places: number;
-  product_result: string;
+  date_start: string;
+  date_end: string;
   requirements: string;
-  skills: Tag[];
-  state: State;
+  customer?: string;
+  additional_inf?: string;
+  product_result: string;
   study_result: string;
   supervisors: string[];
   supervisorsNames: string;
-  title: string;
+  state: State;
   type: Type;
-  idea: string;
-  updated_at: string;
-  participant_feedback: string | null;
+  skills: Tag[];
+  specialities: Institute[];
+  participations?: Participation[];
+  participants?: Candidate[];
+  participant_feedback?: string;
 }
 
 export interface ProjectFilters {
-  state?: number[]; // массив id
-  skills?: number[]; // массив id
-  specialties?: number[]; // массив id
-  difficulty?: Difficulty[]; // Массив сложностей
-  title?: string; // Поиск по подстроке в названии
-  page?: number;
+  state: number[]; // массив id
+  skills: number[]; // массив id
+  specialties: number[]; // массив id
+  difficulty: Difficulty[]; // Массив сложностей
+  title: string; // Поиск по подстроке в названии
+  page: number;
+  sortBy: keyof Project;
+  order: 'asc' | 'desc';
 }
 
 export interface ProjectTags {

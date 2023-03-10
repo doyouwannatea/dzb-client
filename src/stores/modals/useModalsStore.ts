@@ -26,15 +26,16 @@ export const useModalsStore = defineStore('modals', {
       }
 
       if (!authStore.profileData.canSendParticipations) {
-        this.understandModalTitle =
-          'Сейчас вы не можете подать заявку на проект';
+        this.openAlertModal(
+          'На данный момент Вы не можете подавать заявки на проекты',
+        );
         return;
       }
 
       if (participationsStore.participationList) {
         for (const participation of participationsStore.participationList) {
           if (participation.project_id === project.id) {
-            this.selectedProjectModal = true;
+            this.openAlertModal('Вы уже подали заявку на этот проект');
             return;
           }
         }
@@ -48,8 +49,9 @@ export const useModalsStore = defineStore('modals', {
       );
 
       if (!isSameInstitute) {
-        this.understandModalTitle =
-          'Вы не можете отправлять заявки на проекты другого института';
+        this.openAlertModal(
+          'Вы не можете подать заявку на проект другого института',
+        );
         return;
       }
 
@@ -57,6 +59,13 @@ export const useModalsStore = defineStore('modals', {
       this.participationModal = true;
     },
     // OPEN PARTICIPATION MODAL
+
+    // OPEN ALERT MODAL
+    openAlertModal(title?: string, subtitle?: string) {
+      this.alertModalTitle = title;
+      this.alertModalSubtitle = subtitle;
+    },
+    // OPEN ALERT MODAL
 
     // OPEN FEEDBACK MODAL
     openFeedbackModal(project: Project) {
@@ -75,8 +84,7 @@ export const useModalsStore = defineStore('modals', {
 
     // OPEN EDIT DISABLE MODAL
     openEditParticipationsDisabledModal() {
-      this.understandModalTitle =
-        'На данный момент вы не можете изменять свои заявки';
+      this.openAlertModal('На данный момент вы не можете изменять свои заявки');
     },
     // OPEN EDIT DISABLE MODAL
 
@@ -86,9 +94,10 @@ export const useModalsStore = defineStore('modals', {
       const isShown = Cookies.get(cookieKey);
       if (isShown) return;
       Cookies.set(cookieKey, 'true');
-      this.understandModalTitle = 'Внимание';
-      this.understandModalSubtitle =
-        'У Вас есть автоматически созданная заявка на проект. В связи с тем, что в прошлом семестре Вы не заполнили заявки на проекты через Ярмарку проектов, Вас распределили на свободный, наиболее подходящий под Вашу специальность проект. Эта заявка имеет наименьший приоритет среди остальных заявок, Вы можете изменить её приоритет или удалить.';
+      this.openAlertModal(
+        'Внимание',
+        'У Вас есть автоматически созданная заявка на проект. В связи с тем, что в прошлом семестре Вы не заполнили заявки на проекты через Ярмарку проектов, Вас распределили на свободный, наиболее подходящий под Вашу специальность проект. Эта заявка имеет наименьший приоритет среди остальных заявок, Вы можете изменить её приоритет или удалить.',
+      );
     },
     // OPEN EDIT DISABLE MODAL
 

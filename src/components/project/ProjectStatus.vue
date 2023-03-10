@@ -33,4 +33,9 @@
     --text-color: var(--gray-color-2);
     --border-color: var(--gray-color-2);
   }
+
+  .status.processing {
+    --text-color: var(--accent-color-3);
+    --border-color: var(--accent-color-3);
+  }
 </style>

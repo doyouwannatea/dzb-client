@@ -1,6 +1,6 @@
 <template>
   <BaseButton
-    v-if="!hideBtn"
+    v-if="canSeeButton"
     case="uppercase"
     :variant="props.variant"
     :disabled="modalsStore.loading"
@@ -11,12 +11,12 @@
 </template>
 
 <script lang="ts" setup>
-  import { Project } from '@/models/Project';
-  import { ProjectStateID } from '@/models/ProjectState';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { computed } from 'vue';
+  import { Project } from '@/models/Project';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   // components
+  import { isExtraState, isRecruitingState } from '@/helpers/project';
   import BaseButton, { Variant } from '../ui/BaseButton.vue';
 
   type Props = { project: Project; variant?: Variant };
@@ -25,9 +25,10 @@
   const authStore = useAuthStore();
   const props = withDefaults(defineProps<Props>(), { variant: 'outlined' });
 
-  const hideBtn = computed(
+  const canSeeButton = computed(
     () =>
-      props.project.state.id !== ProjectStateID.RecruitingState ||
-      authStore.profileData?.is_teacher,
+      (isRecruitingState(props.project.state.id) ||
+        isExtraState(props.project.state.id)) &&
+      !authStore.profileData?.is_teacher,
   );
 </script>

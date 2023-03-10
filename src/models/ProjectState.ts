@@ -3,6 +3,7 @@ export const enum ProjectStateID {
   ActiveState = 2,
   ExtraState = 3,
   ArchivedState = 4,
+  ProcessingState = 5,
 }
 
 export interface State {
@@ -15,4 +16,5 @@ export const StateClass: Record<ProjectStateID, string> = {
   [ProjectStateID.ActiveState]: 'active',
   [ProjectStateID.ExtraState]: 'extra',
   [ProjectStateID.ArchivedState]: 'archived',
+  [ProjectStateID.ProcessingState]: 'processing',
 };

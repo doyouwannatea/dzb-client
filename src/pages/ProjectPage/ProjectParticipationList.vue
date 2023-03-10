@@ -34,7 +34,7 @@
   import BasePanel from '@/components/ui/BasePanel.vue';
   import ProjectParticipationListStub from './ProjectParticipationListStub.vue';
   import BaseTable, { RowData } from '@/components/ui/BaseTable.vue';
-  import { RouteNames } from '@/router/types/route-names';
+  import { toProjectRoute } from '@/router/utils/routes';
 
   const router = useRouter();
   const projectsStore = useProjectsStore();
@@ -43,11 +43,8 @@
   watchEffect(() => {
     const stateId = project?.value?.state.id;
     const projectId = project?.value?.id;
-    if (stateId && !canViewParticipations(stateId)) {
-      router.replace({
-        name: RouteNames.PROJECT_DETAILS,
-        params: { id: projectId },
-      });
+    if (projectId && stateId && !canViewParticipations(stateId)) {
+      router.replace(toProjectRoute(projectId));
     }
   });
 

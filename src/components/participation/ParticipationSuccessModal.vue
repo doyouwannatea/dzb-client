@@ -16,7 +16,7 @@
           variant="inline-link"
           @click="closeModal"
         >
-          “Мои заявки” </BaseButton
+          «Мои заявки»</BaseButton
         >.
       </p>
       <div class="modal-buttons">

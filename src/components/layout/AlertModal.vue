@@ -1,17 +1,17 @@
 <template>
   <!-- auth modal -->
   <BaseModal
-    :is-show="Boolean(modalsStore.understandModalTitle)"
-    @close="modalsStore.understandModalTitle = undefined"
+    :is-show="Boolean(modalsStore.alertModalTitle)"
+    @close="modalsStore.alertModalTitle = undefined"
   >
     <!-- MAIN CONTENT -->
     <div class="modal-content">
-      <h1>{{ modalsStore.understandModalTitle }}</h1>
-      <p class="subtitle">{{ modalsStore.understandModalSubtitle }}</p>
+      <h1>{{ modalsStore.alertModalTitle }}</h1>
+      <p class="subtitle">{{ modalsStore.alertModalSubtitle }}</p>
       <div class="modal-buttons">
         <BaseButton
           case="uppercase"
-          @click="modalsStore.understandModalTitle = undefined"
+          @click="modalsStore.alertModalTitle = undefined"
         >
           {{ buttonText }}
         </BaseButton>
@@ -34,7 +34,7 @@
   const buttonText = ref('');
 
   watch(
-    () => modalsStore.understandModalTitle,
+    () => modalsStore.alertModalTitle,
     () => {
       buttonText.value =
         buttonTextVariants[

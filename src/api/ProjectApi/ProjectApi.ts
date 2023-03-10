@@ -80,6 +80,16 @@ export default class ProjectApi extends IProjectApi {
     }
   }
 
+  async getProjectHistory(projectId: number): Promise<Project[]> {
+    try {
+      return await baseKyInstance
+        .get(`api/projects/${projectId}/history`)
+        .json();
+    } catch (error) {
+      return [];
+    }
+  }
+
   async getActiveUserProject(): Promise<Project | undefined> {
     try {
       return await baseKyInstance.get('api/activeProject').json();
