@@ -1,9 +1,9 @@
-import { UserSkills } from '@/models/Candidate';
+import { CandidateSkills } from '@/models/Candidate';
 
 export interface State {
   loading: boolean;
   error: string;
-  userSkills?: UserSkills;
+  userSkills?: CandidateSkills;
 }
 
 export const state = (): State => ({

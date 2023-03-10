@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import Cookies from 'js-cookie';
 import { projectIncludesCandidateSpeciality } from '@/helpers/project';
+import { isCandidate } from '@/helpers/typeCheck';
+import { UserCandidate } from '@/models/User';
 import { Project } from '@/models/Project';
 import { useAuthStore } from '../auth/useAuthStore';
 import { useParticipationsStore } from '../participations/useParticipationsStore';
@@ -15,6 +17,8 @@ export const useModalsStore = defineStore('modals', {
       const authStore = useAuthStore();
       const participationsStore = useParticipationsStore();
       const projectsStore = useProjectsStore();
+
+      if (!isCandidate(authStore.profileData)) return;
 
       if (!authStore.isAuth || !authStore.profileData) {
         this.authModal = true;
@@ -37,7 +41,10 @@ export const useModalsStore = defineStore('modals', {
       }
 
       const isSameInstitute = await this._onAsync(() =>
-        projectIncludesCandidateSpeciality(authStore.profileData!, project),
+        projectIncludesCandidateSpeciality(
+          authStore.profileData as UserCandidate,
+          project,
+        ),
       );
 
       if (!isSameInstitute) {

@@ -1,11 +1,9 @@
 import { Institute } from './Institute';
 import { Tag } from './Project';
+import { CommonUserData } from './User';
 
-export interface Candidate {
-  id: number;
-  fio: string;
+export interface Candidate extends CommonUserData {
   about: string;
-  email: string;
   numz: string;
   phone: string;
   course: number;
@@ -24,11 +22,9 @@ export interface Candidate {
   };
   group_id: number;
   skills: Tag[];
-  is_student: boolean;
-  is_teacher: boolean;
 }
 
-export interface UserSkills {
+export interface CandidateSkills {
   common: Tag[];
   personal: Tag[];
 }

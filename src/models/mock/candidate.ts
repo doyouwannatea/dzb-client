@@ -1,5 +1,6 @@
-import { Candidate, UserSkills } from '../Candidate';
+import { Candidate, CandidateSkills } from '../Candidate';
 import { Tag } from '../Project';
+import { UserCandidate } from '../User';
 import { skills, skillCategories } from './project-skills';
 
 const commonSkills: Tag[] = [
@@ -11,7 +12,7 @@ const commonSkills: Tag[] = [
 ];
 const personalSkills: Tag[] = [skillCategories[3]];
 
-export const candidate: Candidate = {
+export const userCandidate: UserCandidate = {
   id: 2,
   fio: 'Булгатов Александр',
   about: 'Информация обо мне',
@@ -71,8 +72,6 @@ export const candidateList: Candidate[] = [
       },
     },
     skills: [...commonSkills, ...personalSkills],
-    is_student: true,
-    is_teacher: false,
   },
   {
     id: 4,
@@ -100,8 +99,6 @@ export const candidateList: Candidate[] = [
       },
     },
     skills: [...commonSkills, ...personalSkills],
-    is_student: true,
-    is_teacher: false,
   },
   {
     id: 5,
@@ -129,8 +126,6 @@ export const candidateList: Candidate[] = [
       },
     },
     skills: [...commonSkills, ...personalSkills],
-    is_student: true,
-    is_teacher: false,
   },
   {
     id: 6,
@@ -158,8 +153,6 @@ export const candidateList: Candidate[] = [
       },
     },
     skills: [...commonSkills, ...personalSkills],
-    is_student: true,
-    is_teacher: false,
   },
   {
     id: 7,
@@ -187,12 +180,10 @@ export const candidateList: Candidate[] = [
       },
     },
     skills: [...commonSkills, ...personalSkills],
-    is_student: true,
-    is_teacher: false,
   },
 ];
 
-export const userSkills: UserSkills = {
+export const candidateSkills: CandidateSkills = {
   common: commonSkills,
   personal: personalSkills,
 };

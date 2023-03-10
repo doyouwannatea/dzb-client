@@ -1,28 +1,54 @@
 import { deepClone } from '@/helpers/array';
 import { delayRes } from '@/helpers/promise';
-import { Candidate } from '@/models/Candidate';
-import { candidate } from '@/models/mock/candidate';
-import { Supervisor } from '@/models/Supervisor';
+import { userCandidate } from '@/models/mock/candidate';
+import { userSupervisor } from '@/models/mock/supervisor';
+import { UserCandidate, UserSupervisor } from '@/models/User';
 import { AUTH_TOKEN_REQUIRED } from '@/values/error-messages';
+import Cookies from 'js-cookie';
 import ICampusApi from './ICampusApi';
+
+// Выбор типа пользователя для тестирования функционала без сервера
+type MockRole = 'teacher' | 'student';
+
+const MOCK_ROLE_COOKIE_KEY = 'MOCK_ROLE_COOKIE_KEY';
+
+function setMockRole(type: MockRole | '') {
+  Cookies.set(MOCK_ROLE_COOKIE_KEY, type);
+}
+function getMockRole(): MockRole | '' {
+  return (Cookies.get(MOCK_ROLE_COOKIE_KEY) as MockRole) || '';
+}
 
 export default class CampusApiMock extends ICampusApi {
   async auth(): Promise<void> {
-    ICampusApi.setAuthToken(
-      '6956a5x2a38zf27ad9ce3b9b464b73d2131e4bd01053333e758ae00a6fddf995',
-    );
+    let mockRole: MockRole | undefined = undefined;
+
+    const isTeacher = window.confirm('Зайти как преподаватель?');
+    if (isTeacher) mockRole = 'teacher';
+
+    if (!mockRole) {
+      const isStudent = window.confirm('Зайти как студент?');
+      if (isStudent) mockRole = 'student';
+    }
+
+    if (!mockRole) return;
+
+    setMockRole(mockRole);
     window.location.reload();
-    return delayRes(undefined, 300);
   }
 
   async logout(): Promise<void> {
     await delayRes(undefined, 200);
-    ICampusApi.deleteAuthToken();
+    setMockRole('');
   }
 
-  async getUserInfo(): Promise<Candidate | Supervisor> {
-    const authToken = ICampusApi.getAuthToken();
-    if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
-    return delayRes(deepClone(candidate), 300);
+  async getUserInfo(): Promise<UserCandidate | UserSupervisor> {
+    const mockRole = getMockRole();
+    if (!mockRole) throw new Error(AUTH_TOKEN_REQUIRED);
+    if (mockRole === 'teacher') {
+      return delayRes(deepClone(userSupervisor), 300);
+    }
+
+    return delayRes(deepClone(userCandidate), 300);
   }
 }

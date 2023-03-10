@@ -1,10 +1,9 @@
-import { Candidate } from '@/models/Candidate';
-import { Supervisor } from '@/models/Supervisor';
+import { UserCandidate, UserSupervisor } from '@/models/User';
 
-export function isCandidate(obj: any): obj is Candidate {
-  return obj.training_group !== undefined;
+export function isCandidate(obj: any): obj is UserCandidate {
+  return obj.is_student;
 }
 
-export function isSupervisor(obj: any): obj is Supervisor {
-  return obj.position !== undefined;
+export function isSupervisor(obj: any): obj is UserSupervisor {
+  return obj.is_teacher;
 }

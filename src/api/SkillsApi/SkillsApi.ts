@@ -1,10 +1,10 @@
-import { UserSkills } from '@/models/Candidate';
+import { CandidateSkills } from '@/models/Candidate';
 import { Tag } from '@/models/Project';
 import SkillsApiMock from './SkillsApiMock';
 import ISkillsApi from './ISkillsApi';
 
 export default class SkillsApi extends ISkillsApi {
-  async getUserSkills(): Promise<UserSkills> {
+  async getUserSkills(): Promise<CandidateSkills> {
     const campusAuthApiMock = new SkillsApiMock();
     return campusAuthApiMock.getUserSkills();
   }

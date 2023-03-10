@@ -1,4 +1,14 @@
 import { Supervisor } from '../Supervisor';
+import { UserSupervisor } from '../User';
+
+export const userSupervisor: UserSupervisor = {
+  id: 4,
+  fio: 'Антипин Дмитрий Алексеевич',
+  email: 'some-email@gmail.com',
+  position: 'руководитель проекта',
+  is_student: false,
+  is_teacher: true,
+};
 
 export const supervisorList: Supervisor[] = [
   {

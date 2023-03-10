@@ -44,6 +44,7 @@
 
 <script setup lang="ts">
   import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { isCandidate, isSupervisor } from '@/helpers/typeCheck';
   // components
   import AppList, { AppListItemType } from '@/components/ui/AppList.vue';
   import BasePanel from '@/components/ui/BasePanel.vue';
@@ -55,24 +56,40 @@
   const contactInfo: AppListItemType[] = [
     {
       title: 'E-Mail:',
-      content: profileData?.email ? profileData.email : '-',
-    },
-    {
-      title: 'Телефон:',
-      content: profileData?.phone ? profileData.phone : '-',
+      content: withDefaultFiller(profileData?.email),
     },
   ];
 
-  const addInfo: AppListItemType[] = [
-    {
-      title: 'Учебная группа:',
-      content: profileData?.training_group ? profileData.training_group : '-',
-    },
-    {
-      title: 'Курс:',
-      content: String(profileData?.course ? profileData.course : '-'),
-    },
-  ];
+  const addInfo: AppListItemType[] = [];
+
+  if (isCandidate(profileData)) {
+    contactInfo.push({
+      title: 'Телефон:',
+      content: withDefaultFiller(profileData?.phone),
+    });
+
+    addInfo.push(
+      {
+        title: 'Учебная группа:',
+        content: withDefaultFiller(profileData?.training_group),
+      },
+      {
+        title: 'Курс:',
+        content: withDefaultFiller(profileData?.course),
+      },
+    );
+  }
+
+  if (isSupervisor(profileData)) {
+    addInfo.push({
+      title: 'Должность:',
+      content: withDefaultFiller(profileData?.position),
+    });
+  }
+
+  function withDefaultFiller(str?: string | number, filler = '-'): string {
+    return str ? String(str) : filler;
+  }
 
   function makeAppListItemsWide(items: AppListItemType[]) {
     return items.map((item) => ({ ...item, wide: true }));
