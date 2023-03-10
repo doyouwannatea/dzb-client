@@ -75,6 +75,7 @@ export default class ParticipationApiMock extends IParticipationApi {
     }
 
     const candidate = await campusApi.getUserInfo();
+    if (!candidate) return;
     if (isSupervisor(candidate)) return;
     participationList.push({
       id: Math.floor(Math.random() * 100),

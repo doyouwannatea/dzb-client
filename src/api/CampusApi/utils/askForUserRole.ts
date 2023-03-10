@@ -7,13 +7,13 @@ type UserRole = keyof UserMetadata;
 const isTeacherKey: UserRole = 'is_teacher';
 const isStudentKey: UserRole = 'is_student';
 
-export function setMockRoleToCookies(type?: UserRole) {
+export function setUserRoleToCookies(role?: UserRole) {
   Cookies.remove(isTeacherKey);
   Cookies.remove(isStudentKey);
-  if (type) Cookies.set(type, '1');
+  if (role) Cookies.set(role, '1');
 }
 
-export function getMockRoleFromCookies(): UserRole | undefined {
+export function getUserRoleFromCookies(): UserRole | undefined {
   const isStudent = Cookies.get(isStudentKey);
   if (isStudent) return 'is_student';
 
@@ -23,16 +23,12 @@ export function getMockRoleFromCookies(): UserRole | undefined {
   return undefined;
 }
 
-export function askForMockRole(): UserRole | undefined {
-  let mockRole: UserRole | undefined = undefined;
-
+export function askForUserRole(): UserRole | undefined {
   const isTeacher = window.confirm('Зайти как преподаватель?');
-  if (isTeacher) mockRole = 'is_teacher';
+  if (isTeacher) return 'is_teacher';
 
-  if (!mockRole) {
-    const isStudent = window.confirm('Зайти как студент?');
-    if (isStudent) mockRole = 'is_student';
-  }
+  const isStudent = window.confirm('Зайти как студент?');
+  if (isStudent) return 'is_student';
 
-  return mockRole;
+  return undefined;
 }

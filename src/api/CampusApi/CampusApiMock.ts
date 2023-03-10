@@ -5,10 +5,10 @@ import { userSupervisor } from '@/models/mock/supervisor';
 import { UserCandidate, UserSupervisor } from '@/models/User';
 import ICampusApi from './ICampusApi';
 import {
-  askForMockRole,
-  setMockRoleToCookies,
-  getMockRoleFromCookies,
-} from './utils/askForMockRole';
+  askForUserRole,
+  setUserRoleToCookies,
+  getUserRoleFromCookies,
+} from './utils/askForUserRole';
 import { AUTH_REQUIRED } from '@/values/error-messages';
 import {
   deleteAuthTokenFromCookies,
@@ -18,28 +18,34 @@ import {
 
 export default class CampusApiMock extends ICampusApi {
   async auth(): Promise<void> {
-    const mockRole = askForMockRole();
+    const mockRole = askForUserRole();
     if (!mockRole) return;
 
     setAuthTokenToCookies('token');
-    setMockRoleToCookies(mockRole);
+    setUserRoleToCookies(mockRole);
     window.location.reload();
   }
 
   async logout(): Promise<void> {
     await sleep(200);
     deleteAuthTokenFromCookies();
-    setMockRoleToCookies(undefined);
+    setUserRoleToCookies(undefined);
   }
 
-  async getUserInfo(): Promise<UserCandidate | UserSupervisor> {
-    const token = getAuthTokenFromCookies();
-    const mockRole = getMockRoleFromCookies();
-    if (!mockRole || !token) throw new Error(AUTH_REQUIRED);
-    if (mockRole === 'is_teacher') {
-      return delayRes(deepClone(userSupervisor), 300);
-    }
-
+  async getCandidateInfo(): Promise<UserCandidate> {
     return delayRes(deepClone(userCandidate), 300);
+  }
+
+  async getSupervisorInfo(): Promise<UserSupervisor> {
+    return delayRes(deepClone(userSupervisor), 300);
+  }
+
+  async getUserInfo(): Promise<UserCandidate | UserSupervisor | undefined> {
+    const token = getAuthTokenFromCookies();
+    const mockRole = getUserRoleFromCookies();
+    if (!mockRole || !token) throw new Error(AUTH_REQUIRED);
+    if (mockRole === 'is_teacher') return this.getSupervisorInfo();
+    if (mockRole === 'is_student') return this.getCandidateInfo();
+    return undefined;
   }
 }

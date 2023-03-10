@@ -1,6 +1,9 @@
 import ky from 'ky';
 import { useToast } from 'vue-toastification';
-import ICampusApi from './CampusApi/ICampusApi';
+import {
+  AUTH_TOKEN_KEY,
+  getAuthTokenFromCookies,
+} from './CampusApi/utils/authToken';
 
 const toast = useToast();
 
@@ -10,10 +13,8 @@ export const baseKyInstance = ky.create({
   hooks: {
     beforeRequest: [
       (request) => {
-        request.headers.set(
-          ICampusApi.AUTH_TOKEN_NAME,
-          ICampusApi.getAuthToken() || '',
-        );
+        const authToken = getAuthTokenFromCookies();
+        if (authToken) request.headers.set(AUTH_TOKEN_KEY, authToken);
       },
     ],
     afterResponse: [
