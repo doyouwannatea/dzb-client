@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { storeToRefs } from 'pinia';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useWatchProjectQueries } from '@/hooks/useProjectFilters';
   import { useFetchAdditionalProjectData } from '@/hooks/useFetchAdditionalProjectData';
@@ -48,6 +48,8 @@
     useHomePageSavedScrollPosition,
     useSaveHomePageScrollPosition,
   } from '@/hooks/useHomePageScrollPosition';
+  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { RouteNames } from '@/router/types/route-names';
   // components
   import ProjectSearch from '@/components/project/ProjectSearch.vue';
   import ProjectSearchBadStub from '@/components/project/ProjectSearchBadStub.vue';
@@ -58,19 +60,15 @@
   import PageLayout from '@/components/layout/PageLayout.vue';
   import OpenProjectFilterModalButton from '@/components/project/OpenProjectFilterModalButton.vue';
   import ProjectListFilterModal from '../components/project/ProjectListFilterModal.vue';
-  import { useSmallDevice } from '@/helpers/breakpoints';
-  import { RouteNames } from '@/router/types/route-names';
 
   useWatchProjectQueries(RouteNames.HOME);
   useFetchAdditionalProjectData();
   useSaveHomePageScrollPosition();
   useHomePageSavedScrollPosition();
 
-  const useProjectStore = useProjectsStore();
-  const error = computed(() => useProjectStore.error);
-  const loading = computed(() => useProjectStore.loading);
-  const projectList = computed(() => useProjectStore.projectList);
-  const projectCount = computed(() => useProjectStore.projectCount);
+  const projectStore = useProjectsStore();
+  const { error, loading, projectList, projectCount } =
+    storeToRefs(projectStore);
   const isSmallDevice = useSmallDevice();
 
   const PROJECTS_PER_PAGE = 7;
