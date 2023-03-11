@@ -18,3 +18,7 @@ export const StateClass: Record<ProjectStateID, string> = {
   [ProjectStateID.ArchivedState]: 'archived',
   [ProjectStateID.ProcessingState]: 'processing',
 };
+
+export const StateAcronyms: Partial<Record<ProjectStateID, string>> = {
+  [ProjectStateID.ProcessingState]: 'Обр-ка заявок',
+};

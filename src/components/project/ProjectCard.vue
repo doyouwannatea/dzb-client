@@ -4,7 +4,11 @@
       <RouterLink class="title" :to="toProjectRoute(project.id)">
         {{ project.title }}
       </RouterLink>
-      <ProjectStatus class="status" :state="project.state" />
+      <ProjectStatus
+        class="status"
+        :state="project.state"
+        :use-acronyms="isMobile"
+      />
       <div
         v-if="project?.supervisorsNames || project?.supervisors.length > 0"
         class="subtitle"
@@ -70,7 +74,7 @@
   import { Project } from '@/models/Project';
   import { StateClass } from '@/models/ProjectState';
   import { toProjectRoute } from '@/router/utils/routes';
-  import { useSmallDevice, useDesktop } from '@/helpers/breakpoints';
+  import { useSmallDevice, useDesktop, useMobile } from '@/helpers/breakpoints';
   // components
   import ProjectStatus from './ProjectStatus.vue';
   import SkillList from '../skill/SkillList.vue';
@@ -82,6 +86,7 @@
   const props = defineProps<{ project: Project }>();
   const isSmallDevice = useSmallDevice();
   const isDesktop = useDesktop();
+  const isMobile = useMobile();
 
   const stateClass = StateClass[props.project.state.id];
 </script>

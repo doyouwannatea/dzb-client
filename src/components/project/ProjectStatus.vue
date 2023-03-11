@@ -1,16 +1,19 @@
 <template>
-  <BaseBadge :class="['status', stateClass]">{{ state.state }}</BaseBadge>
+  <BaseBadge :class="['status', stateClass]">
+    {{ props.useAcronyms ? stateAcronyms : state.state }}
+  </BaseBadge>
 </template>
 
 <script setup lang="ts">
-  import { State, StateClass } from '@/models/ProjectState';
+  import { State, StateClass, StateAcronyms } from '@/models/ProjectState';
   // components
   import BaseBadge from '../ui/BaseBadge.vue';
 
-  type Props = { state: State };
-  const props = defineProps<Props>();
+  type Props = { state: State; useAcronyms?: boolean };
+  const props = withDefaults(defineProps<Props>(), { useAcronyms: false });
 
   const stateClass = StateClass[props.state.id];
+  const stateAcronyms = StateAcronyms[props.state.id] || props.state.state;
 </script>
 
 <style scoped>
