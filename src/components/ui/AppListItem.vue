@@ -48,7 +48,7 @@
     &.wide {
       grid-template-columns: minmax(auto, 14.375rem) auto;
 
-      @media (max-width: $mobile-s) {
+      @media (max-width: $tablet) {
         grid-template-columns: auto;
       }
     }

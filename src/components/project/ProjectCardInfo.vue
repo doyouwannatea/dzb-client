@@ -35,7 +35,7 @@
     font-size: 1.125rem;
     line-height: 1.4375rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       flex-wrap: wrap;
       justify-content: flex-start;
     }

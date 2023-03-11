@@ -45,7 +45,7 @@
     padding-top: 5.8125rem;
     padding-bottom: 6.25rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       min-height: 75vh;
       padding-bottom: 2rem;
     }

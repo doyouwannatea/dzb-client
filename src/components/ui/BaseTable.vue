@@ -51,7 +51,7 @@
     text-align: left;
     border-collapse: collapse;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       font-size: 1rem;
     }
 
@@ -66,7 +66,7 @@
       padding-bottom: 1.4375rem;
       border-bottom: 1px solid #e5f1ea;
 
-      @media (max-width: $mobile-s) {
+      @media (max-width: $tablet) {
         height: 3.75rem;
         padding: 0.35rem 1rem;
       }
@@ -89,7 +89,7 @@
     padding-right: 0;
     padding-left: 0;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       overflow-x: auto;
     }
   }

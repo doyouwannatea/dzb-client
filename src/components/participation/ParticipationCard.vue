@@ -103,7 +103,7 @@
     column-gap: 0.9375rem;
     align-items: flex-start;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       grid-template-columns: 1fr;
       gap: 1rem;
     }
@@ -116,7 +116,7 @@
     font-size: 1.125rem;
     line-height: 150%;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       grid-row: 3;
       grid-column: 1 / -1;
       margin-top: 0;
@@ -129,7 +129,7 @@
     user-select: none;
 
     .desc {
-      @media (max-width: $mobile-s) {
+      @media (max-width: $tablet) {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -137,7 +137,7 @@
     }
 
     .card-content {
-      @media (max-width: $mobile-s) {
+      @media (max-width: $tablet) {
         grid-template-columns: 1fr auto;
       }
     }
@@ -158,7 +158,7 @@
     color: #4f5569;
     text-decoration: none;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       grid-row: 2;
       grid-column: 1 / -1;
     }
@@ -187,7 +187,7 @@
       }
     }
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       margin-top: 0;
     }
   }
@@ -209,7 +209,7 @@
     gap: 0.5rem;
     margin-top: 0.75rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       grid-row: 3;
       margin-top: 0;
     }

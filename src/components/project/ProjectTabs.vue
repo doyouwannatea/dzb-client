@@ -54,7 +54,7 @@
     text-decoration: none;
     text-transform: uppercase;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       flex: 1;
       padding: 1rem 0.5rem;
     }

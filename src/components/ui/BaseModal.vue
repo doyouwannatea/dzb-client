@@ -81,7 +81,7 @@
 
     max-width: 43.125rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       margin-right: 1.6875rem;
       margin-left: 1.6875rem;
     }
@@ -90,7 +90,7 @@
   .modal.m {
     max-width: 60rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       --top-p: 4.188rem;
       --bottom-p: 1rem;
       --side-p: 1rem;
@@ -108,7 +108,7 @@
     font-weight: 800;
     line-height: 3.1875rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       font-size: 2rem;
       line-height: normal;
     }
@@ -149,7 +149,7 @@
     overflow: auto;
     background-color: rgb(0 0 0 / 40%);
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       padding: 0;
     }
   }

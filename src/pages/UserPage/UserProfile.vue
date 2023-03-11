@@ -6,24 +6,18 @@
     <!-- CONTACT INFO -->
     <h2 class="subtitle">Контактная информация</h2>
     <AppList
-      class="margin-b app-list desktop"
+      class="margin-b app-list"
       row-gap="m"
-      :items="contactInfo"
-    />
-    <AppList
-      class="margin-b app-list mobile"
-      row-gap="m"
-      :items="makeAppListItemsWide(contactInfo)"
+      :items="isDesktop ? contactInfo : makeAppListItemsWide(contactInfo)"
     />
     <!-- CONTACT INFO -->
 
     <!-- ADDITIONAL INFO -->
     <h2 class="subtitle">Дополнительная информация</h2>
-    <AppList class="app-list desktop" row-gap="m" :items="addInfo" />
     <AppList
-      class="app-list mobile"
+      class="margin-b app-list"
       row-gap="m"
-      :items="makeAppListItemsWide(addInfo)"
+      :items="isDesktop ? addInfo : makeAppListItemsWide(addInfo)"
     />
     <!-- ADDITIONAL INFO -->
 
@@ -48,7 +42,9 @@
   import AppList, { AppListItemType } from '@/components/ui/AppList.vue';
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
+  import { useDesktop } from '@/helpers/breakpoints';
 
+  const isDesktop = useDesktop();
   const authStore = useAuthStore();
   const profileData = authStore.profileData;
 
@@ -97,21 +93,9 @@
       color: var(--gray-color-2);
     }
 
-    &.desktop {
-      @media (max-width: $mobile-s) {
-        display: none;
-      }
-    }
-
-    &.mobile {
-      display: none;
-
-      &:deep(.info-list-item) {
+    &:deep(.info-list-item) {
+      @media (max-width: $tablet) {
         gap: 0.5rem;
-      }
-
-      @media (max-width: $mobile-s) {
-        display: flex;
       }
     }
   }
@@ -134,7 +118,7 @@
     align-self: flex-end;
     margin-top: auto;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       width: 100%;
       margin-top: 2.5rem;
     }

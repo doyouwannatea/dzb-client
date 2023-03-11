@@ -128,7 +128,7 @@
   } from '@/models/Participation';
   import { immutableArraySort } from '@/helpers/object';
   import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
-  import { useMobileS } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/helpers/breakpoints';
   import cursorIconUrl from '@/assets/icons/cursor.svg?url';
   // components
   import ParticipationCard from '@/components/participation/ParticipationCard.vue';
@@ -145,12 +145,12 @@
     content?: ParticipationWithProject;
   };
 
-  const isMobile = useMobileS();
+  const isSmallDevice = useSmallDevice();
   const modalsStore = useModalsStore();
   const authStore = useAuthStore();
   const dragOptions = computed(() => ({
     animation: 200,
-    delay: isMobile.value ? 300 : 0,
+    delay: isSmallDevice.value ? 300 : 0,
     forceFallback: true,
     fallbackOnBody: true,
     scrollSpeed: 20,
@@ -318,7 +318,7 @@
     align-items: flex-start;
     justify-content: flex-end;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       flex-direction: column;
     }
   }
@@ -327,7 +327,7 @@
     display: flex;
     gap: 0.5rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       flex-wrap: wrap;
       width: 100%;
     }
@@ -337,7 +337,7 @@
     width: 100%;
     max-width: 25rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       width: 100%;
       max-width: unset;
     }
@@ -350,7 +350,7 @@
     line-height: 150%;
     color: var(--gray-color-2);
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       margin-bottom: 1.25rem;
     }
   }

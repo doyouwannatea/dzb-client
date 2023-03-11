@@ -17,7 +17,7 @@
     grid-template-columns: 382px auto;
     gap: 2.125rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       grid-template-columns: auto;
     }
   }
@@ -25,7 +25,7 @@
   .aside {
     align-self: flex-start;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       display: none;
     }
   }

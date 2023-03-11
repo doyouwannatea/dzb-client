@@ -277,7 +277,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5625rem 4.375rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       grid-template-columns: 1fr;
     }
   }
@@ -290,7 +290,7 @@
     column-gap: 18rem;
     margin-top: 0.9375rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       grid-template-columns: 1fr;
       gap: 2rem;
     }

@@ -128,7 +128,7 @@
     color: #fff;
     background-color: var(--text-color);
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       margin-top: 2.8125rem;
     }
   }
@@ -148,7 +148,7 @@
     max-width: 16.875rem;
     color: #fff;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       --width: 3.375rem;
       --height: 3.375rem;
 
@@ -171,7 +171,7 @@
       text-decoration: underline;
     }
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       margin-top: 1em;
     }
 
@@ -185,7 +185,7 @@
     grid-template-columns: 1fr repeat(5, auto);
     column-gap: 4.375rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       display: flex;
       flex-direction: column;
       gap: 2rem;
@@ -197,7 +197,7 @@
     height: 100%;
     background-color: rgb(255 255 255 / 80%);
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       width: 100%;
       height: 1px;
     }

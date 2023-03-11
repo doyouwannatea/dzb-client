@@ -46,7 +46,7 @@
     padding-left: 0;
     list-style: none;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       flex-wrap: wrap;
     }
   }
@@ -58,7 +58,7 @@
     line-height: normal;
     color: #7b7b7b;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;

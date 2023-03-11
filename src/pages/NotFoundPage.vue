@@ -249,7 +249,7 @@
     justify-content: space-evenly;
     margin-top: 7rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       flex-direction: column;
       margin-top: 2.8125rem;
     }
@@ -263,7 +263,7 @@
     min-width: 18.75rem;
     max-width: 29.625rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       align-items: center;
       max-width: initial;
       text-align: center;

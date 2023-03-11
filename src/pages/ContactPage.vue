@@ -207,7 +207,7 @@
     margin-top: 4.75rem;
     margin-bottom: 6.7325rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       margin-top: 30px;
       margin-bottom: 36px;
     }
@@ -240,7 +240,7 @@
     line-height: 1.9375rem;
     color: var(--gray-color-2);
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       margin-bottom: 7px;
       font-size: 16px;
     }
@@ -253,7 +253,7 @@
     line-height: 1.625rem;
     color: var(--text-color);
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       font-size: 16px;
     }
   }

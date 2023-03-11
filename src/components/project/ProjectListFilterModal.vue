@@ -23,7 +23,7 @@
   @import '@styles/breakpoints';
 
   .modal {
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       &:deep(.modal-content) {
         padding: 0;
       }

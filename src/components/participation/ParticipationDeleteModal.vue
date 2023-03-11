@@ -62,7 +62,7 @@
     margin-top: 0.75rem;
     font-size: 1.125rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       padding: 0;
     }
   }

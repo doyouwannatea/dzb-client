@@ -34,7 +34,7 @@
     border-radius: 0.625rem;
     box-shadow: 0 0 0.3125rem rgb(0 0 0 / 18%);
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       right: 0;
       bottom: 130%;
       left: 0;
@@ -50,7 +50,7 @@
     display: flex;
     align-items: center;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       position: relative;
     }
   }
@@ -65,7 +65,7 @@
     background: transparent;
     border: none;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       position: static;
     }
   }

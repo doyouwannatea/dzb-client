@@ -125,7 +125,7 @@
     justify-content: center;
     list-style: none;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       gap: 1.25rem;
     }
   }

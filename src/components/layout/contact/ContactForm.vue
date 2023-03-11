@@ -47,7 +47,7 @@
           >
         </p>
         <BaseButton
-          :full-width="isMobileS"
+          :full-width="isSmallDevice"
           case="uppercase"
           variant="outlined"
           color="white"
@@ -66,9 +66,9 @@
   import BaseInput from '@/components/ui/BaseInput.vue';
   import BaseTextarea from '@/components/ui/BaseTextarea.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
-  import { useMobileS } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/helpers/breakpoints';
 
-  const isMobileS = useMobileS();
+  const isSmallDevice = useSmallDevice();
 </script>
 
 <style lang="scss" module>
@@ -89,7 +89,7 @@
     background-color: var(--accent-color-1);
     border-radius: 0.625rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       flex-direction: column;
       padding: 22px 20px;
       margin-top: 16px;
@@ -120,7 +120,7 @@
       flex: 1 230px;
     }
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       gap: 32px;
       margin-bottom: 32px;
     }
@@ -156,7 +156,7 @@
     line-height: 109.8%;
     color: var(--light-color);
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       max-width: 80%;
       margin-bottom: 16px;
       font-size: 24px;
@@ -174,7 +174,7 @@
       color: inherit;
     }
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       font-size: 12px;
       line-height: 17px;
     }

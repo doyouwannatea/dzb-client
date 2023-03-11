@@ -47,7 +47,7 @@
         text-decoration: underline;
       }
 
-      @media (max-width: $mobile-s) {
+      @media (max-width: $tablet) {
         padding: 1rem;
         padding-right: 4rem;
         font-size: 1.2rem;
@@ -70,7 +70,7 @@
     line-height: 150%;
     color: var(--text-color);
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       padding: 1rem;
       padding-top: 0;
       font-size: 1.2rem;

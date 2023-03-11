@@ -9,7 +9,7 @@
       @close="showHistoryModal = false"
     />
     <ProjectMobileDetails
-      v-if="isMobileS"
+      v-if="isSmallDevice"
       :project="project"
       :show-history-modal="showHistoryModal"
       :history="history"
@@ -29,13 +29,13 @@
   import { ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { useMobileS } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/helpers/breakpoints';
   // components
   import ProjectMobileDetails from './ProjectMobileDetails.vue';
   import ProjectHistoryModal from '@/components/project/ProjectHistoryModal.vue';
   import ProjectDesktopDetails from './ProjectDesktopDetails.vue';
 
-  const isMobileS = useMobileS();
+  const isSmallDevice = useSmallDevice();
   const projectsStore = useProjectsStore();
   const showHistoryModal = ref(false);
   const {

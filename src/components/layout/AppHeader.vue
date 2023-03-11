@@ -41,7 +41,7 @@
     justify-content: space-between;
     height: 7rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       height: initial;
       padding-top: 0.875rem;
       padding-bottom: 0.875rem;
@@ -65,7 +65,7 @@
 
   .navigation,
   .actions {
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       display: none;
     }
   }

@@ -49,7 +49,7 @@
     border-radius: 50%;
     box-shadow: 0 0 0.3125rem rgb(0 0 0 / 18%);
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       display: none;
     }
   }

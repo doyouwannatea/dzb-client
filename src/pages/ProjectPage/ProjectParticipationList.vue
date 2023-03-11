@@ -92,7 +92,7 @@
   }
 
   .table:deep(th:nth-child(4)) {
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       min-width: 5.3em;
       word-break: break-word;
     }

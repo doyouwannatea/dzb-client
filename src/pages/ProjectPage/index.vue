@@ -70,7 +70,7 @@
     margin-top: 1.625rem;
     margin-bottom: 1.5rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       font-size: 1.75rem;
       line-height: 2.5rem;
     }

@@ -156,7 +156,7 @@
     margin-top: 4.75rem;
     margin-bottom: 2.8125rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       margin-top: 1.875rem;
     }
   }

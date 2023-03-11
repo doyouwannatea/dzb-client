@@ -15,7 +15,8 @@
         {{ project.specialities.map((ins) => ins.name).join(', ') }}
       </div>
       <ProjectCardInfo
-        class="info--mobile-s"
+        v-if="isSmallDevice"
+        class="mobile-info"
         :places="project.places"
         :difficulty="project.difficulty"
       />
@@ -36,7 +37,7 @@
         </li>
       </ul>
       <ProjectCardInfo
-        class="info--desktop-s"
+        v-if="isDesktop"
         :places="project.places"
         :difficulty="project.difficulty"
       />
@@ -69,6 +70,7 @@
   import { Project } from '@/models/Project';
   import { StateClass } from '@/models/ProjectState';
   import { toProjectRoute } from '@/router/utils/routes';
+  import { useSmallDevice, useDesktop } from '@/helpers/breakpoints';
   // components
   import ProjectStatus from './ProjectStatus.vue';
   import SkillList from '../skill/SkillList.vue';
@@ -78,6 +80,8 @@
   import ProjectCardInfo from './ProjectCardInfo.vue';
 
   const props = defineProps<{ project: Project }>();
+  const isSmallDevice = useSmallDevice();
+  const isDesktop = useDesktop();
 
   const stateClass = StateClass[props.project.state.id];
 </script>
@@ -96,7 +100,7 @@
     border-radius: 0.625rem;
     box-shadow: 0 0 0.3125rem rgb(0 0 0 / 18%);
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       border-left: none;
     }
   }
@@ -123,7 +127,7 @@
     align-items: center;
     justify-content: space-between;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       flex-direction: column;
       gap: 18px;
       align-items: initial;
@@ -144,7 +148,7 @@
     align-self: flex-end;
     margin-left: auto;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       flex-direction: column;
       align-items: initial;
       align-self: initial;
@@ -152,23 +156,11 @@
     }
   }
 
-  .info {
-    &--mobile-s {
-      display: none;
-      grid-row: 4;
-      grid-column: 1;
-      margin-top: 0;
-
-      @media (max-width: $mobile-s) {
-        display: flex;
-      }
-    }
-
-    &--desktop-s {
-      @media (max-width: $mobile-s) {
-        display: none;
-      }
-    }
+  .mobile-info {
+    display: flex;
+    grid-row: 4;
+    grid-column: 1;
+    margin-top: 0;
   }
 
   .container {
@@ -197,9 +189,9 @@
     &:focus-visible {
       text-decoration: underline;
     }
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       grid-column: 1 / -1;
-      max-width: auto;
+      max-width: none;
     }
   }
 
@@ -224,7 +216,7 @@
     justify-self: flex-end;
     white-space: nowrap;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       grid-column: 2;
       padding-right: 1rem;
       padding-left: 1rem;

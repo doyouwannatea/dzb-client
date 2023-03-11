@@ -1,2 +1,3 @@
-export const mobileS = '834px';
-export const desktopS = '1536px';
+export const desktop = '1536px';
+export const tablet = '834px';
+export const mobile = '450px';

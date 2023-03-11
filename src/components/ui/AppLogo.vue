@@ -25,7 +25,7 @@
     text-decoration: none;
     text-transform: uppercase;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       --width: 1.875rem;
       --height: 1.875rem;
 

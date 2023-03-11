@@ -65,7 +65,7 @@
     background-color: var(--text-color);
     border-radius: 50%;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       grid-row: 2;
     }
   }

@@ -2,7 +2,7 @@
   <BaseLayout>
     <template #header>
       <AppHeader />
-      <BottomNavigationBar v-if="isMobile" />
+      <BottomNavigationBar v-if="isSmallDevice" />
     </template>
     <template #content>
       <BaseContainer v-bind="$attrs" size="md">
@@ -29,7 +29,7 @@
   import AppFooter from './AppFooter.vue';
   import BaseContainer from '../ui/BaseContainer.vue';
   import BottomNavigationBar from './mobile/BottomNavigationBar.vue';
-  import { useMobileS } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/helpers/breakpoints';
 
-  const isMobile = useMobileS();
+  const isSmallDevice = useSmallDevice();
 </script>

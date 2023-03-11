@@ -1,6 +1,6 @@
 <template>
   <PageLayout>
-    <UserNavigation v-if="isMobile" variant="mobile" />
+    <UserNavigation v-if="isSmallDevice" variant="mobile" />
     <header class="header">
       <h1 class="title page-title">Профиль пользователя</h1>
     </header>
@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
-  import { useMobileS } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/helpers/breakpoints';
   import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
   // components
   import SidebarContainer from '@/components/layout/SidebarContainer.vue';
@@ -38,7 +38,7 @@
   import PageLayout from '@/components/layout/PageLayout.vue';
   import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
 
-  const isMobile = useMobileS();
+  const isSmallDevice = useSmallDevice();
   const participationsStore = useParticipationsStore();
   useWatchAuthorization();
 </script>
@@ -47,7 +47,7 @@
   @import '@styles/breakpoints';
 
   .sidebar-container {
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       margin-top: 1.875rem;
     }
   }
@@ -56,7 +56,7 @@
     margin-top: 4.75rem;
     margin-bottom: 2.8125rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       display: none;
     }
   }

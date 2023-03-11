@@ -1,5 +1,5 @@
 <template>
-  <ProjectListFilterModal v-if="isMobile" />
+  <ProjectListFilterModal v-if="isSmallDevice" />
   <PageLayout>
     <header class="header">
       <h1 class="title page-title">Все проекты</h1>
@@ -9,7 +9,7 @@
     </header>
     <aside class="header-controls">
       <ProjectSearch />
-      <OpenProjectFilterModalButton v-if="isMobile" />
+      <OpenProjectFilterModalButton v-if="isSmallDevice" />
     </aside>
     <SidebarContainer>
       <template #sidebar>
@@ -29,7 +29,7 @@
             v-if="projectList && projectList.length"
             :page-size="PROJECTS_PER_PAGE"
             :pages-visible="
-              isMobile ? PAGES_VISIBLE_MOBILE : PAGES_VISIBLE_DESKTOP
+              isSmallDevice ? PAGES_VISIBLE_MOBILE : PAGES_VISIBLE_DESKTOP
             "
             :total-items="projectCount"
           />
@@ -58,7 +58,7 @@
   import PageLayout from '@/components/layout/PageLayout.vue';
   import OpenProjectFilterModalButton from '@/components/project/OpenProjectFilterModalButton.vue';
   import ProjectListFilterModal from '../components/project/ProjectListFilterModal.vue';
-  import { useMobileS } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/helpers/breakpoints';
   import { RouteNames } from '@/router/types/route-names';
 
   useWatchProjectQueries(RouteNames.HOME);
@@ -71,7 +71,7 @@
   const loading = computed(() => useProjectStore.loading);
   const projectList = computed(() => useProjectStore.projectList);
   const projectCount = computed(() => useProjectStore.projectCount);
-  const isMobile = useMobileS();
+  const isSmallDevice = useSmallDevice();
 
   const PROJECTS_PER_PAGE = 7;
   const PAGES_VISIBLE_DESKTOP = 7;
@@ -93,7 +93,7 @@
     margin-top: 4.75rem;
     margin-bottom: 2.8125rem;
 
-    @media (max-width: $mobile-s) {
+    @media (max-width: $tablet) {
       margin-top: 1.875rem;
     }
   }
