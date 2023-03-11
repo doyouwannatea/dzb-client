@@ -16,7 +16,9 @@ export function toJSONLocal(date: Date) {
   return local.toJSON().slice(0, 10);
 }
 
-export function formatDate(date: Date) {
+export function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return dateString;
   return date.toLocaleDateString('ru-RU');
 }
 

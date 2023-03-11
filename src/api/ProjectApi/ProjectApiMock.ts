@@ -153,7 +153,7 @@ export default class ProjectApiMock extends IProjectApi {
       prevProjectId = project?.id || null;
     }
 
-    return history;
+    return history.map(formatProjectDate);
   }
 
   async getActiveUserProject(): Promise<Project | undefined> {

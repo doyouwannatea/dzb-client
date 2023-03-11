@@ -82,9 +82,10 @@ export default class ProjectApi extends IProjectApi {
 
   async getProjectHistory(projectId: number): Promise<Project[]> {
     try {
-      return await baseKyInstance
+      const projectList: Project[] = await baseKyInstance
         .get(`api/projects/${projectId}/history`)
         .json();
+      return projectList.map(formatProjectDate);
     } catch (error) {
       return [];
     }
