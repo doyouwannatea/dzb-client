@@ -46,7 +46,8 @@
     padding-bottom: 6.25rem;
 
     @media (max-width: $mobile-s) {
-      padding-bottom: 45vh;
+      min-height: 75vh;
+      padding-bottom: 2rem;
     }
   }
 </style>
