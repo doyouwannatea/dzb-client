@@ -52,6 +52,7 @@ export const useProjectsStore = () => {
 
       // GET USER PROJECT LIST
       async getUserProjectList() {
+        this.userProjectList = undefined;
         return this._onAsync(async () => {
           const [activeProject, arhiveProjects] = await Promise.all([
             projectApi.getActiveUserProject(),
