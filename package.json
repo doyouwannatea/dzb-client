@@ -30,6 +30,7 @@
     "@vueform/multiselect": "^2.3.3",
     "@vueuse/core": "^7.6.2",
     "@vueuse/integrations": "^7.7.0",
+    "2gis-maps": "^3.7.3",
     "focus-trap": "^6.7.3",
     "js-cookie": "^3.0.1",
     "ky": "^0.28.7",
