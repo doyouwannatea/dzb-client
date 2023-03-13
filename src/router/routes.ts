@@ -16,6 +16,9 @@ const UserSkills = () => import('@/pages/UserPage/UserSkills.vue');
 const UserProjects = () => import('@/pages/UserPage/UserProjects.vue');
 import UserParticipations from '@/pages/UserPage/UserParticipations.vue';
 
+// Create project page
+const ProjectCreatePage = () => import('@/pages/ProjectCreatePage.vue');
+
 // Home page
 const HomePage = () => import('@/pages/HomePage.vue');
 
@@ -181,5 +184,10 @@ export const routes: RouteRecordRaw[] = [
     path: '/:pathMatch(.*)*',
     component: NotFound,
     name: RouteNames.NOT_FOUND,
+  },
+  {
+    path: '/createProject',
+    component: ProjectCreatePage,
+    name: RouteNames.PROJECT_CREATE,
   },
 ];
