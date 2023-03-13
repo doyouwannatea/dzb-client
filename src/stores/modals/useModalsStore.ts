@@ -60,6 +60,14 @@ export const useModalsStore = defineStore('modals', {
     },
     // OPEN ALERT MODAL
 
+    // OPEN CONFIRM MODAL
+    openConfirmModal(title?: string, agree?: string, disagree?: string) {
+      this.confirmModalTitle = title;
+      this.confirmModalAgree = agree;
+      this.confirmModalDisagree = disagree;
+    },
+    // OPEN CONFIRM MODAL
+
     // OPEN FEEDBACK MODAL
     openFeedbackModal(project: Project) {
       const authStore = useAuthStore();

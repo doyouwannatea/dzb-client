@@ -8,6 +8,9 @@ export interface State {
   projectFilterModal: boolean;
   alertModalTitle?: string;
   alertModalSubtitle?: string;
+  confirmModalTitle?: string;
+  confirmModalAgree?: string;
+  confirmModalDisagree?: string;
 }
 
 export const state = (): State => ({
@@ -20,4 +23,7 @@ export const state = (): State => ({
   projectFilterModal: false,
   alertModalTitle: undefined,
   alertModalSubtitle: '',
+  confirmModalTitle: undefined,
+  confirmModalAgree: '',
+  confirmModalDisagree: '',
 });
