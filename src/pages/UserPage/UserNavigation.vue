@@ -12,7 +12,10 @@
     </template>
 
     <li :class="['item', props.variant]">
-      <button :class="['action', props.variant]" @click="authStore.exit()">
+      <button
+        :class="['action', props.variant]"
+        @click="modalsStore.openExitConfirmModal()"
+      >
         Выйти из профиля
       </button>
     </li>
@@ -22,11 +25,12 @@
 <script setup lang="ts">
   import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { RouterLink } from 'vue-router';
 
   type Props = { variant: 'desktop' | 'mobile' };
   const props = withDefaults(defineProps<Props>(), { variant: 'desktop' });
-  const authStore = useAuthStore();
+  const modalsStore = useModalsStore();
   const routes = useRoledUserNavigationRoutes();
 </script>
 

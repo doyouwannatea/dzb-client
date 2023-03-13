@@ -46,12 +46,6 @@
   items.push({
     content: 'Выйти',
     type: 'button',
-    action: () => {
-      modalsStore.openConfirmModal(
-        'Вы уверены, что хотите выйти из аккаунта?',
-        'Выйти из аккаунта',
-        'Остаться',
-      );
-    },
+    action: () => modalsStore.openExitConfirmModal(),
   });
 </script>

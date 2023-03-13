@@ -10,7 +10,6 @@ import { state } from './state';
 export const useModalsStore = defineStore('modals', {
   state,
   actions: {
-    // OPEN PARTICIPATION MODAL
     async openParticipationModal(project: Project) {
       const authStore = useAuthStore();
       const participationsStore = useParticipationsStore();
@@ -51,24 +50,51 @@ export const useModalsStore = defineStore('modals', {
       projectsStore.openedProject = project;
       this.participationModal = true;
     },
-    // OPEN PARTICIPATION MODAL
 
-    // OPEN ALERT MODAL
     openAlertModal(title?: string, subtitle?: string) {
       this.alertModalTitle = title;
       this.alertModalSubtitle = subtitle;
     },
-    // OPEN ALERT MODAL
 
-    // OPEN CONFIRM MODAL
-    openConfirmModal(title?: string, agree?: string, disagree?: string) {
+    openConfirmModal(
+      title?: string,
+      agree?: string,
+      disagree?: string,
+      agreeAction?: () => void,
+      disagreeAction?: () => void,
+    ) {
       this.confirmModalTitle = title;
       this.confirmModalAgree = agree;
       this.confirmModalDisagree = disagree;
+      this.confirmModalAgreeAction = agreeAction;
+      this.confirmModalDisagreeAction = disagreeAction;
     },
-    // OPEN CONFIRM MODAL
 
-    // OPEN FEEDBACK MODAL
+    closeConfirmModal() {
+      this.confirmModalTitle = undefined;
+      this.confirmModalAgree = undefined;
+      this.confirmModalDisagree = undefined;
+      this.confirmModalAgreeAction = undefined;
+      this.confirmModalDisagreeAction = undefined;
+    },
+
+    openExitConfirmModal() {
+      const authStore = useAuthStore();
+
+      this.openConfirmModal(
+        'Вы уверены, что хотите выйти из аккаунта?',
+        'Выйти из аккаунта',
+        'Остаться',
+        () => {
+          authStore.exit();
+          this.closeConfirmModal();
+        },
+        () => {
+          this.closeConfirmModal();
+        },
+      );
+    },
+
     openFeedbackModal(project: Project) {
       const authStore = useAuthStore();
       const projectsStore = useProjectsStore();
@@ -81,15 +107,11 @@ export const useModalsStore = defineStore('modals', {
       projectsStore.openedProject = project;
       this.projectFeedbackModal = true;
     },
-    // OPEN FEEDBACK MODAL
 
-    // OPEN EDIT DISABLE MODAL
     openEditParticipationsDisabledModal() {
       this.openAlertModal('На данный момент вы не можете изменять свои заявки');
     },
-    // OPEN EDIT DISABLE MODAL
 
-    // OPEN EDIT DISABLE MODAL
     openAutoParticipationInfoModal() {
       const cookieKey = 'AUTO_PARTICIPATION_INFO_MODAL_IS_SHOWN';
       const isShown = Cookies.get(cookieKey);
@@ -100,9 +122,7 @@ export const useModalsStore = defineStore('modals', {
         'У Вас есть автоматически созданная заявка на проект. В связи с тем, что в прошлом семестре Вы не заполнили заявки на проекты через Ярмарку проектов, Вас распределили на свободный, наиболее подходящий под Вашу специальность проект. Эта заявка имеет наименьший приоритет среди остальных заявок, Вы можете изменить её приоритет или удалить.',
       );
     },
-    // OPEN EDIT DISABLE MODAL
 
-    // ON ASYNC
     async _onAsync<T>(callback: () => Promise<T>) {
       this.loading = true;
       try {
@@ -113,6 +133,5 @@ export const useModalsStore = defineStore('modals', {
         this.loading = false;
       }
     },
-    // ON ASYNC
   },
 });

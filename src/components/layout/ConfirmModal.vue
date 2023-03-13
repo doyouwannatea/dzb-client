@@ -1,7 +1,7 @@
 <template>
   <BaseModal
     :is-show="Boolean(modalsStore.confirmModalTitle)"
-    @close="modalsStore.confirmModalTitle = undefined"
+    @close="modalsStore.closeConfirmModal()"
   >
     <!-- MAIN CONTENT -->
     <div class="modal-content">
@@ -9,17 +9,14 @@
       <div class="modal-buttons">
         <BaseButton
           case="uppercase"
-          @click="modalsStore.confirmModalTitle = undefined"
+          @click="modalsStore.confirmModalDisagreeAction"
         >
           {{ modalsStore.confirmModalDisagree }}
         </BaseButton>
         <BaseButton
           case="uppercase"
           variant="outlined"
-          @click="
-            modalsStore.confirmModalTitle = undefined;
-            authStore.exit();
-          "
+          @click="modalsStore.confirmModalAgreeAction"
         >
           {{ modalsStore.confirmModalAgree }}
         </BaseButton>
@@ -34,10 +31,8 @@
   // components
   import BaseModal from '../ui/BaseModal.vue';
   import BaseButton from '../ui/BaseButton.vue';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
   const modalsStore = useModalsStore();
-  const authStore = useAuthStore();
 </script>
 
 <style lang="scss" scoped>

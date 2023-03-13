@@ -6,11 +6,15 @@ export interface State {
   participationModal: boolean;
   projectFeedbackModal: boolean;
   projectFilterModal: boolean;
+  // Alert modal
   alertModalTitle?: string;
   alertModalSubtitle?: string;
+  // Confirm modal
   confirmModalTitle?: string;
   confirmModalAgree?: string;
   confirmModalDisagree?: string;
+  confirmModalAgreeAction?: () => void;
+  confirmModalDisagreeAction?: () => void;
 }
 
 export const state = (): State => ({
@@ -21,9 +25,13 @@ export const state = (): State => ({
   participationSuccessModal: false,
   projectFeedbackModal: false,
   projectFilterModal: false,
+  // Alert modal
   alertModalTitle: undefined,
   alertModalSubtitle: '',
+  // Confirm modal
   confirmModalTitle: undefined,
   confirmModalAgree: '',
   confirmModalDisagree: '',
+  confirmModalAgreeAction: undefined,
+  confirmModalDisagreeAction: undefined,
 });
