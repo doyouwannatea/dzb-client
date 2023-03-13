@@ -27,21 +27,21 @@
 
   .main {
     display: flex;
-    margin-bottom: 30px;
+    margin-bottom: 1.875rem;
   }
 
   .border {
-    padding-bottom: 30px;
-    border-bottom: 2px solid var(--gray-color-1);
+    padding-bottom: 1.875rem;
+    border-bottom: 0.125rem solid var(--gray-color-1);
   }
 
   .title {
-    width: 255px;
-    margin-right: 30px;
+    width: 15.9375rem;
+    margin-right: 1.875rem;
 
     h1 {
       display: inline;
-      font-size: 20px;
+      font-size: 1.25rem;
       font-weight: 700;
       line-height: 130%;
     }
@@ -51,10 +51,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 74px;
-    height: 74px;
-    margin-bottom: 18px;
-    font-size: 32px;
+    width: 4.625rem;
+    height: 4.625rem;
+    margin-bottom: 1.125rem;
+    font-size: 2rem;
     color: var(--accent-color-1);
     background: #f1f4fe;
     border-radius: 50%;
