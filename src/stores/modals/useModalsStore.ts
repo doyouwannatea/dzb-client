@@ -56,6 +56,11 @@ export const useModalsStore = defineStore('modals', {
       this.alertModalSubtitle = subtitle;
     },
 
+    closeAlertModal() {
+      this.alertModalTitle = undefined;
+      this.alertModalSubtitle = undefined;
+    },
+
     openConfirmModal(
       title?: string,
       agree?: string,

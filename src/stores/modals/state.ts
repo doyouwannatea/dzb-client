@@ -1,3 +1,5 @@
+// TODO: надо Alert и Confirm вынести в отдельный store
+
 export interface State {
   loading: boolean;
   authModal: boolean;
