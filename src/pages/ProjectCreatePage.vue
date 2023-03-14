@@ -4,35 +4,31 @@
       <h1 class="title page-title">Создать проект</h1>
     </header>
     <BasePanel>
-      <CreateProjectSection tag="1" title="Тип проекта" :divider="true">
+      <FormSection tag="1" title="Тип проекта" :divider="true">
         <h1>Контент</h1>
-      </CreateProjectSection>
-      <CreateProjectSection tag="2" title="Данные о проекте" :divider="true">
+      </FormSection>
+      <FormSection tag="2" title="Данные о проекте" :divider="true">
         <h1>Контент</h1>
-      </CreateProjectSection>
-      <CreateProjectSection tag="3" title="Роли в проекте" :divider="true">
+      </FormSection>
+      <FormSection tag="3" title="Роли в проекте" :divider="true">
         <h1>Контент</h1>
-      </CreateProjectSection>
-      <CreateProjectSection
-        tag="4"
-        title="Результаты и идея проекта"
-        :divider="true"
-      >
+      </FormSection>
+      <FormSection tag="4" title="Результаты и идея проекта" :divider="true">
         <h1>Контент</h1>
-      </CreateProjectSection>
-      <CreateProjectSection
+      </FormSection>
+      <FormSection
         tag="5"
         title="Направления (специальности), профилей  участников проекта"
       >
         <h1>Контент</h1>
-      </CreateProjectSection>
-      <CreateProjectSection
+      </FormSection>
+      <FormSection
         tag="6"
         title="Навыки, которые необходимы на проекте"
         :divider="true"
       >
         <h1>Контент</h1>
-      </CreateProjectSection>
+      </FormSection>
     </BasePanel>
   </PageLayout>
 </template>
@@ -41,7 +37,7 @@
   import PageLayout from '@/components/layout/PageLayout.vue';
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
-  import CreateProjectSection from '@/components/ui/CreateProjectSection.vue';
+  import FormSection from '@/components/ui/FormSection.vue';
 </script>
 
 <style lang="scss" scoped>
