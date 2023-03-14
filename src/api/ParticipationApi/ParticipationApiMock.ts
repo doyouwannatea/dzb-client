@@ -1,5 +1,5 @@
 import { deepClone } from '@/helpers/object';
-import { delayRes, sleep } from '@/helpers/promise';
+import { delayRes } from '@/helpers/promise';
 import { isSupervisor } from '@/helpers/typeCheck';
 import { participationList } from '@/models/mock/participation';
 import { projectListResponse } from '@/models/mock/project';
@@ -7,9 +7,9 @@ import {
   ParticipationWithProject,
   ParticipationPriority,
 } from '@/models/Participation';
-import { AUTH_TOKEN_REQUIRED } from '@/values/error-messages';
+import { AUTH_REQUIRED } from '@/values/error-messages';
 import { campusApi } from '../CampusApi';
-import ICampusApi from '../CampusApi/ICampusApi';
+import { getAuthTokenFromCookies } from '../CampusApi/utils/authToken';
 import IParticipationApi from './IParticipationApi';
 
 export default class ParticipationApiMock extends IParticipationApi {
@@ -18,8 +18,8 @@ export default class ParticipationApiMock extends IParticipationApi {
   }
 
   async getParticipationList(): Promise<ParticipationWithProject[]> {
-    const authToken = ICampusApi.getAuthToken();
-    if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
+    const authToken = getAuthTokenFromCookies();
+    if (!authToken) throw new Error(AUTH_REQUIRED);
 
     const participationsWithProjects = await this.getParticipationsWithProjects(
       this.filterValidParticipations(participationList),
@@ -29,8 +29,8 @@ export default class ParticipationApiMock extends IParticipationApi {
   }
 
   async deleteParticipation(id: number): Promise<void> {
-    const authToken = ICampusApi.getAuthToken();
-    if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
+    const authToken = getAuthTokenFromCookies();
+    if (!authToken) throw new Error(AUTH_REQUIRED);
 
     const idx = participationList.findIndex(
       (participation) => participation.id === id,
@@ -43,8 +43,8 @@ export default class ParticipationApiMock extends IParticipationApi {
     participationId: number,
     priority: ParticipationPriority,
   ): Promise<void> {
-    const authToken = ICampusApi.getAuthToken();
-    if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
+    const authToken = getAuthTokenFromCookies();
+    if (!authToken) throw new Error(AUTH_REQUIRED);
 
     const participation = participationList.find(
       (participation) => participation.id === participationId,
@@ -59,8 +59,8 @@ export default class ParticipationApiMock extends IParticipationApi {
     projectId: number,
   ): Promise<void> {
     // проверки на стороне клиента
-    const authToken = ICampusApi.getAuthToken();
-    if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
+    const authToken = getAuthTokenFromCookies();
+    if (!authToken) throw new Error(AUTH_REQUIRED);
     if (priority < 1) throw new Error('Приоритет должен быть > 0');
     if (priority > 3) throw new Error('Приоритет должен быть > 0 < 4');
 
@@ -75,6 +75,7 @@ export default class ParticipationApiMock extends IParticipationApi {
     }
 
     const candidate = await campusApi.getUserInfo();
+    if (!candidate) return;
     if (isSupervisor(candidate)) return;
     participationList.push({
       id: Math.floor(Math.random() * 100),

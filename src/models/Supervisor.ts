@@ -1,6 +1,5 @@
-export interface Supervisor {
-  id: number;
-  fio: string;
-  email: string;
+import { CommonUserData } from './User';
+
+export interface Supervisor extends CommonUserData {
   position: string;
 }

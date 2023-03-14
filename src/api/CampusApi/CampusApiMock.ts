@@ -1,28 +1,51 @@
 import { deepClone } from '@/helpers/object';
-import { delayRes } from '@/helpers/promise';
-import { Candidate } from '@/models/Candidate';
-import { candidate } from '@/models/mock/candidate';
-import { Supervisor } from '@/models/Supervisor';
-import { AUTH_TOKEN_REQUIRED } from '@/values/error-messages';
+import { delayRes, sleep } from '@/helpers/promise';
+import { userCandidate } from '@/models/mock/candidate';
+import { userSupervisor } from '@/models/mock/supervisor';
+import { UserCandidate, UserSupervisor } from '@/models/User';
 import ICampusApi from './ICampusApi';
+import {
+  askForUserRole,
+  setUserRoleToCookies,
+  getUserRoleFromCookies,
+} from './utils/askForUserRole';
+import { AUTH_REQUIRED } from '@/values/error-messages';
+import {
+  deleteAuthTokenFromCookies,
+  getAuthTokenFromCookies,
+  setAuthTokenToCookies,
+} from './utils/authToken';
 
 export default class CampusApiMock extends ICampusApi {
   async auth(): Promise<void> {
-    ICampusApi.setAuthToken(
-      '6956a5x2a38zf27ad9ce3b9b464b73d2131e4bd01053333e758ae00a6fddf995',
-    );
+    const mockRole = askForUserRole();
+    if (!mockRole) return;
+
+    setAuthTokenToCookies('token');
+    setUserRoleToCookies(mockRole);
     window.location.reload();
-    return delayRes(undefined, 300);
   }
 
   async logout(): Promise<void> {
-    await delayRes(undefined, 200);
-    ICampusApi.deleteAuthToken();
+    await sleep(200);
+    deleteAuthTokenFromCookies();
+    setUserRoleToCookies(undefined);
   }
 
-  async getUserInfo(): Promise<Candidate | Supervisor> {
-    const authToken = ICampusApi.getAuthToken();
-    if (!authToken) throw new Error(AUTH_TOKEN_REQUIRED);
-    return delayRes(deepClone(candidate), 300);
+  async getCandidateInfo(): Promise<UserCandidate> {
+    return delayRes(deepClone(userCandidate), 300);
+  }
+
+  async getSupervisorInfo(): Promise<UserSupervisor> {
+    return delayRes(deepClone(userSupervisor), 300);
+  }
+
+  async getUserInfo(): Promise<UserCandidate | UserSupervisor | undefined> {
+    const token = getAuthTokenFromCookies();
+    const mockRole = getUserRoleFromCookies();
+    if (!mockRole || !token) throw new Error(AUTH_REQUIRED);
+    if (mockRole === 'is_teacher') return this.getSupervisorInfo();
+    if (mockRole === 'is_student') return this.getCandidateInfo();
+    return undefined;
   }
 }

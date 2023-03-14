@@ -1,6 +1,6 @@
 <template>
   <!-- CONTENT -->
-  <section>
+  <section v-if="isCandidate(authStore.profileData)">
     <!-- STUB -->
     <UserParticipationListStub
       v-if="!participationsStore.listNotEmpty && !participationsStore.loading"
@@ -84,7 +84,7 @@
             variant="outlined"
             color="red"
             :disabled="participationsStore.loading"
-            @click="onCancelEdit"
+            @click="onDisableDrag"
           >
             отмена
           </BaseButton>
@@ -94,11 +94,7 @@
             variant="outlined"
             case="uppercase"
             :disabled="participationsStore.loading"
-            @click="
-              authStore.profileData?.canSendParticipations
-                ? onToggleEdit()
-                : modalsStore.openEditParticipationsDisabledModal()
-            "
+            @click="onEnableDrag"
           >
             Редактировать заявки
           </BaseButton>
@@ -139,6 +135,7 @@
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { participationApi } from '@/api/ParticipationApi';
+  import { isCandidate } from '@/helpers/typeCheck';
 
   type EditableListItem = {
     order: number;
@@ -254,11 +251,16 @@
     editableParticipationListRef.value = list;
   }
 
-  function onToggleEdit() {
+  function onEnableDrag() {
+    if (!isCandidate(authStore.profileData)) return;
+    if (!authStore.profileData.canSendParticipations) {
+      modalsStore.openEditParticipationsDisabledModal();
+      return;
+    }
     dragDisabled.value = false;
   }
 
-  function onCancelEdit() {
+  function onDisableDrag() {
     dragDisabled.value = true;
     initList();
   }

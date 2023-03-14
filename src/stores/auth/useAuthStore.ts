@@ -3,9 +3,7 @@ import { defineStore } from 'pinia';
 import { useRoute } from 'vue-router';
 import { state } from './state';
 import { campusApi } from '@/api/CampusApi';
-import { projectApi } from '@/api/ProjectApi';
 import { useProjectsStore } from '../projects/useProjectsStore';
-import { isSupervisor } from '@/helpers/typeCheck';
 import { RouteNames } from '@/router/types/route-names';
 import { useSaveCurrentRoute } from '@/hooks/useSaveRoute';
 
@@ -39,9 +37,7 @@ export const useAuthStore = () => {
       // FETCH USER DATA
       fetchUserData() {
         return this._onAsync(async () => {
-          const profileData = await campusApi.getUserInfo();
-          if (isSupervisor(profileData)) return;
-          this.profileData = profileData;
+          this.profileData = await campusApi.getUserInfo();
         });
       },
       // FETCH USER DATA

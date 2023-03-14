@@ -15,7 +15,7 @@
     <!-- HEADER -->
 
     <!-- MAIN CONTENT -->
-    <div class="body-grid">
+    <div v-if="isCandidate(authStore.profileData)" class="body-grid">
       <!-- fio -->
       <fieldset class="input-group">
         <label class="input-label" for="fio">ФИО</label>
@@ -158,6 +158,7 @@
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
+  import { isCandidate } from '@/helpers/typeCheck';
   // components
   import BaseModal from '../ui/BaseModal.vue';
   import BaseInput from '../ui/BaseInput.vue';

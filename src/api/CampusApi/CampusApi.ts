@@ -1,43 +1,78 @@
-import { Candidate } from '@/models/Candidate';
 import ICampusApi from './ICampusApi';
 import { baseKyInstance } from '../baseKy';
-import { Supervisor } from '@/models/Supervisor';
-import { isCandidate } from '@/helpers/typeCheck';
+import { UserCandidate, UserSupervisor } from '@/models/User';
+import {
+  askForUserRole,
+  getUserRoleFromCookies,
+  setUserRoleToCookies,
+} from './utils/askForUserRole';
+import {
+  deleteAuthTokenFromCookies,
+  setAuthTokenToCookies,
+} from './utils/authToken';
 
 export default class CampusApi extends ICampusApi {
   async auth(): Promise<void> {
-    const data: { url: string } = await baseKyInstance
-      .get('campus_auth')
-      .json();
-    document.location.replace(data.url);
+    const isMockAuth = import.meta.env.VITE_MOCK_AUTH;
+    if (!isMockAuth || isMockAuth === 'false') {
+      const data: { url: string } = await baseKyInstance
+        .get('campus_auth')
+        .json();
+      document.location.replace(data.url);
+      return;
+    }
+
+    if (isMockAuth === 'true') {
+      const userRole = askForUserRole();
+      if (!userRole) return;
+      setUserRoleToCookies(userRole);
+
+      const authToken = window.prompt('Введите токен пользователя');
+      if (!authToken) return;
+      setAuthTokenToCookies(authToken);
+      document.location.reload();
+    }
   }
 
   async logout(): Promise<void> {
-    await baseKyInstance.get('campus_out');
+    const isMockAuth = import.meta.env.VITE_MOCK_AUTH;
+    if (!isMockAuth || isMockAuth === 'false') {
+      await baseKyInstance.get('campus_out');
+      return;
+    }
+
+    if (isMockAuth === 'true') {
+      deleteAuthTokenFromCookies();
+      setUserRoleToCookies(undefined);
+      return;
+    }
   }
 
-  async getUserInfo(): Promise<Candidate | Supervisor> {
-    const res = await baseKyInstance.get('api/candidate');
-    if (res.status === 202) {
-      await this.logout();
-      const errorMsg =
-        'Внимание!\n В настоящее время функционал проекта частично готов только для студента';
-      window.alert(errorMsg);
-      throw new Error(errorMsg);
+  async getCandidateInfo(): Promise<UserCandidate> {
+    const userInfo: UserCandidate = await baseKyInstance
+      .get('api/candidate')
+      .json();
+    userInfo.is_student = true;
+    userInfo.is_teacher = false;
+    if (userInfo.canSendParticipations === undefined) {
+      userInfo.canSendParticipations = false;
     }
-    const userInfo: Candidate | Supervisor = await res.json();
-
-    if (isCandidate(userInfo)) {
-      const hasCanSendParticipations = Object.prototype.hasOwnProperty.call<
-        typeof userInfo,
-        [keyof typeof userInfo],
-        boolean
-      >(userInfo, 'canSendParticipations');
-      if (!hasCanSendParticipations) {
-        userInfo.canSendParticipations = false;
-      }
-    }
-
     return userInfo;
+  }
+
+  async getSupervisorInfo(): Promise<UserSupervisor> {
+    const userInfo: UserSupervisor = await baseKyInstance
+      .get('api/supervisor')
+      .json();
+    userInfo.is_student = false;
+    userInfo.is_teacher = true;
+    return userInfo;
+  }
+
+  async getUserInfo(): Promise<UserCandidate | UserSupervisor | undefined> {
+    const userRole = getUserRoleFromCookies();
+    if (userRole === 'is_student') return this.getCandidateInfo();
+    if (userRole === 'is_teacher') return this.getSupervisorInfo();
+    return undefined;
   }
 }

@@ -2,7 +2,7 @@ import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
 import { ParticipationState } from '../Participation';
 import { Project, Type } from '../Project';
 import { State, ProjectStateID } from '../ProjectState';
-import { candidateList, candidate } from './candidate';
+import { candidateList, userCandidate } from './candidate';
 import { skills } from './project-skills';
 
 // состояния проектов вынесенные в переменные для переиспользования в "mockProjectList", используется в режиме отладки
@@ -63,8 +63,8 @@ export const mockProjectList: Project[] = [
     participations: [
       {
         id: 100,
-        candidate: candidate,
-        candidate_id: candidate.id,
+        candidate: userCandidate,
+        candidate_id: userCandidate.id,
         created_at: '2022-11-12T08:10:37.891Z',
         updated_at: '2022-11-12T08:10:37.891Z',
         priority: 1,
@@ -128,7 +128,7 @@ export const mockProjectList: Project[] = [
         state_id: ParticipationState.Active,
       },
     ],
-    participants: [candidate, candidateList[0], candidateList[1]],
+    participants: [userCandidate, candidateList[0], candidateList[1]],
     places: 4,
     product_result:
       'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ, адаптированная под разные их виды',
@@ -168,8 +168,8 @@ export const mockProjectList: Project[] = [
     participations: [
       {
         id: 100,
-        candidate: candidate,
-        candidate_id: candidate.id,
+        candidate: userCandidate,
+        candidate_id: userCandidate.id,
         created_at: '2022-11-12T08:10:37.891Z',
         updated_at: '2022-11-12T08:10:37.891Z',
         priority: 1,
@@ -233,7 +233,7 @@ export const mockProjectList: Project[] = [
         state_id: ParticipationState.Active,
       },
     ],
-    participants: [candidate, candidateList[0], candidateList[1]],
+    participants: [userCandidate, candidateList[0], candidateList[1]],
     places: 4,
     product_result:
       'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ, адаптированная под разные их виды',
@@ -273,8 +273,8 @@ export const mockProjectList: Project[] = [
     participations: [
       {
         id: 100,
-        candidate: candidate,
-        candidate_id: candidate.id,
+        candidate: userCandidate,
+        candidate_id: userCandidate.id,
         created_at: '2022-11-12T08:10:37.891Z',
         updated_at: '2022-11-12T08:10:37.891Z',
         priority: 1,
@@ -338,7 +338,7 @@ export const mockProjectList: Project[] = [
         state_id: ParticipationState.Active,
       },
     ],
-    participants: [candidate, candidateList[0], candidateList[1]],
+    participants: [userCandidate, candidateList[0], candidateList[1]],
     places: 4,
     product_result:
       'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ, адаптированная под разные их виды',
@@ -552,7 +552,7 @@ export const mockProjectList: Project[] = [
     goal: 'Разработка развлекательных, познавательных и научных материалов в социальных сетях ИРНИТУ. ',
     id: 8,
     participations: [],
-    participants: [candidate],
+    participants: [userCandidate],
     specialities: [{ id: 1, name: 'НГДСз' }],
     places: 12,
     product_result:

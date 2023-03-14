@@ -1,5 +1,5 @@
 <template>
-  <BasePanel class="panel">
+  <BasePanel v-if="isCandidate(authStore.profileData)" class="panel">
     <div class="container">
       <h1 class="title">Навыки</h1>
       <BaseTooltip :message="academicSkillsMsg">
@@ -44,6 +44,7 @@
   import { useFetchAdditionalProjectData } from '@/hooks/useFetchAdditionalProjectData';
   import { useSkillsStore } from '@/stores/skills/useSkillsStore';
   import { useGetUserSkills } from '@/hooks/useFetchStudentData';
+  import { isCandidate } from '@/helpers/typeCheck';
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseTooltip from '@/components/ui/BaseTooltip.vue';
