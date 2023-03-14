@@ -4,6 +4,7 @@
     @click="modalsStore.projectFilterModal = true"
   >
     <svg
+      v-if="isEmptyFilters"
       width="25"
       height="25"
       viewBox="0 0 25 25"
@@ -18,14 +19,40 @@
         stroke-linejoin="round"
       />
     </svg>
+    <svg
+      v-else
+      width="25"
+      height="25"
+      viewBox="0 0 25 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M22 3H2L10 12.46V19L14 21V12.46L22 3Z"
+        stroke="#383838"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <circle cx="18.5" cy="4.5" r="3.5" fill="#FFA500" />
+    </svg>
     Фильтры
   </button>
 </template>
 
 <script setup lang="ts">
   import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { computed } from 'vue';
+  import { isEmptyObject } from '@/helpers/object';
 
   const modalsStore = useModalsStore();
+
+  const projectStore = useProjectsStore();
+  const isEmptyFilters = computed(() => {
+    const { order, page, title, sortBy, ...rest } = projectStore.filters;
+    return isEmptyObject(rest as unknown as Record<string, unknown>);
+  });
 </script>
 
 <style lang="scss" scoped>
