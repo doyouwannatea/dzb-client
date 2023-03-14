@@ -11,11 +11,18 @@
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M22.5404 3.87424H2.54037L10.5404 13.3342V19.8742L14.5404 21.8742V13.3342L22.5404 3.87424Z"
+        d="M22 3H2L10 12.46V19L14 21V12.46L22 3Z"
         stroke="#383838"
-        stroke-width="1.99596"
+        stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
+      />
+      <circle
+        v-if="!isEmptyFilters"
+        class="active-indicator"
+        cx="18.5"
+        cy="4.5"
+        r="3.5"
       />
     </svg>
     Фильтры
@@ -24,8 +31,17 @@
 
 <script setup lang="ts">
   import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { computed } from 'vue';
+  import { isEmptyObject } from '@/helpers/object';
 
   const modalsStore = useModalsStore();
+  const projectStore = useProjectsStore();
+
+  const isEmptyFilters = computed(() => {
+    const { order, page, title, sortBy, ...rest } = projectStore.filters;
+    return isEmptyObject(rest as unknown as Record<string, unknown>);
+  });
 </script>
 
 <style lang="scss" scoped>
@@ -61,5 +77,9 @@
         stroke: var(--text-color);
       }
     }
+  }
+
+  .active-indicator {
+    fill: var(--accent-color-2);
   }
 </style>
