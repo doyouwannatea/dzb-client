@@ -32,9 +32,6 @@
     >
       Редактировать профиль
     </BaseButton>
-    <RouterLink class="nav-link" :to="{ name: 'PROJECT_CREATE' }">
-      Создать проект
-    </RouterLink>
     <!-- USER INFORMATION -->
   </BasePanel>
 </template>
