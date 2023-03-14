@@ -4,30 +4,30 @@
       <h1 class="title page-title">Создать проект</h1>
     </header>
     <BasePanel>
-      <CreateProjectSection number="1" title="Тип проекта" :divider="true">
+      <CreateProjectSection tag="1" title="Тип проекта" :divider="true">
         <h1>Контент</h1>
       </CreateProjectSection>
-      <CreateProjectSection number="2" title="Данные о проекте" :divider="true">
+      <CreateProjectSection tag="2" title="Данные о проекте" :divider="true">
         <h1>Контент</h1>
       </CreateProjectSection>
-      <CreateProjectSection number="3" title="Роли в проекте" :divider="true">
+      <CreateProjectSection tag="3" title="Роли в проекте" :divider="true">
         <h1>Контент</h1>
       </CreateProjectSection>
       <CreateProjectSection
-        number="4"
+        tag="4"
         title="Результаты и идея проекта"
         :divider="true"
       >
         <h1>Контент</h1>
       </CreateProjectSection>
       <CreateProjectSection
-        number="5"
+        tag="5"
         title="Направления (специальности), профилей  участников проекта"
       >
         <h1>Контент</h1>
       </CreateProjectSection>
       <CreateProjectSection
-        number="6"
+        tag="6"
         title="Навыки, которые необходимы на проекте"
         :divider="true"
       >

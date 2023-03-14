@@ -1,53 +1,47 @@
 <template>
-  <div class="main" :class="[divider ? 'border' : '']">
-    <div class="title">
-      <div class="number">{{ props.number }}</div>
-      <h1>{{ props.title }}</h1>
+  <section class="section" :class="{ divider: props.divider }">
+    <div class="meta-info">
+      <div class="tag">{{ props.tag }}</div>
+      <p class="title">{{ props.title }}</p>
     </div>
     <div class="content">
       <slot></slot>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-  import { withDefaults } from '@vue/runtime-core';
-
-  type Props = { number: string; title: string; divider?: boolean };
+  type Props = { tag: string; title: string; divider?: boolean };
 
   const props = withDefaults(defineProps<Props>(), {
-    number: '1',
-    title: 'Тип проекта',
     divider: false,
   });
 </script>
 
 <style lang="scss" scoped>
-  @import '@styles/breakpoints';
-
-  .main {
+  .section {
     display: flex;
+    gap: 1.875rem;
     margin-bottom: 1.875rem;
   }
 
-  .border {
+  .divider {
     padding-bottom: 1.875rem;
     border-bottom: 0.125rem solid var(--gray-color-1);
   }
 
-  .title {
+  .meta-info {
     width: 15.9375rem;
-    margin-right: 1.875rem;
-
-    h1 {
-      display: inline;
-      font-size: 1.25rem;
-      font-weight: 700;
-      line-height: 130%;
-    }
   }
 
-  .number {
+  .title {
+    display: inline;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 130%;
+  }
+
+  .tag {
     display: flex;
     align-items: center;
     justify-content: center;
