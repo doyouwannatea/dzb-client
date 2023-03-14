@@ -1,5 +1,10 @@
 <template>
-  <BaseAccordion ref="accordionEl" :opened="opened" @toggle="opened = !opened">
+  <BaseAccordion
+    ref="accordionEl"
+    :animated="animated"
+    :opened="opened"
+    @toggle="opened = !opened"
+  >
     <template #title>
       <slot name="title"></slot>
     </template>
@@ -14,6 +19,13 @@
   import { onClickOutside } from '@vueuse/core';
   import BaseAccordion from './BaseAccordion.vue';
 
+  interface Props {
+    animated?: boolean;
+  }
+
+  withDefaults(defineProps<Props>(), {
+    animated: false,
+  });
   const accordionEl = ref<HTMLElement | null>(null);
   const opened = ref(false);
   onClickOutside(accordionEl, () => (opened.value = false));

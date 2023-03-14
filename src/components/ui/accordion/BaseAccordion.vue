@@ -14,7 +14,11 @@
       @enter="onEnter"
       @leave="onLeave"
     >
-      <div v-if="props.opened" ref="contentRef" class="content">
+      <div
+        v-if="props.opened"
+        ref="contentRef"
+        :class="['content', { animated: props.animated }]"
+      >
         <slot name="content"></slot>
       </div>
     </Transition>
@@ -24,21 +28,29 @@
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref, Transition } from 'vue';
 
-  const props = withDefaults(
-    defineProps<{ opened?: boolean; animated?: boolean }>(),
-    {
-      opened: false,
-      animated: true,
-    },
-  );
-  const emits = defineEmits<{
+  interface Props {
+    opened?: boolean;
+    animated?: boolean;
+  }
+  interface Emits {
     (e: 'toggle'): void;
-  }>();
+  }
+
+  const props = withDefaults(defineProps<Props>(), {
+    opened: false,
+    animated: false,
+  });
+  const emits = defineEmits<Emits>();
 
   const contentRef = ref<HTMLElement | undefined>(undefined);
   const mutationObserver = ref<MutationObserver | undefined>(undefined);
 
-  onMounted(() => {
+  onMounted(animate);
+  onUnmounted(disconnect);
+
+  function animate() {
+    if (!props.animated) return;
+
     const el = contentRef.value;
     function onContentChange() {
       if (el) {
@@ -56,17 +68,19 @@
         subtree: true,
       });
     }
-  });
+  }
 
-  onUnmounted(() => {
+  function disconnect() {
     mutationObserver.value?.disconnect();
-  });
+  }
 
   function onEnter(el: HTMLElement) {
+    if (!props.animated) return;
     el.style.height = el.scrollHeight + 'px';
   }
 
   function onLeave(el: HTMLElement) {
+    if (!props.animated) return;
     el.style.height = '0px';
   }
 
@@ -88,7 +102,7 @@
     border: inherit;
   }
 
-  .content {
+  .content.animated {
     height: 0;
     will-change: height;
   }

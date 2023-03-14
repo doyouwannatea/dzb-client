@@ -1,6 +1,6 @@
 <template>
   <BasePanel class="panel">
-    <ClosableAccordion class="question">
+    <ClosableAccordion animated class="question">
       <template #title>
         <slot name="title"></slot>
       </template>
