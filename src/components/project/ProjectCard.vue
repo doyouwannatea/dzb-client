@@ -242,6 +242,7 @@
     font-weight: 600;
     line-height: 1.25rem;
     color: var(--text-color);
+    overflow-wrap: anywhere;
     list-style: none;
   }
 

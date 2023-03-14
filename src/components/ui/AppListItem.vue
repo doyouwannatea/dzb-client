@@ -55,6 +55,7 @@
   }
 
   .info-list-value {
+    overflow-wrap: anywhere;
     white-space: pre-line;
   }
 </style>
