@@ -4,23 +4,6 @@
     @click="modalsStore.projectFilterModal = true"
   >
     <svg
-      v-if="isEmptyFilters"
-      width="25"
-      height="25"
-      viewBox="0 0 25 25"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M22.5404 3.87424H2.54037L10.5404 13.3342V19.8742L14.5404 21.8742V13.3342L22.5404 3.87424Z"
-        stroke="#383838"
-        stroke-width="1.99596"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
-    <svg
-      v-else
       width="25"
       height="25"
       viewBox="0 0 25 25"
@@ -34,7 +17,13 @@
         stroke-linecap="round"
         stroke-linejoin="round"
       />
-      <circle cx="18.5" cy="4.5" r="3.5" fill="#FFA500" />
+      <circle
+        v-if="!isEmptyFilters"
+        class="active-indicator"
+        cx="18.5"
+        cy="4.5"
+        r="3.5"
+      />
     </svg>
     Фильтры
   </button>
@@ -47,8 +36,8 @@
   import { isEmptyObject } from '@/helpers/object';
 
   const modalsStore = useModalsStore();
-
   const projectStore = useProjectsStore();
+
   const isEmptyFilters = computed(() => {
     const { order, page, title, sortBy, ...rest } = projectStore.filters;
     return isEmptyObject(rest as unknown as Record<string, unknown>);
@@ -88,5 +77,9 @@
         stroke: var(--text-color);
       }
     }
+  }
+
+  .active-indicator {
+    fill: var(--accent-color-2);
   }
 </style>
