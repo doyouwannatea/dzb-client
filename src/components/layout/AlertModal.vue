@@ -2,17 +2,14 @@
   <!-- auth modal -->
   <BaseModal
     :is-show="Boolean(modalsStore.alertModalTitle)"
-    @close="modalsStore.alertModalTitle = undefined"
+    @close="modalsStore.closeAlertModal()"
   >
     <!-- MAIN CONTENT -->
     <div class="modal-content">
       <h1>{{ modalsStore.alertModalTitle }}</h1>
       <p class="subtitle">{{ modalsStore.alertModalSubtitle }}</p>
       <div class="modal-buttons">
-        <BaseButton
-          case="uppercase"
-          @click="modalsStore.alertModalTitle = undefined"
-        >
+        <BaseButton case="uppercase" @click="modalsStore.closeAlertModal()">
           {{ buttonText }}
         </BaseButton>
       </div>

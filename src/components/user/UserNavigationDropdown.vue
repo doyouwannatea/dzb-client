@@ -15,6 +15,7 @@
   import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
   // components
   import DropdownList, { DropdownItem } from '../ui/DropdownList.vue';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
 
   type Props = {
     isOpen: boolean;
@@ -28,8 +29,8 @@
   const emit = defineEmits<Emits>();
 
   const route = useRoute();
-  const authStore = useAuthStore();
   const routes = useRoledUserNavigationRoutes();
+  const modalsStore = useModalsStore();
 
   watch(
     () => route.path,
@@ -45,9 +46,6 @@
   items.push({
     content: 'Выйти',
     type: 'button',
-    action: () => {
-      authStore.exit();
-      emit('close');
-    },
+    action: () => modalsStore.openExitConfirmModal(),
   });
 </script>
