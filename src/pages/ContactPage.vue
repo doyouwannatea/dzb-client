@@ -1,4 +1,3 @@
-<!-- eslint-disable no-irregular-whitespace -->
 <template>
   <PageLayout>
     <header class="header">
@@ -166,16 +165,16 @@
         </div>
       </div>
     </div>
-    <div id="map" class="map" style="width: 100%; height: 600px"></div>
+    <div id="map" class="map"></div>
     <ContactForm />
   </PageLayout>
 </template>
 
 <script setup lang="ts">
-  import PageLayout from '@/components/layout/PageLayout.vue';
-  import ContactForm from '@/components/layout/contact/ContactForm.vue';
   import { onMounted } from 'vue';
   import DG from '2gis-maps';
+  import PageLayout from '@/components/layout/PageLayout.vue';
+  import ContactForm from '@/components/layout/contact/ContactForm.vue';
 
   onMounted(() => {
     const map = DG.map('map', {
@@ -186,10 +185,12 @@
       scrollWheelZoom: false,
       doubleClickZoom: false,
       boxZoom: false,
+      fullscreenControl: false,
     });
     DG.marker([52.26215, 104.26163])
       .addTo(map)
-      .bindPopup('Аудитория А-305 • Центр Проектного обучения');
+      .bindPopup('Аудитория А-305 • Центр Проектного обучения')
+      .openPopup();
   });
 </script>
 
@@ -289,7 +290,6 @@
     min-height: 12.5rem;
     margin-top: 3.125rem;
     background-color: var(--gray-color-1);
-    border: none;
     border-radius: 0.625rem;
   }
 </style>
