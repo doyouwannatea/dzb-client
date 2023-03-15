@@ -17,12 +17,12 @@ export const useModalsStore = defineStore('modals', {
       const participationsStore = useParticipationsStore();
       const projectsStore = useProjectsStore();
 
-      if (!isCandidate(authStore.profileData)) return;
-
       if (!authStore.isAuth || !authStore.profileData) {
         this.authModal = true;
         return;
       }
+
+      if (!isCandidate(authStore.profileData)) return;
 
       if (!authStore.profileData.canSendParticipations) {
         this.openAlertModal(
