@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.16.0",
-    "@vueform/multiselect": "^2.3.3",
+    "@vueform/multiselect": "^2.6.1",
     "@vueuse/core": "^7.6.2",
     "@vueuse/integrations": "^7.7.0",
     "2gis-maps": "^3.7.3",
