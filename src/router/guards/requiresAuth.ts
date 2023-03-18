@@ -7,7 +7,7 @@ export const requiresAuth: NavigationGuard = (to, from, next) => {
   const authStore = useAuthStore();
   const modalsStore = useModalsStore();
 
-  if (to.meta.requiresAuth && !authStore.isAuth) {
+  if (to.meta.requiresAuth && !authStore.profileData) {
     modalsStore.authModal = true;
     return next(
       from || {

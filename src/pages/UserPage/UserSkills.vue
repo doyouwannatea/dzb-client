@@ -1,5 +1,8 @@
 <template>
-  <BasePanel v-if="isCandidate(authStore.profileData)" class="panel">
+  <BasePanel
+    v-if="authStore.profileData && isCandidate(authStore.profileData)"
+    class="panel"
+  >
     <div class="container">
       <h1 class="title">Навыки</h1>
       <BaseTooltip :message="academicSkillsMsg">

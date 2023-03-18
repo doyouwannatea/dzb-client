@@ -15,7 +15,10 @@
     <!-- HEADER -->
 
     <!-- MAIN CONTENT -->
-    <div v-if="isCandidate(authStore.profileData)" class="body-grid">
+    <div
+      v-if="authStore.profileData && isCandidate(authStore.profileData)"
+      class="body-grid"
+    >
       <!-- fio -->
       <fieldset class="input-group">
         <label class="input-label" for="fio">ФИО</label>

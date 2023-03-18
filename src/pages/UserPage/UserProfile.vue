@@ -58,7 +58,7 @@
 
   const addInfo: AppListItemType[] = [];
 
-  if (isCandidate(profileData)) {
+  if (profileData && isCandidate(profileData)) {
     contactInfo.push({
       title: 'Телефон:',
       content: withDefaultFiller(profileData?.phone),
@@ -76,7 +76,7 @@
     );
   }
 
-  if (isSupervisor(profileData)) {
+  if (profileData && isSupervisor(profileData)) {
     addInfo.push({
       title: 'Должность:',
       content: withDefaultFiller(profileData?.position),

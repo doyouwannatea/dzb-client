@@ -1,6 +1,6 @@
 <template>
   <div class="actions">
-    <template v-if="authStore.isAuth">
+    <template v-if="authStore.profileData">
       <!-- UNDER DEV  -->
       <button v-if="false" class="ring-btn">
         <img :src="ringIconUrl" alt="уведомления" class="icon" />

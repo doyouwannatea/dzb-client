@@ -8,7 +8,7 @@ export const useWatchAuthorization = () => {
   const authStore = useAuthStore();
 
   watch(
-    () => authStore.isAuth,
+    () => authStore.profileData,
     (isAuth) => {
       if (!isAuth) {
         router.replace({
