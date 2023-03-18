@@ -203,7 +203,7 @@
   }
 
   .search {
-    --ms-bg: #f9f9f9;
+    --ms-bg: var(--gray-color-4);
 
     max-width: 21rem;
     margin-right: 0;
@@ -233,7 +233,7 @@
   }
 
   .right-col {
-    background: #f9f9f9;
+    background: var(--gray-color-4);
     border-left: 1px solid var(--gray-color-1);
   }
 

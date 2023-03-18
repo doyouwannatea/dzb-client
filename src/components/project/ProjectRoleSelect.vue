@@ -7,6 +7,7 @@
       no-results-text="Сотрудник не найден"
       :searchable="true"
       :options="props.memberList"
+      :disabled="props.disableMemberSelect"
       @change="(payload: unknown) => onMemberChange(payload as Member)"
     />
     <div class="arrow-icon" v-html="arrowIcon"></div>
@@ -17,6 +18,7 @@
       no-results-text="Роль не найдена"
       :searchable="true"
       :options="props.roleList"
+      :disabled="props.disableRoleSelect"
       @change="(payload: unknown) => onRoleChange(payload as Role)"
     />
   </div>
@@ -37,6 +39,8 @@
     role: Role;
     memberList: MultiselectObjectItem<Required<Member>>[];
     roleList: MultiselectObjectItem<Required<Role>>[];
+    disableMemberSelect?: boolean;
+    disableRoleSelect?: boolean;
   };
   type Emits = {
     (event: 'update:member', member?: Member): void;
@@ -46,6 +50,8 @@
   const props = withDefaults(defineProps<Props>(), {
     member: undefined,
     role: undefined,
+    disableMemberSelect: false,
+    disableRoleSelect: false,
   });
   const emit = defineEmits<Emits>();
   const mutableMember = ref(props.member);
