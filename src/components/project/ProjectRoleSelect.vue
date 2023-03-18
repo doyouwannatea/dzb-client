@@ -5,6 +5,7 @@
       class="multiselect"
       placeholder="Выберите сотрудника"
       no-results-text="Сотрудник не найден"
+      no-options-text="Сотрудники не найдены"
       :searchable="true"
       :options="props.memberList"
       :disabled="props.disableMemberSelect"
@@ -16,6 +17,7 @@
       class="multiselect"
       placeholder="Выберите роль сотрудника"
       no-results-text="Роль не найдена"
+      no-options-text="Роли не найдены"
       :searchable="true"
       :options="props.roleList"
       :disabled="props.disableRoleSelect"
@@ -27,18 +29,18 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import VMultiselect from '@vueform/multiselect';
-  import { Supervisor } from '@/models/Supervisor';
+  import { MemberRole } from '@/models/ProjectApplication';
   import arrowIcon from '@/assets/icons/user-role-select-arrow.svg?raw';
   import { MultiselectObjectItem } from '@/models/VMultiselect';
 
-  type Role = number | undefined;
-  type Member = Supervisor | undefined;
+  type Role = MemberRole;
+  type Member = number;
 
   type Props = {
-    member: Member;
-    role: Role;
-    memberList: MultiselectObjectItem<Required<Member>>[];
-    roleList: MultiselectObjectItem<Required<Role>>[];
+    member?: Member;
+    role?: Role;
+    memberList: MultiselectObjectItem<Member>[];
+    roleList: MultiselectObjectItem<Role>[];
     disableMemberSelect?: boolean;
     disableRoleSelect?: boolean;
   };
@@ -71,6 +73,14 @@
     gap: 0.25rem;
     align-items: center;
     justify-content: space-between;
+
+    & > *:first-child {
+      flex: 4;
+    }
+
+    & > *:last-child {
+      flex: 3;
+    }
   }
 
   .arrow-icon {
