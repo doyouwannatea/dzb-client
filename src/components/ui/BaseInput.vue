@@ -100,6 +100,6 @@
   }
 
   .input:focus-visible {
-    border: 1px solid black;
+    border: 1px solid var(--accent-color-1);
   }
 </style>

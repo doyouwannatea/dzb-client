@@ -11,10 +11,7 @@
   --ms-option-bg-selected: var(--green-color-1);
   --ms-option-bg-selected-pointed: var(--green-color-2);
   --ms-bg-disabled: var(--gray-color-4);
-
-  min-height: 3.5625rem;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  --ms-border-color-active: var(--accent-color-1);
 
   &.is-disabled {
     color: var(--gray-color-2);
