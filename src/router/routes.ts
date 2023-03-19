@@ -25,6 +25,9 @@ const FaqPage = () => import('@/pages/FaqPage.vue');
 // Contact page
 const ContactPage = () => import('@/pages/ContactPage.vue');
 
+// Create project page
+const CreateProjectPage = () => import('@/pages/CreateProjectPage.vue');
+
 // 404 page
 const NotFound = () => import('@/pages/NotFoundPage.vue');
 
@@ -77,17 +80,22 @@ export const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/project/create/:id?',
+    name: RouteNames.USER_PROJECT_CREATE,
+    component: CreateProjectPage,
+    meta: {
+      title: 'Создать проект',
+      requiresAuth: true,
+      role: ['teacher'],
+    },
+  },
+  {
     path: '/profile',
     name: RouteNames.PROFILE,
     component: UserPage,
     meta: {
       title: 'Профиль пользователя',
       requiresAuth: true,
-      svg: `
-      <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20.0005 21.5001V19.5001C20.0005 18.4393 19.5791 17.4218 18.8289 16.6717C18.0788 15.9216 17.0614 15.5001 16.0005 15.5001H8.00049C6.93962 15.5001 5.92221 15.9216 5.17206 16.6717C4.42192 17.4218 4.00049 18.4393 4.00049 19.5001V21.5001" stroke="#A4A4A4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M12.0005 11.5001C14.2096 11.5001 16.0005 9.70926 16.0005 7.50012C16.0005 5.29098 14.2096 3.50012 12.0005 3.50012C9.79135 3.50012 8.00049 5.29098 8.00049 7.50012C8.00049 9.70926 9.79135 11.5001 12.0005 11.5001Z" stroke="#A4A4A4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>`,
     },
     children: [
       {

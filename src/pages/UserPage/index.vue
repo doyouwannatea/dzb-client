@@ -3,6 +3,7 @@
     <UserNavigation v-if="isSmallDevice" variant="mobile" />
     <header class="header">
       <h1 class="title page-title">Профиль пользователя</h1>
+      <UserCreateProjectLink />
     </header>
     <SidebarContainer class="sidebar-container">
       <template #sidebar>
@@ -31,12 +32,13 @@
   import { RouterView } from 'vue-router';
   import { useSmallDevice } from '@/helpers/breakpoints';
   import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
+  import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
   // components
   import SidebarContainer from '@/components/layout/SidebarContainer.vue';
   import UserNavigation from './UserNavigation.vue';
   import DeadlineTimer from '@/components/layout/DeadlineTimer.vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
-  import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
+  import UserCreateProjectLink from './UserCreateProjectLink.vue';
 
   const isSmallDevice = useSmallDevice();
   const participationsStore = useParticipationsStore();
@@ -53,15 +55,14 @@
   }
 
   .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-top: 4.75rem;
-    margin-bottom: 2.8125rem;
+    margin-bottom: 1.875rem;
 
     @media (max-width: $tablet) {
       display: none;
     }
-  }
-
-  .title {
-    margin-bottom: 0.6875rem;
   }
 </style>
