@@ -298,7 +298,6 @@
   .actions {
     display: flex;
     gap: 0.9375rem;
-    align-items: center;
     justify-content: flex-end;
     margin-top: 1.5rem;
   }
