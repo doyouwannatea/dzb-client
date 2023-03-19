@@ -13,6 +13,8 @@
   --ms-bg-disabled: var(--gray-color-4);
   --ms-border-color-active: var(--accent-color-1);
 
+  transition: border 100ms ease;
+
   &.is-disabled {
     color: var(--gray-color-2);
   }
