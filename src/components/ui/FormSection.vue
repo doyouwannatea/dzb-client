@@ -4,11 +4,18 @@
       <div class="tag">{{ props.tag }}</div>
       <p class="title">{{ props.title }}</p>
     </div>
-    <div class="content">
+    <div v-bind="$attrs" class="content">
       <slot></slot>
     </div>
   </section>
 </template>
+
+<script lang="ts">
+  import { defineComponent } from 'vue';
+  export default defineComponent({
+    inheritAttrs: false,
+  });
+</script>
 
 <script setup lang="ts">
   type Props = { tag: string; title: string; divider?: boolean };
