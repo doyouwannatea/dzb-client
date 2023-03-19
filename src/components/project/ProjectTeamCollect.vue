@@ -15,8 +15,14 @@
             : multiselectRoleList
         "
         :member-list="filterSameSupervisors(member.memberId)"
-        :disable-member-select="props.disableAll || member.isCurrentUser"
-        :disable-role-select="props.disableAll"
+        :member-select-options="{
+          label: index === 0 ? 'ФИО преподавателя' : undefined,
+          selectDisabled: props.disableAll || member.isCurrentUser,
+        }"
+        :role-select-options="{
+          label: index === 0 ? 'Роль в проекте' : undefined,
+          selectDisabled: props.disableAll,
+        }"
       />
       <DeleteButton
         v-if="!member.isCurrentUser"

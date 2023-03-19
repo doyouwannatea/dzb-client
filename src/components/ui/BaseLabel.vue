@@ -1,6 +1,6 @@
 <template>
   <component :is="props.is" :class="{ [$style.disabled]: props.disabled }">
-    <p :class="$style['label-text']">
+    <p v-if="props.label" :class="$style['label-text']">
       {{ props.label }}
       <span v-if="props.required" :class="$style.required">*</span>
     </p>
@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
   type Props = {
-    label: string;
+    label?: string;
     required?: boolean;
     disabled?: boolean;
     is?: 'label' | 'div';
@@ -19,6 +19,7 @@
   const props = withDefaults(defineProps<Props>(), {
     required: false,
     disabled: false,
+    label: undefined,
     is: 'label',
   });
 </script>

@@ -1,28 +1,40 @@
 <template>
   <div class="wrapper">
-    <VMultiselect
-      v-model="mutableMember"
-      class="multiselect"
-      placeholder="Выберите сотрудника"
-      no-results-text="Сотрудник не найден"
-      no-options-text="Сотрудники не найдены"
-      :searchable="true"
-      :options="props.memberList"
-      :disabled="props.disableMemberSelect"
-      @change="(payload: unknown) => onMemberChange(payload as Member)"
-    />
+    <BaseLabel
+      is="div"
+      :label="props.memberSelectOptions.label"
+      :disabled="props.memberSelectOptions.labelDisabled"
+    >
+      <VMultiselect
+        v-model="mutableMember"
+        class="multiselect"
+        placeholder="Выберите сотрудника"
+        no-results-text="Сотрудник не найден"
+        no-options-text="Сотрудники не найдены"
+        :searchable="true"
+        :options="props.memberList"
+        :disabled="props.memberSelectOptions.selectDisabled"
+        @change="(payload: unknown) => onMemberChange(payload as Member)"
+      />
+    </BaseLabel>
     <div class="arrow-icon" v-html="arrowIcon"></div>
-    <VMultiselect
-      v-model="mutableRole"
-      class="multiselect"
-      placeholder="Выберите роль сотрудника"
-      no-results-text="Роль не найдена"
-      no-options-text="Роли не найдены"
-      :searchable="true"
-      :options="props.roleList"
-      :disabled="props.disableRoleSelect"
-      @change="(payload: unknown) => onRoleChange(payload as Role)"
-    />
+    <BaseLabel
+      is="div"
+      :label="props.roleSelectOptions.label"
+      :disabled="props.roleSelectOptions.labelDisabled"
+    >
+      <VMultiselect
+        v-model="mutableRole"
+        class="multiselect"
+        placeholder="Выберите роль сотрудника"
+        no-results-text="Роль не найдена"
+        no-options-text="Роли не найдены"
+        :searchable="true"
+        :options="props.roleList"
+        :disabled="props.roleSelectOptions.selectDisabled"
+        @change="(payload: unknown) => onRoleChange(payload as Role)"
+      />
+    </BaseLabel>
   </div>
 </template>
 
@@ -32,6 +44,13 @@
   import { MemberRole } from '@/models/ProjectApplication';
   import arrowIcon from '@/assets/icons/user-role-select-arrow.svg?raw';
   import { MultiselectObjectItem } from '@/models/VMultiselect';
+  import BaseLabel from '../ui/BaseLabel.vue';
+
+  export type SelectOptions = {
+    labelDisabled?: boolean;
+    selectDisabled?: boolean;
+    label?: string;
+  };
 
   type Role = MemberRole;
   type Member = number;
@@ -41,8 +60,8 @@
     role?: Role;
     memberList: MultiselectObjectItem<Member>[];
     roleList: MultiselectObjectItem<Role>[];
-    disableMemberSelect?: boolean;
-    disableRoleSelect?: boolean;
+    memberSelectOptions?: SelectOptions;
+    roleSelectOptions?: SelectOptions;
   };
   type Emits = {
     (event: 'update:member', member?: Member): void;
@@ -52,8 +71,8 @@
   const props = withDefaults(defineProps<Props>(), {
     member: undefined,
     role: undefined,
-    disableMemberSelect: false,
-    disableRoleSelect: false,
+    memberSelectOptions: () => ({}),
+    roleSelectOptions: () => ({}),
   });
   const emit = defineEmits<Emits>();
   const mutableMember = ref(props.member);
@@ -71,7 +90,7 @@
   .wrapper {
     display: flex;
     gap: 0.25rem;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
 
     & > *:first-child {
@@ -85,5 +104,6 @@
 
   .arrow-icon {
     min-width: 1.5rem;
+    margin-bottom: 1.3rem;
   }
 </style>
