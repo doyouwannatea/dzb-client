@@ -303,18 +303,18 @@
     margin-top: 1.5rem;
   }
 
-  .project-type-section {
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-  }
-
   .small-textarea {
     min-height: 6.75rem;
   }
 
   .large-textarea {
     min-height: 21.25rem;
+  }
+
+  .project-type-section {
+    display: grid;
+    grid-template-columns: 3fr 4fr;
+    gap: 1rem;
   }
 
   .project-data-section {
