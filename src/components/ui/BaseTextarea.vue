@@ -4,19 +4,31 @@
     <textarea
       v-bind="$attrs"
       :value="props.modelValue"
-      class="input"
+      :class="['input', { 'with-maxlength': isMaxLength }]"
       :style="{ resize: props.resize }"
       @input="onInput"
     >
     </textarea>
-    <span v-if="$attrs.maxlength" class="maxlength">
+    <span v-if="isMaxLength" class="maxlength">
       {{ props.modelValue.length || 0 }}/{{ $attrs.maxlength }}
     </span>
   </label>
 </template>
 
+<script lang="ts">
+  import { defineComponent } from 'vue';
+  export default defineComponent({
+    inheritAttrs: false,
+  });
+</script>
+
 <script setup lang="ts">
-  import { TextareaHTMLAttributes, withDefaults } from 'vue';
+  import {
+    TextareaHTMLAttributes,
+    withDefaults,
+    useAttrs,
+    computed,
+  } from 'vue';
 
   interface Props extends TextareaHTMLAttributes {
     modelValue?: string;
@@ -34,18 +46,17 @@
     resize: 'none',
   });
   const emit = defineEmits<Emits>();
+  const attrs = useAttrs();
+  const isMaxLength = computed(
+    () =>
+      typeof attrs.maxlength === 'number' ||
+      typeof attrs.maxlength === 'string',
+  );
 
   function onInput(e: Event) {
     const target = e.target as HTMLInputElement;
     emit('update:modelValue', target.value);
   }
-</script>
-
-<script lang="ts">
-  import { defineComponent } from 'vue';
-  export default defineComponent({
-    inheritAttrs: false,
-  });
 </script>
 
 <style scoped>
@@ -80,6 +91,10 @@
     border: 1px solid var(--gray-color-1);
     border-radius: 0.3125rem;
     transition: border 100ms ease;
+  }
+
+  .input.with-maxlength {
+    padding-bottom: 2.5rem;
   }
 
   .input::placeholder {
