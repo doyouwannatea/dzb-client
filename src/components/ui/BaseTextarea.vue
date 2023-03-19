@@ -9,6 +9,9 @@
       @input="onInput"
     >
     </textarea>
+    <span v-if="$attrs.maxlength" class="maxlength">
+      {{ props.modelValue.length || 0 }}/{{ $attrs.maxlength }}
+    </span>
   </label>
 </template>
 
@@ -47,8 +50,18 @@
 
 <style scoped>
   .label {
+    position: relative;
     display: inline-block;
     width: 100%;
+  }
+
+  .maxlength {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 0.625rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-color-2);
   }
 
   .label-text {
