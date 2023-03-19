@@ -73,6 +73,7 @@
     font-size: 1rem;
     font-weight: 600;
     color: var(--gray-color-2);
+    user-select: none;
   }
 
   .label-text {
