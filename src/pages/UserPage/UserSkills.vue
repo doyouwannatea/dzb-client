@@ -32,13 +32,11 @@
         case="uppercase"
         variant="outlined"
         :disabled="skillsStore.loading"
-        @click="modalsStore.editSkillsModal = true"
       >
         Редактировать навыки
       </BaseButton>
     </div>
   </BasePanel>
-  <EditSkillsModal />
 </template>
 
 <script setup lang="ts">
@@ -53,7 +51,6 @@
   import BaseTooltip from '@/components/ui/BaseTooltip.vue';
   import SkillList from '@/components/skill/SkillList.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
-  import EditSkillsModal from '@/components/skill/EditSkillsModal.vue';
 
   useGetUserSkills();
   useFetchAdditionalProjectData();
