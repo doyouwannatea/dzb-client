@@ -1,4 +1,9 @@
 <template>
+  <SkillsEditModal
+    v-model:is-show="showEditSkillsModal"
+    v-model:skill-list="skillList"
+    :shared-skill-list="skills"
+  />
   <PageLayout>
     <header class="header">
       <h1 :class="[$style.title, 'page-title']">Создать проект</h1>
@@ -185,7 +190,17 @@
         divider
       >
         <!-- <Project skills> -->
-        <SkillList show-all :skills="skillList" />
+        <SkillList show-all :skills="skillList">
+          <template #after-list>
+            <BaseButton
+              case="none"
+              variant="tag"
+              @click="() => (showEditSkillsModal = true)"
+            >
+              Добавить навыки +
+            </BaseButton>
+          </template>
+        </SkillList>
         <!-- </Project skills> -->
       </FormSection>
     </BasePanel>
@@ -224,6 +239,8 @@
   import BaseInput from '@/components/ui/BaseInput.vue';
   import SkillList from '@/components/skill/SkillList.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
+  import SkillsEditModal from '@/components/skill/SkillsEditModal.vue';
+  import { skills } from '@/models/mock/project-skills';
 
   useWatchAuthorization();
 
@@ -231,6 +248,8 @@
   const authStore = useAuthStore();
   const { profileData } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
+
+  const showEditSkillsModal = ref<boolean>(false);
 
   const projectType = ref<number>(1);
   const prevProject = ref<string | undefined>(undefined);
@@ -249,11 +268,11 @@
     { id: 3, name: 'ИБ', skillCategory_id: 1 },
     { id: 4, name: 'АСУ', skillCategory_id: 1 },
   ];
-  const skillList: Tag[] = [
+  const skillList = ref<Tag[]>([
     { id: 1, name: 'JavaScript', skillCategory_id: 1 },
     { id: 2, name: 'Web', skillCategory_id: 1 },
     { id: 3, name: 'Конференция', skillCategory_id: 1 },
-  ];
+  ]);
 
   // <Team control>
   const team = ref<TeamMember[]>(initTeam());
@@ -293,6 +312,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
+    justify-self: flex-start;
   }
 
   .actions {
