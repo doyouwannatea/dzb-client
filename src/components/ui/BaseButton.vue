@@ -5,7 +5,7 @@
     :class="['button', props.variant, props.color]"
     :style="{
       textTransform: props.case,
-      width: props.fullWidth ? '100%' : 'auto',
+      width: props.fullWidth ? '100%' : undefined,
     }"
   >
     <slot></slot>
