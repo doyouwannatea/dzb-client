@@ -5,7 +5,7 @@
       v-bind="$attrs"
       class="button"
       variant="inline-link"
-      case="default"
+      case="none"
     >
       Открыть версии <br />
       проекта ↗
