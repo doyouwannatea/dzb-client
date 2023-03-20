@@ -44,7 +44,7 @@
         </AppListItem>
 
         <AppListItem>
-          <template #title>Версии проекта</template>
+          <template #title>История проекта</template>
           <template #default>
             <ProjectHistoryButton
               :history-length="history?.length"

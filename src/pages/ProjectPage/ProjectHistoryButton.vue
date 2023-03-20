@@ -7,7 +7,7 @@
       variant="inline-link"
       case="default"
     >
-      Открыть версии <br />
+      Открыть хронологию <br />
       проекта ↗
     </BaseButton>
     <template v-else>

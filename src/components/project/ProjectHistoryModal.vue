@@ -2,7 +2,7 @@
   <!-- succsess modal -->
   <BaseModal :is-show="props.isShow" @close="emit('close')">
     <!-- MAIN CONTENT -->
-    <h1>Версии проекта</h1>
+    <h1>История проекта</h1>
     <ProjectHistory
       class="history-list"
       :project-list="
