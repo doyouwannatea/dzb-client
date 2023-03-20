@@ -33,7 +33,7 @@
   interface Props extends TextareaHTMLAttributes {
     modelValue?: string;
     label?: string;
-    resize: 'horizontal' | 'vertical' | 'both' | 'none';
+    resize?: 'horizontal' | 'vertical' | 'both' | 'none';
   }
 
   interface Emits {
