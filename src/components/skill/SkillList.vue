@@ -4,6 +4,7 @@
       <BaseTag
         :disabled="disableAll"
         :deletable="deletable"
+        :variant="tagVariant"
         @delete="$emit('delete', skill)"
       >
         {{ skill.name }}
@@ -17,6 +18,9 @@
       >
         {{ showBtnText }}
       </BaseButton>
+    </li>
+    <li v-if="$slots['after-list']">
+      <slot name="after-list"></slot>
     </li>
   </ul>
 </template>
@@ -35,6 +39,7 @@
     defaultVisible?: number;
     disableAll?: boolean;
     deletable?: boolean;
+    tagVariant?: 'primary' | 'outlined';
   };
 
   type Emits = {
@@ -47,6 +52,7 @@
     defaultVisible: 3,
     disableAll: false,
     deletable: undefined,
+    tagVariant: 'primary',
   });
   defineEmits<Emits>();
 
@@ -70,7 +76,7 @@
   );
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .show-btn-wrapper {
     display: flex;
     align-items: center;
@@ -80,6 +86,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    align-items: center;
     padding-left: 0;
     list-style: none;
   }
