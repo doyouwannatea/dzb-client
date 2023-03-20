@@ -3,15 +3,15 @@
     <slot></slot>
     <button class="btn">
       <img class="icon" :src="questionIconUrl" alt="«?»" />
-      <div class="tooltip-msg">{{ message }}</div>
+      <div :class="['tooltip-msg', props.position]">{{ props.message }}</div>
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
   import questionIconUrl from '@/assets/icons/question.svg?url';
-  type Props = { message: string };
-  defineProps<Props>();
+  type Props = { message: string; position?: 'top' | 'bottom' };
+  const props = withDefaults(defineProps<Props>(), { position: 'top' });
 </script>
 
 <style lang="scss" scoped>
@@ -19,8 +19,8 @@
 
   .tooltip-msg {
     position: absolute;
-    bottom: 100%;
     left: 100%;
+    z-index: 1;
     display: none;
     width: min(3000%, 100vw);
     max-width: 22.25rem;
@@ -38,6 +38,14 @@
       right: 0;
       bottom: 130%;
       left: 0;
+    }
+
+    &.top {
+      bottom: 100%;
+    }
+
+    &.bottom {
+      top: 100%;
     }
   }
 
