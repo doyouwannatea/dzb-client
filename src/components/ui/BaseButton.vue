@@ -167,9 +167,6 @@
 
     padding: 0.4375rem 1.25rem;
     font-size: 0.875rem;
-    color: var(--light-color);
-    background: var(--accent-color-1);
-    border: 1px solid var(--light-color);
     border: none;
     border-radius: 6.25rem;
   }
