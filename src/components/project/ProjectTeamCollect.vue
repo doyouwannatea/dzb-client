@@ -1,45 +1,47 @@
 <template>
-  <ul :class="$style.list">
-    <li
-      v-for="(member, index) in multiselectTeamList"
-      :key="member.memberId || index"
-      :class="$style.member"
+  <section>
+    <ul :class="$style.list">
+      <li
+        v-for="(member, index) in multiselectTeamList"
+        :key="member.memberId || index"
+        :class="$style.member"
+      >
+        <ProjectRoleSelect
+          v-model:member="member.memberId"
+          v-model:role="member.role"
+          :class="$style['member-select']"
+          :role-list="
+            member.isCurrentUser && multiselectCurrentUserRoleList
+              ? multiselectCurrentUserRoleList
+              : multiselectRoleList
+          "
+          :member-list="filterSameSupervisors(member.memberId)"
+          :member-select-options="{
+            label: index === 0 ? 'ФИО преподавателя' : undefined,
+            selectDisabled: props.disableAll,
+          }"
+          :role-select-options="{
+            label: index === 0 ? 'Роль в проекте' : undefined,
+            selectDisabled: props.disableAll,
+          }"
+        />
+        <DeleteButton
+          v-if="!member.isCurrentUser"
+          :class="$style['member-delete-button']"
+          @click="() => onDeleteMember(member)"
+        />
+      </li>
+    </ul>
+    <BaseButton
+      v-if="!isMaxTeamMembers"
+      :class="$style['add-member-button']"
+      case="uppercase"
+      variant="outlined"
+      @click="onAddMember"
     >
-      <ProjectRoleSelect
-        v-model:member="member.memberId"
-        v-model:role="member.role"
-        :class="$style['member-select']"
-        :role-list="
-          member.isCurrentUser && multiselectCurrentUserRoleList
-            ? multiselectCurrentUserRoleList
-            : multiselectRoleList
-        "
-        :member-list="filterSameSupervisors(member.memberId)"
-        :member-select-options="{
-          label: index === 0 ? 'ФИО преподавателя' : undefined,
-          selectDisabled: props.disableAll,
-        }"
-        :role-select-options="{
-          label: index === 0 ? 'Роль в проекте' : undefined,
-          selectDisabled: props.disableAll,
-        }"
-      />
-      <DeleteButton
-        v-if="!member.isCurrentUser"
-        :class="$style['member-delete-button']"
-        @click="() => onDeleteMember(member)"
-      />
-    </li>
-  </ul>
-  <BaseButton
-    v-if="!isMaxTeamMembers"
-    :class="$style['add-member-button']"
-    case="uppercase"
-    variant="outlined"
-    @click="onAddMember"
-  >
-    <slot name="add-button">+ добавить роль</slot>
-  </BaseButton>
+      <slot name="add-button">+ добавить роль</slot>
+    </BaseButton>
+  </section>
 </template>
 
 <script setup lang="ts">

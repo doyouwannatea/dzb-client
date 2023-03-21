@@ -160,7 +160,37 @@
         <!-- </Project difficulty> -->
       </FormSection>
 
-      <FormSection tag="3" title="Роли в проекте" divider>
+      <FormSection
+        :class="$style['project-team-section']"
+        tag="3"
+        title="Роли в проекте"
+        divider
+      >
+        <!-- <Project institute> -->
+        <BaseLabel
+          is="div"
+          :class="$style['institute-input']"
+          label="Кафедра, к которой будет привязан проект"
+        >
+          <template #label="{ label }">
+            <BaseTooltip
+              :position-x="isSmallDevice ? 'left' : 'right'"
+              message="Заполняется автоматически в зависимости от выбранного на проекте наставника"
+            >
+              {{ label }}
+            </BaseTooltip>
+          </template>
+
+          <template #default>
+            <BaseInput
+              :model-value="team[0].memberData?.fio"
+              placeholder="Выберите наставника проекта"
+              disabled
+            />
+          </template>
+        </BaseLabel>
+        <!-- </Project institute> -->
+
         <!-- <Project team> -->
         <ProjectTeamCollect
           v-model:team="team"
@@ -370,6 +400,24 @@
     display: grid;
     grid-template-columns: 3fr 4fr;
     gap: 1rem;
+  }
+
+  .institute-input {
+    margin-bottom: 1.5rem;
+  }
+
+  .project-team-section {
+    display: grid;
+    grid-template-columns: 4fr 1fr 3fr;
+    column-gap: 1.5rem;
+
+    & > *:nth-child(1) {
+      grid-column: 1;
+    }
+
+    & > *:nth-child(2) {
+      grid-column: 1 / -1;
+    }
   }
 
   .project-data-section {
