@@ -44,7 +44,7 @@
   import { MemberRole } from '@/models/ProjectApplication';
   import arrowIcon from '@/assets/icons/user-role-select-arrow.svg?raw';
   import { MultiselectObjectItem } from '@/models/VMultiselect';
-  import BaseLabel from '../ui/BaseLabel.vue';
+  import BaseLabel from '../ui/label/BaseLabel.vue';
 
   export type SelectOptions = {
     labelDisabled?: boolean;

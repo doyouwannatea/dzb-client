@@ -111,7 +111,7 @@
   import SkillList from './SkillList.vue';
   import BaseInput from '../ui/BaseInput.vue';
   import ScrollablePanel from '../ui/ScrollablePanel.vue';
-  import BaseLabel from '../ui/BaseLabel.vue';
+  import BaseLabel from '../ui/label/BaseLabel.vue';
   import BaseTextarea from '../ui/BaseTextarea.vue';
   import BaseTooltip from '../ui/BaseTooltip.vue';
   import ClickableGroupedList, {

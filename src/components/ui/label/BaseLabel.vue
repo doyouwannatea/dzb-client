@@ -1,16 +1,18 @@
 <template>
   <component :is="props.is" :class="{ [$style.disabled]: props.disabled }">
     <p v-if="props.label" :class="$style['label-text']">
-      <slot name="label" :label="props.label">
+      <slot name="label" :label="props.label" :required="props.required">
         {{ props.label }}
+        <LabelRequiredIcon />
       </slot>
-      <span v-if="props.required" :class="$style.required">*</span>
     </p>
     <slot name="default"></slot>
   </component>
 </template>
 
 <script setup lang="ts">
+  import LabelRequiredIcon from './LabelRequiredIcon.vue';
+
   type Props = {
     label?: string;
     required?: boolean;
