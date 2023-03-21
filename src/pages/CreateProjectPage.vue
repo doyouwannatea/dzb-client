@@ -130,9 +130,12 @@
           required
         >
           <BaseRadioButton v-model="projectDuration" :value="1">
-            1 семестр
+            1 семестр (весенний)
           </BaseRadioButton>
           <BaseRadioButton v-model="projectDuration" :value="2">
+            1 семестр (осенний)
+          </BaseRadioButton>
+          <BaseRadioButton v-model="projectDuration" :value="3">
             2 семестра
           </BaseRadioButton>
         </BaseLabel>
@@ -360,7 +363,7 @@
   }
 
   .small-textarea {
-    min-height: 6.75rem;
+    min-height: 8.375rem;
   }
 
   .large-textarea {
