@@ -3,7 +3,8 @@
     <!-- HEADER -->
     <template #header>
       <BaseTooltip
-        position="bottom"
+        position-y="bottom"
+        :position-x="isSmallDevice ? 'left' : 'right'"
         message="Написать рекомендации по выбору навыков"
       >
         <h1>Редактирование навыков</h1>
@@ -118,6 +119,7 @@
     ListItem,
   } from '../ui/ClickableGroupedList.vue';
   import { getRandomIntInclusive } from '@/helpers/number';
+  import { useSmallDevice } from '@/helpers/breakpoints';
 
   type Props = {
     isShow: boolean;
@@ -134,6 +136,7 @@
     prevAddedSkillList: () => [],
   });
   const emit = defineEmits<Emits>();
+  const isSmallDevice = useSmallDevice();
 
   const searchValue = ref<string>('');
   const newSkillName = ref<string>('');
