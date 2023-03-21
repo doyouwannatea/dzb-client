@@ -167,7 +167,9 @@
           :supervisor-list="mockSupervisorList"
           :role-list="sharedRoleList"
           :current-user-role-list="currentUserRoleList"
-        />
+        >
+          <template #add-button>+ добавить сонаставника</template>
+        </ProjectTeamCollect>
         <!-- </Project team> -->
       </FormSection>
 
@@ -317,15 +319,8 @@
   // <Team control>
   const team = ref<TeamMember[]>(initTeam());
 
-  const sharedRoleList: MemberRole[] = [
-    MemberRole.Mentor,
-    MemberRole.CoMentor,
-    MemberRole.Expert,
-  ];
-  const currentUserRoleList: MemberRole[] = [
-    ...sharedRoleList,
-    MemberRole.JobDeveloper,
-  ];
+  const sharedRoleList: MemberRole[] = [MemberRole.CoMentor];
+  const currentUserRoleList: MemberRole[] = [MemberRole.Mentor];
 
   function initTeam(): TeamMember[] {
     const team: TeamMember[] = [];
@@ -334,6 +329,7 @@
       team.push({
         memberData: currentUser,
         isCurrentUser: true,
+        role: MemberRole.Mentor,
       });
     }
 

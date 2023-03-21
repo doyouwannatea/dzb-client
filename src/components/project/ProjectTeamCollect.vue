@@ -17,7 +17,7 @@
         :member-list="filterSameSupervisors(member.memberId)"
         :member-select-options="{
           label: index === 0 ? 'ФИО преподавателя' : undefined,
-          selectDisabled: props.disableAll || member.isCurrentUser,
+          selectDisabled: props.disableAll,
         }"
         :role-select-options="{
           label: index === 0 ? 'Роль в проекте' : undefined,
@@ -38,7 +38,7 @@
     variant="outlined"
     @click="onAddMember"
   >
-    + добавить роль
+    <slot name="add-button">+ добавить роль</slot>
   </BaseButton>
 </template>
 
@@ -166,7 +166,10 @@
 
     multiselectTeamList.value = [
       ...multiselectTeamList.value,
-      { memberId: undefined, role: undefined },
+      {
+        memberId: undefined,
+        role: props.roleList.length === 1 ? props.roleList[0] : undefined,
+      },
     ];
   }
 

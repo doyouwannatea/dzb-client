@@ -11,9 +11,13 @@
         placeholder="Выберите сотрудника"
         no-results-text="Сотрудник не найден"
         no-options-text="Сотрудники не найдены"
+        :caret="props.memberList.length > 1"
         :searchable="true"
         :options="props.memberList"
-        :disabled="props.memberSelectOptions.selectDisabled"
+        :disabled="
+          props.memberSelectOptions.selectDisabled ||
+          props.memberList.length < 2
+        "
         @change="(payload: unknown) => onMemberChange(payload as Member)"
       />
     </BaseLabel>
@@ -29,9 +33,12 @@
         placeholder="Выберите роль сотрудника"
         no-results-text="Роль не найдена"
         no-options-text="Роли не найдены"
+        :caret="props.roleList.length > 1"
         :searchable="true"
         :options="props.roleList"
-        :disabled="props.roleSelectOptions.selectDisabled"
+        :disabled="
+          props.roleSelectOptions.selectDisabled || props.roleList.length < 2
+        "
         @change="(payload: unknown) => onRoleChange(payload as Role)"
       />
     </BaseLabel>
