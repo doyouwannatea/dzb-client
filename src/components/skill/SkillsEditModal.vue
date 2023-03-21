@@ -31,11 +31,17 @@
             />
           </template>
           <template #default>
-            <template v-if="filteredSharedSkillList.length === 0">
-              Навыки не найдены
-            </template>
             <ClickableGroupedList
-              :grouped-list="[{ id: 1, list: filteredSharedSkillList }]"
+              :grouped-list="[
+                {
+                  id: 1,
+                  list: filteredSharedSkillList,
+                  groupLabel:
+                    filteredSharedSkillList.length === 0
+                      ? 'Навыки не найдены'
+                      : undefined,
+                },
+              ]"
               @item-click="(payload) => onAddSkillFromList(payload as number)"
             />
           </template>
