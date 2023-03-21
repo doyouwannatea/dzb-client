@@ -90,6 +90,39 @@
         </BaseLabel>
         <!-- </Project customer> -->
 
+        <!-- <Project theme source> -->
+        <BaseLabel is="div" label="Источник темы">
+          <template #label="{ label }">
+            <BaseTooltip
+              :position-x="isSmallDevice ? 'left' : 'right'"
+              message="Eсли на момент заполнения аннотации нет информации, ее можно предоставить позднее, в сроки оговоренные положением о проектном обучении, либо оставить поле пустым"
+            >
+              {{ label }}
+            </BaseTooltip>
+          </template>
+
+          <template #default>
+            <VMultiselect
+              v-model="projectThemeSource"
+              class="multiselect"
+              placeholder="Ввыберите источник темы"
+              no-results-text="Источник не найден"
+              no-options-text="Источники не найдены"
+              :searchable="true"
+              :options="[
+                'текущие запросы служб ИРНИТУ',
+                'тематики бизнес акселератора ИРНИТУ ',
+                'тематики проектно-образовательных интенсивов (в том числе реализуемых в сетевой форме)',
+                'тематики предприятий и сторонних организаций (в том числе реализуемых в рамках НИР, НИОКР и хоз. договорных работ) ',
+                'тематики российских и международных конкурсов и соревнований',
+                'тематики грантов (любого уровня, в том числе ИРНИТУ)',
+                'тематики российских и международных акселерационных программ',
+              ]"
+            />
+          </template>
+        </BaseLabel>
+        <!-- </Project theme source> -->
+
         <!-- <Project duration> -->
         <BaseLabel
           :class="$style['radio-buttons-label']"
@@ -232,7 +265,7 @@
   import ProjectTeamCollect, {
     TeamMember,
   } from '@/components/project/ProjectTeamCollect.vue';
-  import BaseLabel from '@/components/ui/BaseLabel.vue';
+  import BaseLabel from '@/components/ui/label/BaseLabel.vue';
   import BaseRadioButton from '@/components/ui/BaseRadioButton.vue';
   import VMultiselect from '@vueform/multiselect';
   import BaseTextarea from '@/components/ui/BaseTextarea.vue';
@@ -241,9 +274,12 @@
   import BaseButton from '@/components/ui/BaseButton.vue';
   import SkillsEditModal from '@/components/skill/SkillsEditModal.vue';
   import { skills } from '@/models/mock/project-skills';
+  import BaseTooltip from '@/components/ui/BaseTooltip.vue';
+  import { useSmallDevice } from '@/helpers/breakpoints';
 
   useWatchAuthorization();
 
+  const isSmallDevice = useSmallDevice();
   const route = useRoute();
   const authStore = useAuthStore();
   const { profileData } = storeToRefs(authStore);
@@ -256,6 +292,7 @@
   const projectName = ref<string | undefined>(undefined);
   const projectGoal = ref<string | undefined>(undefined);
   const projectCustomer = ref<string | undefined>(undefined);
+  const projectThemeSource = ref<string | undefined>(undefined);
   const projectDuration = ref<number>(1);
   const projectDifficulty = ref<number>(1);
   const projectRequirementsForParticipants = ref<string | undefined>(undefined);
@@ -354,11 +391,15 @@
     }
 
     & > *:nth-child(4) {
+      grid-column: 1;
+    }
+
+    & > *:nth-child(5) {
       grid-row: 1;
       grid-column: 3;
     }
 
-    & > *:nth-child(5) {
+    & > *:nth-child(6) {
       grid-row: 2;
       grid-column: 3;
     }
