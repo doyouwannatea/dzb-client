@@ -3,7 +3,7 @@
     <p v-if="props.label" :class="$style['label-text']">
       <slot name="label" :label="props.label" :required="props.required">
         {{ props.label }}
-        <LabelRequiredIcon />
+        <LabelRequiredIcon v-if="props.required" />
       </slot>
     </p>
     <slot name="default"></slot>
