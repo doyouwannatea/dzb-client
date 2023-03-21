@@ -1,10 +1,12 @@
 <template>
   <component :is="props.is" :class="{ [$style.disabled]: props.disabled }">
     <p v-if="props.label" :class="$style['label-text']">
-      {{ props.label }}
+      <slot name="label" :label="props.label">
+        {{ props.label }}
+      </slot>
       <span v-if="props.required" :class="$style.required">*</span>
     </p>
-    <slot></slot>
+    <slot name="default"></slot>
   </component>
 </template>
 
