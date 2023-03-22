@@ -15,7 +15,13 @@
 <script setup lang="ts">
   import { withDefaults } from '@vue/runtime-core';
 
-  export type Variant = 'outlined' | 'link' | 'inline-link' | 'primary' | 'tag';
+  export type Variant =
+    | 'outlined'
+    | 'link'
+    | 'inline-link'
+    | 'primary'
+    | 'tag'
+    | 'tag-outlined';
   type Is = 'button' | 'router-link' | 'a';
   type Case = 'uppercase' | 'lowercase' | 'none';
   type Color = 'red' | 'white';
@@ -81,7 +87,7 @@
     }
   }
 
-  // A.K.A. "Silent Classes"
+  // SCSS: A.K.A. "Silent Classes"
   %primary {
     background-color: var(--background-color);
 
@@ -100,12 +106,16 @@
     }
   }
 
-  // Наследует стили %primary
-  .primary {
+  %tag {
     @extend %primary;
+
+    padding: 0.4375rem 1.25rem;
+    font-size: 0.875rem;
+    border: none;
+    border-radius: 6.25rem;
   }
 
-  .outlined {
+  %outlined {
     color: var(--background-color);
     background-color: transparent;
     border: 0.125rem solid var(--background-color);
@@ -137,14 +147,7 @@
     }
   }
 
-  .inline-link {
-    padding: 0;
-    font-size: 0.875rem;
-    border-radius: 0;
-  }
-
-  .link,
-  .inline-link {
+  %link {
     color: var(--background-color);
 
     &:hover {
@@ -161,13 +164,33 @@
     }
   }
 
-  // Наследует стили %primary
-  .tag {
+  // Наследование стилей в SCSS https://sass-lang.com/documentation/at-rules/extend
+  .primary {
     @extend %primary;
+  }
 
-    padding: 0.4375rem 1.25rem;
+  .outlined {
+    @extend %outlined;
+  }
+
+  .link {
+    @extend %link;
+  }
+
+  .inline-link {
+    @extend %link;
+
+    padding: 0;
     font-size: 0.875rem;
-    border: none;
-    border-radius: 6.25rem;
+    border-radius: 0;
+  }
+
+  .tag {
+    @extend %tag;
+  }
+
+  .tag-outlined {
+    @extend %tag;
+    @extend %outlined;
   }
 </style>
