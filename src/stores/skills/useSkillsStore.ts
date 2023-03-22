@@ -1,5 +1,5 @@
 import { skillsApi } from '@/api/SkillsApi';
-import { Tag } from '@/models/Project';
+import { Skill } from '@/models/Project';
 import { defineStore } from 'pinia';
 import { useAuthStore } from '../auth/useAuthStore';
 import { state } from './state';
@@ -16,7 +16,7 @@ export const useSkillsStore = defineStore('skills', {
     // GET USER SKILLS
 
     // UPDATE USER SKILLS
-    updateUserSkills(skills: Tag[]) {
+    updateUserSkills(skills: Skill[]) {
       const authStore = useAuthStore();
 
       return this._onAsync(async () => {

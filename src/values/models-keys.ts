@@ -1,5 +1,5 @@
 import { Supervisor } from '@/models/Supervisor';
-import { Tag, Type } from '../models/Project';
+import { Skill, Type } from '../models/Project';
 import { State } from '../models/ProjectState';
 
 export const SupervisorKeys: Record<keyof Supervisor, keyof Supervisor> = {
@@ -12,7 +12,7 @@ export const TypeKeys: Record<keyof Type, keyof Type> = {
   id: 'id',
   type: 'type',
 };
-export const SkillKeys: Record<keyof Tag, keyof Tag> = {
+export const SkillKeys: Record<keyof Skill, keyof Skill> = {
   id: 'id',
   name: 'name',
   skillCategory_id: 'skillCategory_id',

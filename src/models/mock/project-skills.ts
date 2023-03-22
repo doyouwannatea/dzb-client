@@ -1,6 +1,6 @@
-import { Tag } from '../Project';
+import { Skill } from '../Project';
 
-export const skills: Tag[] = [
+export const skills: Skill[] = [
   {
     id: 1,
     name: 'Web',
@@ -38,7 +38,7 @@ export const skills: Tag[] = [
   },
 ];
 
-export const specialties: Tag[] = [
+export const specialties: Skill[] = [
   {
     id: 13,
     name: 'ИСТ',
@@ -56,7 +56,7 @@ export const specialties: Tag[] = [
   },
 ];
 
-export const skillCategories: Tag[] = [
+export const skillCategories: Skill[] = [
   {
     id: 8,
     name: 'Построение графиков',

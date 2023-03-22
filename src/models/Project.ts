@@ -1,12 +1,11 @@
 import { Candidate } from './Candidate';
-import { Institute } from './Institute';
 import { Participation } from './Participation';
 import { Difficulty } from './ProjectDifficulty';
 import { State } from './ProjectState';
+import { Specialty } from './Specialty';
+import { Tag } from './Tag';
 
-export interface Tag {
-  id: number;
-  name: string;
+export interface Skill extends Tag {
   skillCategory_id: number;
 }
 
@@ -34,8 +33,8 @@ export interface Project {
   supervisorsNames: string;
   state: State;
   type: Type;
-  skills: Tag[];
-  specialities: Institute[];
+  skills: Skill[];
+  specialities: Specialty[];
   participations?: Participation[];
   participants?: Candidate[];
   participant_feedback?: string;
@@ -53,8 +52,8 @@ export interface ProjectFilters {
 }
 
 export interface ProjectTags {
-  skills: Tag[];
-  specialties: Tag[];
+  skills: Skill[];
+  specialties: Specialty[];
   skillCategories: Tag[];
 }
 

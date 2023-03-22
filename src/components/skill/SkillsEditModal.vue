@@ -9,9 +9,9 @@
       >
         <h1>Редактирование навыков</h1>
       </BaseTooltip>
-      <SkillList
+      <TagList
         :class="$style['main-skill-list']"
-        :skills="skillListRef"
+        :tag-list="skillListRef"
         show-all
         deletable
         @delete="onDeleteSkill"
@@ -81,9 +81,9 @@
             />
           </template>
           <template #default>
-            <SkillList
+            <TagList
               v-if="props.prevAddedSkillList.length > 0"
-              :skills="props.prevAddedSkillList"
+              :tag-list="props.prevAddedSkillList"
               tag-variant="outlined"
               show-all
             />
@@ -104,12 +104,12 @@
 <script setup lang="ts">
   import { ref, computed, watch } from 'vue';
   import searchIconUrl from '@/assets/icons/search.svg?url';
-  import { Tag } from '@/models/Project';
+  import { Skill } from '@/models/Project';
 
   // components
   import BaseModal from '../ui/BaseModal.vue';
   import BaseButton from '../ui/BaseButton.vue';
-  import SkillList from './SkillList.vue';
+  import TagList from '../ui/TagList.vue';
   import BaseInput from '../ui/BaseInput.vue';
   import ScrollablePanel from '../ui/ScrollablePanel.vue';
   import BaseLabel from '../ui/label/BaseLabel.vue';
@@ -120,16 +120,17 @@
   } from '../ui/ClickableGroupedList.vue';
   import { getRandomIntInclusive } from '@/helpers/number';
   import { useSmallDevice } from '@/helpers/breakpoints';
+  import { Tag } from '@/models/Tag';
 
   type Props = {
     isShow: boolean;
-    skillList: Tag[];
-    sharedSkillList: Tag[];
-    prevAddedSkillList?: Tag[];
+    skillList: Skill[];
+    sharedSkillList: Skill[];
+    prevAddedSkillList?: Skill[];
   };
   type Emits = {
     (event: 'update:isShow', isShow: boolean): void;
-    (event: 'update:skillList', skillList: Tag[]): void;
+    (event: 'update:skillList', skillList: Skill[]): void;
   };
 
   const props = withDefaults(defineProps<Props>(), {
@@ -141,7 +142,7 @@
   const searchValue = ref<string>('');
   const newSkillName = ref<string>('');
 
-  const skillListRef = ref<Tag[]>([]);
+  const skillListRef = ref<Skill[]>([]);
   const sharedSkillListRef = computed<ListItem<number>[]>(() =>
     props.sharedSkillList.map((skill) => ({
       id: skill.id,

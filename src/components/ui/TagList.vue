@@ -1,20 +1,20 @@
 <template>
-  <ul v-if="visibleSkills.length > 0" class="list">
-    <li v-for="skill of visibleSkills" :key="skill.id">
+  <ul v-if="visibleTags.length > 0" class="list">
+    <li v-for="tag of visibleTags" :key="tag.id">
       <BaseTag
         :disabled="disableAll"
         :deletable="deletable"
         :variant="tagVariant"
-        @delete="$emit('delete', skill)"
+        @delete="$emit('delete', tag)"
       >
-        {{ skill.name }}
+        {{ tag.name }}
       </BaseTag>
     </li>
     <li v-if="showBtnVisible" class="show-btn-wrapper">
       <BaseButton
         case="lowercase"
         variant="inline-link"
-        @click="isSkillsVisible = true"
+        @click="isTagsVisible = true"
       >
         {{ showBtnText }}
       </BaseButton>
@@ -26,15 +26,15 @@
 </template>
 
 <script setup lang="ts">
-  import { Tag } from '@/models/Project';
   import { computed, ref, withDefaults } from 'vue';
   import { declOfNum } from '@/helpers/string';
+  import { Tag } from '@/models/Tag';
   // components
-  import BaseTag from '../ui/BaseTag.vue';
-  import BaseButton from '../ui/BaseButton.vue';
+  import BaseTag from './BaseTag.vue';
+  import BaseButton from './BaseButton.vue';
 
   type Props = {
-    skills: Tag[];
+    tagList: Tag[];
     showAll?: boolean;
     defaultVisible?: number;
     disableAll?: boolean;
@@ -43,11 +43,11 @@
   };
 
   type Emits = {
-    (e: 'delete', skill: Tag): void;
+    (e: 'delete', tag: Tag): void;
   };
 
   const props = withDefaults(defineProps<Props>(), {
-    skills: () => [],
+    tagList: () => [],
     showAll: false,
     defaultVisible: 3,
     disableAll: false,
@@ -57,22 +57,22 @@
   defineEmits<Emits>();
 
   // Setup variables
-  const hiddenSkillsCount = props.skills.length - props.defaultVisible;
-  const showBtnText = `+${hiddenSkillsCount} ${declOfNum(hiddenSkillsCount, [
+  const hiddenTagsCount = props.tagList.length - props.defaultVisible;
+  const showBtnText = `+${hiddenTagsCount} ${declOfNum(hiddenTagsCount, [
     'тег',
     'тега',
     'тегов',
   ])}`;
 
   // Reactive variables
-  const isSkillsVisible = ref(props.showAll);
-  const visibleSkills = computed(() =>
-    isSkillsVisible.value
-      ? props.skills
-      : props.skills.slice(0, props.defaultVisible),
+  const isTagsVisible = ref(props.showAll);
+  const visibleTags = computed(() =>
+    isTagsVisible.value
+      ? props.tagList
+      : props.tagList.slice(0, props.defaultVisible),
   );
   const showBtnVisible = computed(
-    () => props.skills.length > props.defaultVisible && !isSkillsVisible.value,
+    () => props.tagList.length > props.defaultVisible && !isTagsVisible.value,
   );
 </script>
 

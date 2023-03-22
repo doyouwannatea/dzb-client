@@ -10,9 +10,9 @@
           Академические навыки ({{ authStore.profileData?.training_group }})
         </h2>
       </BaseTooltip>
-      <SkillList
+      <TagList
         class="tags-list"
-        :skills="skillsStore.userSkills?.common"
+        :tag-list="skillsStore.userSkills?.common"
         :show-all="true"
         :disable-all="true"
       />
@@ -21,9 +21,9 @@
       <BaseTooltip :message="individualSkillsMsg">
         <h2 class="subtitle">Индивидуальные навыки</h2>
       </BaseTooltip>
-      <SkillList
+      <TagList
         class="tags-list"
-        :skills="skillsStore.userSkills?.personal"
+        :tag-list="skillsStore.userSkills?.personal"
         :show-all="true"
       />
       <div v-if="skillsStore.loading">загрузка...</div>
@@ -49,7 +49,7 @@
   // components
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseTooltip from '@/components/ui/BaseTooltip.vue';
-  import SkillList from '@/components/skill/SkillList.vue';
+  import TagList from '@/components/ui/TagList.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
 
   useGetUserSkills();

@@ -1,6 +1,6 @@
 <template>
   <SkillsEditModal
-    v-model:is-show="showEditSkillsModal"
+    v-model:is-show="showSkillsEditModal"
     v-model:skill-list="skillList"
     :shared-skill-list="skills"
   />
@@ -258,17 +258,17 @@
         divider
       >
         <!-- <Project skills> -->
-        <SkillList show-all :skills="skillList">
+        <TagList show-all :tag-list="skillList">
           <template #after-list>
             <BaseButton
               case="none"
               variant="tag"
-              @click="() => (showEditSkillsModal = true)"
+              @click="() => (showSkillsEditModal = true)"
             >
               Добавить навыки +
             </BaseButton>
           </template>
-        </SkillList>
+        </TagList>
         <!-- </Project skills> -->
       </FormSection>
     </BasePanel>
@@ -291,7 +291,7 @@
   import { isSupervisor } from '@/helpers/typeCheck';
 
   import { MemberRole } from '@/models/ProjectApplication';
-  import { Tag } from '@/models/Project';
+  import { Skill } from '@/models/Project';
   import { supervisorList as mockSupervisorList } from '@/models/mock/supervisor';
 
   import PageLayout from '@/components/layout/PageLayout.vue';
@@ -305,7 +305,7 @@
   import VMultiselect from '@vueform/multiselect';
   import BaseTextarea from '@/components/ui/BaseTextarea.vue';
   import BaseInput from '@/components/ui/BaseInput.vue';
-  import SkillList from '@/components/skill/SkillList.vue';
+  import TagList from '@/components/ui/TagList.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
   import SkillsEditModal from '@/components/skill/SkillsEditModal.vue';
   import { skills } from '@/models/mock/project-skills';
@@ -320,7 +320,7 @@
   const { profileData } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
 
-  const showEditSkillsModal = ref<boolean>(false);
+  const showSkillsEditModal = ref<boolean>(false);
 
   const projectType = ref<number>(1);
   const prevProject = ref<string | undefined>(undefined);

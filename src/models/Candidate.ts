@@ -1,5 +1,5 @@
 import { Institute } from './Institute';
-import { Tag } from './Project';
+import { Skill } from './Project';
 import { CommonUserData } from './User';
 
 export interface Candidate extends CommonUserData {
@@ -21,10 +21,10 @@ export interface Candidate extends CommonUserData {
     };
   };
   group_id: number;
-  skills: Tag[];
+  skills: Skill[];
 }
 
 export interface CandidateSkills {
-  common: Tag[];
-  personal: Tag[];
+  common: Skill[];
+  personal: Skill[];
 }

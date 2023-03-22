@@ -2,7 +2,7 @@ import { deepClone } from '@/helpers/object';
 import { delayRes } from '@/helpers/promise';
 import { CandidateSkills } from '@/models/Candidate';
 import { userCandidate, candidateSkills } from '@/models/mock/candidate';
-import { Tag } from '@/models/Project';
+import { Skill } from '@/models/Project';
 import ISkillsApi from './ISkillsApi';
 
 export default class SkillsApiMock extends ISkillsApi {
@@ -10,7 +10,7 @@ export default class SkillsApiMock extends ISkillsApi {
     return delayRes(candidateSkills, 300);
   }
 
-  async updateUserSkills(skills: Tag[]): Promise<void> {
+  async updateUserSkills(skills: Skill[]): Promise<void> {
     candidateSkills.personal = deepClone(skills);
     userCandidate.skills = [
       ...candidateSkills.personal,

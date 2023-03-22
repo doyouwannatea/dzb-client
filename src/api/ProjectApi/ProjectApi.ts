@@ -1,11 +1,5 @@
 import { projectFiltersToSearchParams } from '@/helpers/query';
-import {
-  Project,
-  ProjectFilters,
-  Type,
-  ProjectTags,
-  Tag,
-} from '@/models/Project';
+import { Project, ProjectFilters, Type, ProjectTags } from '@/models/Project';
 import IProjectApi, {
   OnDownloadProgress,
   ProjectListResponse,
@@ -16,6 +10,7 @@ import { Supervisor } from '@/models/Supervisor';
 import { baseKyInstance } from '../baseKy';
 import { Candidate } from '@/models/Candidate';
 import { compareString } from '@/helpers/string';
+import { Tag } from '@/models/Tag';
 
 export default class ProjectApi extends IProjectApi {
   async getSingleProject(projectId: number): Promise<Project> {

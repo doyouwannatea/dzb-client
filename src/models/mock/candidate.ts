@@ -1,16 +1,16 @@
 import { Candidate, CandidateSkills } from '../Candidate';
-import { Tag } from '../Project';
+import { Skill } from '../Project';
 import { UserCandidate } from '../User';
 import { skills, skillCategories } from './project-skills';
 
-const commonSkills: Tag[] = [
+const commonSkills: Skill[] = [
   skills[0],
   skills[1],
   skills[2],
   skillCategories[2],
   skillCategories[4],
 ];
-const personalSkills: Tag[] = [skillCategories[3]];
+const personalSkills: Skill[] = [skillCategories[3]];
 
 export const userCandidate: UserCandidate = {
   id: 2,

@@ -47,8 +47,8 @@
       />
     </div>
     <footer class="footer container">
-      <SkillList
-        :skills="
+      <TagList
+        :tag-list="
           props.project.skills.filter(
             (skill) => skill.name.split(' ').length < 10,
           )
@@ -77,7 +77,7 @@
   import { useSmallDevice, useDesktop, useMobile } from '@/helpers/breakpoints';
   // components
   import ProjectStatus from './ProjectStatus.vue';
-  import SkillList from '../skill/SkillList.vue';
+  import TagList from '../ui/TagList.vue';
   import OpenParticipationModalButton from '../participation/OpenParticipationModalButton.vue';
   import OpenFeedbackModalButton from '../feedback/OpenFeedbackModalButton.vue';
   import BaseButton from '../ui/BaseButton.vue';
