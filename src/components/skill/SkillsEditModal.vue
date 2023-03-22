@@ -105,6 +105,9 @@
   import { ref, computed, watch } from 'vue';
   import searchIconUrl from '@/assets/icons/search.svg?url';
   import { Skill } from '@/models/Project';
+  import { getRandomIntInclusive } from '@/helpers/number';
+  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { Tag } from '@/models/Tag';
 
   // components
   import BaseModal from '../ui/BaseModal.vue';
@@ -117,10 +120,7 @@
   import BaseTooltip from '../ui/BaseTooltip.vue';
   import ClickableGroupedList, {
     ListItem,
-  } from '../ui/ClickableGroupedList.vue';
-  import { getRandomIntInclusive } from '@/helpers/number';
-  import { useSmallDevice } from '@/helpers/breakpoints';
-  import { Tag } from '@/models/Tag';
+  } from '../ui/clickable-grouped-list/ClickableGroupedList.vue';
 
   type Props = {
     isShow: boolean;

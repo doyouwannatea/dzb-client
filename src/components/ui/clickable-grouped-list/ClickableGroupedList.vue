@@ -4,9 +4,9 @@
     :key="group.id"
     :class="$style['group-list']"
   >
-    <li v-if="group.groupLabel" :class="$style['list-group-label']">
+    <ClickableGroupedListLabel is="li" v-if="group.groupLabel">
       {{ group.groupLabel }}
-    </li>
+    </ClickableGroupedListLabel>
     <li
       v-for="item in group.list"
       :key="item.id || item.label"
@@ -24,6 +24,8 @@
 </template>
 
 <script setup lang="ts">
+  import ClickableGroupedListLabel from './ClickableGroupedListLabel.vue';
+
   export type ListItem<T = unknown> = {
     id: number;
     label: string;
@@ -62,13 +64,6 @@
     &:not(:last-child) {
       margin-bottom: 1rem;
     }
-  }
-
-  .list-group-label {
-    margin-bottom: 0.1875rem;
-    font-size: 0.75rem;
-    color: var(--gray-color-2);
-    text-transform: uppercase;
   }
 
   .item-label {
