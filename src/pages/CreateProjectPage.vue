@@ -4,6 +4,11 @@
     v-model:skill-list="skillList"
     :shared-skill-list="skills"
   />
+  <SpecialtyEditModal
+    v-model:is-show="showSpecialtyEditModal"
+    v-model:specialty-list="specialtyList"
+    :shared-specialty-list="specialties"
+  />
   <PageLayout>
     <header class="header">
       <h1 :class="[$style.title, 'page-title']">Создать проект</h1>
@@ -248,7 +253,17 @@
         title="Направления (специальности), профилей  участников проекта"
       >
         <!-- <Project specialties> -->
-        <SkillList show-all :skills="trainingСourses" />
+        <TagList show-all :tag-list="specialtyList">
+          <template #after-list>
+            <BaseButton
+              case="none"
+              variant="tag"
+              @click="() => (showSpecialtyEditModal = true)"
+            >
+              Добавить специальности +
+            </BaseButton>
+          </template>
+        </TagList>
         <!-- </Project specialties> -->
       </FormSection>
 
@@ -311,6 +326,10 @@
   import { skills } from '@/models/mock/project-skills';
   import BaseTooltip from '@/components/ui/BaseTooltip.vue';
   import { useSmallDevice } from '@/helpers/breakpoints';
+  import SpecialtyEditModal from '@/components/specialty/SpecialtyEditModal.vue';
+  import { SelectedSpecialty, SpecialtyCourse } from '@/models/Specialty';
+  import { specialties } from '@/models/mock/specialties';
+  import { specialtyFullName } from '@/helpers/specialty';
 
   useWatchAuthorization();
 
@@ -321,6 +340,7 @@
   const projectId = computed(() => route.params.id);
 
   const showSkillsEditModal = ref<boolean>(false);
+  const showSpecialtyEditModal = ref<boolean>(false);
 
   const projectType = ref<number>(1);
   const prevProject = ref<string | undefined>(undefined);
@@ -334,17 +354,15 @@
   const projectExpectedResult = ref<string | undefined>(undefined);
   const projectIdea = ref<string | undefined>(undefined);
 
-  const trainingСourses: Tag[] = [
-    { id: 1, name: 'ИСТ', skillCategory_id: 1 },
-    { id: 2, name: 'ЭВМ', skillCategory_id: 1 },
-    { id: 3, name: 'ИБ', skillCategory_id: 1 },
-    { id: 4, name: 'АСУ', skillCategory_id: 1 },
-  ];
-  const skillList = ref<Tag[]>([
-    { id: 1, name: 'JavaScript', skillCategory_id: 1 },
-    { id: 2, name: 'Web', skillCategory_id: 1 },
-    { id: 3, name: 'Конференция', skillCategory_id: 1 },
-  ]);
+  const specialtyList = ref<SelectedSpecialty<number | string>[]>(
+    specialties.slice(3, 5).map(({ id, name }) => ({
+      id: id,
+      course: SpecialtyCourse.Third,
+      specialty_id: id,
+      name: specialtyFullName(name, SpecialtyCourse.Third),
+    })),
+  );
+  const skillList = ref<Skill[]>(skills.slice(0, 1));
 
   // <Team control>
   const team = ref<TeamMember[]>(initTeam());
