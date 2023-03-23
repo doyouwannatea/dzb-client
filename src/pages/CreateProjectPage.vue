@@ -9,6 +9,11 @@
     v-model:specialty-list="specialtyList"
     :shared-specialty-list="specialties"
   />
+  <SpecialtyEditModal
+    v-model:is-show="showAdditionalSpecialtyEditModal"
+    v-model:specialty-list="additionalSpecialtyList"
+    :shared-specialty-list="specialties"
+  />
   <PageLayout>
     <header class="header">
       <h1 :class="[$style.title, 'page-title']">Создать проект</h1>
@@ -250,7 +255,7 @@
 
       <FormSection
         tag="5"
-        title="Направления (специальности), профилей  участников проекта"
+        title="Направления (специальности), участников проекта"
       >
         <!-- <Project specialties> -->
         <TagList show-all :tag-list="specialtyList">
@@ -269,9 +274,25 @@
 
       <FormSection
         tag="6"
-        title="Навыки, которые необходимы на проекте"
+        title="Приглашённые направления (специальности), участников проекта"
         divider
       >
+        <!-- <Project specialties> -->
+        <TagList show-all :tag-list="additionalSpecialtyList">
+          <template #after-list>
+            <BaseButton
+              case="none"
+              variant="tag"
+              @click="() => (showAdditionalSpecialtyEditModal = true)"
+            >
+              Добавить специальности +
+            </BaseButton>
+          </template>
+        </TagList>
+        <!-- </Project specialties> -->
+      </FormSection>
+
+      <FormSection tag="7" title="Навыки, которые необходимы на проекте">
         <!-- <Project skills> -->
         <TagList show-all :tag-list="skillList">
           <template #after-list>
@@ -341,6 +362,7 @@
 
   const showSkillsEditModal = ref<boolean>(false);
   const showSpecialtyEditModal = ref<boolean>(false);
+  const showAdditionalSpecialtyEditModal = ref<boolean>(false);
 
   const projectType = ref<number>(1);
   const prevProject = ref<string | undefined>(undefined);
@@ -356,6 +378,14 @@
 
   const specialtyList = ref<SelectedSpecialty<number | string>[]>(
     specialties.slice(3, 5).map(({ id, name }) => ({
+      id: id,
+      course: SpecialtyCourse.Third,
+      specialty_id: id,
+      name: specialtyFullName(name, SpecialtyCourse.Third),
+    })),
+  );
+  const additionalSpecialtyList = ref<SelectedSpecialty<number | string>[]>(
+    specialties.slice(5, 9).map(({ id, name }) => ({
       id: id,
       course: SpecialtyCourse.Third,
       specialty_id: id,
