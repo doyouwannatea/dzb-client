@@ -105,7 +105,6 @@
   import { ref, computed, watch } from 'vue';
   import searchIconUrl from '@/assets/icons/search.svg?url';
   import { Skill } from '@/models/Project';
-  import { getRandomIntInclusive } from '@/helpers/number';
   import { useSmallDevice } from '@/helpers/breakpoints';
   import { stringIncludes, stringsAreEqual } from '@/helpers/string';
   import { Tag } from '@/models/Tag';
@@ -215,12 +214,15 @@
       return;
     }
 
-    const leftBorder = props.sharedSkillList.length + skillListRef.value.length;
-    const rightBorder = leftBorder + 100000;
+    const id =
+      Math.max(
+        ...props.sharedSkillList.map((skill) => skill.id),
+        ...skillListRef.value.map((skill) => skill.id),
+      ) + 1;
     skillListRef.value = [
       ...skillListRef.value,
       {
-        id: getRandomIntInclusive(leftBorder, rightBorder),
+        id: id,
         name: skillName,
         skillCategory_id: -1,
       },
