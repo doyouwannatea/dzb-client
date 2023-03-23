@@ -17,7 +17,7 @@
 
     <!-- MAIN CONTENT -->
     <div :class="$style.content">
-      <div :class="$style.col">
+      <div v-if="instituteListComputed.length > 0" :class="$style.col">
         <p :class="$style['col-title']">Добавить группу специальностей</p>
         <ScrollablePanel>
           <template #header>
@@ -48,7 +48,9 @@
       </div>
 
       <div :class="$style.col">
-        <p :class="$style['col-title']">Добавить отдельные специальности</p>
+        <p v-if="instituteListComputed.length > 0" :class="$style['col-title']">
+          Добавить отдельные специальности
+        </p>
         <ScrollablePanel>
           <template #header>
             <BaseInput
@@ -132,12 +134,14 @@
 
   const instituteListComputed = computed<ListItem<number | string>[]>(() =>
     uniqBy(
-      props.sharedSpecialtyList.map((specialty) => ({
-        id: specialty.institute?.id || 0,
-        label: specialty.institute?.name || '',
-        selected: false,
-        value: specialty.institute?.id || 0,
-      })),
+      props.sharedSpecialtyList
+        .filter((specialty) => specialty.institute)
+        .map((specialty) => ({
+          id: specialty.institute!.id,
+          label: specialty.institute!.name,
+          selected: false,
+          value: specialty.institute!.id,
+        })),
       (institute) => institute.id,
     ),
   );
