@@ -1,6 +1,6 @@
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import _ from 'lodash';
+import { isEqual } from 'lodash';
 import { locationQueryToProjectFilters } from '@/helpers/query';
 import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 import { ProjectFilters } from '@/models/Project';
@@ -26,8 +26,8 @@ export const useWatchProjectQueries = (routeName: RouteNames) => {
       }
 
       // если в строке поиска есть фильтры, но они не совпадают с теми, что в хранилище, то обновляем фильтры
-      const isEqual = _.isEqual(storedFilters, queryFilters);
-      if (!isEqual) {
+      const isEqualFilters = isEqual(storedFilters, queryFilters);
+      if (!isEqualFilters) {
         projectStore.setFilters(queryFilters);
       }
 
