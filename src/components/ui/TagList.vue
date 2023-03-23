@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="visibleTags.length > 0" class="list">
+  <ul v-if="visibleTags.length > 0 || $slots['after-list']" class="list">
     <li v-for="tag of visibleTags" :key="tag.id">
       <BaseTag
         :disabled="disableAll"
@@ -34,7 +34,7 @@
   import BaseButton from './BaseButton.vue';
 
   type Props = {
-    tagList: Tag[];
+    tagList: Tag<number | string>[];
     showAll?: boolean;
     defaultVisible?: number;
     disableAll?: boolean;
@@ -43,7 +43,7 @@
   };
 
   type Emits = {
-    (e: 'delete', tag: Tag): void;
+    (e: 'delete', tag: Tag<number | string>): void;
   };
 
   const props = withDefaults(defineProps<Props>(), {
