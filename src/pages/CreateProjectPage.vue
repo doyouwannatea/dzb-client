@@ -13,7 +13,11 @@
     v-model:is-show="showAdditionalSpecialtyEditModal"
     v-model:specialty-list="additionalSpecialtyList"
     :shared-specialty-list="specialties"
-  />
+  >
+    <template #title>
+      <h1>Редактирование приглашённых специальностей</h1>
+    </template>
+  </SpecialtyEditModal>
   <PageLayout>
     <header class="header">
       <h1 :class="[$style.title, 'page-title']">Создать проект</h1>

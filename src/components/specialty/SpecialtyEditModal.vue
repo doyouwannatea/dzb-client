@@ -2,7 +2,9 @@
   <BaseModal size="m" :is-show="props.isShow" @close="onCloseModal">
     <!-- HEADER -->
     <template #header>
-      <h1>Редактирование специальностей</h1>
+      <slot name="title">
+        <h1>Редактирование специальностей</h1>
+      </slot>
       <TagList
         :class="$style['main-tag-list']"
         :tag-list="specialtyListRef"

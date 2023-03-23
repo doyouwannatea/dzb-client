@@ -7,7 +7,9 @@
         :position-x="isSmallDevice ? 'left' : 'right'"
         message="Написать рекомендации по выбору навыков"
       >
-        <h1>Редактирование навыков</h1>
+        <slot name="title">
+          <h1>Редактирование навыков</h1>
+        </slot>
       </BaseTooltip>
       <TagList
         :class="$style['main-skill-list']"
