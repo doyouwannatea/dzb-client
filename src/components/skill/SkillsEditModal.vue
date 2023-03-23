@@ -95,7 +95,7 @@
 
     <!-- ACTIONS -->
     <div :class="$style.actions">
-      <BaseButton case="uppercase" @click="onSave">сохранить</BaseButton>
+      <BaseButton @click="onSave">сохранить и выйти</BaseButton>
     </div>
     <!-- ACTIONS -->
   </BaseModal>
@@ -240,6 +240,7 @@
 <style module lang="scss">
   .actions {
     display: flex;
+    gap: 1rem;
     justify-content: center;
     margin-top: 2.75rem;
   }
