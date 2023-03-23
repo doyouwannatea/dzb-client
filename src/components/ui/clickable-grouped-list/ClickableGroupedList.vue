@@ -27,7 +27,7 @@
   import ClickableGroupedListLabel from './ClickableGroupedListLabel.vue';
 
   export type ListItem<T = unknown> = {
-    id: number;
+    id: number | string;
     label: string;
     value?: T;
     selected?: boolean;
