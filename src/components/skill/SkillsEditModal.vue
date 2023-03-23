@@ -107,6 +107,7 @@
   import { Skill } from '@/models/Project';
   import { getRandomIntInclusive } from '@/helpers/number';
   import { useSmallDevice } from '@/helpers/breakpoints';
+  import { stringIncludes, stringsAreEqual } from '@/helpers/string';
   import { Tag } from '@/models/Tag';
 
   // components
@@ -143,7 +144,7 @@
   const newSkillName = ref<string>('');
 
   const skillListRef = ref<Skill[]>([]);
-  const sharedSkillListRef = computed<ListItem<number>[]>(() =>
+  const sharedSkillListRef = computed<ListItem<number | string>[]>(() =>
     props.sharedSkillList.map((skill) => ({
       id: skill.id,
       label: skill.name,
@@ -155,10 +156,7 @@
   );
   const filteredSharedSkillList = computed(() =>
     sharedSkillListRef.value.filter((skill) =>
-      skill.label
-        .trim()
-        .toLowerCase()
-        .includes(searchValue.value.trim().toLowerCase()),
+      stringIncludes(skill.label, searchValue.value),
     ),
   );
 
@@ -173,7 +171,7 @@
     { immediate: true },
   );
 
-  function onDeleteSkill(userSkill: Tag) {
+  function onDeleteSkill(userSkill: Tag<number | string>) {
     const skillIndex = skillListRef.value.findIndex(
       (skill) => skill.id === userSkill.id,
     );
@@ -183,7 +181,7 @@
     ];
   }
 
-  function onAddSkillFromList(skillId: number) {
+  function onAddSkillFromList(skillId: number | string) {
     const skillIndex = sharedSkillListRef.value.findIndex(
       (skill) => skill.id === skillId,
     );
@@ -200,8 +198,8 @@
     if (skillName === '') return;
 
     // если у пользователя уже есть такой навык
-    const userSkill = skillListRef.value.find(
-      (skill) => skill.name.trim().toLowerCase() === skillName.toLowerCase(),
+    const userSkill = skillListRef.value.find((skill) =>
+      stringsAreEqual(skill.name, skillName),
     );
 
     if (userSkill) return;
@@ -209,8 +207,8 @@
     newSkillName.value = '';
 
     // если в списке навыков уже есть такой навык
-    const skillFromList = sharedSkillListRef.value.find(
-      (skill) => skill.label.toLowerCase().trim() === skillName.toLowerCase(),
+    const skillFromList = sharedSkillListRef.value.find((skill) =>
+      stringsAreEqual(skill.label, skillName),
     );
     if (skillFromList) {
       onAddSkillFromList(skillFromList.id);
