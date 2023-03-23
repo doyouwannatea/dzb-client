@@ -72,3 +72,11 @@ export function intToRoman(num: number): string {
 
   return result;
 }
+
+export function stringIncludes(text: string, value: string): boolean {
+  return text.trim().toLowerCase().includes(value.trim().toLowerCase());
+}
+
+export function stringsAreEqual(str1: string, str2: string): boolean {
+  return str1.trim().toLowerCase() === str2.trim().toLowerCase();
+}
