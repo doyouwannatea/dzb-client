@@ -1,5 +1,8 @@
 <template>
-  <component :is="props.is" :class="{ [$style.disabled]: props.disabled }">
+  <component
+    :is="props.is"
+    :class="[$style.label, { [$style.disabled]: props.disabled }]"
+  >
     <p v-if="props.label" :class="$style['label-text']">
       <slot name="label" :label="props.label" :required="props.required">
         {{ props.label }}
@@ -17,7 +20,7 @@
     label?: string;
     required?: boolean;
     disabled?: boolean;
-    is?: 'label' | 'div';
+    is?: 'label' | 'fieldset' | 'div';
   };
 
   const props = withDefaults(defineProps<Props>(), {
@@ -29,6 +32,11 @@
 </script>
 
 <style module lang="scss">
+  .label {
+    padding: 0;
+    border: none;
+  }
+
   .label-text {
     margin-bottom: 0.625rem;
     font-size: 1.125rem;

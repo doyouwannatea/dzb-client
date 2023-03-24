@@ -31,6 +31,7 @@
       >
         <!-- <Project type> -->
         <BaseLabel
+          is="fieldset"
           :class="$style['radio-buttons-label']"
           label="Выберите тип проекта"
           required
@@ -139,6 +140,7 @@
 
         <!-- <Project duration> -->
         <BaseLabel
+          is="fieldset"
           :class="$style['radio-buttons-label']"
           label="Длительность проекта"
           required
@@ -157,6 +159,7 @@
 
         <!-- <Project difficulty> -->
         <BaseLabel
+          is="fieldset"
           :class="$style['radio-buttons-label']"
           label="Сложность проекта"
           required
