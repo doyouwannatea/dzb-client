@@ -1,4 +1,4 @@
-import { projectFiltersToSearchParams } from '@/helpers/query';
+import { projectFiltersToSearchParams } from '@/helpers/location-query';
 import {
   Project,
   ProjectFilters,
