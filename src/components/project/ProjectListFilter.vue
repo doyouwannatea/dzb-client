@@ -74,23 +74,23 @@
         <BaseCheckbox
           v-model="filters.difficulty"
           class="label"
-          :value="Difficulty.Low"
+          :value="ProjectDifficulty.Low"
         >
-          {{ DifficultyText[Difficulty.Low] }}
+          {{ DifficultyText[ProjectDifficulty.Low] }}
         </BaseCheckbox>
         <BaseCheckbox
           v-model="filters.difficulty"
           class="label"
-          :value="Difficulty.Medium"
+          :value="ProjectDifficulty.Medium"
         >
-          {{ DifficultyText[Difficulty.Medium] }}
+          {{ DifficultyText[ProjectDifficulty.Medium] }}
         </BaseCheckbox>
         <BaseCheckbox
           v-model="filters.difficulty"
           class="label"
-          :value="Difficulty.High"
+          :value="ProjectDifficulty.High"
         >
-          {{ DifficultyText[Difficulty.High] }}
+          {{ DifficultyText[ProjectDifficulty.High] }}
         </BaseCheckbox>
       </template>
     </ProjectFilterAccordion>
@@ -122,7 +122,10 @@
   import { SkillKeys } from '@/values/models-keys';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { useProjectFilters } from '@/hooks/useProjectFilters';
-  import { DifficultyText, Difficulty } from '@/models/ProjectDifficulty';
+  import {
+    DifficultyText,
+    ProjectDifficulty,
+  } from '@/models/ProjectDifficulty';
   // components
   import VMultiselect from '@vueform/multiselect';
   import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';

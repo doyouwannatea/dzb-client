@@ -333,7 +333,7 @@
   import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
   import { isSupervisor } from '@/helpers/typeCheck';
 
-  import { MemberRole } from '@/models/ProjectApplication';
+  import { MemberRole } from '@/models/ProjectProposal';
   import { Skill } from '@/models/Project';
   import { supervisorList as mockSupervisorList } from '@/models/mock/supervisor';
 

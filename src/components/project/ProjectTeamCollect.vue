@@ -49,7 +49,7 @@
   import ProjectRoleSelect from './ProjectRoleSelect.vue';
   import { Supervisor } from '@/models/Supervisor';
   import { MultiselectObjectItem } from '@/models/VMultiselect';
-  import { MemberRole, MemberRoleText } from '@/models/ProjectApplication';
+  import { MemberRole, MemberRoleText } from '@/models/ProjectProposal';
   import BaseButton from '../ui/BaseButton.vue';
   import DeleteButton from '../ui/DeleteButton.vue';
 

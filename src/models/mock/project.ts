@@ -1,6 +1,6 @@
 import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
 import { ParticipationState } from '../Participation';
-import { Project, Type } from '../Project';
+import { Project, ProjectType } from '../Project';
 import { State, ProjectStateID } from '../ProjectState';
 import { candidateList, userCandidate } from './candidate';
 import { skills } from './project-skills';
@@ -37,7 +37,7 @@ export const states: State[] = [
 ];
 
 // массив всех типов проекта, используется в режиме отладки
-export const types: Type[] = [
+export const types: ProjectType[] = [
   {
     id: 1,
     type: 'Прикладной',

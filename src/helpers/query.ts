@@ -2,7 +2,7 @@ import { ProjectFilters } from '@/models/Project';
 import { ProjectFiltersLocationQuery } from '@/models/LocationQuery';
 import { LocationQueryValue } from 'vue-router';
 import { toString } from './string';
-import { Difficulty } from '@/models/ProjectDifficulty';
+import { ProjectDifficulty } from '@/models/ProjectDifficulty';
 
 function locationQueryValueToNumber(
   queryValue: LocationQueryValue | LocationQueryValue[],
@@ -33,7 +33,7 @@ export function locationQueryToProjectFilters(
     skills: locationQueryValueToArrayNumber(query.skills),
     difficulty: locationQueryValueToArrayNumber(
       query.difficulty,
-    ) as Difficulty[],
+    ) as ProjectDifficulty[],
     specialties: locationQueryValueToArrayNumber(query.specialties),
     order: toString(query.order) as ProjectFilters['order'],
     sortBy: toString(query.sortBy) as ProjectFilters['sortBy'],

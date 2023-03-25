@@ -14,12 +14,16 @@
 </template>
 
 <script setup lang="ts">
-  import { Difficulty, DifficultyText } from '@/models/ProjectDifficulty';
+  import {
+    ProjectDifficulty,
+    DifficultyText,
+  } from '@/models/ProjectDifficulty';
   import { checkProjectDifficulty } from '@/helpers/project';
   // components
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
 
-  const props = defineProps<{ places: number; difficulty: Difficulty }>();
+  const props =
+    defineProps<{ places: number; difficulty: ProjectDifficulty }>();
   const difficultyText = DifficultyText[props.difficulty];
 </script>
 

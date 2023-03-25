@@ -1,7 +1,7 @@
 import { Candidate } from './Candidate';
 import { Participation } from './Participation';
-import { Difficulty } from './ProjectDifficulty';
-import { State } from './ProjectState';
+import { ProjectDifficulty } from './ProjectDifficulty';
+import { ProjectStateID, State } from './ProjectState';
 import { Specialty } from './Specialty';
 import { Tag } from './Tag';
 
@@ -9,8 +9,14 @@ export interface Skill extends Tag {
   skillCategory: Tag;
 }
 
-export interface Type {
-  id: number;
+export const enum ProjectTypeName {
+  Applied = 1,
+  Scientific = 2,
+  Service = 3,
+}
+
+export interface ProjectType {
+  id: ProjectTypeName;
   type: string;
 }
 
@@ -21,7 +27,7 @@ export interface Project {
   places: number;
   goal: string;
   description: string;
-  difficulty: Difficulty;
+  difficulty: ProjectDifficulty;
   date_start: string;
   date_end: string;
   requirements: string;
@@ -32,7 +38,7 @@ export interface Project {
   supervisors: string[];
   supervisorsNames: string;
   state: State;
-  type: Type;
+  type: ProjectType;
   skills: Skill[];
   specialities: Specialty[];
   participations?: Participation[];
@@ -41,11 +47,11 @@ export interface Project {
 }
 
 export interface ProjectFilters {
-  state: number[]; // массив id
-  skills: number[]; // массив id
-  specialties: number[]; // массив id
-  difficulty: Difficulty[]; // Массив сложностей
-  title: string; // Поиск по подстроке в названии
+  state: ProjectStateID[];
+  skills: number[];
+  specialties: number[];
+  difficulty: ProjectDifficulty[];
+  title: string;
   page: number;
   sortBy: keyof Project;
   order: 'asc' | 'desc';

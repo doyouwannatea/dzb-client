@@ -2,7 +2,7 @@ import { DownloadProgress } from 'ky';
 import type {
   Project,
   ProjectFilters,
-  Type,
+  ProjectType,
   ProjectTags,
 } from '@/models/Project';
 import { State } from '@/models/ProjectState';
@@ -27,7 +27,7 @@ export default abstract class IProjectApi {
   abstract getSingleProject(projectId: number): Promise<Project>;
   abstract getAllProjectTags(): Promise<ProjectTags>;
   abstract getAllSupervisors(): Promise<Supervisor[]>;
-  abstract getAllProjectTypes(): Promise<Type[]>;
+  abstract getAllProjectTypes(): Promise<ProjectType[]>;
   abstract getAllProjectStates(): Promise<State[]>;
   abstract getProjectParticipants(projectId: number): Promise<Candidate[]>;
   abstract getProjectHistory(projectId: number): Promise<Project[]>;

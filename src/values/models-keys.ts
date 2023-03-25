@@ -1,5 +1,5 @@
 import { Supervisor } from '@/models/Supervisor';
-import { Skill, Type } from '../models/Project';
+import { Skill, ProjectType } from '../models/Project';
 import { State } from '../models/ProjectState';
 
 export const SupervisorKeys: Record<keyof Supervisor, keyof Supervisor> = {
@@ -10,7 +10,7 @@ export const SupervisorKeys: Record<keyof Supervisor, keyof Supervisor> = {
   about: 'about',
   department: 'department',
 };
-export const TypeKeys: Record<keyof Type, keyof Type> = {
+export const TypeKeys: Record<keyof ProjectType, keyof ProjectType> = {
   id: 'id',
   type: 'type',
 };

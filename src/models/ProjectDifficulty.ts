@@ -1,11 +1,11 @@
-export const enum Difficulty {
+export const enum ProjectDifficulty {
   Low = 1,
   Medium = 2,
   High = 3,
 }
 
-export const DifficultyText: Record<Difficulty, string> = {
-  [Difficulty.Low]: 'Легко',
-  [Difficulty.Medium]: 'Средне',
-  [Difficulty.High]: 'Сложно',
+export const DifficultyText: Record<ProjectDifficulty, string> = {
+  [ProjectDifficulty.Low]: 'Легко',
+  [ProjectDifficulty.Medium]: 'Средне',
+  [ProjectDifficulty.High]: 'Сложно',
 };

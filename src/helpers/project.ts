@@ -1,7 +1,7 @@
 import { insituteApi } from '@/api/InsituteApi';
 import { Candidate } from '@/models/Candidate';
 import { Project } from '@/models/Project';
-import { Difficulty } from '@/models/ProjectDifficulty';
+import { ProjectDifficulty } from '@/models/ProjectDifficulty';
 import { ProjectStateID } from '@/models/ProjectState';
 import { deepClone } from './object';
 import { formatDate } from './string';
@@ -13,7 +13,7 @@ export function formatProjectDate(project: Project): Project {
   return formattedProject;
 }
 
-export function checkProjectDifficulty(difficulty: Difficulty): boolean {
+export function checkProjectDifficulty(difficulty: ProjectDifficulty): boolean {
   return difficulty && difficulty > 0 && difficulty < 4;
 }
 

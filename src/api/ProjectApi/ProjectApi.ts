@@ -1,5 +1,10 @@
 import { projectFiltersToSearchParams } from '@/helpers/query';
-import { Project, ProjectFilters, Type, ProjectTags } from '@/models/Project';
+import {
+  Project,
+  ProjectFilters,
+  ProjectType,
+  ProjectTags,
+} from '@/models/Project';
 import IProjectApi, {
   OnDownloadProgress,
   ProjectListResponse,
@@ -57,7 +62,7 @@ export default class ProjectApi extends IProjectApi {
     return baseKyInstance.get('api/supervisors').json();
   }
 
-  async getAllProjectTypes(): Promise<Type[]> {
+  async getAllProjectTypes(): Promise<ProjectType[]> {
     return baseKyInstance.get('api/types').json();
   }
 

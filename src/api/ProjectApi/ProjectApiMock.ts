@@ -4,7 +4,7 @@ import type {
   Project,
   ProjectFilters,
   ProjectTags,
-  Type,
+  ProjectType,
 } from '@/models/Project';
 import { projectListResponse, states, types } from '@/models/mock/project';
 import { delayRes, sleep } from '@/helpers/promise';
@@ -104,7 +104,7 @@ export default class ProjectApiMock extends IProjectApi {
     return delayRes(supervisorList, 400);
   }
 
-  async getAllProjectTypes(): Promise<Type[]> {
+  async getAllProjectTypes(): Promise<ProjectType[]> {
     return delayRes(types, 300);
   }
 
