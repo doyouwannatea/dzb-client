@@ -3,8 +3,8 @@ import { ProjectDifficulty } from './ProjectDifficulty';
 import { SpecialtyCourse } from './Specialty';
 
 export const enum MemberRole {
-  Mentor = 1,
-  JobDeveloper = 2,
+  Mentor = 2,
+  JobDeveloper = 1,
   CoMentor = 3,
   Expert = 4,
 }
