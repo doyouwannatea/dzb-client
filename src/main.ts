@@ -1,5 +1,6 @@
 import { createApp, markRaw } from 'vue';
 import { createPinia } from 'pinia';
+import { VueQueryPlugin } from 'vue-query';
 import Toast, { PluginOptions, POSITION } from 'vue-toastification';
 import App from './App.vue';
 import { router } from './router';
@@ -16,5 +17,6 @@ pinia.use(({ store }) => {
 });
 app.use(Toast, toastOptions);
 app.use(router);
+app.use(VueQueryPlugin);
 app.use(pinia);
 app.mount('#app');
