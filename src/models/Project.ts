@@ -6,7 +6,7 @@ import { Specialty } from './Specialty';
 import { Tag } from './Tag';
 
 export interface Skill extends Tag {
-  skillCategory: Tag;
+  skillCategory?: Tag;
 }
 
 export const enum ProjectTypeName {

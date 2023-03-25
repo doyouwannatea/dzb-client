@@ -124,15 +124,17 @@
     ListItem,
   } from '../ui/clickable-grouped-list/ClickableGroupedList.vue';
 
+  export type EditedSkill = Skill & { isNew?: boolean };
+
   type Props = {
     isShow: boolean;
-    skillList: Skill[];
+    skillList: EditedSkill[];
     sharedSkillList: Skill[];
     prevAddedSkillList?: Skill[];
   };
   type Emits = {
     (event: 'update:isShow', isShow: boolean): void;
-    (event: 'update:skillList', skillList: Skill[]): void;
+    (event: 'update:skillList', skillList: EditedSkill[]): void;
   };
 
   const props = withDefaults(defineProps<Props>(), {
@@ -144,7 +146,7 @@
   const searchValue = ref<string>('');
   const newSkillName = ref<string>('');
 
-  const skillListRef = ref<Skill[]>([]);
+  const skillListRef = ref<EditedSkill[]>([]);
   const sharedSkillListRef = computed<ListItem<number | string>[]>(() =>
     props.sharedSkillList.map((skill) => ({
       id: skill.id,
@@ -226,7 +228,7 @@
       {
         id: id,
         name: skillName,
-        skillCategory: { id: -1, name: '' },
+        isNew: true,
       },
     ];
   }

@@ -1,5 +1,6 @@
 import { Supervisor } from '../Supervisor';
 import { UserSupervisor } from '../User';
+import { institutes } from './specialties';
 
 export const supervisorList: Supervisor[] = [
   {
@@ -8,7 +9,7 @@ export const supervisorList: Supervisor[] = [
     email: 'some-email@gmail.com',
     position: 'руководитель проекта',
     about: '',
-    department: null,
+    department: institutes[0],
   },
   {
     id: 4,
@@ -16,7 +17,7 @@ export const supervisorList: Supervisor[] = [
     email: 'some-email@gmail.com',
     position: 'руководитель проекта',
     about: '',
-    department: null,
+    department: institutes[1],
   },
   {
     id: 5,
@@ -24,7 +25,7 @@ export const supervisorList: Supervisor[] = [
     email: 'some-email@gmail.com',
     position: 'руководитель проекта',
     about: '',
-    department: null,
+    department: institutes[2],
   },
   {
     id: 6,
@@ -32,7 +33,7 @@ export const supervisorList: Supervisor[] = [
     email: 'some-email@gmail.com',
     position: 'руководитель проекта',
     about: '',
-    department: null,
+    department: institutes[3],
   },
   {
     id: 7,
@@ -40,7 +41,7 @@ export const supervisorList: Supervisor[] = [
     email: 'some-email@gmail.com',
     position: 'руководитель проекта',
     about: '',
-    department: null,
+    department: institutes[0],
   },
   {
     id: 8,
@@ -48,7 +49,7 @@ export const supervisorList: Supervisor[] = [
     email: 'some-email@gmail.com',
     position: 'руководитель проекта',
     about: '',
-    department: null,
+    department: institutes[0],
   },
   {
     id: 9,
@@ -56,7 +57,7 @@ export const supervisorList: Supervisor[] = [
     email: 'some-email@gmail.com',
     position: 'руководитель проекта',
     about: '',
-    department: null,
+    department: institutes[0],
   },
   {
     id: 10,
@@ -64,7 +65,7 @@ export const supervisorList: Supervisor[] = [
     email: 'some-email@gmail.com',
     position: 'руководитель проекта',
     about: '',
-    department: null,
+    department: institutes[0],
   },
 ];
 

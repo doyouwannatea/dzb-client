@@ -18,7 +18,7 @@ export const MemberRoleText: Record<MemberRole, string> = {
 
 export interface ProjectProposalTeamMember {
   supervisor_id: number;
-  role_ids: MemberRole;
+  role_ids: MemberRole[];
 }
 
 export const enum SpecialtyPriority {
@@ -53,9 +53,9 @@ export interface ProjectProposal {
   study_result: string;
   additional_inf: string;
   type_id: ProjectTypeName;
-  theme_source_id: number;
+  theme_source_id: number | null;
   department_id: number;
-  prev_project_id: number;
+  prev_project_id: number | null;
   state_id: ProjectProposalState;
   supervisors: ProjectProposalTeamMember[];
   skill_ids: number[];

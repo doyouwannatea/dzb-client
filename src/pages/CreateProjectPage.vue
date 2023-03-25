@@ -1,18 +1,21 @@
 <template>
   <SkillsEditModal
+    v-if="projectSkills.data.value"
     v-model:is-show="showSkillsEditModal"
-    v-model:skill-list="skillList"
-    :shared-skill-list="skills"
+    v-model:skill-list="skillListRef"
+    :shared-skill-list="projectSkills.data.value"
   />
   <SpecialtyEditModal
+    v-if="specialtyList.data.value"
     v-model:is-show="showSpecialtyEditModal"
-    v-model:specialty-list="specialtyList"
-    :shared-specialty-list="specialties"
+    v-model:specialty-list="specialtyListRef"
+    :shared-specialty-list="specialtyList.data.value"
   />
   <SpecialtyEditModal
+    v-if="specialtyList.data.value"
     v-model:is-show="showAdditionalSpecialtyEditModal"
-    v-model:specialty-list="additionalSpecialtyList"
-    :shared-specialty-list="specialties"
+    v-model:specialty-list="additionalSpecialtyListRef"
+    :shared-specialty-list="specialtyList.data.value"
   >
     <template #title>
       <h1>Редактирование приглашённых специальностей</h1>
@@ -36,35 +39,52 @@
           label="Выберите тип проекта"
           required
         >
-          <BaseRadioButton v-model="projectType" :value="1">
+          <BaseRadioButton
+            v-model="isNewProjectRef"
+            :value="true"
+            :disabled="disableAll"
+          >
             Новый проект
           </BaseRadioButton>
-          <BaseRadioButton v-model="projectType" :value="2">
+          <BaseRadioButton
+            v-model="isNewProjectRef"
+            :value="false"
+            :disabled="disableAll"
+          >
             Продолжить старый (из Архива)
           </BaseRadioButton>
         </BaseLabel>
         <!-- </Project type> -->
 
         <!-- <Prev project> -->
-        <BaseLabel
-          is="div"
-          label="Выберите проект, который хотите продолжить"
-          :disabled="projectType !== 2"
-        >
+        <BaseLabel is="div" label="Выберите проект, который хотите продолжить">
           <VMultiselect
-            v-model="prevProject"
+            v-model="prevProjectIdRef"
             class="multiselect"
-            placeholder="Выберите проект для продолжения"
+            :placeholder="
+              prevProjects.isFetching.value
+                ? 'Ваши проекты загружаются...'
+                : prevProjects.isError.value
+                ? 'Ошибка загрузки ваших проектов'
+                : prevProjects.data.value && prevProjects.data.value.length < 1
+                ? 'В системе не найдены Ваши проекты'
+                : isNewProjectRef
+                ? 'Переключите тип проекта на «Продолжить старый»'
+                : 'Выберите проект для продолжения'
+            "
             no-results-text="Проект не найден"
             no-options-text="Проекты не найдены"
             :searchable="true"
-            :options="[
-              'Разработка автоматизированной «дорожной карты» подготовки и проведения мероприятий в ИРНИТУ',
-              'Профиль потребителя энергоресурсов',
-            ]"
-            :disabled="projectType !== 2"
+            :options="prevProjectsMultiselectItems"
+            :disabled="
+              isNewProjectRef ||
+              prevProjects.isFetching.value ||
+              (prevProjects.data.value && prevProjects.data.value.length < 1) ||
+              disableAll
+            "
           />
         </BaseLabel>
+
         <!-- </Prev project> -->
       </FormSection>
 
@@ -77,7 +97,8 @@
         <!-- <Project name> -->
         <BaseLabel label="Название проекта" required>
           <BaseTextarea
-            v-model="projectName"
+            v-model="projectNameRef"
+            :disabled="disableAll"
             :class="$style['small-textarea']"
             placeholder="Например, платформа для размещения вузовских олимпиад"
             maxlength="100"
@@ -88,7 +109,8 @@
         <!-- <Project goal> -->
         <BaseLabel label="Цель проекта" required>
           <BaseTextarea
-            v-model="projectGoal"
+            v-model="projectGoalRef"
+            :disabled="disableAll"
             :class="$style['small-textarea']"
             placeholder="Например, создать платформу (страничку) для рекламы олимпиад"
             maxlength="100"
@@ -99,7 +121,8 @@
         <!-- <Project customer> -->
         <BaseLabel label="Заказчик">
           <BaseInput
-            v-model="projectCustomer"
+            v-model="projectCustomerRef"
+            :disabled="disableAll"
             placeholder="ЦЭО, Лукьянов Н.Д."
           />
         </BaseLabel>
@@ -118,21 +141,20 @@
 
           <template #default>
             <VMultiselect
-              v-model="projectThemeSource"
+              v-model="projectThemeSourceIdRef"
               class="multiselect"
-              placeholder="Ввыберите источник темы"
+              :disabled="themeSources.isFetching.value || disableAll"
+              :placeholder="
+                themeSources.isFetching.value
+                  ? 'Источники темы загружаются...'
+                  : themeSources.isError.value
+                  ? 'Ошибка загрузки источников темы'
+                  : 'Ввыберите источник темы'
+              "
               no-results-text="Источник не найден"
               no-options-text="Источники не найдены"
               :searchable="true"
-              :options="[
-                'текущие запросы служб ИРНИТУ',
-                'тематики бизнес акселератора ИРНИТУ ',
-                'тематики проектно-образовательных интенсивов (в том числе реализуемых в сетевой форме)',
-                'тематики предприятий и сторонних организаций (в том числе реализуемых в рамках НИР, НИОКР и хоз. договорных работ) ',
-                'тематики российских и международных конкурсов и соревнований',
-                'тематики грантов (любого уровня, в том числе ИРНИТУ)',
-                'тематики российских и международных акселерационных программ',
-              ]"
+              :options="themeSourcesMultiselectItems"
             />
           </template>
         </BaseLabel>
@@ -145,13 +167,25 @@
           label="Длительность проекта"
           required
         >
-          <BaseRadioButton v-model="projectDuration" :value="1">
-            1 семестр (весенний)
+          <BaseRadioButton
+            v-model="projectDurationRef"
+            :disabled="disableAll"
+            :value="ProjectDuration.FallSemester"
+          >
+            1 семестр (оень {{ currentYear }} года)
           </BaseRadioButton>
-          <BaseRadioButton v-model="projectDuration" :value="2">
-            1 семестр (осенний)
+          <BaseRadioButton
+            v-model="projectDurationRef"
+            :disabled="disableAll"
+            :value="ProjectDuration.SpringSemester"
+          >
+            1 семестр (весна {{ currentYear + 1 }} года)
           </BaseRadioButton>
-          <BaseRadioButton v-model="projectDuration" :value="3">
+          <BaseRadioButton
+            v-model="projectDurationRef"
+            :disabled="disableAll"
+            :value="ProjectDuration.FullYear"
+          >
             2 семестра
           </BaseRadioButton>
         </BaseLabel>
@@ -164,13 +198,25 @@
           label="Сложность проекта"
           required
         >
-          <BaseRadioButton v-model="projectDifficulty" :value="1">
+          <BaseRadioButton
+            v-model="projectDifficultyRef"
+            :disabled="disableAll"
+            :value="ProjectDifficulty.Low"
+          >
             Легкий
           </BaseRadioButton>
-          <BaseRadioButton v-model="projectDifficulty" :value="2">
+          <BaseRadioButton
+            v-model="projectDifficultyRef"
+            :disabled="disableAll"
+            :value="ProjectDifficulty.Medium"
+          >
             Средний
           </BaseRadioButton>
-          <BaseRadioButton v-model="projectDifficulty" :value="3">
+          <BaseRadioButton
+            v-model="projectDifficultyRef"
+            :disabled="disableAll"
+            :value="ProjectDifficulty.High"
+          >
             Сложный
           </BaseRadioButton>
         </BaseLabel>
@@ -187,7 +233,7 @@
         <BaseLabel
           is="div"
           :class="$style['institute-input']"
-          label="Кафедра, к которой будет привязан проект"
+          label="Подразделение, к которому будет привязан проект"
         >
           <template #label="{ label }">
             <BaseTooltip
@@ -200,8 +246,12 @@
 
           <template #default>
             <BaseInput
-              :model-value="team[0].memberData?.fio"
-              placeholder="Выберите наставника проекта"
+              :model-value="projectDepartmentComputed?.name"
+              :placeholder="
+                projectMentorComputed.memberData
+                  ? 'Подразделение наставника не установлено'
+                  : 'Выберите наставника проекта'
+              "
               disabled
             />
           </template>
@@ -210,12 +260,22 @@
 
         <!-- <Project team> -->
         <ProjectTeamCollect
+          v-if="supervisorList.data.value"
           v-model:team="team"
-          :supervisor-list="mockSupervisorList"
+          :supervisor-list="supervisorList.data.value"
           :role-list="sharedRoleList"
           :current-user-role-list="currentUserRoleList"
+          :disable-all="supervisorList.isFetching.value || disableAll"
         >
-          <template #add-button>+ добавить сонаставника</template>
+          <template #add-button>
+            <template v-if="supervisorList.isFetching.value">
+              Преподаватели загружаются...
+            </template>
+            <template v-else-if="supervisorList.isError.value">
+              Ошибка загрузки преподавателей
+            </template>
+            <template v-else>+ добавить сонаставника</template>
+          </template>
         </ProjectTeamCollect>
         <!-- </Project team> -->
       </FormSection>
@@ -229,7 +289,8 @@
         <!-- <Project expected result> -->
         <BaseLabel label="Ожидаемый результат">
           <BaseTextarea
-            v-model="projectExpectedResult"
+            v-model="projectExpectedResultRef"
+            :disabled="disableAll"
             :class="$style['small-textarea']"
             placeholder="Создать платформу (страничку) для рекламы олимпиад"
             maxlength="100"
@@ -238,9 +299,10 @@
         <!-- </Project expected result> -->
 
         <!-- <Project requirements for participants> -->
-        <BaseLabel label="Требования к участникам">
+        <BaseLabel label="Формируемые навыки">
           <BaseTextarea
-            v-model="projectRequirementsForParticipants"
+            v-model="skillsToBeFormed"
+            :disabled="disableAll"
             :class="$style['small-textarea']"
             placeholder="Например, знание основ верстки  и дизайна веб-страниц"
             maxlength="100"
@@ -251,7 +313,8 @@
         <!-- <Project idea> -->
         <BaseLabel label="Идея проекта">
           <BaseTextarea
-            v-model="projectIdea"
+            v-model="projectIdeaRef"
+            :disabled="disableAll"
             :class="$style['large-textarea']"
             placeholder="Опишите идею своего проекта"
             maxlength="1200"
@@ -265,14 +328,21 @@
         title="Направления (специальности), участников проекта"
       >
         <!-- <Project specialties> -->
-        <TagList show-all :tag-list="specialtyList">
+        <TagList show-all :tag-list="specialtyListRef">
           <template #after-list>
             <BaseButton
               case="none"
               variant="tag"
+              :disabled="specialtyList.isFetching.value || disableAll"
               @click="() => (showSpecialtyEditModal = true)"
             >
-              Добавить специальности +
+              <template v-if="projectSkills.isFetching.value">
+                Специальности загружаются...
+              </template>
+              <template v-else-if="projectSkills.isError.value">
+                Ошибка загрузки специальностей
+              </template>
+              <template v-else>Добавить специальности +</template>
             </BaseButton>
           </template>
         </TagList>
@@ -285,14 +355,21 @@
         divider
       >
         <!-- <Project specialties> -->
-        <TagList show-all :tag-list="additionalSpecialtyList">
+        <TagList show-all :tag-list="additionalSpecialtyListRef">
           <template #after-list>
             <BaseButton
               case="none"
               variant="tag"
+              :disabled="specialtyList.isFetching.value || disableAll"
               @click="() => (showAdditionalSpecialtyEditModal = true)"
             >
-              Добавить специальности +
+              <template v-if="projectSkills.isFetching.value">
+                Специальности загружаются...
+              </template>
+              <template v-else-if="projectSkills.isError.value">
+                Ошибка загрузки специальностей
+              </template>
+              <template v-else>Добавить специальности +</template>
             </BaseButton>
           </template>
         </TagList>
@@ -301,14 +378,21 @@
 
       <FormSection tag="7" title="Навыки, которые необходимы на проекте">
         <!-- <Project skills> -->
-        <TagList show-all :tag-list="skillList">
+        <TagList show-all :tag-list="skillListRef">
           <template #after-list>
             <BaseButton
               case="none"
               variant="tag"
+              :disabled="projectSkills.isFetching.value || disableAll"
               @click="() => (showSkillsEditModal = true)"
             >
-              Добавить навыки +
+              <template v-if="projectSkills.isFetching.value">
+                Навыки загружаются...
+              </template>
+              <template v-else-if="projectSkills.isError.value">
+                Ошибка загрузки навыков
+              </template>
+              <template v-else>Добавить навыки +</template>
             </BaseButton>
           </template>
         </TagList>
@@ -317,25 +401,36 @@
     </BasePanel>
 
     <div :class="$style.actions">
-      <BaseButton color="red" variant="outlined">Сбросить и выйти</BaseButton>
-      <BaseButton variant="outlined">Сохранить черновик</BaseButton>
-      <BaseButton>Подать заявку</BaseButton>
+      <BaseButton :disabled="disableAll" color="red" variant="outlined">
+        Сбросить и выйти
+      </BaseButton>
+      <BaseButton :disabled="disableAll" variant="outlined">
+        Сохранить черновик
+      </BaseButton>
+      <BaseButton :disabled="disableAll" @click="createProjectProposal">
+        Подать заявку
+      </BaseButton>
     </div>
   </PageLayout>
 </template>
 
 <script setup lang="ts">
-  import { computed, ref } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useRoute } from 'vue-router';
+  import { DateTime } from 'luxon';
 
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
   import { isSupervisor } from '@/helpers/typeCheck';
 
-  import { MemberRole } from '@/models/ProjectProposal';
-  import { Skill } from '@/models/Project';
-  import { supervisorList as mockSupervisorList } from '@/models/mock/supervisor';
+  import {
+    MemberRole,
+    ProjectProposal,
+    ProjectProposalState,
+    SpecialtyPriority,
+  } from '@/models/ProjectProposal';
+  import { ProjectTypeName } from '@/models/Project';
 
   import PageLayout from '@/components/layout/PageLayout.vue';
   import BasePanel from '@/components/ui/BasePanel.vue';
@@ -350,14 +445,28 @@
   import BaseInput from '@/components/ui/BaseInput.vue';
   import TagList from '@/components/ui/TagList.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
-  import SkillsEditModal from '@/components/skill/SkillsEditModal.vue';
-  import { skills } from '@/models/mock/project-skills';
+  import SkillsEditModal, {
+    EditedSkill,
+  } from '@/components/skill/SkillsEditModal.vue';
   import BaseTooltip from '@/components/ui/BaseTooltip.vue';
   import { useSmallDevice } from '@/helpers/breakpoints';
   import SpecialtyEditModal from '@/components/specialty/SpecialtyEditModal.vue';
-  import { SelectedSpecialty, SpecialtyCourse } from '@/models/Specialty';
-  import { specialties } from '@/models/mock/specialties';
-  import { specialtyFullName } from '@/helpers/specialty';
+  import { SelectedSpecialty } from '@/models/Specialty';
+  import { MultiselectObjectItem } from '@/models/VMultiselect';
+
+  import { useAllSupervisors } from '@/queries/useAllSupervisors';
+  import { useProjectSkills } from '@/queries/useProjectSkills';
+  import { useSpecialties } from '@/queries/useSpecialties';
+  import { useUserProjects } from '@/queries/useUserProjects';
+  import { useThemeSources } from '@/queries/useThemeSources';
+  import { useCreateProjectProposal } from '@/queries/useCreateProjectProposal';
+  import { ProjectDifficulty } from '@/models/ProjectDifficulty';
+
+  const enum ProjectDuration {
+    SpringSemester = 1,
+    FallSemester = 2,
+    FullYear = 3,
+  }
 
   useWatchAuthorization();
 
@@ -367,45 +476,72 @@
   const { profileData } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
 
+  const supervisorList = useAllSupervisors();
+  const projectSkills = useProjectSkills();
+  const specialtyList = useSpecialties();
+  const prevProjects = useUserProjects();
+  const themeSources = useThemeSources();
+
+  const createProjectProposalMutation = useCreateProjectProposal();
+
+  const disableAll = computed(
+    () => createProjectProposalMutation.isLoading.value,
+  );
+
   const showSkillsEditModal = ref<boolean>(false);
   const showSpecialtyEditModal = ref<boolean>(false);
   const showAdditionalSpecialtyEditModal = ref<boolean>(false);
 
-  const projectType = ref<number>(1);
-  const prevProject = ref<string | undefined>(undefined);
-  const projectName = ref<string | undefined>(undefined);
-  const projectGoal = ref<string | undefined>(undefined);
-  const projectCustomer = ref<string | undefined>(undefined);
-  const projectThemeSource = ref<string | undefined>(undefined);
-  const projectDuration = ref<number>(1);
-  const projectDifficulty = ref<number>(1);
-  const projectRequirementsForParticipants = ref<string | undefined>(undefined);
-  const projectExpectedResult = ref<string | undefined>(undefined);
-  const projectIdea = ref<string | undefined>(undefined);
-
-  const specialtyList = ref<SelectedSpecialty<number | string>[]>(
-    specialties.slice(3, 5).map(({ id, name }) => ({
-      id: id,
-      course: SpecialtyCourse.Third,
-      specialty_id: id,
-      name: specialtyFullName(name, SpecialtyCourse.Third),
-    })),
+  const isNewProjectRef = ref<boolean>(true);
+  const prevProjectIdRef = ref<number | null>(null);
+  const projectNameRef = ref<string>('');
+  const projectGoalRef = ref<string>('');
+  const projectCustomerRef = ref<string>('');
+  const projectThemeSourceIdRef = ref<number | null>(null);
+  const projectDurationRef = ref<ProjectDuration>(ProjectDuration.FallSemester);
+  const projectDifficultyRef = ref<ProjectDifficulty>(ProjectDifficulty.Low);
+  const skillsToBeFormed = ref<string>('');
+  const projectExpectedResultRef = ref<string>('');
+  const projectIdeaRef = ref<string>('');
+  const specialtyListRef = ref<SelectedSpecialty<number | string>[]>([]);
+  const additionalSpecialtyListRef = ref<SelectedSpecialty<number | string>[]>(
+    [],
   );
-  const additionalSpecialtyList = ref<SelectedSpecialty<number | string>[]>(
-    specialties.slice(5, 9).map(({ id, name }) => ({
-      id: id,
-      course: SpecialtyCourse.Third,
-      specialty_id: id,
-      name: specialtyFullName(name, SpecialtyCourse.Third),
-    })),
-  );
-  const skillList = ref<Skill[]>(skills.slice(0, 1));
-
-  // <Team control>
+  const skillListRef = ref<EditedSkill[]>([]);
   const team = ref<TeamMember[]>(initTeam());
-
   const sharedRoleList: MemberRole[] = [MemberRole.CoMentor];
   const currentUserRoleList: MemberRole[] = [MemberRole.Mentor];
+
+  const projectMentorComputed = computed(() => team.value[0]);
+  const projectDepartmentComputed = computed(
+    () => projectMentorComputed.value.memberData?.department,
+  );
+  const prevProjectsMultiselectItems = computed<
+    MultiselectObjectItem<number>[]
+  >(
+    () =>
+      prevProjects.data.value?.map((project) => ({
+        label: project.title,
+        value: project.id,
+      })) || [],
+  );
+  const themeSourcesMultiselectItems = computed<
+    MultiselectObjectItem<number>[]
+  >(
+    () =>
+      themeSources.data.value?.map((source) => ({
+        label: source.name,
+        value: source.id,
+      })) || [],
+  );
+  const currentYear = new Date(Date.now()).getFullYear();
+
+  watch(
+    () => isNewProjectRef.value,
+    (isNewProject) => {
+      if (isNewProject) prevProjectIdRef.value = null;
+    },
+  );
 
   function initTeam(): TeamMember[] {
     const team: TeamMember[] = [];
@@ -420,7 +556,102 @@
 
     return team;
   }
-  // </Team control>
+
+  function createProjectProposal() {
+    // тут валидация
+    if (!projectDepartmentComputed.value) return;
+    if (!projectNameRef.value) return;
+
+    const date = calcProjectDate(projectDurationRef.value);
+
+    const projectProposal: ProjectProposal = {
+      title: projectNameRef.value,
+      goal: projectGoalRef.value,
+      customer: projectCustomerRef.value,
+      theme_source_id: projectThemeSourceIdRef.value,
+      prev_project_id: prevProjectIdRef.value,
+      difficulty: projectDifficultyRef.value,
+      department_id: projectDepartmentComputed.value.id,
+      supervisors: team.value
+        .filter((member) => member.memberData && member.role)
+        .map((member) => ({
+          supervisor_id: member.memberData!.id,
+          role_ids: [member.role!],
+        })),
+      product_result: projectExpectedResultRef.value,
+      specialities: [
+        ...additionalSpecialtyListRef.value.map((specialty) => ({
+          course: specialty.course,
+          specialitiy_id: specialty.specialty_id,
+          priority: SpecialtyPriority.Low,
+        })),
+        ...specialtyListRef.value.map((specialty) => ({
+          course: specialty.course,
+          specialitiy_id: specialty.specialty_id,
+          priority: SpecialtyPriority.High,
+        })),
+      ],
+      skill_ids: skillListRef.value
+        .filter((skill) => !skill.isNew)
+        .map((skill) => skill.id),
+      new_skills: skillListRef.value
+        .filter((skill) => skill.isNew)
+        .map((skill) => skill.name),
+      date_start: date.start,
+      date_end: date.end,
+      description: projectIdeaRef.value,
+      state_id: ProjectProposalState.UnderReview,
+      places: 0,
+      type_id: ProjectTypeName.Applied,
+      study_result: skillsToBeFormed.value,
+      additional_inf: '',
+      requirements: '',
+    };
+
+    createProjectProposalMutation.mutate(projectProposal);
+  }
+
+  function calcProjectDate(duration: ProjectDuration): {
+    start: string;
+    end: string;
+  } {
+    const currentYear = new Date(Date.now()).getFullYear();
+
+    const springStartDate = DateTime.fromObject({
+      year: currentYear + 1,
+      month: 2,
+      day: 1,
+    });
+    const springEndDate = springStartDate.plus({ months: 4 });
+    const fallStartDate = DateTime.fromObject({
+      year: currentYear,
+      month: 9,
+      day: 1,
+    });
+    const fallEndDate = fallStartDate.plus({ months: 4 });
+
+    let dateStart = '';
+    let dateEnd = '';
+    switch (duration) {
+      case ProjectDuration.SpringSemester:
+        dateStart = springStartDate.toISODate();
+        dateEnd = springEndDate.toISODate();
+        break;
+      case ProjectDuration.FallSemester:
+        dateStart = fallStartDate.toISODate();
+        dateEnd = fallEndDate.toISODate();
+        break;
+      case ProjectDuration.FullYear:
+        dateStart = fallStartDate.toISODate();
+        dateEnd = springEndDate.toISODate();
+        break;
+    }
+
+    return {
+      start: dateStart,
+      end: dateEnd,
+    };
+  }
 </script>
 
 <style lang="scss" module>

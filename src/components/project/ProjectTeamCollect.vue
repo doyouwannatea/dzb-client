@@ -35,6 +35,7 @@
     <BaseButton
       v-if="!isMaxTeamMembers"
       :class="$style['add-member-button']"
+      :disabled="props.disableAll"
       case="uppercase"
       variant="outlined"
       @click="onAddMember"
