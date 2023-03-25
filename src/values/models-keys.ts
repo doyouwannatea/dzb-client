@@ -7,6 +7,8 @@ export const SupervisorKeys: Record<keyof Supervisor, keyof Supervisor> = {
   fio: 'fio',
   email: 'email',
   position: 'position',
+  about: 'about',
+  department: 'department',
 };
 export const TypeKeys: Record<keyof Type, keyof Type> = {
   id: 'id',
@@ -15,7 +17,7 @@ export const TypeKeys: Record<keyof Type, keyof Type> = {
 export const SkillKeys: Record<keyof Skill, keyof Skill> = {
   id: 'id',
   name: 'name',
-  skillCategory_id: 'skillCategory_id',
+  skillCategory: 'skillCategory',
 };
 export const StateKeys: Record<keyof State, keyof State> = {
   id: 'id',

@@ -18,8 +18,8 @@ export const SpecialtyName: Record<SpecialtyCourse, string> = {
 };
 
 export interface Specialty<T = number> extends Tag<T> {
-  institute?: Institute | null;
-  department?: Institute | null;
+  institute: Institute | null;
+  department: Institute | null;
 }
 
 export interface SelectedSpecialty<T = number> extends Tag<T> {

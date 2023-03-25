@@ -226,7 +226,7 @@
       {
         id: id,
         name: skillName,
-        skillCategory_id: -1,
+        skillCategory: { id: -1, name: '' },
       },
     ];
   }

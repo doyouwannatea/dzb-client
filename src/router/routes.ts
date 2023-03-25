@@ -12,7 +12,6 @@ const ProjectDetails = () => import('@/pages/ProjectPage/ProjectDetails.vue');
 // User page
 const UserPage = () => import('@/pages/UserPage/index.vue');
 const UserProfile = () => import('@/pages/UserPage/UserProfile.vue');
-const UserSkills = () => import('@/pages/UserPage/UserSkills.vue');
 const UserProjects = () => import('@/pages/UserPage/UserProjects.vue');
 import UserParticipations from '@/pages/UserPage/UserParticipations.vue';
 
@@ -135,17 +134,6 @@ export const routes: RouteRecordRaw[] = [
           title: 'Мои проекты',
         },
       },
-      // {
-      //   path: 'skills',
-      //   name: RouteNames.USER_SKILLS,
-      //   component: UserSkills,
-      //   meta: {
-      //     type: 'user-nav',
-      //     order: 3,
-      //     title: 'Навыки',
-      //     role: ['student'],
-      //   },
-      // },
     ],
   },
   {

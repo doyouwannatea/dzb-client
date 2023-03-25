@@ -6,7 +6,7 @@ import { Specialty } from './Specialty';
 import { Tag } from './Tag';
 
 export interface Skill extends Tag {
-  skillCategory_id: number;
+  skillCategory: Tag;
 }
 
 export interface Type {
@@ -54,7 +54,6 @@ export interface ProjectFilters {
 export interface ProjectTags {
   skills: Skill[];
   specialties: Specialty[];
-  skillCategories: Tag[];
 }
 
 export interface AdditionalProjectData {

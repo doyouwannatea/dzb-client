@@ -56,9 +56,9 @@ export const mockProjectList: Project[] = [
     goal: 'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ',
     id: 1,
     specialities: [
-      { id: 2, name: 'НвГДСз' },
-      { id: 4, name: 'ЭВМ' },
-      { id: 3, name: 'ИСТб' },
+      { id: 2, name: 'НвГДСз', department: null, institute: null },
+      { id: 4, name: 'ЭВМ', department: null, institute: null },
+      { id: 3, name: 'ИСТб', department: null, institute: null },
     ],
     participations: [
       {
@@ -161,9 +161,9 @@ export const mockProjectList: Project[] = [
     goal: 'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ',
     id: 40,
     specialities: [
-      { id: 2, name: 'НвГДСз' },
-      { id: 4, name: 'ЭВМ' },
-      { id: 3, name: 'ИСТб' },
+      { id: 2, name: 'НвГДСз', department: null, institute: null },
+      { id: 4, name: 'ЭВМ', department: null, institute: null },
+      { id: 3, name: 'ИСТб', department: null, institute: null },
     ],
     participations: [
       {
@@ -266,9 +266,9 @@ export const mockProjectList: Project[] = [
     goal: 'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ',
     id: 41,
     specialities: [
-      { id: 2, name: 'НвГДСз' },
-      { id: 4, name: 'ЭВМ' },
-      { id: 3, name: 'ИСТб' },
+      { id: 2, name: 'НвГДСз', department: null, institute: null },
+      { id: 4, name: 'ЭВМ', department: null, institute: null },
+      { id: 3, name: 'ИСТб', department: null, institute: null },
     ],
     participations: [
       {
@@ -373,8 +373,8 @@ export const mockProjectList: Project[] = [
     participations: [],
     participants: [],
     specialities: [
-      { id: 2, name: 'НвГДСз' },
-      { id: 3, name: 'ИСТб' },
+      { id: 2, name: 'НвГДСз', department: null, institute: null },
+      { id: 3, name: 'ИСТб', department: null, institute: null },
     ],
     places: 12,
     product_result:
@@ -405,8 +405,8 @@ export const mockProjectList: Project[] = [
     participations: [],
     participants: [],
     specialities: [
-      { id: 1, name: 'НГДСз' },
-      { id: 3, name: 'ИСТб' },
+      { id: 1, name: 'НГДСз', department: null, institute: null },
+      { id: 3, name: 'ИСТб', department: null, institute: null },
     ],
     places: 12,
     product_result:
@@ -437,7 +437,7 @@ export const mockProjectList: Project[] = [
     id: 4,
     participations: [],
     participants: [],
-    specialities: [{ id: 1, name: 'НГДСз' }],
+    specialities: [{ id: 1, name: 'НГДСз', department: null, institute: null }],
     places: 12,
     product_result:
       'Практические рекомендации по развитию определённых soft skills у различных категорий научных работников',
@@ -466,7 +466,7 @@ export const mockProjectList: Project[] = [
     id: 5,
     participations: [],
     participants: [],
-    specialities: [{ id: 1, name: 'НГДСз' }],
+    specialities: [{ id: 1, name: 'НГДСз', department: null, institute: null }],
     places: 12,
     product_result:
       'Создание мобильного приложения по Well-being в стиле Agile, с возможностью дополнения инициатив в виде конструктора',
@@ -495,7 +495,7 @@ export const mockProjectList: Project[] = [
     id: 6,
     participations: [],
     participants: [],
-    specialities: [{ id: 1, name: 'НГДСз' }],
+    specialities: [{ id: 1, name: 'НГДСз', department: null, institute: null }],
     places: 12,
     product_result:
       'Создание мобильного приложения по Well-being в стиле Agile, с возможностью дополнения инициатив в виде конструктора',
@@ -524,7 +524,7 @@ export const mockProjectList: Project[] = [
     id: 7,
     participations: [],
     participants: [],
-    specialities: [{ id: 1, name: 'НГДСз' }],
+    specialities: [{ id: 1, name: 'НГДСз', department: null, institute: null }],
     places: 12,
     product_result:
       'Короткометражные повторяющиеся и не повторяющиеся видеопередачи (выпуски), юмористического и познавательного содержания, призванные привлекать внимание целевых и потенциальных целевых групп.',
@@ -553,7 +553,7 @@ export const mockProjectList: Project[] = [
     id: 8,
     participations: [],
     participants: [userCandidate],
-    specialities: [{ id: 1, name: 'НГДСз' }],
+    specialities: [{ id: 1, name: 'НГДСз', department: null, institute: null }],
     places: 12,
     product_result:
       'Короткометражные повторяющиеся и не повторяющиеся видеопередачи (выпуски), юмористического и познавательного содержания, призванные привлекать внимание целевых и потенциальных целевых групп.',
