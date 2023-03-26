@@ -42,16 +42,16 @@
           <BaseRadioButton
             v-model="isNewProjectRef"
             :value="true"
-            :disabled="disableAll"
+            :disabled="disableAll || prevProjectsMultiselectItems.length < 1"
           >
             Новый проект
           </BaseRadioButton>
           <BaseRadioButton
             v-model="isNewProjectRef"
             :value="false"
-            :disabled="disableAll"
+            :disabled="disableAll || prevProjectsMultiselectItems.length < 1"
           >
-            Продолжить старый (из Архива)
+            Продолжить старый
           </BaseRadioButton>
         </BaseLabel>
         <!-- </Project type> -->
@@ -62,12 +62,12 @@
             v-model="prevProjectIdRef"
             class="multiselect"
             :placeholder="
-              prevProjects.isFetching.value
+              userProjectProposalList.isFetching.value
                 ? 'Ваши проекты загружаются...'
-                : prevProjects.isError.value
+                : userProjectProposalList.isError.value
                 ? 'Ошибка загрузки ваших проектов'
-                : prevProjects.data.value && prevProjects.data.value.length < 1
-                ? 'В системе не найдены Ваши проекты'
+                : prevProjectsMultiselectItems.length < 1
+                ? 'Ваши старые проекты не найдены'
                 : isNewProjectRef
                 ? 'Переключите тип проекта на «Продолжить старый»'
                 : 'Выберите проект для продолжения'
@@ -78,8 +78,8 @@
             :options="prevProjectsMultiselectItems"
             :disabled="
               isNewProjectRef ||
-              prevProjects.isFetching.value ||
-              (prevProjects.data.value && prevProjects.data.value.length < 1) ||
+              userProjectProposalList.isFetching.value ||
+              prevProjectsMultiselectItems.length < 1 ||
               disableAll
             "
           />
@@ -476,6 +476,7 @@
   import { useProjectProposalList } from '@/queries/useProjectProposalList';
   import { specialtyFullName } from '@/helpers/specialty';
   import { TYPE, useToast } from 'vue-toastification';
+  import { ProjectStateID } from '@/models/ProjectState';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -494,12 +495,7 @@
   const { profileData } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
 
-  const canFetchCurrentProjectProposal = computed(() =>
-    Boolean(projectId.value),
-  );
-  const userProjectProposalList = useProjectProposalList(
-    canFetchCurrentProjectProposal,
-  );
+  const userProjectProposalList = useProjectProposalList();
   const currentProjectProposalComputed = computed(() =>
     userProjectProposalList.data.value?.find(
       (proposal) => Number(proposal.id) === Number(projectId.value),
@@ -509,7 +505,6 @@
   const supervisorList = useAllSupervisors();
   const projectSkills = useProjectSkills();
   const specialtyList = useSpecialties();
-  const prevProjects = useUserProjects();
   const themeSources = useThemeSources();
 
   const createProjectProposalMutation = useCreateProjectProposal();
@@ -555,10 +550,16 @@
     MultiselectObjectItem<number>[]
   >(
     () =>
-      prevProjects.data.value?.map((project) => ({
-        label: project.title,
-        value: project.id,
-      })) || [],
+      userProjectProposalList.data.value
+        ?.filter(
+          (project) =>
+            project.state.id === ProjectStateID.ArchivedState ||
+            project.state.id === ProjectStateID.ActiveState,
+        )
+        .map((project) => ({
+          label: project.title,
+          value: project.id,
+        })) || [],
   );
   const themeSourcesMultiselectItems = computed<
     MultiselectObjectItem<number>[]

@@ -6,6 +6,7 @@ import {
   Skill,
 } from './Project';
 import { ProjectDifficulty } from './ProjectDifficulty';
+import { ProjectStateID } from './ProjectState';
 import { Specialty, SpecialtyCourse } from './Specialty';
 import { State } from './State';
 import { Tag } from './Tag';
@@ -41,7 +42,9 @@ export const enum ProjectProposalStateId {
   Approved = 9,
 }
 
-export type ProjectProposalState = State<ProjectProposalStateId>;
+export type ProjectProposalState = State<
+  ProjectProposalStateId & ProjectStateID
+>;
 
 export interface ProjectProposalSpecialty {
   specialitiy_id: number;
