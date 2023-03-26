@@ -79,7 +79,7 @@ export interface NewProjectProposal extends ProjectProposal {
 export interface CreatedProjectProposal extends ProjectProposal {
   id: number;
   type: ProjectType;
-  theme_source: Tag;
+  theme_source?: Tag;
   department: Institute;
   prevProjectId: number | null;
   state: ProjectProposalState;

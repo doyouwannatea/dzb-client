@@ -9,7 +9,7 @@ const pinia = createPinia();
 const app = createApp(App);
 
 const toastOptions: PluginOptions = {
-  position: POSITION.BOTTOM_RIGHT,
+  position: POSITION.TOP_RIGHT,
 };
 
 pinia.use(({ store }) => {

@@ -402,22 +402,21 @@
 
     <div :class="$style.actions">
       <BaseButton
-        is="router-link"
-        :to="{ name: RouteNames.USER_INFO }"
         :disabled="disableAll"
         color="red"
         variant="outlined"
+        @click="onCancel"
       >
         Сбросить и выйти
       </BaseButton>
       <BaseButton
         :disabled="disableAll"
         variant="outlined"
-        @click="createDraft"
+        @click="onCreateDraft"
       >
         Сохранить черновик
       </BaseButton>
-      <BaseButton :disabled="disableAll" @click="createUnderReview">
+      <BaseButton :disabled="disableAll" @click="onCreateUnderReview">
         Подать заявку
       </BaseButton>
     </div>
@@ -427,12 +426,13 @@
 <script setup lang="ts">
   import { computed, ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { DateTime } from 'luxon';
 
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
   import { isSupervisor } from '@/helpers/typeCheck';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
 
   import {
     MemberRole,
@@ -475,6 +475,7 @@
   import { RouteNames } from '@/router/types/route-names';
   import { useProjectProposalList } from '@/queries/useProjectProposalList';
   import { specialtyFullName } from '@/helpers/specialty';
+  import { TYPE, useToast } from 'vue-toastification';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -484,9 +485,12 @@
 
   useWatchAuthorization();
 
+  const toast = useToast();
   const isSmallDevice = useSmallDevice();
+  const router = useRouter();
   const route = useRoute();
   const authStore = useAuthStore();
+  const modalsStore = useModalsStore();
   const { profileData } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
 
@@ -539,6 +543,7 @@
   const teamRef = ref<TeamMember[]>([]);
   const sharedRoleList: MemberRole[] = [MemberRole.CoMentor];
   const currentUserRoleList: MemberRole[] = [MemberRole.Mentor];
+  const projectProposalType = ref<ProjectProposalStateId | null>();
 
   const projectMentorComputed = computed<TeamMember | undefined>(
     () => teamRef.value[0],
@@ -578,35 +583,61 @@
     (currentProjectProposal) => {
       if (currentProjectProposal) {
         fillFromProjectProposal(currentProjectProposal);
+      } else {
+        teamRef.value = initTeam();
       }
     },
     { immediate: true, deep: true },
   );
 
-  watch(
-    [() => profileData?.value, () => currentProjectProposalComputed.value],
-    ([userData, currentProjectProposal]) => {
-      if (currentProjectProposal) return;
-      if (!userData || !isSupervisor(userData)) return;
+  function initTeam() {
+    const userData = profileData?.value;
 
-      const { is_student, is_teacher, ...currentUser } = userData;
-      teamRef.value = [
-        {
-          memberData: currentUser,
-          isCurrentUser: true,
-          role: MemberRole.Mentor,
-        },
-      ];
-    },
-    { immediate: true, deep: true },
-  );
+    if (!userData || !isSupervisor(userData)) return [];
+
+    const { is_student, is_teacher, ...currentUser } = userData;
+    return [
+      {
+        memberData: currentUser,
+        isCurrentUser: true,
+        role: MemberRole.Mentor,
+      },
+    ];
+  }
 
   function prepareProjectProposal(
     projectProposalState: ProjectProposalStateId,
   ): NewProjectProposal | undefined {
-    // тут валидация
-    if (!projectDepartmentComputed.value) return;
-    if (!projectNameRef.value) return;
+    if (!projectNameRef.value) {
+      toast('Введите название проекта');
+      return;
+    }
+    if (!projectGoalRef.value) {
+      toast('Введите цель проекта');
+      return;
+    }
+    if (!projectDepartmentComputed.value) {
+      toast(
+        'Подразделение наставника проекта не найдено, выберите другого наставника, или обратитесь в службу поддержки',
+      );
+      return;
+    }
+    if (!projectExpectedResultRef.value) {
+      toast('Введите ожидаемый результат проекта');
+      return;
+    }
+    if (!skillsToBeFormed.value) {
+      toast('Введите формируемые в результате проекта навыки студентов');
+      return;
+    }
+    if (!projectDescriptionRef.value) {
+      toast('Введите описание проекта');
+      return;
+    }
+    if (specialtyListRef.value.length === 0) {
+      toast('Выберите основные специальности участников проекта');
+      return;
+    }
 
     const date = calcProjectDate(projectDurationRef.value);
 
@@ -658,15 +689,99 @@
   function createProjectProposal(projectProposalState: ProjectProposalStateId) {
     const projectProposal = prepareProjectProposal(projectProposalState);
     if (!projectProposal) return;
-    createProjectProposalMutation.mutate(projectProposal);
+    createProjectProposalMutation.mutate(projectProposal, {
+      onSuccess: onSuccessfulEstablishment,
+      onError: onErrorfulEstablishment,
+    });
   }
 
-  function createDraft() {
-    createProjectProposal(ProjectProposalStateId.Draft);
+  function onSuccessfulEstablishment() {
+    clearAllFields();
+
+    function agree() {
+      modalsStore.openConfirmModal();
+      router.push({ name: RouteNames.USER_INFO });
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+    }
+
+    const startMessage =
+      projectProposalType.value === ProjectProposalStateId.Draft
+        ? 'Черновик успешно сохранён'
+        : 'Заявка успешно отправлена';
+
+    modalsStore.openConfirmModal(
+      `${startMessage}, вернуться в личный кабинет?`,
+      'вернуться в личный кабинет',
+      'создать новую заявку',
+      agree,
+      disagree,
+    );
   }
 
-  function createUnderReview() {
-    createProjectProposal(ProjectProposalStateId.UnderReview);
+  function onErrorfulEstablishment(error: unknown) {
+    toast('Ошибка отправки: ' + String(error), { type: TYPE.ERROR });
+  }
+
+  function onCreateDraft() {
+    function agree() {
+      modalsStore.openConfirmModal();
+      projectProposalType.value = ProjectProposalStateId.Draft;
+      createProjectProposal(ProjectProposalStateId.Draft);
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+    }
+
+    modalsStore.openConfirmModal(
+      'Сохранить черновик заявки?',
+      'сохранить черновик',
+      'отмена',
+      agree,
+      disagree,
+    );
+  }
+
+  function onCreateUnderReview() {
+    function agree() {
+      modalsStore.openConfirmModal();
+      projectProposalType.value = ProjectProposalStateId.UnderReview;
+      createProjectProposal(ProjectProposalStateId.UnderReview);
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+    }
+
+    modalsStore.openConfirmModal(
+      'Подать заявку на проект?',
+      'подать заявку',
+      'отмена',
+      agree,
+      disagree,
+    );
+  }
+
+  function onCancel() {
+    function agree() {
+      modalsStore.openConfirmModal();
+      router.push({ name: RouteNames.USER_INFO });
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+    }
+
+    modalsStore.openConfirmModal(
+      'Сбросить все данные и вернуться в личный кабинет?',
+      'сбросить и выйти',
+      'остаться',
+      agree,
+      disagree,
+    );
   }
 
   function projectDurationFromDate(isoDate: {
@@ -743,7 +858,7 @@
     projectNameRef.value = projectProposal.title;
     projectGoalRef.value = projectProposal.goal;
     projectCustomerRef.value = projectProposal.customer;
-    projectThemeSourceIdRef.value = projectProposal.theme_source.id;
+    projectThemeSourceIdRef.value = projectProposal.theme_source?.id || null;
     projectDifficultyRef.value = projectProposal.difficulty;
     projectExpectedResultRef.value = projectProposal.product_result;
     skillsToBeFormed.value = projectProposal.study_result;
@@ -794,6 +909,23 @@
         ...projectProposalTeam.filter((member) => !member.isCurrentUser),
       ];
     }
+  }
+
+  function clearAllFields() {
+    isNewProjectRef.value = false;
+    projectNameRef.value = '';
+    projectGoalRef.value = '';
+    projectCustomerRef.value = '';
+    projectThemeSourceIdRef.value = null;
+    projectDifficultyRef.value = ProjectDifficulty.Low;
+    projectExpectedResultRef.value = '';
+    skillsToBeFormed.value = '';
+    projectDescriptionRef.value = '';
+    specialtyListRef.value = [];
+    additionalSpecialtyListRef.value = [];
+    skillListRef.value = [];
+    projectDurationRef.value = ProjectDuration.FallSemester;
+    teamRef.value = initTeam();
   }
 </script>
 
