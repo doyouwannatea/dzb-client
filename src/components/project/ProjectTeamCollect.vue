@@ -3,7 +3,7 @@
     <ul :class="$style.list">
       <li
         v-for="(member, index) in multiselectTeamList"
-        :key="member.memberId || index"
+        :key="String(member.memberId) + String(member.role || 0)"
         :class="$style.member"
       >
         <ProjectRoleSelect
