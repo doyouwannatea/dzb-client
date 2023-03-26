@@ -283,7 +283,7 @@
       <FormSection
         :class="$style['project-results-section']"
         tag="4"
-        title="Результаты и идея проекта"
+        title="Описание и предполагаемые результаты проекта"
         divider
       >
         <!-- <Project expected result> -->
@@ -310,17 +310,17 @@
         </BaseLabel>
         <!-- </Project requirements for participants> -->
 
-        <!-- <Project idea> -->
-        <BaseLabel label="Идея проекта">
+        <!-- <Project description> -->
+        <BaseLabel label="Описание проекта">
           <BaseTextarea
-            v-model="projectIdeaRef"
+            v-model="projectDescriptionRef"
             :disabled="disableAll"
             :class="$style['large-textarea']"
             placeholder="Опишите идею своего проекта"
             maxlength="1200"
           />
         </BaseLabel>
-        <!-- </Project idea> -->
+        <!-- </Project description> -->
       </FormSection>
 
       <FormSection
@@ -401,13 +401,23 @@
     </BasePanel>
 
     <div :class="$style.actions">
-      <BaseButton :disabled="disableAll" color="red" variant="outlined">
+      <BaseButton
+        is="router-link"
+        :to="{ name: RouteNames.USER_INFO }"
+        :disabled="disableAll"
+        color="red"
+        variant="outlined"
+      >
         Сбросить и выйти
       </BaseButton>
-      <BaseButton :disabled="disableAll" variant="outlined">
+      <BaseButton
+        :disabled="disableAll"
+        variant="outlined"
+        @click="createDraft"
+      >
         Сохранить черновик
       </BaseButton>
-      <BaseButton :disabled="disableAll" @click="createProjectProposal">
+      <BaseButton :disabled="disableAll" @click="createUnderReview">
         Подать заявку
       </BaseButton>
     </div>
@@ -461,6 +471,7 @@
   import { useThemeSources } from '@/queries/useThemeSources';
   import { useCreateProjectProposal } from '@/queries/useCreateProjectProposal';
   import { ProjectDifficulty } from '@/models/ProjectDifficulty';
+  import { RouteNames } from '@/router/types/route-names';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -502,7 +513,7 @@
   const projectDifficultyRef = ref<ProjectDifficulty>(ProjectDifficulty.Low);
   const skillsToBeFormed = ref<string>('');
   const projectExpectedResultRef = ref<string>('');
-  const projectIdeaRef = ref<string>('');
+  const projectDescriptionRef = ref<string>('');
   const specialtyListRef = ref<SelectedSpecialty<number | string>[]>([]);
   const additionalSpecialtyListRef = ref<SelectedSpecialty<number | string>[]>(
     [],
@@ -557,14 +568,16 @@
     return team;
   }
 
-  function createProjectProposal() {
+  function prepareProjectProposal(
+    projectProposalState: ProjectProposalState,
+  ): ProjectProposal | undefined {
     // тут валидация
     if (!projectDepartmentComputed.value) return;
     if (!projectNameRef.value) return;
 
     const date = calcProjectDate(projectDurationRef.value);
 
-    const projectProposal: ProjectProposal = {
+    return {
       title: projectNameRef.value,
       goal: projectGoalRef.value,
       customer: projectCustomerRef.value,
@@ -599,16 +612,28 @@
         .map((skill) => skill.name),
       date_start: date.start,
       date_end: date.end,
-      description: projectIdeaRef.value,
-      state_id: ProjectProposalState.UnderReview,
+      description: projectDescriptionRef.value,
+      state_id: projectProposalState,
       places: 0,
       type_id: ProjectTypeName.Applied,
       study_result: skillsToBeFormed.value,
       additional_inf: '',
       requirements: '',
     };
+  }
 
+  function createProjectProposal(projectProposalState: ProjectProposalState) {
+    const projectProposal = prepareProjectProposal(projectProposalState);
+    if (!projectProposal) return;
     createProjectProposalMutation.mutate(projectProposal);
+  }
+
+  function createDraft() {
+    createProjectProposal(ProjectProposalState.Draft);
+  }
+
+  function createUnderReview() {
+    createProjectProposal(ProjectProposalState.UnderReview);
   }
 
   function calcProjectDate(duration: ProjectDuration): {
