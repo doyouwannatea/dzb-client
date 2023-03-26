@@ -642,18 +642,27 @@
   } {
     const currentYear = new Date(Date.now()).getFullYear();
 
-    const springStartDate = DateTime.fromObject({
-      year: currentYear + 1,
-      month: 2,
-      day: 1,
-    });
-    const springEndDate = springStartDate.plus({ months: 4 });
     const fallStartDate = DateTime.fromObject({
       year: currentYear,
       month: 9,
       day: 1,
     });
-    const fallEndDate = fallStartDate.plus({ months: 4 });
+    const fallEndDate = DateTime.fromObject({
+      year: currentYear,
+      month: 12,
+      day: 30,
+    });
+
+    const springStartDate = DateTime.fromObject({
+      year: currentYear + 1,
+      month: 2,
+      day: 1,
+    });
+    const springEndDate = DateTime.fromObject({
+      year: currentYear + 1,
+      month: 5,
+      day: 30,
+    });
 
     let dateStart = '';
     let dateEnd = '';
