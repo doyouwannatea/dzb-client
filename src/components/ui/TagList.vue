@@ -40,6 +40,7 @@
     disableAll?: boolean;
     deletable?: boolean;
     tagVariant?: 'primary' | 'outlined';
+    declOfNum?: [string, string, string];
   };
 
   type Emits = {
@@ -53,16 +54,16 @@
     disableAll: false,
     deletable: undefined,
     tagVariant: 'primary',
+    declOfNum: () => ['тег', 'тега', 'тегов'],
   });
   defineEmits<Emits>();
 
   // Setup variables
   const hiddenTagsCount = props.tagList.length - props.defaultVisible;
-  const showBtnText = `+${hiddenTagsCount} ${declOfNum(hiddenTagsCount, [
-    'тег',
-    'тега',
-    'тегов',
-  ])}`;
+  const showBtnText = `+${hiddenTagsCount} ${declOfNum(
+    hiddenTagsCount,
+    props.declOfNum,
+  )}`;
 
   // Reactive variables
   const isTagsVisible = ref(props.showAll);

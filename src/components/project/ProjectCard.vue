@@ -54,6 +54,7 @@
             (skill) => skill.name.split(' ').length < 10,
           )
         "
+        :decl-of-num="['навык', 'навыка', 'навыков']"
       />
       <div class="actions">
         <OpenParticipationModalButton :project="props.project" />
