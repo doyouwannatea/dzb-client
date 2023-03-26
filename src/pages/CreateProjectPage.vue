@@ -287,7 +287,7 @@
         divider
       >
         <!-- <Project expected result> -->
-        <BaseLabel label="Ожидаемый результат">
+        <BaseLabel required label="Ожидаемый результат">
           <BaseTextarea
             v-model="projectExpectedResultRef"
             :disabled="disableAll"
@@ -299,7 +299,7 @@
         <!-- </Project expected result> -->
 
         <!-- <Project requirements for participants> -->
-        <BaseLabel label="Формируемые навыки">
+        <BaseLabel required label="Формируемые навыки">
           <BaseTextarea
             v-model="skillsToBeFormed"
             :disabled="disableAll"
@@ -311,7 +311,7 @@
         <!-- </Project requirements for participants> -->
 
         <!-- <Project description> -->
-        <BaseLabel label="Описание проекта">
+        <BaseLabel required label="Описание проекта">
           <BaseTextarea
             v-model="projectDescriptionRef"
             :disabled="disableAll"
@@ -618,7 +618,7 @@
       type_id: ProjectTypeName.Applied,
       study_result: skillsToBeFormed.value,
       additional_inf: '',
-      requirements: '',
+      requirements: 'requirements',
     };
   }
 

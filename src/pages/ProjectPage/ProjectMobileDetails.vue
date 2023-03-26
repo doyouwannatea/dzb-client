@@ -17,7 +17,11 @@
           <template #title>Руководители проекта</template>
           <template #default>
             {{
-              project.supervisorsNames || project.supervisors.join(', ') || '-'
+              project.supervisorsNames ||
+              project.supervisors
+                .map((supervisor) => supervisor.supervisor.fio)
+                .join(', ') ||
+              '-'
             }}
           </template>
         </AppListItem>
@@ -57,11 +61,6 @@
       <AppList
         :items="[
           {
-            title: 'Требования к студентам',
-            content: project.requirements,
-            wide: true,
-          },
-          {
             title: 'Цель проекта',
             content: project.goal,
             wide: true,
@@ -91,7 +90,7 @@
 
       <AppList v-if="project?.skills.length > 0">
         <AppListItem :bold="false" :wide="true">
-          <template #title>Теги</template>
+          <template #title>Требования к студентам</template>
           <template #default>
             <TagList :tag-list="project.skills" show-all />
           </template>

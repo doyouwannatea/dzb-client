@@ -10,10 +10,15 @@
         :use-acronyms="isMobile"
       />
       <div
-        v-if="project?.supervisorsNames || project?.supervisors.length > 0"
+        v-if="project.supervisorsNames || project.supervisors?.length > 0"
         class="subtitle"
       >
-        {{ project.supervisorsNames || project.supervisors.join(', ') }}
+        {{
+          project.supervisorsNames ||
+          project.supervisors
+            .map((supervisor) => supervisor.supervisor.fio)
+            .join(', ')
+        }}
       </div>
       <div v-if="project?.specialities.length > 0" class="subtitle">
         {{ project.specialities.map((ins) => ins.name).join(', ') }}
@@ -31,10 +36,6 @@
         <li v-if="project.goal" class="list-item">
           <b>Цель:</b>
           {{ project.goal }}
-        </li>
-        <li v-if="project.requirements" class="list-item">
-          <b>Требования к студентам:</b>
-          {{ project.requirements }}
         </li>
         <li v-if="project.date_start" class="list-item">
           <b>Старт проекта:</b> {{ project.date_start }}

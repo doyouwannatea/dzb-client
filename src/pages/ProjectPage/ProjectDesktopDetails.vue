@@ -7,7 +7,11 @@
         :items="[
           {
             title: 'Руководители проекта',
-            content: project.supervisorsNames || project.supervisors.join(', '),
+            content:
+              project.supervisorsNames ||
+              project.supervisors
+                .map((supervisor) => supervisor.supervisor.fio)
+                .join(', '),
           },
           {
             title: 'Старт проекта',
@@ -60,11 +64,6 @@
     <AppList
       :items="[
         {
-          title: 'Требования к студентам',
-          content: project.requirements,
-          wide: true,
-        },
-        {
           title: 'Описание проекта',
           content: project.description,
           wide: true,
@@ -103,7 +102,7 @@
     <!-- Information list -->
     <AppList>
       <AppListItem :bold="false" :wide="true">
-        <template #title>Теги</template>
+        <template #title>Требования к студентам</template>
         <template #default>
           <TagList :tag-list="project.skills" show-all />
         </template>

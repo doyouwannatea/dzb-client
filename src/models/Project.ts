@@ -1,8 +1,10 @@
 import { Candidate } from './Candidate';
 import { Participation } from './Participation';
 import { ProjectDifficulty } from './ProjectDifficulty';
+import { MemberRole } from './ProjectProposal';
 import { ProjectStateID, State } from './ProjectState';
 import { Specialty } from './Specialty';
+import { Supervisor } from './Supervisor';
 import { Tag } from './Tag';
 
 export interface Skill extends Tag {
@@ -20,6 +22,12 @@ export interface ProjectType {
   type: string;
 }
 
+export interface ProjectSupervisor {
+  id: number;
+  roles: MemberRole[];
+  supervisor: Supervisor;
+}
+
 export interface Project {
   id: number;
   prevProjectId: number | null;
@@ -35,7 +43,7 @@ export interface Project {
   additional_inf?: string;
   product_result: string;
   study_result: string;
-  supervisors: string[];
+  supervisors: ProjectSupervisor[];
   supervisorsNames: string;
   state: State;
   type: ProjectType;
