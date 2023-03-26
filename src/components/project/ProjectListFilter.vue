@@ -13,7 +13,7 @@
       </template>
       <template #content>
         <BaseCheckbox
-          v-for="state in additionalProjectData.states"
+          v-for="state in acceptedProjectStates"
           :key="state.id"
           v-model="filters.state"
           :value="state.id"
@@ -117,11 +117,15 @@
 </template>
 
 <script setup lang="ts">
+  import { computed } from 'vue';
   import { storeToRefs } from 'pinia';
   import { capitalizeFirstLetter } from '@/helpers/string';
   import { SkillKeys } from '@/values/models-keys';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { useProjectFilters } from '@/hooks/useProjectFilters';
+  import {
+    useProjectFilters,
+    ACCEPTED_PROJECT_STATES,
+  } from '@/hooks/useProjectFilters';
   import {
     DifficultyText,
     ProjectDifficulty,
@@ -136,6 +140,12 @@
   const modalsStore = useModalsStore();
   const { additionalProjectData, loading, error, tagsLoading, statesLoading } =
     storeToRefs(useProjectsStore());
+
+  const acceptedProjectStates = computed(() =>
+    additionalProjectData.value.states?.filter((state) =>
+      ACCEPTED_PROJECT_STATES.includes(state.id),
+    ),
+  );
   const { clearFilter, filter, filters } = useProjectFilters();
 </script>
 

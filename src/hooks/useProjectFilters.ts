@@ -6,6 +6,14 @@ import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 import { ProjectFilters } from '@/models/Project';
 import { isEmptyObject } from '@/helpers/object';
 import { RouteNames } from '@/router/types/route-names';
+import { ProjectStateID } from '@/models/ProjectState';
+
+export const ACCEPTED_PROJECT_STATES = [
+  ProjectStateID.ActiveState,
+  ProjectStateID.RecruitingState,
+  ProjectStateID.ArchivedState,
+  ProjectStateID.ProcessingState,
+];
 
 export const useWatchProjectQueries = (routeName: RouteNames) => {
   const router = useRouter();
