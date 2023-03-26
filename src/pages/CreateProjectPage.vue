@@ -248,7 +248,7 @@
             <BaseInput
               :model-value="projectDepartmentComputed?.name"
               :placeholder="
-                projectMentorComputed.memberData
+                projectMentorComputed?.memberData
                   ? 'Подразделение наставника не установлено'
                   : 'Выберите наставника проекта'
               "
@@ -261,7 +261,7 @@
         <!-- <Project team> -->
         <ProjectTeamCollect
           v-if="supervisorList.data.value"
-          v-model:team="team"
+          v-model:team="teamRef"
           :supervisor-list="supervisorList.data.value"
           :role-list="sharedRoleList"
           :current-user-role-list="currentUserRoleList"
@@ -436,8 +436,9 @@
 
   import {
     MemberRole,
-    ProjectProposal,
-    ProjectProposalState,
+    NewProjectProposal,
+    CreatedProjectProposal,
+    ProjectProposalStateId,
     SpecialtyPriority,
   } from '@/models/ProjectProposal';
   import { ProjectTypeName } from '@/models/Project';
@@ -472,6 +473,8 @@
   import { useCreateProjectProposal } from '@/queries/useCreateProjectProposal';
   import { ProjectDifficulty } from '@/models/ProjectDifficulty';
   import { RouteNames } from '@/router/types/route-names';
+  import { useProjectProposalList } from '@/queries/useProjectProposalList';
+  import { specialtyFullName } from '@/helpers/specialty';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -487,6 +490,18 @@
   const { profileData } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
 
+  const canFetchCurrentProjectProposal = computed(() =>
+    Boolean(projectId.value),
+  );
+  const userProjectProposalList = useProjectProposalList(
+    canFetchCurrentProjectProposal,
+  );
+  const currentProjectProposalComputed = computed(() =>
+    userProjectProposalList.data.value?.find(
+      (proposal) => Number(proposal.id) === Number(projectId.value),
+    ),
+  );
+
   const supervisorList = useAllSupervisors();
   const projectSkills = useProjectSkills();
   const specialtyList = useSpecialties();
@@ -496,7 +511,9 @@
   const createProjectProposalMutation = useCreateProjectProposal();
 
   const disableAll = computed(
-    () => createProjectProposalMutation.isLoading.value,
+    () =>
+      createProjectProposalMutation.isLoading.value ||
+      userProjectProposalList.isFetching.value,
   );
 
   const showSkillsEditModal = ref<boolean>(false);
@@ -519,13 +536,15 @@
     [],
   );
   const skillListRef = ref<EditedSkill[]>([]);
-  const team = ref<TeamMember[]>(initTeam());
+  const teamRef = ref<TeamMember[]>([]);
   const sharedRoleList: MemberRole[] = [MemberRole.CoMentor];
   const currentUserRoleList: MemberRole[] = [MemberRole.Mentor];
 
-  const projectMentorComputed = computed(() => team.value[0]);
+  const projectMentorComputed = computed<TeamMember | undefined>(
+    () => teamRef.value[0],
+  );
   const projectDepartmentComputed = computed(
-    () => projectMentorComputed.value.memberData?.department,
+    () => projectMentorComputed.value?.memberData?.department,
   );
   const prevProjectsMultiselectItems = computed<
     MultiselectObjectItem<number>[]
@@ -554,23 +573,37 @@
     },
   );
 
-  function initTeam(): TeamMember[] {
-    const team: TeamMember[] = [];
-    if (profileData?.value && isSupervisor(profileData.value)) {
-      const { is_student, is_teacher, ...currentUser } = profileData.value;
-      team.push({
-        memberData: currentUser,
-        isCurrentUser: true,
-        role: MemberRole.Mentor,
-      });
-    }
+  watch(
+    () => currentProjectProposalComputed.value,
+    (currentProjectProposal) => {
+      if (currentProjectProposal) {
+        fillFromProjectProposal(currentProjectProposal);
+      }
+    },
+    { immediate: true, deep: true },
+  );
 
-    return team;
-  }
+  watch(
+    [() => profileData?.value, () => currentProjectProposalComputed.value],
+    ([userData, currentProjectProposal]) => {
+      if (currentProjectProposal) return;
+      if (!userData || !isSupervisor(userData)) return;
+
+      const { is_student, is_teacher, ...currentUser } = userData;
+      teamRef.value = [
+        {
+          memberData: currentUser,
+          isCurrentUser: true,
+          role: MemberRole.Mentor,
+        },
+      ];
+    },
+    { immediate: true, deep: true },
+  );
 
   function prepareProjectProposal(
-    projectProposalState: ProjectProposalState,
-  ): ProjectProposal | undefined {
+    projectProposalState: ProjectProposalStateId,
+  ): NewProjectProposal | undefined {
     // тут валидация
     if (!projectDepartmentComputed.value) return;
     if (!projectNameRef.value) return;
@@ -585,7 +618,7 @@
       prev_project_id: prevProjectIdRef.value,
       difficulty: projectDifficultyRef.value,
       department_id: projectDepartmentComputed.value.id,
-      supervisors: team.value
+      supervisors: teamRef.value
         .filter((member) => member.memberData && member.role)
         .map((member) => ({
           supervisor_id: member.memberData!.id,
@@ -622,18 +655,36 @@
     };
   }
 
-  function createProjectProposal(projectProposalState: ProjectProposalState) {
+  function createProjectProposal(projectProposalState: ProjectProposalStateId) {
     const projectProposal = prepareProjectProposal(projectProposalState);
     if (!projectProposal) return;
     createProjectProposalMutation.mutate(projectProposal);
   }
 
   function createDraft() {
-    createProjectProposal(ProjectProposalState.Draft);
+    createProjectProposal(ProjectProposalStateId.Draft);
   }
 
   function createUnderReview() {
-    createProjectProposal(ProjectProposalState.UnderReview);
+    createProjectProposal(ProjectProposalStateId.UnderReview);
+  }
+
+  function projectDurationFromDate(isoDate: {
+    start: string;
+    end: string;
+  }): ProjectDuration {
+    const dateStart = DateTime.fromISO(isoDate.start);
+    const dateEnd = DateTime.fromISO(isoDate.end);
+
+    const startMonth = dateStart.month;
+    const endMonth = dateEnd.month;
+
+    if (startMonth === 9 && endMonth === 12)
+      return ProjectDuration.FallSemester;
+    if (startMonth === 2 && endMonth === 5)
+      return ProjectDuration.SpringSemester;
+
+    return ProjectDuration.FullYear;
   }
 
   function calcProjectDate(duration: ProjectDuration): {
@@ -685,6 +736,64 @@
       start: dateStart,
       end: dateEnd,
     };
+  }
+
+  function fillFromProjectProposal(projectProposal: CreatedProjectProposal) {
+    isNewProjectRef.value = !projectProposal.prevProjectId;
+    projectNameRef.value = projectProposal.title;
+    projectGoalRef.value = projectProposal.goal;
+    projectCustomerRef.value = projectProposal.customer;
+    projectThemeSourceIdRef.value = projectProposal.theme_source.id;
+    projectDifficultyRef.value = projectProposal.difficulty;
+    projectExpectedResultRef.value = projectProposal.product_result;
+    skillsToBeFormed.value = projectProposal.study_result;
+    projectDescriptionRef.value = projectProposal.description;
+    specialtyListRef.value = projectProposal.project_specialities
+      .filter((specialty) => specialty.priority === SpecialtyPriority.High)
+      .map((specialty) => ({
+        course: specialty.course,
+        id: specialty.id,
+        name: specialtyFullName(specialty.speciality.name, specialty.course),
+        specialty_id: specialty.speciality.id,
+      }));
+    additionalSpecialtyListRef.value = projectProposal.project_specialities
+      .filter((specialty) => specialty.priority === SpecialtyPriority.Low)
+      .map((specialty) => ({
+        course: specialty.course,
+        id: specialty.id,
+        name: specialtyFullName(specialty.speciality.name, specialty.course),
+        specialty_id: specialty.speciality.id,
+      }));
+    skillListRef.value = projectProposal.skills;
+    projectDurationRef.value = projectDurationFromDate({
+      start: projectProposal.date_start,
+      end: projectProposal.date_end,
+    });
+    const projectProposalTeam: TeamMember[] = projectProposal.supervisors
+      .filter(
+        ({ roles }) =>
+          roles.filter((role) =>
+            [...sharedRoleList, ...currentUserRoleList].includes(role.id),
+          ).length > 0,
+      )
+      .map<TeamMember>(({ roles, supervisor }) => {
+        const acceptedRoles = roles.filter((role) =>
+          [...sharedRoleList, ...currentUserRoleList].includes(role.id),
+        );
+        return {
+          role: acceptedRoles[0].id,
+          isCurrentUser: acceptedRoles[0].id === MemberRole.Mentor,
+          memberData: supervisor,
+        };
+      });
+
+    const mentor = projectProposalTeam.find((member) => member.isCurrentUser);
+    if (mentor) {
+      teamRef.value = [
+        mentor,
+        ...projectProposalTeam.filter((member) => !member.isCurrentUser),
+      ];
+    }
   }
 </script>
 

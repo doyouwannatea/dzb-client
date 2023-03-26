@@ -1,6 +1,14 @@
-import { ProjectTypeName } from './Project';
+import { Institute } from './Institute';
+import {
+  ProjectSupervisor,
+  ProjectType,
+  ProjectTypeName,
+  Skill,
+} from './Project';
 import { ProjectDifficulty } from './ProjectDifficulty';
-import { SpecialtyCourse } from './Specialty';
+import { Specialty, SpecialtyCourse } from './Specialty';
+import { State } from './State';
+import { Tag } from './Tag';
 
 export const enum MemberRole {
   Mentor = 2,
@@ -26,12 +34,14 @@ export const enum SpecialtyPriority {
   Low = 2,
 }
 
-export const enum ProjectProposalState {
+export const enum ProjectProposalStateId {
   UnderReview = 6,
   Draft = 7,
   Rejected = 8,
   Approved = 9,
 }
+
+export type ProjectProposalState = State<ProjectProposalStateId>;
 
 export interface ProjectProposalSpecialty {
   specialitiy_id: number;
@@ -52,13 +62,34 @@ export interface ProjectProposal {
   product_result: string;
   study_result: string;
   additional_inf: string;
+}
+
+export interface NewProjectProposal extends ProjectProposal {
   type_id: ProjectTypeName;
-  theme_source_id: number | null;
+  theme_source_id?: number | null;
   department_id: number;
   prev_project_id: number | null;
-  state_id: ProjectProposalState;
+  state_id: ProjectProposalStateId;
   supervisors: ProjectProposalTeamMember[];
   skill_ids: number[];
   new_skills: string[];
   specialities: ProjectProposalSpecialty[];
+}
+
+export interface CreatedProjectProposal extends ProjectProposal {
+  id: number;
+  type: ProjectType;
+  theme_source: Tag;
+  department: Institute;
+  prevProjectId: number | null;
+  state: ProjectProposalState;
+  supervisors: ProjectSupervisor[];
+  skills: Skill[];
+  specialities: Specialty[];
+  project_specialities: {
+    id: number;
+    course: SpecialtyCourse;
+    priority: SpecialtyPriority;
+    speciality: Specialty;
+  }[];
 }

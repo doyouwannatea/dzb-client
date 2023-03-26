@@ -5,7 +5,7 @@ import type {
   ProjectType,
   ProjectTags,
 } from '@/models/Project';
-import { State } from '@/models/ProjectState';
+import { ProjectState } from '@/models/ProjectState';
 import { Supervisor } from '@/models/Supervisor';
 import { Candidate } from '@/models/Candidate';
 
@@ -28,7 +28,7 @@ export default abstract class IProjectApi {
   abstract getAllProjectTags(): Promise<ProjectTags>;
   abstract getAllSupervisors(): Promise<Supervisor[]>;
   abstract getAllProjectTypes(): Promise<ProjectType[]>;
-  abstract getAllProjectStates(): Promise<State[]>;
+  abstract getAllProjectStates(): Promise<ProjectState[]>;
   abstract getProjectParticipants(projectId: number): Promise<Candidate[]>;
   abstract getProjectHistory(projectId: number): Promise<Project[]>;
   abstract getActiveUserProject(): Promise<Project | undefined>;

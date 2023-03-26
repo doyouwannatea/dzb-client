@@ -1,7 +1,10 @@
 import { delayRes, sleep } from '@/helpers/promise';
 import { themeSources } from '@/models/mock/project-proposal';
 import { specialties } from '@/models/mock/specialties';
-import { ProjectProposal } from '@/models/ProjectProposal';
+import {
+  CreatedProjectProposal,
+  ProjectProposal,
+} from '@/models/ProjectProposal';
 import { Specialty } from '@/models/Specialty';
 import { Tag } from '@/models/Tag';
 import IProjectCreationApi from './IProjectCreationApi';
@@ -18,5 +21,9 @@ export default class ProjectCreationApiMock extends IProjectCreationApi {
 
   async getSpecialties(): Promise<Specialty[]> {
     return delayRes(specialties, 400);
+  }
+
+  async getProjectProposalList(): Promise<CreatedProjectProposal[]> {
+    return [];
   }
 }

@@ -1,35 +1,35 @@
 import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
 import { ParticipationState } from '../Participation';
 import { Project, ProjectType } from '../Project';
-import { State, ProjectStateID } from '../ProjectState';
+import { ProjectState, ProjectStateID } from '../ProjectState';
 import { candidateList, userCandidate } from './candidate';
 import { skills } from './project-skills';
 import { projectSupervisorList } from './project-supervisor';
 
 // состояния проектов вынесенные в переменные для переиспользования в "mockProjectList", используется в режиме отладки
-const recruitingState: State = {
+const recruitingState: ProjectState = {
   state: 'идёт набор',
   id: ProjectStateID.RecruitingState,
 };
-const activeState: State = {
+const activeState: ProjectState = {
   state: 'активный',
   id: ProjectStateID.ActiveState,
 };
-const extraState: State = {
+const extraState: ProjectState = {
   state: 'добор',
   id: ProjectStateID.ExtraState,
 };
-const archivedState: State = {
+const archivedState: ProjectState = {
   state: 'в архиве',
   id: ProjectStateID.ArchivedState,
 };
-const processingState: State = {
+const processingState: ProjectState = {
   state: 'обработка заявок',
   id: ProjectStateID.ProcessingState,
 };
 
 // массив всех состояний проекта, используется в режиме отладки
-export const states: State[] = [
+export const states: ProjectState[] = [
   recruitingState,
   activeState,
   extraState,

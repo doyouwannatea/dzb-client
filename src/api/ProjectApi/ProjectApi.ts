@@ -9,7 +9,7 @@ import IProjectApi, {
   OnDownloadProgress,
   ProjectListResponse,
 } from './IProjectApi';
-import { State } from '@/models/ProjectState';
+import { ProjectState } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
 import { Supervisor } from '@/models/Supervisor';
 import { baseKyInstance } from '../baseKy';
@@ -66,7 +66,7 @@ export default class ProjectApi extends IProjectApi {
     return baseKyInstance.get('api/types').json();
   }
 
-  async getAllProjectStates(): Promise<State[]> {
+  async getAllProjectStates(): Promise<ProjectState[]> {
     return baseKyInstance.get('api/states').json();
   }
 

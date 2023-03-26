@@ -1,5 +1,4 @@
 import { projectApi } from '@/api/ProjectApi';
-import { delayRes } from '@/helpers/promise';
 import { useQuery } from 'vue-query';
 
 export const useAllSupervisorsKey = 'useAllSupervisorsKey';

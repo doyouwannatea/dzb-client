@@ -2,7 +2,7 @@ import { Candidate } from './Candidate';
 import { Participation } from './Participation';
 import { ProjectDifficulty } from './ProjectDifficulty';
 import { MemberRole } from './ProjectProposal';
-import { ProjectStateID, State } from './ProjectState';
+import { ProjectStateID, ProjectState } from './ProjectState';
 import { Specialty } from './Specialty';
 import { Supervisor } from './Supervisor';
 import { Tag } from './Tag';
@@ -24,7 +24,7 @@ export interface ProjectType {
 
 export interface ProjectSupervisor {
   id: number;
-  roles: MemberRole[];
+  roles: Tag<MemberRole>[];
   supervisor: Supervisor;
 }
 
@@ -45,7 +45,7 @@ export interface Project {
   study_result: string;
   supervisors: ProjectSupervisor[];
   supervisorsNames: string;
-  state: State;
+  state: ProjectState;
   type: ProjectType;
   skills: Skill[];
   specialities: Specialty[];
@@ -72,5 +72,5 @@ export interface ProjectTags {
 
 export interface AdditionalProjectData {
   tags?: ProjectTags;
-  states?: State[];
+  states?: ProjectState[];
 }

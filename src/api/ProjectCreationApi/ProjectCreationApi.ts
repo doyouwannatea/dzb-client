@@ -1,6 +1,9 @@
 import IProjectCreationApi from './IProjectCreationApi';
 import { baseKyInstance } from '../baseKy';
-import { ProjectProposal } from '@/models/ProjectProposal';
+import {
+  CreatedProjectProposal,
+  ProjectProposal,
+} from '@/models/ProjectProposal';
 import { Tag } from '@/models/Tag';
 import { Specialty } from '@/models/Specialty';
 
@@ -17,5 +20,9 @@ export default class ProjectCreationApi extends IProjectCreationApi {
 
   async getSpecialties(): Promise<Specialty[]> {
     return baseKyInstance.get('api/specialities').json();
+  }
+
+  async getProjectProposalList(): Promise<CreatedProjectProposal[]> {
+    return baseKyInstance.get('api/supervisor/projects').json();
   }
 }

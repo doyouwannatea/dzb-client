@@ -10,7 +10,7 @@ import { projectListResponse, states, types } from '@/models/mock/project';
 import { delayRes, sleep } from '@/helpers/promise';
 import { supervisorList } from '@/models/mock/supervisor';
 import IProjectApi from './IProjectApi';
-import { State } from '@/models/ProjectState';
+import { ProjectState } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
 import { Supervisor } from '@/models/Supervisor';
 import { skills } from '@/models/mock/project-skills';
@@ -108,7 +108,7 @@ export default class ProjectApiMock extends IProjectApi {
     return delayRes(types, 300);
   }
 
-  async getAllProjectStates(): Promise<State[]> {
+  async getAllProjectStates(): Promise<ProjectState[]> {
     return delayRes(states, 300);
   }
 

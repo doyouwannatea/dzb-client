@@ -85,13 +85,7 @@
   });
   const emit = defineEmits<Emits>();
 
-  const multiselectTeamList = ref<MultiselectTeamMember[]>(
-    props.team.map((member) => ({
-      memberId: member.memberData?.id,
-      role: member.role,
-      isCurrentUser: member.isCurrentUser,
-    })),
-  );
+  const multiselectTeamList = ref<MultiselectTeamMember[]>([]);
 
   const multiselectSupervisorList = computed<MultiselectObjectItem<number>[]>(
     () =>
@@ -118,7 +112,8 @@
   // если обновляется multiselectTeamList, преобразовывает multiselectTeamList и обновляет props.team
   watch(
     () => multiselectTeamList.value,
-    (teamList) => {
+    (teamList, prevTeamList) => {
+      if (teamList !== prevTeamList) return;
       emit(
         'update:team',
         teamList.map(({ isCurrentUser, memberId, role }) => ({
@@ -131,6 +126,18 @@
       );
     },
     { deep: true },
+  );
+
+  watch(
+    () => props.team,
+    (team) => {
+      multiselectTeamList.value = team.map((member) => ({
+        memberId: member.memberData?.id,
+        role: member.role,
+        isCurrentUser: member.isCurrentUser,
+      }));
+    },
+    { immediate: true, deep: true },
   );
 
   // для каждого нового сотрудника фильтрует список сотрудников в выпадающем списке
