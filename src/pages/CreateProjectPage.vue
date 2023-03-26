@@ -172,7 +172,7 @@
             :disabled="disableAll"
             :value="ProjectDuration.FallSemester"
           >
-            1 семестр (оень {{ currentYear }} года)
+            1 семестр (осень {{ currentYear }} года)
           </BaseRadioButton>
           <BaseRadioButton
             v-model="projectDurationRef"
