@@ -1,7 +1,14 @@
 import { projectCreationApi } from '@/api/ProjectCreationApi';
-import { useMutation } from 'vue-query';
+import { useMutation, useQueryClient } from 'vue-query';
+import { useProjectProposalListKey } from './useProjectProposalList';
 
-export const useCreateProjectProposal = () =>
-  useMutation({
+export const useCreateProjectProposal = () => {
+  const client = useQueryClient();
+
+  return useMutation({
     mutationFn: projectCreationApi.createProjectProposal,
+    onSuccess: () => {
+      client.invalidateQueries(useProjectProposalListKey);
+    },
   });
+};
