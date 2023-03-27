@@ -1,34 +1,35 @@
 import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
 import { ParticipationState } from '../Participation';
-import { Project, Type } from '../Project';
-import { State, ProjectStateID } from '../ProjectState';
+import { Project, ProjectType } from '../Project';
+import { ProjectState, ProjectStateID } from '../ProjectState';
 import { candidateList, userCandidate } from './candidate';
 import { skills } from './project-skills';
+import { projectSupervisorList } from './project-supervisor';
 
 // состояния проектов вынесенные в переменные для переиспользования в "mockProjectList", используется в режиме отладки
-const recruitingState: State = {
+const recruitingState: ProjectState = {
   state: 'идёт набор',
   id: ProjectStateID.RecruitingState,
 };
-const activeState: State = {
+const activeState: ProjectState = {
   state: 'активный',
   id: ProjectStateID.ActiveState,
 };
-const extraState: State = {
+const extraState: ProjectState = {
   state: 'добор',
   id: ProjectStateID.ExtraState,
 };
-const archivedState: State = {
+const archivedState: ProjectState = {
   state: 'в архиве',
   id: ProjectStateID.ArchivedState,
 };
-const processingState: State = {
+const processingState: ProjectState = {
   state: 'обработка заявок',
   id: ProjectStateID.ProcessingState,
 };
 
 // массив всех состояний проекта, используется в режиме отладки
-export const states: State[] = [
+export const states: ProjectState[] = [
   recruitingState,
   activeState,
   extraState,
@@ -37,7 +38,7 @@ export const states: State[] = [
 ];
 
 // массив всех типов проекта, используется в режиме отладки
-export const types: Type[] = [
+export const types: ProjectType[] = [
   {
     id: 1,
     type: 'Прикладной',
@@ -56,9 +57,9 @@ export const mockProjectList: Project[] = [
     goal: 'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ',
     id: 1,
     specialities: [
-      { id: 2, name: 'НвГДСз' },
-      { id: 4, name: 'ЭВМ' },
-      { id: 3, name: 'ИСТб' },
+      { id: 2, name: 'НвГДСз', department: null, institute: null },
+      { id: 4, name: 'ЭВМ', department: null, institute: null },
+      { id: 3, name: 'ИСТб', department: null, institute: null },
     ],
     participations: [
       {
@@ -138,10 +139,7 @@ export const mockProjectList: Project[] = [
     state: archivedState,
     study_result:
       'Знания: эффективное делопроизводства в современных условиях функционирования организации Умения: отладка процессов эффективного движения документов внутри организации Навыки: грамотного распределения времени и ресурсов для нормального функционирования организации',
-    supervisors: [
-      'Чернышенко Марина Сергеевна',
-      'Владимир Александрович Александров',
-    ],
+    supervisors: projectSupervisorList.slice(0, 2),
     supervisorsNames: '',
     title:
       'Разработка автоматизированной «дорожной карты» подготовки и проведения мероприятий в ИРНИТУ',
@@ -161,9 +159,9 @@ export const mockProjectList: Project[] = [
     goal: 'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ',
     id: 40,
     specialities: [
-      { id: 2, name: 'НвГДСз' },
-      { id: 4, name: 'ЭВМ' },
-      { id: 3, name: 'ИСТб' },
+      { id: 2, name: 'НвГДСз', department: null, institute: null },
+      { id: 4, name: 'ЭВМ', department: null, institute: null },
+      { id: 3, name: 'ИСТб', department: null, institute: null },
     ],
     participations: [
       {
@@ -243,10 +241,7 @@ export const mockProjectList: Project[] = [
     state: archivedState,
     study_result:
       'Знания: эффективное делопроизводства в современных условиях функционирования организации Умения: отладка процессов эффективного движения документов внутри организации Навыки: грамотного распределения времени и ресурсов для нормального функционирования организации',
-    supervisors: [
-      'Чернышенко Марина Сергеевна',
-      'Владимир Александрович Александров',
-    ],
+    supervisors: projectSupervisorList.slice(0, 2),
     supervisorsNames: '',
     title:
       'Разработка автоматизированной «дорожной карты» подготовки и проведения мероприятий в ИРНИТУ',
@@ -266,9 +261,9 @@ export const mockProjectList: Project[] = [
     goal: 'Автоматизированная «дорожная карта» подготовки и проведения мероприятий в ИРНИТУ',
     id: 41,
     specialities: [
-      { id: 2, name: 'НвГДСз' },
-      { id: 4, name: 'ЭВМ' },
-      { id: 3, name: 'ИСТб' },
+      { id: 2, name: 'НвГДСз', department: null, institute: null },
+      { id: 4, name: 'ЭВМ', department: null, institute: null },
+      { id: 3, name: 'ИСТб', department: null, institute: null },
     ],
     participations: [
       {
@@ -348,10 +343,7 @@ export const mockProjectList: Project[] = [
     state: archivedState,
     study_result:
       'Знания: эффективное делопроизводства в современных условиях функционирования организации Умения: отладка процессов эффективного движения документов внутри организации Навыки: грамотного распределения времени и ресурсов для нормального функционирования организации',
-    supervisors: [
-      'Чернышенко Марина Сергеевна',
-      'Владимир Александрович Александров',
-    ],
+    supervisors: projectSupervisorList.slice(0, 2),
     supervisorsNames: '',
     title:
       'Разработка автоматизированной «дорожной карты» подготовки и проведения мероприятий в ИРНИТУ',
@@ -373,8 +365,8 @@ export const mockProjectList: Project[] = [
     participations: [],
     participants: [],
     specialities: [
-      { id: 2, name: 'НвГДСз' },
-      { id: 3, name: 'ИСТб' },
+      { id: 2, name: 'НвГДСз', department: null, institute: null },
+      { id: 3, name: 'ИСТб', department: null, institute: null },
     ],
     places: 12,
     product_result:
@@ -384,7 +376,7 @@ export const mockProjectList: Project[] = [
     state: archivedState,
     study_result:
       'Знать: особенности потребителя энергетической продукции, причины недополучения платы за энергоуслуги. Уметь: анализировать базы данных, синтезировать информацию Владеть навыками командной работы при решении проблемных ситуаций',
-    supervisors: ['Осипова Ирина Михайловна'],
+    supervisors: projectSupervisorList.slice(2, 3),
     supervisorsNames: '',
     title: 'Профиль потребителя энергоресурсов',
     type: {
@@ -405,8 +397,8 @@ export const mockProjectList: Project[] = [
     participations: [],
     participants: [],
     specialities: [
-      { id: 1, name: 'НГДСз' },
-      { id: 3, name: 'ИСТб' },
+      { id: 1, name: 'НГДСз', department: null, institute: null },
+      { id: 3, name: 'ИСТб', department: null, institute: null },
     ],
     places: 12,
     product_result:
@@ -416,7 +408,7 @@ export const mockProjectList: Project[] = [
     state: processingState,
     study_result:
       'Знания: знать методы сбора, анализа, систематизации, хранения информации предприятия Умения: уметь, в соответствии с поставленной задачей, выявлять критерии оценки и отбора информации Навыки: владеть способами получения информации из различных источников',
-    supervisors: ['Наумова Татьяна Александровна'],
+    supervisors: projectSupervisorList.slice(2, 3),
     supervisorsNames: '',
     title:
       'Создание корпоративной программы благополучия сотрудников «Well-being» (мобильная версия)',
@@ -437,7 +429,7 @@ export const mockProjectList: Project[] = [
     id: 4,
     participations: [],
     participants: [],
-    specialities: [{ id: 1, name: 'НГДСз' }],
+    specialities: [{ id: 1, name: 'НГДСз', department: null, institute: null }],
     places: 12,
     product_result:
       'Практические рекомендации по развитию определённых soft skills у различных категорий научных работников',
@@ -446,7 +438,7 @@ export const mockProjectList: Project[] = [
     state: recruitingState,
     study_result:
       'Знания: методов проведения исследований, понятий предмета и объекта исследования Умения: постановка цели и задач исследования, определение предмета и объекта, актуальности темы исследования, выдвижение и проверка гипотезы исследования Навыки: подбор и изучение источников, обработка и анализ полученной информации, формирование результата исследования',
-    supervisors: ['Чернышенко Марина Сергеевна'],
+    supervisors: projectSupervisorList.slice(2, 4),
     supervisorsNames: '',
     title: 'Предпринимательские качества у научных работников',
     type: {
@@ -466,7 +458,7 @@ export const mockProjectList: Project[] = [
     id: 5,
     participations: [],
     participants: [],
-    specialities: [{ id: 1, name: 'НГДСз' }],
+    specialities: [{ id: 1, name: 'НГДСз', department: null, institute: null }],
     places: 12,
     product_result:
       'Создание мобильного приложения по Well-being в стиле Agile, с возможностью дополнения инициатив в виде конструктора',
@@ -475,7 +467,7 @@ export const mockProjectList: Project[] = [
     state: recruitingState,
     study_result:
       'Знания: знать методы сбора, анализа, систематизации, хранения информации предприятия Умения: уметь, в соответствии с поставленной задачей, выявлять критерии оценки и отбора информации Навыки: владеть способами получения информации из различных источников',
-    supervisors: ['Баяскаланова Туяна Александровна'],
+    supervisors: projectSupervisorList.slice(2, 4),
     supervisorsNames: '',
     title:
       'Стратегическое управление ключевыми потенциалами развития территориальных социально-экономических систем',
@@ -495,7 +487,7 @@ export const mockProjectList: Project[] = [
     id: 6,
     participations: [],
     participants: [],
-    specialities: [{ id: 1, name: 'НГДСз' }],
+    specialities: [{ id: 1, name: 'НГДСз', department: null, institute: null }],
     places: 12,
     product_result:
       'Создание мобильного приложения по Well-being в стиле Agile, с возможностью дополнения инициатив в виде конструктора',
@@ -504,7 +496,7 @@ export const mockProjectList: Project[] = [
     state: recruitingState,
     study_result:
       'Знания: знать методы сбора, анализа, систематизации, хранения информации предприятия Умения: уметь, в соответствии с поставленной задачей, выявлять критерии оценки и отбора информации Навыки: владеть способами получения информации из различных источников',
-    supervisors: ['Наумова Татьяна Александровна'],
+    supervisors: projectSupervisorList.slice(2, 4),
     supervisorsNames: '',
     title:
       'Создание корпоративной программы благополучия сотрудников «Well-being» (мобильная версия)',
@@ -524,7 +516,7 @@ export const mockProjectList: Project[] = [
     id: 7,
     participations: [],
     participants: [],
-    specialities: [{ id: 1, name: 'НГДСз' }],
+    specialities: [{ id: 1, name: 'НГДСз', department: null, institute: null }],
     places: 12,
     product_result:
       'Короткометражные повторяющиеся и не повторяющиеся видеопередачи (выпуски), юмористического и познавательного содержания, призванные привлекать внимание целевых и потенциальных целевых групп.',
@@ -534,7 +526,7 @@ export const mockProjectList: Project[] = [
     state: activeState,
     study_result:
       'Знания: получает новые знания о сути и ходе реализации проекта, о его специфических свойствах и способах работы с видеоматериалом. Умения: использовать полученные навыки в ходе обучения для создания качественного видеоконтента;Навыки: Способен создавать  качественный развлекательный или образовательный продукт, востребованный обществом и индустрией.',
-    supervisors: ['Другова Елена Сергеевна'],
+    supervisors: projectSupervisorList.slice(2, 4),
     supervisorsNames: '',
     title: '«Продвижение ИРНИТУ в социальных сетях»',
     type: {
@@ -553,7 +545,7 @@ export const mockProjectList: Project[] = [
     id: 8,
     participations: [],
     participants: [userCandidate],
-    specialities: [{ id: 1, name: 'НГДСз' }],
+    specialities: [{ id: 1, name: 'НГДСз', department: null, institute: null }],
     places: 12,
     product_result:
       'Короткометражные повторяющиеся и не повторяющиеся видеопередачи (выпуски), юмористического и познавательного содержания, призванные привлекать внимание целевых и потенциальных целевых групп.',
@@ -563,7 +555,7 @@ export const mockProjectList: Project[] = [
     state: archivedState,
     study_result:
       'Знания: получает новые знания о сути и ходе реализации проекта, о его специфических свойствах и способах работы с видеоматериалом. Умения: использовать полученные навыки в ходе обучения для создания качественного видеоконтента;Навыки: Способен создавать  качественный развлекательный или образовательный продукт, востребованный обществом и индустрией.',
-    supervisors: ['Другова Елена Сергеевна'],
+    supervisors: projectSupervisorList.slice(2, 4),
     supervisorsNames: '',
     title: 'Подготовка хрестоматии по трудовому праву',
     type: {

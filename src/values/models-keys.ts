@@ -1,21 +1,23 @@
 import { Supervisor } from '@/models/Supervisor';
-import { Tag, Type } from '../models/Project';
-import { State } from '../models/ProjectState';
+import { Skill, ProjectType } from '../models/Project';
+import { State } from '../models/State';
 
 export const SupervisorKeys: Record<keyof Supervisor, keyof Supervisor> = {
   id: 'id',
   fio: 'fio',
   email: 'email',
   position: 'position',
+  about: 'about',
+  department: 'department',
 };
-export const TypeKeys: Record<keyof Type, keyof Type> = {
+export const TypeKeys: Record<keyof ProjectType, keyof ProjectType> = {
   id: 'id',
   type: 'type',
 };
-export const SkillKeys: Record<keyof Tag, keyof Tag> = {
+export const SkillKeys: Record<keyof Skill, keyof Skill> = {
   id: 'id',
   name: 'name',
-  skillCategory_id: 'skillCategory_id',
+  skillCategory: 'skillCategory',
 };
 export const StateKeys: Record<keyof State, keyof State> = {
   id: 'id',

@@ -13,7 +13,7 @@
       </template>
       <template #content>
         <BaseCheckbox
-          v-for="state in additionalProjectData.states"
+          v-for="state in acceptedProjectStates"
           :key="state.id"
           v-model="filters.state"
           :value="state.id"
@@ -36,6 +36,7 @@
           v-model="filters.specialties"
           mode="tags"
           placeholder="Введите специальности"
+          no-results-text="Специальности не найдены"
           class="miltiselect"
           :close-on-select="false"
           :searchable="true"
@@ -49,6 +50,7 @@
           v-model="filters.skills"
           mode="tags"
           placeholder="Введите навыки"
+          no-results-text="Навыки не найдены"
           class="miltiselect"
           :close-on-select="false"
           :searchable="true"
@@ -72,23 +74,23 @@
         <BaseCheckbox
           v-model="filters.difficulty"
           class="label"
-          :value="Difficulty.Low"
+          :value="ProjectDifficulty.Low"
         >
-          {{ DifficultyText[Difficulty.Low] }}
+          {{ DifficultyText[ProjectDifficulty.Low] }}
         </BaseCheckbox>
         <BaseCheckbox
           v-model="filters.difficulty"
           class="label"
-          :value="Difficulty.Medium"
+          :value="ProjectDifficulty.Medium"
         >
-          {{ DifficultyText[Difficulty.Medium] }}
+          {{ DifficultyText[ProjectDifficulty.Medium] }}
         </BaseCheckbox>
         <BaseCheckbox
           v-model="filters.difficulty"
           class="label"
-          :value="Difficulty.High"
+          :value="ProjectDifficulty.High"
         >
-          {{ DifficultyText[Difficulty.High] }}
+          {{ DifficultyText[ProjectDifficulty.High] }}
         </BaseCheckbox>
       </template>
     </ProjectFilterAccordion>
@@ -115,12 +117,19 @@
 </template>
 
 <script setup lang="ts">
+  import { computed } from 'vue';
   import { storeToRefs } from 'pinia';
   import { capitalizeFirstLetter } from '@/helpers/string';
   import { SkillKeys } from '@/values/models-keys';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { useProjectFilters } from '@/hooks/useProjectFilters';
-  import { DifficultyText, Difficulty } from '@/models/ProjectDifficulty';
+  import {
+    useProjectFilters,
+    ACCEPTED_PROJECT_STATES,
+  } from '@/hooks/useProjectFilters';
+  import {
+    DifficultyText,
+    ProjectDifficulty,
+  } from '@/models/ProjectDifficulty';
   // components
   import VMultiselect from '@vueform/multiselect';
   import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
@@ -131,6 +140,12 @@
   const modalsStore = useModalsStore();
   const { additionalProjectData, loading, error, tagsLoading, statesLoading } =
     storeToRefs(useProjectsStore());
+
+  const acceptedProjectStates = computed(() =>
+    additionalProjectData.value.states?.filter((state) =>
+      ACCEPTED_PROJECT_STATES.includes(state.id),
+    ),
+  );
   const { clearFilter, filter, filters } = useProjectFilters();
 </script>
 

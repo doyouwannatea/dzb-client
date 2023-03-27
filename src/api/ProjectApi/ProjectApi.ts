@@ -1,21 +1,21 @@
-import { projectFiltersToSearchParams } from '@/helpers/query';
+import { projectFiltersToSearchParams } from '@/helpers/location-query';
 import {
   Project,
   ProjectFilters,
-  Type,
+  ProjectType,
   ProjectTags,
-  Tag,
 } from '@/models/Project';
 import IProjectApi, {
   OnDownloadProgress,
   ProjectListResponse,
 } from './IProjectApi';
-import { State } from '@/models/ProjectState';
+import { ProjectState } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
 import { Supervisor } from '@/models/Supervisor';
 import { baseKyInstance } from '../baseKy';
 import { Candidate } from '@/models/Candidate';
 import { compareString } from '@/helpers/string';
+import { Tag } from '@/models/Tag';
 
 export default class ProjectApi extends IProjectApi {
   async getSingleProject(projectId: number): Promise<Project> {
@@ -62,11 +62,11 @@ export default class ProjectApi extends IProjectApi {
     return baseKyInstance.get('api/supervisors').json();
   }
 
-  async getAllProjectTypes(): Promise<Type[]> {
+  async getAllProjectTypes(): Promise<ProjectType[]> {
     return baseKyInstance.get('api/types').json();
   }
 
-  async getAllProjectStates(): Promise<State[]> {
+  async getAllProjectStates(): Promise<ProjectState[]> {
     return baseKyInstance.get('api/states').json();
   }
 

@@ -28,7 +28,7 @@
         </ul>
       </nav>
 
-      <section v-if="authStore.isAuth" class="info-block">
+      <section v-if="authStore.profileData" class="info-block">
         <h3 class="title info-title">Личный кабиент</h3>
         <ul class="info-list">
           <li v-for="link in userRoutes" :key="link.name" class="info-item">

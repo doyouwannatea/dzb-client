@@ -5,11 +5,15 @@
 </template>
 
 <script setup lang="ts">
-  import { State, StateClass, StateAcronyms } from '@/models/ProjectState';
+  import {
+    ProjectState,
+    StateClass,
+    StateAcronyms,
+  } from '@/models/ProjectState';
   // components
   import BaseBadge from '../ui/BaseBadge.vue';
 
-  type Props = { state: State; useAcronyms?: boolean };
+  type Props = { state: ProjectState; useAcronyms?: boolean };
   const props = withDefaults(defineProps<Props>(), { useAcronyms: false });
 
   const stateClass = StateClass[props.state.id];

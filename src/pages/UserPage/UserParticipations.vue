@@ -1,6 +1,6 @@
 <template>
   <!-- CONTENT -->
-  <section v-if="isCandidate(authStore.profileData)">
+  <section v-if="authStore.profileData && isCandidate(authStore.profileData)">
     <!-- STUB -->
     <UserParticipationListStub
       v-if="!participationsStore.listNotEmpty && !participationsStore.loading"
@@ -252,7 +252,7 @@
   }
 
   function onEnableDrag() {
-    if (!isCandidate(authStore.profileData)) return;
+    if (!authStore.profileData || !isCandidate(authStore.profileData)) return;
     if (!authStore.profileData.canSendParticipations) {
       modalsStore.openEditParticipationsDisabledModal();
       return;

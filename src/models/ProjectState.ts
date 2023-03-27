@@ -1,3 +1,5 @@
+import { State } from './State';
+
 export const enum ProjectStateID {
   RecruitingState = 1,
   ActiveState = 2,
@@ -6,10 +8,7 @@ export const enum ProjectStateID {
   ProcessingState = 5,
 }
 
-export interface State {
-  id: ProjectStateID;
-  state: string;
-}
+export type ProjectState = State<ProjectStateID>;
 
 export const StateClass: Record<ProjectStateID, string> = {
   [ProjectStateID.RecruitingState]: 'recruiting',

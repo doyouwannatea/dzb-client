@@ -4,23 +4,20 @@ import type {
   Project,
   ProjectFilters,
   ProjectTags,
-  Type,
+  ProjectType,
 } from '@/models/Project';
 import { projectListResponse, states, types } from '@/models/mock/project';
 import { delayRes, sleep } from '@/helpers/promise';
 import { supervisorList } from '@/models/mock/supervisor';
 import IProjectApi from './IProjectApi';
-import { State } from '@/models/ProjectState';
+import { ProjectState } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
 import { Supervisor } from '@/models/Supervisor';
-import {
-  skillCategories,
-  specialties,
-  skills,
-} from '@/models/mock/project-skills';
+import { skills } from '@/models/mock/project-skills';
 import { deepClone } from '@/helpers/object';
 import { Candidate } from '@/models/Candidate';
 import { activeProjectId, archiveProjectIdList } from '@/models/mock/candidate';
+import { specialties } from '@/models/mock/specialties';
 
 const createDownloadProgress =
   (totalBytes: number) =>
@@ -100,18 +97,18 @@ export default class ProjectApiMock extends IProjectApi {
   }
 
   async getAllProjectTags(): Promise<ProjectTags> {
-    return delayRes({ skillCategories, skills, specialties }, 300);
+    return delayRes({ skills, specialties }, 300);
   }
 
   async getAllSupervisors(): Promise<Supervisor[]> {
     return delayRes(supervisorList, 400);
   }
 
-  async getAllProjectTypes(): Promise<Type[]> {
+  async getAllProjectTypes(): Promise<ProjectType[]> {
     return delayRes(types, 300);
   }
 
-  async getAllProjectStates(): Promise<State[]> {
+  async getAllProjectStates(): Promise<ProjectState[]> {
     return delayRes(states, 300);
   }
 

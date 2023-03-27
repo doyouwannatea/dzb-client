@@ -4,21 +4,36 @@
     <textarea
       v-bind="$attrs"
       :value="props.modelValue"
-      class="input"
+      :class="['input', { 'with-maxlength': isMaxLength }]"
       :style="{ resize: props.resize }"
       @input="onInput"
     >
     </textarea>
+    <span v-if="isMaxLength" class="maxlength">
+      {{ props.modelValue.length || 0 }}/{{ $attrs.maxlength }}
+    </span>
   </label>
 </template>
 
+<script lang="ts">
+  import { defineComponent } from 'vue';
+  export default defineComponent({
+    inheritAttrs: false,
+  });
+</script>
+
 <script setup lang="ts">
-  import { TextareaHTMLAttributes, withDefaults } from 'vue';
+  import {
+    TextareaHTMLAttributes,
+    withDefaults,
+    useAttrs,
+    computed,
+  } from 'vue';
 
   interface Props extends TextareaHTMLAttributes {
     modelValue?: string;
     label?: string;
-    resize: 'horizontal' | 'vertical' | 'both' | 'none';
+    resize?: 'horizontal' | 'vertical' | 'both' | 'none';
   }
 
   interface Emits {
@@ -31,6 +46,12 @@
     resize: 'none',
   });
   const emit = defineEmits<Emits>();
+  const attrs = useAttrs();
+  const isMaxLength = computed(
+    () =>
+      typeof attrs.maxlength === 'number' ||
+      typeof attrs.maxlength === 'string',
+  );
 
   function onInput(e: Event) {
     const target = e.target as HTMLInputElement;
@@ -38,17 +59,21 @@
   }
 </script>
 
-<script lang="ts">
-  import { defineComponent } from 'vue';
-  export default defineComponent({
-    inheritAttrs: false,
-  });
-</script>
-
 <style scoped>
   .label {
+    position: relative;
     display: inline-block;
     width: 100%;
+  }
+
+  .maxlength {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 0.625rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-color-2);
+    user-select: none;
   }
 
   .label-text {
@@ -69,6 +94,10 @@
     transition: border 100ms ease;
   }
 
+  .input.with-maxlength {
+    padding-bottom: 2.5rem;
+  }
+
   .input::placeholder {
     font-size: 1.125rem;
     color: var(--gray-color-2);
@@ -81,10 +110,10 @@
   .input:disabled {
     color: var(--gray-color-2);
     cursor: default;
-    background-color: #f9f9f9;
+    background-color: var(--gray-color-4);
   }
 
   .input:focus-visible {
-    border: 1px solid black;
+    border: 1px solid var(--accent-color-1);
   }
 </style>

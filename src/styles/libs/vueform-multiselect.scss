@@ -1,17 +1,23 @@
 @import '../../../node_modules/@vueform/multiselect/themes/default';
 
 .multiselect {
-  --ms-bg: #f9f9f9;
+  --ms-bg: var(--light-color);
   --ms-border-color: var(--gray-color-1);
   --ms-py: 1.0625rem;
   --ms-px: 1.0625rem;
   --ms-radius: 0.3125rem;
   --ms-option-font-size: 1.125rem;
   --ms-font-size: 1.125rem;
+  --ms-option-bg-selected: var(--green-color-1);
+  --ms-option-bg-selected-pointed: var(--green-color-2);
+  --ms-bg-disabled: var(--gray-color-4);
+  --ms-border-color-active: var(--accent-color-1);
 
-  min-height: 3.5625rem;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  transition: border 100ms ease;
+
+  &.is-disabled {
+    color: var(--gray-color-2);
+  }
 }
 
 .multiselect.is-active {

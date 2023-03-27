@@ -15,7 +15,10 @@
     <!-- HEADER -->
 
     <!-- MAIN CONTENT -->
-    <div v-if="isCandidate(authStore.profileData)" class="body-grid">
+    <div
+      v-if="authStore.profileData && isCandidate(authStore.profileData)"
+      class="body-grid"
+    >
       <!-- fio -->
       <fieldset class="input-group">
         <label class="input-label" for="fio">ФИО</label>
@@ -74,9 +77,12 @@
 
     <!-- ACTIONS -->
     <template #actions>
-      <BaseTooltip :message="priorityTooltipMsg">
+      <BaseTooltip
+        :position-x="isSmallDevice ? 'left' : 'right'"
+        :message="priorityTooltipMsg"
+      >
         <span class="input-label subtitle">
-          <span class="required">*</span>
+          <LabelRequiredIcon />
           Приоритетность проекта
         </span>
       </BaseTooltip>
@@ -159,17 +165,20 @@
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
   import { isCandidate } from '@/helpers/typeCheck';
+  import { useSmallDevice } from '@/helpers/breakpoints';
   // components
   import BaseModal from '../ui/BaseModal.vue';
   import BaseInput from '../ui/BaseInput.vue';
   import BaseTooltip from '../ui/BaseTooltip.vue';
   import BaseRadioButton from '../ui/BaseRadioButton.vue';
   import BaseButton from '../ui/BaseButton.vue';
+  import LabelRequiredIcon from '../ui/label/LabelRequiredIcon.vue';
 
   const projectsStore = useProjectsStore();
   const authStore = useAuthStore();
   const participationsStore = useParticipationsStore();
   const modalsStore = useModalsStore();
+  const isSmallDevice = useSmallDevice();
 
   const priorityValue = ref<ParticipationPriority>();
   const highSelected = ref(false);

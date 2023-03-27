@@ -24,6 +24,6 @@
   const authStore = useAuthStore();
 
   const showBtn = computed(
-    () => props.project.participant_feedback && authStore.isAuth,
+    () => props.project.participant_feedback && authStore.profileData,
   );
 </script>

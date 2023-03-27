@@ -23,7 +23,7 @@
 <script setup lang="ts">
   import { toRefs } from 'vue';
   import { RouterLink } from 'vue-router';
-  import { State } from '@/models/ProjectState';
+  import { ProjectState } from '@/models/ProjectState';
   import { RouteNames } from '@/router/types/route-names';
   import {
     canViewParticipants,
@@ -31,7 +31,7 @@
   } from '@/helpers/project';
 
   interface Props {
-    projectState: State;
+    projectState: ProjectState;
   }
   const props = defineProps<Props>();
   const { projectState } = toRefs(props);

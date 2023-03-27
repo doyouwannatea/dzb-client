@@ -1,10 +1,10 @@
 <template>
-  <span :class="['tag', { disabled }]">
+  <span :class="['tag', props.variant, { disabled: props.disabled }]">
     <slot></slot>
     <button
-      v-if="deletable"
+      v-if="props.deletable"
       class="multiselect-tag-remove remove-btn"
-      @click="$emit('delete')"
+      @click="emit('delete')"
     >
       <span class="multiselect-tag-remove-icon"></span>
     </button>
@@ -12,15 +12,23 @@
 </template>
 
 <script setup lang="ts">
-  import { withDefaults } from 'vue';
+  type Props = {
+    variant?: 'primary' | 'outlined';
+    disabled?: boolean;
+    deletable?: boolean;
+  };
+  type Emits = {
+    (event: 'delete'): void;
+  };
 
-  type Props = { disabled?: boolean; deletable?: boolean };
-  type Emits = { (e: 'delete'): void };
-  withDefaults(defineProps<Props>(), { disabled: false, remove: undefined });
-  defineEmits<Emits>();
+  const props = withDefaults(defineProps<Props>(), {
+    variant: 'primary',
+    disabled: false,
+  });
+  const emit = defineEmits<Emits>();
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .tag {
     display: inline-flex;
     align-items: center;
@@ -31,11 +39,16 @@
     color: var(--accent-color-1);
     background: #f1f4fe;
     border-radius: 1.875rem;
-  }
 
-  .tag.disabled {
-    color: var(--gray-color-2);
-    background: var(--gray-color-1);
+    &.outlined {
+      background-color: transparent;
+      border: 1px solid var(--accent-color-1);
+    }
+
+    &.disabled {
+      color: var(--gray-color-2);
+      background: var(--gray-color-1);
+    }
   }
 
   .remove-btn {
@@ -45,9 +58,9 @@
     background-color: transparent;
     border: none;
     border-radius: 50%;
-  }
 
-  .remove-btn:hover {
-    background-color: #cbd7ff;
+    &:hover {
+      background-color: #cbd7ff;
+    }
   }
 </style>

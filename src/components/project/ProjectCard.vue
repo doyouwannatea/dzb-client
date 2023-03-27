@@ -10,10 +10,15 @@
         :use-acronyms="isMobile"
       />
       <div
-        v-if="project?.supervisorsNames || project?.supervisors.length > 0"
+        v-if="project.supervisorsNames || project.supervisors?.length > 0"
         class="subtitle"
       >
-        {{ project.supervisorsNames || project.supervisors.join(', ') }}
+        {{
+          project.supervisorsNames ||
+          project.supervisors
+            .map((supervisor) => supervisor.supervisor.fio)
+            .join(', ')
+        }}
       </div>
       <div v-if="project?.specialities.length > 0" class="subtitle">
         {{ project.specialities.map((ins) => ins.name).join(', ') }}
@@ -32,10 +37,6 @@
           <b>Цель:</b>
           {{ project.goal }}
         </li>
-        <li v-if="project.requirements" class="list-item">
-          <b>Требования к студентам:</b>
-          {{ project.requirements }}
-        </li>
         <li v-if="project.date_start" class="list-item">
           <b>Старт проекта:</b> {{ project.date_start }}
         </li>
@@ -47,12 +48,13 @@
       />
     </div>
     <footer class="footer container">
-      <SkillList
-        :skills="
+      <TagList
+        :tag-list="
           props.project.skills.filter(
             (skill) => skill.name.split(' ').length < 10,
           )
         "
+        :decl-of-num="['навык', 'навыка', 'навыков']"
       />
       <div class="actions">
         <OpenParticipationModalButton :project="props.project" />
@@ -77,7 +79,7 @@
   import { useSmallDevice, useDesktop, useMobile } from '@/helpers/breakpoints';
   // components
   import ProjectStatus from './ProjectStatus.vue';
-  import SkillList from '../skill/SkillList.vue';
+  import TagList from '../ui/TagList.vue';
   import OpenParticipationModalButton from '../participation/OpenParticipationModalButton.vue';
   import OpenFeedbackModalButton from '../feedback/OpenFeedbackModalButton.vue';
   import BaseButton from '../ui/BaseButton.vue';

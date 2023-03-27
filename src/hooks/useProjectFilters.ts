@@ -1,11 +1,19 @@
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import _ from 'lodash';
-import { locationQueryToProjectFilters } from '@/helpers/query';
+import { isEqual } from 'lodash';
+import { locationQueryToProjectFilters } from '@/helpers/location-query';
 import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 import { ProjectFilters } from '@/models/Project';
 import { isEmptyObject } from '@/helpers/object';
 import { RouteNames } from '@/router/types/route-names';
+import { ProjectStateID } from '@/models/ProjectState';
+
+export const ACCEPTED_PROJECT_STATES = [
+  ProjectStateID.ActiveState,
+  ProjectStateID.RecruitingState,
+  ProjectStateID.ArchivedState,
+  ProjectStateID.ProcessingState,
+];
 
 export const useWatchProjectQueries = (routeName: RouteNames) => {
   const router = useRouter();
@@ -26,8 +34,8 @@ export const useWatchProjectQueries = (routeName: RouteNames) => {
       }
 
       // если в строке поиска есть фильтры, но они не совпадают с теми, что в хранилище, то обновляем фильтры
-      const isEqual = _.isEqual(storedFilters, queryFilters);
-      if (!isEqual) {
+      const isEqualFilters = isEqual(storedFilters, queryFilters);
+      if (!isEqualFilters) {
         projectStore.setFilters(queryFilters);
       }
 

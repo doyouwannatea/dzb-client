@@ -17,7 +17,7 @@ export const useModalsStore = defineStore('modals', {
       const participationsStore = useParticipationsStore();
       const projectsStore = useProjectsStore();
 
-      if (!authStore.isAuth || !authStore.profileData) {
+      if (!authStore.profileData) {
         this.authModal = true;
         return;
       }
@@ -111,7 +111,7 @@ export const useModalsStore = defineStore('modals', {
       const authStore = useAuthStore();
       const projectsStore = useProjectsStore();
 
-      if (!authStore.isAuth) {
+      if (!authStore.profileData) {
         this.authModal = true;
         return;
       }

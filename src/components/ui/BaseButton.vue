@@ -2,13 +2,11 @@
   <component
     :is="props.is"
     :disabled="props.disabled"
-    :class="[
-      'btn',
-      props.variant,
-      props.case,
-      props.color,
-      { 'full-width': props.fullWidth },
-    ]"
+    :class="['button', props.variant, props.color]"
+    :style="{
+      textTransform: props.case,
+      width: props.fullWidth ? '100%' : undefined,
+    }"
   >
     <slot></slot>
   </component>
@@ -17,9 +15,15 @@
 <script setup lang="ts">
   import { withDefaults } from '@vue/runtime-core';
 
-  export type Variant = 'outlined' | 'link' | 'inline-link' | 'primary';
+  export type Variant =
+    | 'outlined'
+    | 'link'
+    | 'inline-link'
+    | 'primary'
+    | 'tag'
+    | 'tag-outlined';
   type Is = 'button' | 'router-link' | 'a';
-  type Case = 'uppercase' | 'lowercase' | 'default';
+  type Case = 'uppercase' | 'lowercase' | 'none';
   type Color = 'red' | 'white';
 
   type Props = {
@@ -41,8 +45,8 @@
   });
 </script>
 
-<style scoped>
-  .btn {
+<style scoped lang="scss">
+  .button {
     --background-color: var(--accent-color-1);
     --disabled-color: var(--gray-color-2);
     --hover-color: #2248bb;
@@ -65,110 +69,128 @@
     border: 0;
     border-radius: 0.3125rem;
     transition: background-color 20ms ease, color 20ms ease;
+
+    &.red {
+      --background-color: var(--red-color-1);
+      --hover-color: var(--red-color-1);
+      --active-color: var(--red-color-2);
+    }
+
+    &.white {
+      --background-color: #fff;
+      --hover-color: var(--gray-color-1);
+      --active-color: var(--gray-color-2);
+    }
+
+    &:disabled {
+      pointer-events: none;
+    }
   }
 
-  .btn.red {
-    --background-color: var(--red-color-1);
-    --hover-color: var(--red-color-1);
-    --active-color: var(--red-color-2);
-  }
-
-  .btn.white {
-    --background-color: #fff;
-    --hover-color: var(--gray-color-1);
-    --active-color: var(--gray-color-2);
-  }
-
-  .btn:disabled {
-    pointer-events: none;
-  }
-
-  .full-width {
-    width: 100%;
-  }
-
-  .uppercase {
-    text-transform: uppercase;
-  }
-
-  .lowercase {
-    text-transform: lowercase;
-  }
-
-  .primary {
+  // SCSS: A.K.A. "Silent Classes"
+  %primary {
     background-color: var(--background-color);
+
+    &:hover {
+      color: #fff;
+      background-color: var(--hover-color);
+    }
+
+    &:active {
+      color: #fff;
+      background-color: var(--active-color);
+    }
+
+    &:disabled {
+      background-color: var(--disabled-color);
+    }
   }
 
-  .primary:hover {
-    color: #fff;
-    background-color: var(--hover-color);
+  %tag {
+    @extend %primary;
+
+    padding: 0.4375rem 1.25rem;
+    font-size: 0.875rem;
+    border: none;
+    border-radius: 6.25rem;
   }
 
-  .primary:active {
-    color: #fff;
-    background-color: var(--active-color);
-  }
-
-  .primary:disabled {
-    background-color: var(--disabled-color);
-  }
-
-  .outlined {
+  %outlined {
     color: var(--background-color);
     background-color: transparent;
     border: 0.125rem solid var(--background-color);
+
+    &:hover {
+      color: #fff;
+      background-color: var(--hover-color);
+      border-color: var(--hover-color);
+    }
+
+    &.white:hover {
+      color: var(--text-color);
+    }
+
+    &:active {
+      color: #fff;
+      background-color: var(--active-color);
+      border-color: var(--active-color);
+    }
+
+    &.white:active {
+      color: var(--text-color);
+    }
+
+    &:disabled {
+      color: var(--disabled-color);
+      background-color: transparent;
+      border-color: var(--disabled-color);
+    }
   }
 
-  .outlined:hover {
-    color: #fff;
-    background-color: var(--hover-color);
-    border-color: var(--hover-color);
-  }
-
-  .outlined.white:hover {
-    color: var(--text-color);
-  }
-
-  .outlined:active {
-    color: #fff;
-    background-color: var(--active-color);
-    border-color: var(--active-color);
-  }
-
-  .outlined.white:active {
-    color: var(--text-color);
-  }
-
-  .outlined:disabled {
-    color: var(--disabled-color);
-    background-color: transparent;
-    border-color: var(--disabled-color);
-  }
-
-  .inline-link {
-    padding: 0;
-    font-size: 0.875rem;
+  %link {
     color: var(--background-color);
-    border-radius: 0;
+
+    &:hover {
+      color: var(--background-color);
+      text-decoration: underline;
+    }
+
+    &:active {
+      color: var(--active-color);
+    }
+
+    &:disabled {
+      color: var(--disabled-color);
+    }
+  }
+
+  // Наследование стилей в SCSS https://sass-lang.com/documentation/at-rules/extend
+  .primary {
+    @extend %primary;
+  }
+
+  .outlined {
+    @extend %outlined;
   }
 
   .link {
-    color: var(--background-color);
+    @extend %link;
   }
 
-  .inline-link:hover,
-  .link:hover {
-    color: var(--background-color);
-    text-decoration: underline;
+  .inline-link {
+    @extend %link;
+
+    padding: 0;
+    font-size: 0.875rem;
+    border-radius: 0;
   }
 
-  .inline-link:active,
-  .link:active {
-    color: var(--active-color);
+  .tag {
+    @extend %tag;
   }
 
-  .inline-link:disabled,
-  .link:disabled {
-    color: var(--disabled-color);
+  .tag-outlined {
+    @extend %tag;
+    @extend %outlined;
   }
 </style>

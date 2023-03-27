@@ -7,7 +7,11 @@
         :items="[
           {
             title: 'Руководители проекта',
-            content: project.supervisorsNames || project.supervisors.join(', '),
+            content:
+              project.supervisorsNames ||
+              project.supervisors
+                .map((supervisor) => supervisor.supervisor.fio)
+                .join(', '),
           },
           {
             title: 'Старт проекта',
@@ -60,11 +64,6 @@
     <AppList
       :items="[
         {
-          title: 'Требования к студентам',
-          content: project.requirements,
-          wide: true,
-        },
-        {
           title: 'Описание проекта',
           content: project.description,
           wide: true,
@@ -103,9 +102,9 @@
     <!-- Information list -->
     <AppList>
       <AppListItem :bold="false" :wide="true">
-        <template #title>Теги</template>
+        <template #title>Требования к студентам</template>
         <template #default>
-          <SkillList :skills="project.skills" show-all />
+          <TagList :tag-list="project.skills" show-all />
         </template>
       </AppListItem>
     </AppList>
@@ -123,7 +122,7 @@
   import OpenParticipationModalButton from '@/components/participation/OpenParticipationModalButton.vue';
   import OpenFeedbackModalButton from '@/components/feedback/OpenFeedbackModalButton.vue';
   import AppListItem from '@/components/ui/AppListItem.vue';
-  import SkillList from '@/components/skill/SkillList.vue';
+  import TagList from '@/components/ui/TagList.vue';
   import ProjectTeamCounter from '@/components/project/ProjectTeamCounter.vue';
   import ProjectHistoryButton from './ProjectHistoryButton.vue';
 

@@ -1,4 +1,3 @@
-export interface Institute {
-  id: number;
-  name: string;
-}
+import { Tag } from './Tag';
+
+export type Institute = Tag;

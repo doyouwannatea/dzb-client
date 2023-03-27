@@ -1,16 +1,5 @@
-import { Candidate, CandidateSkills } from '../Candidate';
-import { Tag } from '../Project';
+import { Candidate } from '../Candidate';
 import { UserCandidate } from '../User';
-import { skills, skillCategories } from './project-skills';
-
-const commonSkills: Tag[] = [
-  skills[0],
-  skills[1],
-  skills[2],
-  skillCategories[2],
-  skillCategories[4],
-];
-const personalSkills: Tag[] = [skillCategories[3]];
 
 export const userCandidate: UserCandidate = {
   id: 2,
@@ -21,23 +10,7 @@ export const userCandidate: UserCandidate = {
   numz: '19430087',
   course: 3,
   training_group: 'ИСТб-19-1',
-  group_id: 1,
   canSendParticipations: true,
-  group: {
-    id: 1,
-    name: 'ИСТб-19-1',
-    specialitiyCource_id: 1,
-    specialitiy_cource: {
-      cource: 1,
-      id: 1,
-      specialitiy: {
-        id: 1,
-        name: 'НГДСз',
-      },
-      specialitiy_id: 1,
-    },
-  },
-  skills: [...commonSkills, ...personalSkills],
   is_student: true,
   is_teacher: false,
 };
@@ -55,23 +28,6 @@ export const candidateList: Candidate[] = [
     numz: '19430087',
     course: 3,
     training_group: 'ИСТб-19-2',
-    group_id: 1,
-    canSendParticipations: true,
-    group: {
-      id: 1,
-      name: 'ИСТб-19-2',
-      specialitiyCource_id: 1,
-      specialitiy_cource: {
-        cource: 1,
-        id: 1,
-        specialitiy: {
-          id: 1,
-          name: 'НГДСз',
-        },
-        specialitiy_id: 1,
-      },
-    },
-    skills: [...commonSkills, ...personalSkills],
   },
   {
     id: 4,
@@ -82,23 +38,6 @@ export const candidateList: Candidate[] = [
     numz: '19430087',
     course: 3,
     training_group: 'ИСТб-19-2',
-    group_id: 1,
-    canSendParticipations: true,
-    group: {
-      id: 1,
-      name: 'ИСТб-19-2',
-      specialitiyCource_id: 1,
-      specialitiy_cource: {
-        cource: 1,
-        id: 1,
-        specialitiy: {
-          id: 1,
-          name: 'НГДСз',
-        },
-        specialitiy_id: 1,
-      },
-    },
-    skills: [...commonSkills, ...personalSkills],
   },
   {
     id: 5,
@@ -109,23 +48,6 @@ export const candidateList: Candidate[] = [
     numz: '19430087',
     course: 3,
     training_group: 'ИСТб-19-2',
-    group_id: 1,
-    canSendParticipations: true,
-    group: {
-      id: 1,
-      name: 'ИСТб-19-2',
-      specialitiyCource_id: 1,
-      specialitiy_cource: {
-        cource: 1,
-        id: 1,
-        specialitiy: {
-          id: 1,
-          name: 'НГДСз',
-        },
-        specialitiy_id: 1,
-      },
-    },
-    skills: [...commonSkills, ...personalSkills],
   },
   {
     id: 6,
@@ -136,23 +58,6 @@ export const candidateList: Candidate[] = [
     numz: '19430087',
     course: 3,
     training_group: 'ИСТб-19-2',
-    group_id: 1,
-    canSendParticipations: true,
-    group: {
-      id: 1,
-      name: 'ИСТб-19-2',
-      specialitiyCource_id: 1,
-      specialitiy_cource: {
-        cource: 1,
-        id: 1,
-        specialitiy: {
-          id: 1,
-          name: 'НГДСз',
-        },
-        specialitiy_id: 1,
-      },
-    },
-    skills: [...commonSkills, ...personalSkills],
   },
   {
     id: 7,
@@ -163,27 +68,5 @@ export const candidateList: Candidate[] = [
     numz: '19430087',
     course: 3,
     training_group: 'ИСТб-19-1',
-    group_id: 1,
-    canSendParticipations: true,
-    group: {
-      id: 1,
-      name: 'ИСТб-19-1',
-      specialitiyCource_id: 1,
-      specialitiy_cource: {
-        cource: 1,
-        id: 1,
-        specialitiy: {
-          id: 1,
-          name: 'НГДСз',
-        },
-        specialitiy_id: 1,
-      },
-    },
-    skills: [...commonSkills, ...personalSkills],
   },
 ];
-
-export const candidateSkills: CandidateSkills = {
-  common: commonSkills,
-  personal: personalSkills,
-};
