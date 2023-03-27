@@ -1,6 +1,6 @@
 <template>
   <BaseBadge :class="['status', stateClass]">
-    {{ state.state }}
+    {{ props.state.state }}
   </BaseBadge>
 </template>
 
@@ -9,8 +9,8 @@
   // components
   import BaseBadge from '../ui/BaseBadge.vue';
 
-  type Props = { state: ProjectProposalState; useAcronyms?: boolean };
-  const props = withDefaults(defineProps<Props>(), { useAcronyms: false });
+  type Props = { state: ProjectProposalState };
+  const props = defineProps<Props>();
 
   const stateClass = StateClass[props.state.id];
 </script>

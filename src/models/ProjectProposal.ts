@@ -41,6 +41,13 @@ export const enum ProjectProposalStateId {
   Approved = 9,
 }
 
+export const PROJECT_PROPOSAL_IDS = [
+  ProjectProposalStateId.UnderReview,
+  ProjectProposalStateId.Draft,
+  ProjectProposalStateId.Rejected,
+  ProjectProposalStateId.Approved,
+];
+
 export type ProjectProposalState = State<ProjectProposalStateId>;
 
 export const StateClass: Record<ProjectProposalStateId, string> = {
