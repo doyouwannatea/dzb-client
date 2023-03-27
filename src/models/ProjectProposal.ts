@@ -43,6 +43,13 @@ export const enum ProjectProposalStateId {
 
 export type ProjectProposalState = State<ProjectProposalStateId>;
 
+export const StateClass: Record<ProjectProposalStateId, string> = {
+  [ProjectProposalStateId.UnderReview]: 'review',
+  [ProjectProposalStateId.Draft]: 'draft',
+  [ProjectProposalStateId.Rejected]: 'rejected',
+  [ProjectProposalStateId.Approved]: 'approved',
+};
+
 export interface ProjectProposalSpecialty {
   specialitiy_id: number;
   course: SpecialtyCourse;

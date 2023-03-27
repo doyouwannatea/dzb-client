@@ -14,6 +14,7 @@ const UserPage = () => import('@/pages/UserPage/index.vue');
 const UserProfile = () => import('@/pages/UserPage/UserProfile.vue');
 const UserProjects = () => import('@/pages/UserPage/UserProjects.vue');
 import UserParticipations from '@/pages/UserPage/UserParticipations.vue';
+import ProjectProposals from '@/pages/UserPage/ProjectProposals.vue';
 
 // Home page
 const HomePage = () => import('@/pages/HomePage.vue');
@@ -122,6 +123,17 @@ export const routes: RouteRecordRaw[] = [
           order: 1,
           title: 'Мои заявки',
           role: ['student'],
+        },
+      },
+      {
+        path: 'project-proposals',
+        name: RouteNames.PROJECT_PROPOSALS,
+        component: ProjectProposals,
+        meta: {
+          type: ['user-nav'],
+          order: 1,
+          title: 'Мои заявки',
+          role: ['teacher'],
         },
       },
       {
