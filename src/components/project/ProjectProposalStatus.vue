@@ -12,6 +12,7 @@
   type Props = { state: ProjectProposalState };
   const props = defineProps<Props>();
 
+  // TODO: стоит добавить в props BaseBadge массив с состояниями и привязкой к цветам, тогда не надо будет создавать несколько компонентов с одниковой логикой
   const stateClass = StateClass[props.state.id];
 </script>
 

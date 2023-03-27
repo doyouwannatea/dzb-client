@@ -409,13 +409,14 @@
       >
         Сбросить и выйти
       </BaseButton>
-      <BaseButton
+      <!-- TODO: добавить функцию изменения черновика -->
+      <!-- <BaseButton
         :disabled="disableAll"
         variant="outlined"
         @click="onCreateDraft"
       >
         Сохранить черновик
-      </BaseButton>
+      </BaseButton> -->
       <BaseButton :disabled="disableAll" @click="onCreateUnderReview">
         Подать заявку
       </BaseButton>
@@ -424,6 +425,7 @@
 </template>
 
 <script setup lang="ts">
+  // TODO: отрефакторить логику компонента, а то большой слишком
   import { computed, ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useRoute, useRouter } from 'vue-router';

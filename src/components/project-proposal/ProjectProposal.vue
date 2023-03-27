@@ -20,6 +20,7 @@
         <template v-else>Ваша роль в проекте не установлена</template>
       </p>
       <div class="actions">
+        <!-- TODO: вернуть после добавления функций удаления и редактирования -->
         <!-- <BaseButton color="red" variant="inline-link">
           <span class="icon" v-html="trashIcon"></span> удалить черновик
         </BaseButton>
