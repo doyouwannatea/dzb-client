@@ -468,7 +468,6 @@
   import { useAllSupervisors } from '@/queries/useAllSupervisors';
   import { useProjectSkills } from '@/queries/useProjectSkills';
   import { useSpecialties } from '@/queries/useSpecialties';
-  import { useUserProjects } from '@/queries/useUserProjects';
   import { useThemeSources } from '@/queries/useThemeSources';
   import { useCreateProjectProposal } from '@/queries/useCreateProjectProposal';
   import { ProjectDifficulty } from '@/models/ProjectDifficulty';
@@ -701,7 +700,7 @@
 
     function agree() {
       modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.USER_INFO });
+      router.push({ name: RouteNames.PROJECT_PROPOSALS });
     }
 
     function disagree() {
@@ -769,7 +768,7 @@
   function onCancel() {
     function agree() {
       modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.USER_INFO });
+      router.push({ name: RouteNames.PROJECT_PROPOSALS });
     }
 
     function disagree() {
