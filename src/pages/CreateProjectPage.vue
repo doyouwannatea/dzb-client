@@ -6,10 +6,10 @@
     :shared-skill-list="projectSkills.data.value"
   />
   <SpecialtyEditModal
-    v-if="specialtyList.data.value"
+    v-if="specialtiesOfMentorDepartmentComputed"
     v-model:is-show="showSpecialtyEditModal"
     v-model:specialty-list="specialtyListRef"
-    :shared-specialty-list="specialtyList.data.value"
+    :shared-specialty-list="specialtiesOfMentorDepartmentComputed"
   />
   <SpecialtyEditModal
     v-if="specialtyList.data.value"
@@ -328,12 +328,23 @@
         title="Направления (специальности), участников проекта"
       >
         <!-- <Project specialties> -->
-        <TagList show-all :tag-list="specialtyListRef">
+        <TagList
+          v-if="
+            specialtyList.isFetching.value ||
+            specialtiesOfMentorDepartmentComputed.length > 0
+          "
+          show-all
+          :tag-list="specialtyListRef"
+        >
           <template #after-list>
             <BaseButton
               case="none"
               variant="tag"
-              :disabled="specialtyList.isFetching.value || disableAll"
+              :disabled="
+                specialtyList.isFetching.value ||
+                !projectDepartmentComputed ||
+                disableAll
+              "
               @click="() => (showSpecialtyEditModal = true)"
             >
               <template v-if="projectSkills.isFetching.value">
@@ -342,10 +353,22 @@
               <template v-else-if="projectSkills.isError.value">
                 Ошибка загрузки специальностей
               </template>
+              <template v-else-if="!projectDepartmentComputed">
+                Выберите наставника с кафедрой
+              </template>
               <template v-else>Добавить специальности +</template>
             </BaseButton>
           </template>
         </TagList>
+        <p v-else>
+          Кафедра <b>«{{ projectDepartmentComputed?.name }}»</b> не выпускает
+          специальности.
+          <br />
+          <br />
+          Вы можете пригласить любые специальности в пункте
+          <b>6</b>, студенты этих направлений самостоятельно смогут подать
+          заявку на участие в Вашем проекте.
+        </p>
         <!-- </Project specialties> -->
       </FormSection>
 
@@ -546,6 +569,13 @@
   );
   const projectDepartmentComputed = computed(
     () => projectMentorComputed.value?.memberData?.department,
+  );
+  const specialtiesOfMentorDepartmentComputed = computed(
+    () =>
+      specialtyList.data.value?.filter(
+        (specialty) =>
+          specialty.department?.id === projectDepartmentComputed.value?.id,
+      ) || [],
   );
   const prevProjectsMultiselectItems = computed<
     MultiselectObjectItem<number>[]
