@@ -101,7 +101,7 @@
             :disabled="disableAll"
             :class="$style['small-textarea']"
             placeholder="Например, платформа для размещения вузовских олимпиад"
-            maxlength="100"
+            resize="vertical"
           />
         </BaseLabel>
         <!-- </Project name> -->
@@ -113,7 +113,7 @@
             :disabled="disableAll"
             :class="$style['small-textarea']"
             placeholder="Например, создать платформу (страничку) для рекламы олимпиад"
-            maxlength="100"
+            resize="vertical"
           />
         </BaseLabel>
         <!-- </Project goal> -->
@@ -293,7 +293,7 @@
             :disabled="disableAll"
             :class="$style['small-textarea']"
             placeholder="Создать платформу (страничку) для рекламы олимпиад"
-            maxlength="100"
+            resize="vertical"
           />
         </BaseLabel>
         <!-- </Project expected result> -->
@@ -305,7 +305,7 @@
             :disabled="disableAll"
             :class="$style['small-textarea']"
             placeholder="Например, знание основ верстки  и дизайна веб-страниц"
-            maxlength="100"
+            resize="vertical"
           />
         </BaseLabel>
         <!-- </Project requirements for participants> -->
@@ -317,7 +317,7 @@
             :disabled="disableAll"
             :class="$style['large-textarea']"
             placeholder="Опишите идею своего проекта"
-            maxlength="1200"
+            resize="vertical"
           />
         </BaseLabel>
         <!-- </Project description> -->
