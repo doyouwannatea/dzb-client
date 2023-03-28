@@ -356,7 +356,7 @@
               <template v-else-if="!projectDepartmentComputed">
                 Выберите наставника с кафедрой
               </template>
-              <template v-else>Добавить специальности +</template>
+              <template v-else>Редактировать специальности +</template>
             </BaseButton>
           </template>
         </TagList>
@@ -392,7 +392,7 @@
               <template v-else-if="projectSkills.isError.value">
                 Ошибка загрузки специальностей
               </template>
-              <template v-else>Добавить специальности +</template>
+              <template v-else>Редактировать специальности +</template>
             </BaseButton>
           </template>
         </TagList>
@@ -415,7 +415,7 @@
               <template v-else-if="projectSkills.isError.value">
                 Ошибка загрузки навыков
               </template>
-              <template v-else>Добавить навыки +</template>
+              <template v-else>Редактировать навыки +</template>
             </BaseButton>
           </template>
         </TagList>
