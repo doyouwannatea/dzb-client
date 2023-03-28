@@ -1,26 +1,33 @@
 <template>
-  <ul
-    v-for="group in props.groupedList"
-    :key="group.id"
-    :class="$style['group-list']"
+  <div
+    :class="$style.content"
+    :style="{
+      gridTemplateColumns: `repeat(${props.cols}, 1fr)`,
+    }"
   >
-    <ClickableGroupedListLabel is="li" v-if="group.groupLabel">
-      {{ group.groupLabel }}
-    </ClickableGroupedListLabel>
-    <li
-      v-for="item in group.list"
-      :key="item.id || item.label"
-      :class="$style['list-item']"
+    <ul
+      v-for="group in props.groupedList"
+      :key="group.id"
+      :class="$style['group-list']"
     >
-      <component
-        :is="props.clickable ? 'button' : 'span'"
-        :class="[$style['item-label'], { [$style.selected]: item.selected }]"
-        @click="() => onItemClick(item)"
+      <ClickableGroupedListLabel is="li" v-if="group.groupLabel">
+        {{ group.groupLabel }}
+      </ClickableGroupedListLabel>
+      <li
+        v-for="item in group.list"
+        :key="item.id || item.label"
+        :class="$style['list-item']"
       >
-        {{ item.label }}
-      </component>
-    </li>
-  </ul>
+        <component
+          :is="props.clickable ? 'button' : 'span'"
+          :class="[$style['item-label'], { [$style.selected]: item.selected }]"
+          @click="() => onItemClick(item)"
+        >
+          {{ item.label }}
+        </component>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -42,12 +49,16 @@
   type Props = {
     groupedList: GroupedList[];
     clickable?: boolean;
+    cols?: string | number;
   };
   type Emits = {
     (event: 'item-click', payload: unknown): void;
   };
 
-  const props = withDefaults(defineProps<Props>(), { clickable: true });
+  const props = withDefaults(defineProps<Props>(), {
+    clickable: true,
+    cols: 1,
+  });
   const emit = defineEmits<Emits>();
 
   function onItemClick(listItem: ListItem) {
@@ -58,6 +69,10 @@
 </script>
 
 <style module lang="scss">
+  .content {
+    display: grid;
+  }
+
   .group-list {
     list-style: none;
 

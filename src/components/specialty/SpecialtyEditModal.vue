@@ -17,7 +17,7 @@
 
     <!-- MAIN CONTENT -->
     <div :class="$style.content">
-      <div v-if="departmentListComputed.length > 1" :class="$style.col">
+      <div v-if="!hideDepartmentList" :class="$style.col">
         <p :class="$style['col-title']">Добавить группу специальностей</p>
         <ScrollablePanel>
           <template #header>
@@ -48,10 +48,7 @@
       </div>
 
       <div :class="$style.col">
-        <p
-          v-if="departmentListComputed.length > 1"
-          :class="$style['col-title']"
-        >
+        <p v-if="!hideDepartmentList" :class="$style['col-title']">
           Добавить отдельные специальности
         </p>
         <ScrollablePanel>
@@ -64,6 +61,9 @@
           </template>
           <template #default>
             <ClickableGroupedList
+              :cols="
+                hideDepartmentList ? filteredSpecialtyListComputed.length : 1
+              "
               :grouped-list="filteredSpecialtyListComputed"
               @item-click="(payload) => onAddSpecialty(payload as SpecialtyListItem)"
             />
@@ -123,6 +123,7 @@
     isShow: boolean;
     specialtyList: SelectedSpecialty<number | string>[];
     sharedSpecialtyList: Specialty[];
+    requiredСourses?: SpecialtyCourse[];
   };
   type Emits = {
     (event: 'update:isShow', isShow: boolean): void;
@@ -132,7 +133,13 @@
     ): void;
   };
 
-  const props = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), {
+    requiredСourses: () => [
+      SpecialtyCourse.Third,
+      SpecialtyCourse.Fourth,
+      SpecialtyCourse.Fifth,
+    ],
+  });
   const emit = defineEmits<Emits>();
 
   const searchSpecialtiesGroupValueRef = ref<string>('');
@@ -154,25 +161,22 @@
     ),
   );
 
+  const hideDepartmentList = computed(
+    () => departmentListComputed.value.length <= 1,
+  );
+
   const groupedSpecialtyListComputed = computed<
     GroupedList<SpecialtyListItem>[]
   >(() => {
-    const requiredСourses: SpecialtyCourse[] = [
-      SpecialtyCourse.Third,
-      SpecialtyCourse.Fourth,
-      SpecialtyCourse.Fifth,
-    ];
-
-    const groupedList: GroupedList<SpecialtyListItem>[] = requiredСourses.map(
-      (course) => ({
+    const groupedList: GroupedList<SpecialtyListItem>[] =
+      props.requiredСourses.map((course) => ({
         id: course,
         list: [],
         groupLabel: SpecialtyName[course],
-      }),
-    );
+      }));
 
     for (const specialty of props.sharedSpecialtyList) {
-      for (const course of requiredСourses) {
+      for (const course of props.requiredСourses) {
         // специальности включающие в себя «б» не имеют специалитета
         if (specialty.name.includes('б') && course === SpecialtyCourse.Fifth)
           continue;
