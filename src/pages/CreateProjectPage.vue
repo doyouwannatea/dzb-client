@@ -186,7 +186,7 @@
             :disabled="disableAll"
             :value="ProjectDuration.FullYear"
           >
-            2 семестра
+            2 семестра ({{ currentYear }} - {{ currentYear + 1 }} год)
           </BaseRadioButton>
         </BaseLabel>
         <!-- </Project duration> -->
