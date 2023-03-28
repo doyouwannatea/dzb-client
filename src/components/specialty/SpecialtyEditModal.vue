@@ -17,20 +17,20 @@
 
     <!-- MAIN CONTENT -->
     <div :class="$style.content">
-      <div v-if="instituteListComputed.length > 0" :class="$style.col">
+      <div v-if="departmentListComputed.length > 1" :class="$style.col">
         <p :class="$style['col-title']">Добавить группу специальностей</p>
         <ScrollablePanel>
           <template #header>
             <BaseInput
-              v-model="searchInstituteValueRef"
+              v-model="searchSpecialtiesGroupValueRef"
               :icon="searchIconUrl"
-              placeholder="Поиск по кафедрам и институтам"
+              placeholder="Поиск по кафедрам"
             />
             <ClickableGroupedListLabel
               is="div"
               :class="$style['specialty-group-label']"
             >
-              кафедры и институты
+              кафедры
             </ClickableGroupedListLabel>
           </template>
           <template #default>
@@ -38,17 +38,20 @@
               :grouped-list="[
                 {
                   id: 1,
-                  list: filteredInstitutesСomputed,
+                  list: filteredSpecialtiesGroupListComputed,
                 },
               ]"
-              @item-click="(payload) => onAddInstitute(payload as number)"
+              @item-click="(payload) => onAddGroupOfSpecialties(payload as number, 'department')"
             />
           </template>
         </ScrollablePanel>
       </div>
 
       <div :class="$style.col">
-        <p v-if="instituteListComputed.length > 0" :class="$style['col-title']">
+        <p
+          v-if="departmentListComputed.length > 1"
+          :class="$style['col-title']"
+        >
           Добавить отдельные специальности
         </p>
         <ScrollablePanel>
@@ -111,6 +114,11 @@
     course: SpecialtyCourse;
   } & Pick<Specialty, 'department' | 'institute' | 'id'>;
 
+  type SpecialtyGroupName = keyof Pick<
+    SpecialtyListItem,
+    'department' | 'institute'
+  >;
+
   type Props = {
     isShow: boolean;
     specialtyList: SelectedSpecialty<number | string>[];
@@ -127,22 +135,22 @@
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
 
-  const searchInstituteValueRef = ref<string>('');
+  const searchSpecialtiesGroupValueRef = ref<string>('');
   const searchSpecialtyValueRef = ref<string>('');
 
   const specialtyListRef = ref<SelectedSpecialty<number | string>[]>([]);
 
-  const instituteListComputed = computed<ListItem<number | string>[]>(() =>
+  const departmentListComputed = computed<ListItem<number | string>[]>(() =>
     uniqBy(
       props.sharedSpecialtyList
-        .filter((specialty) => specialty.institute)
+        .filter((specialty) => specialty.department)
         .map((specialty) => ({
-          id: specialty.institute!.id,
-          label: specialty.institute!.name,
+          id: specialty.department!.id,
+          label: specialty.department!.name,
           selected: false,
-          value: specialty.institute!.id,
+          value: specialty.department!.id,
         })),
-      (institute) => institute.id,
+      (department) => department.id,
     ),
   );
 
@@ -195,9 +203,11 @@
     return groupedList;
   });
 
-  const filteredInstitutesСomputed = computed<ListItem<number | string>[]>(() =>
-    instituteListComputed.value.filter((institute) =>
-      stringIncludes(institute.label, searchInstituteValueRef.value),
+  const filteredSpecialtiesGroupListComputed = computed<
+    ListItem<number | string>[]
+  >(() =>
+    departmentListComputed.value.filter((department) =>
+      stringIncludes(department.label, searchSpecialtiesGroupValueRef.value),
     ),
   );
 
@@ -216,7 +226,7 @@
   watch(
     () => props.isShow,
     () => {
-      searchInstituteValueRef.value = '';
+      searchSpecialtiesGroupValueRef.value = '';
       searchSpecialtyValueRef.value = '';
       specialtyListRef.value = props.specialtyList;
     },
@@ -276,11 +286,11 @@
     specialtyListRef.value = list;
   }
 
-  function onAddInstitute(instituteId: number) {
+  function onAddGroupOfSpecialties(groupId: number, idOf: SpecialtyGroupName) {
     let specialtyList = specialtyListRef.value;
     for (const group of groupedSpecialtyListComputed.value) {
       for (const specialty of group.list) {
-        if (specialty.value?.institute?.id === instituteId) {
+        if (specialty.value?.[idOf]?.id === groupId) {
           specialtyList = addSpecialty(specialtyList, specialty.value);
         }
       }
