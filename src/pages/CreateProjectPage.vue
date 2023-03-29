@@ -604,6 +604,14 @@
   const currentYear = new Date(Date.now()).getFullYear();
 
   watch(
+    () => projectDepartmentComputed.value,
+    () => {
+      specialtyListRef.value = [];
+    },
+    { deep: true },
+  );
+
+  watch(
     () => isNewProjectRef.value,
     (isNewProject) => {
       if (isNewProject) prevProjectIdRef.value = null;
@@ -666,8 +674,18 @@
       toast('Введите описание проекта');
       return;
     }
-    if (specialtyListRef.value.length === 0) {
+    if (
+      specialtiesOfMentorDepartmentComputed.value.length > 0 &&
+      specialtyListRef.value.length === 0
+    ) {
       toast('Выберите основные специальности участников проекта');
+      return;
+    }
+    if (
+      specialtiesOfMentorDepartmentComputed.value.length === 0 &&
+      additionalSpecialtyListRef.value.length === 0
+    ) {
+      toast('Выберите приглашённые специальности участников проекта');
       return;
     }
 
