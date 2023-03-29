@@ -162,7 +162,7 @@
   );
 
   const hideDepartmentList = computed(
-    () => departmentListComputed.value.length <= 1,
+    () => departmentListComputed.value.length === 0,
   );
 
   const groupedSpecialtyListComputed = computed<
