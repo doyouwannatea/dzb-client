@@ -604,11 +604,11 @@
   const currentYear = new Date(Date.now()).getFullYear();
 
   watch(
-    () => projectDepartmentComputed.value,
-    () => {
+    () => projectDepartmentComputed.value?.id,
+    (departmentId, prevDepartmentId) => {
+      if (departmentId === prevDepartmentId) return;
       specialtyListRef.value = [];
     },
-    { deep: true },
   );
 
   watch(
