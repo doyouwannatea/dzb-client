@@ -85,7 +85,7 @@ export const routes: RouteRecordRaw[] = [
     name: RouteNames.USER_PROJECT_CREATE,
     component: CreateProjectPage,
     meta: {
-      title: 'Создать проект',
+      title: 'Создать проектную заявку',
       requiresAuth: true,
       role: ['teacher'],
     },

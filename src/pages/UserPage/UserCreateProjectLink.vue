@@ -4,7 +4,7 @@
     v-if="authStore.profileData && isSupervisor(authStore.profileData)"
     :to="toProjectCreateRoute(props.projectId)"
   >
-    Cоздать проект
+    создать проектную заявку
   </BaseButton>
 </template>
 

@@ -23,7 +23,7 @@
   </SpecialtyEditModal>
   <PageLayout>
     <header class="header">
-      <h1 :class="[$style.title, 'page-title']">Создать проект</h1>
+      <h1 :class="[$style.title, 'page-title']">Создание проектной заявки</h1>
     </header>
     <BasePanel>
       <FormSection
