@@ -3,16 +3,31 @@ import { themeSources } from '@/models/mock/project-proposal';
 import { specialties } from '@/models/mock/specialties';
 import {
   CreatedProjectProposal,
-  ProjectProposal,
+  NewProjectProposal,
 } from '@/models/ProjectProposal';
 import { Specialty } from '@/models/Specialty';
 import { Tag } from '@/models/Tag';
-import IProjectCreationApi from './IProjectCreationApi';
+import IProjectCreationApi, {
+  UpdateProjectProposalData,
+} from './IProjectCreationApi';
 
 export default class ProjectCreationApiMock extends IProjectCreationApi {
-  async createProjectProposal(projectProposal: ProjectProposal): Promise<void> {
+  async createProjectProposal(
+    projectProposal: NewProjectProposal,
+  ): Promise<CreatedProjectProposal> {
     await sleep(500);
     console.log(projectProposal);
+    return {} as CreatedProjectProposal;
+  }
+
+  async updateProjectProposal({
+    projectProposal,
+    id,
+  }: UpdateProjectProposalData): Promise<CreatedProjectProposal> {
+    await sleep(500);
+    console.log(projectProposal);
+    console.log(id);
+    return {} as CreatedProjectProposal;
   }
 
   async getThemeSources(): Promise<Tag[]> {

@@ -9,6 +9,11 @@ export const enum SpecialtyCourse {
   Fifth = 5,
 }
 
+export const enum SpecialtyPriority {
+  High = 1,
+  Low = 2,
+}
+
 export const SpecialtyName: Record<SpecialtyCourse, string> = {
   [SpecialtyCourse.First]: '1 курс',
   [SpecialtyCourse.Second]: '2 курс',
@@ -26,4 +31,11 @@ export interface SelectedSpecialty<T = number> extends Tag<T> {
   specialty_id: number;
   course: SpecialtyCourse;
   priority?: number;
+}
+
+export interface SpecialtyGroup {
+  id: number;
+  course: SpecialtyCourse;
+  priority: SpecialtyPriority;
+  speciality: Specialty;
 }

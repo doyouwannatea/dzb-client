@@ -328,8 +328,13 @@
         title="Направления (специальности), участников проекта"
       >
         <!-- <Project specialties> -->
+        <p
+          v-if="isNotEditableProposalComputed && specialtyListRef.length === 0"
+        >
+          <b>Список пуст</b>
+        </p>
         <TagList
-          v-if="
+          v-else-if="
             specialtyList.isFetching.value ||
             specialtiesOfMentorDepartmentComputed.length > 0
           "
@@ -338,6 +343,7 @@
         >
           <template #after-list>
             <BaseButton
+              v-if="isEditableProposalComputed"
               case="none"
               variant="tag"
               :disabled="
@@ -378,9 +384,18 @@
         divider
       >
         <!-- <Project specialties> -->
-        <TagList show-all :tag-list="additionalSpecialtyListRef">
+        <p
+          v-if="
+            isNotEditableProposalComputed &&
+            additionalSpecialtyListRef.length === 0
+          "
+        >
+          <b>Список пуст</b>
+        </p>
+        <TagList v-else show-all :tag-list="additionalSpecialtyListRef">
           <template #after-list>
             <BaseButton
+              v-if="isEditableProposalComputed"
               case="none"
               variant="tag"
               :disabled="specialtyList.isFetching.value || disableAll"
@@ -401,9 +416,13 @@
 
       <FormSection tag="7" title="Навыки, которые необходимы на проекте">
         <!-- <Project skills> -->
-        <TagList show-all :tag-list="skillListRef">
+        <p v-if="isNotEditableProposalComputed && skillListRef.length === 0">
+          <b>Список пуст</b>
+        </p>
+        <TagList v-else show-all :tag-list="skillListRef">
           <template #after-list>
             <BaseButton
+              v-if="isEditableProposalComputed"
               case="none"
               variant="tag"
               :disabled="projectSkills.isFetching.value || disableAll"
@@ -425,23 +444,64 @@
 
     <div :class="$style.actions">
       <BaseButton
-        :disabled="disableAll"
+        v-if="isEditableProposalComputed"
+        :disabled="createProjectProposalMutation.isLoading.value"
         color="red"
         variant="outlined"
         @click="onCancel"
       >
         Сбросить и выйти
       </BaseButton>
-      <!-- TODO: добавить функцию изменения черновика -->
-      <!-- <BaseButton
-        :disabled="disableAll"
+
+      <BaseButton
+        is="router-link"
+        v-if="isNotEditableProposalComputed"
+        :to="{ name: RouteNames.PROJECT_PROPOSALS }"
         variant="outlined"
+      >
+        Вернуться к заявкам
+      </BaseButton>
+
+      <BaseButton
+        v-if="
+          isEditableProposalComputed ||
+          currentProjectProposalState === ProjectProposalStateId.Rejected
+        "
+        :disabled="
+          createProjectProposalMutation.isLoading.value ||
+          userProjectProposalList.isFetching.value
+        "
+        :variant="
+          currentProjectProposalState === ProjectProposalStateId.Rejected
+            ? 'primary'
+            : 'outlined'
+        "
         @click="onCreateDraft"
       >
-        Сохранить черновик
-      </BaseButton> -->
-      <BaseButton :disabled="disableAll" @click="onCreateUnderReview">
-        Подать заявку
+        <template v-if="createProjectProposalMutation.isLoading.value">
+          Черновик сохраняется...
+        </template>
+        <template
+          v-else-if="
+            currentProjectProposalState === ProjectProposalStateId.Rejected
+          "
+          >Сохранить как черновик</template
+        >
+        <template v-else>Сохранить черновик</template>
+      </BaseButton>
+
+      <BaseButton
+        v-if="isEditableProposalComputed"
+        :disabled="
+          createProjectProposalMutation.isLoading.value ||
+          userProjectProposalList.isFetching.value
+        "
+        @click="onCreateUnderReview"
+      >
+        <template v-if="createProjectProposalMutation.isLoading.value">
+          Заявка отправляется...
+        </template>
+        <template v-else>Подать заявку</template>
       </BaseButton>
     </div>
   </PageLayout>
@@ -464,9 +524,10 @@
     NewProjectProposal,
     CreatedProjectProposal,
     ProjectProposalStateId,
-    SpecialtyPriority,
+    ProjectProposalTeamMember,
+    ProjectProposalSpecialty,
   } from '@/models/ProjectProposal';
-  import { ProjectTypeName } from '@/models/Project';
+  import { ProjectSupervisor, ProjectTypeName } from '@/models/Project';
 
   import PageLayout from '@/components/layout/PageLayout.vue';
   import BasePanel from '@/components/ui/BasePanel.vue';
@@ -487,7 +548,11 @@
   import BaseTooltip from '@/components/ui/BaseTooltip.vue';
   import { useSmallDevice } from '@/helpers/breakpoints';
   import SpecialtyEditModal from '@/components/specialty/SpecialtyEditModal.vue';
-  import { SelectedSpecialty } from '@/models/Specialty';
+  import {
+    SelectedSpecialty,
+    SpecialtyGroup,
+    SpecialtyPriority,
+  } from '@/models/Specialty';
   import { MultiselectObjectItem } from '@/models/VMultiselect';
 
   import { useAllSupervisors } from '@/queries/useAllSupervisors';
@@ -501,6 +566,8 @@
   import { specialtyFullName } from '@/helpers/specialty';
   import { TYPE, useToast } from 'vue-toastification';
   import { ProjectStateID } from '@/models/ProjectState';
+  import { toProjectCreateRoute } from '@/router/utils/routes';
+  import { useUpdateProjectProposal } from '@/queries/useUpdateProjectProposal';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -520,24 +587,12 @@
   const projectId = computed(() => route.params.id);
 
   const userProjectProposalList = useProjectProposalList();
-  const currentProjectProposalComputed = computed(() =>
-    userProjectProposalList.data.value?.find(
-      (proposal) => Number(proposal.id) === Number(projectId.value),
-    ),
-  );
-
   const supervisorList = useAllSupervisors();
   const projectSkills = useProjectSkills();
   const specialtyList = useSpecialties();
   const themeSources = useThemeSources();
-
   const createProjectProposalMutation = useCreateProjectProposal();
-
-  const disableAll = computed(
-    () =>
-      createProjectProposalMutation.isLoading.value ||
-      userProjectProposalList.isFetching.value,
-  );
+  const updateProjectProposalMutation = useUpdateProjectProposal();
 
   const showSkillsEditModal = ref<boolean>(false);
   const showSpecialtyEditModal = ref<boolean>(false);
@@ -562,7 +617,40 @@
   const teamRef = ref<TeamMember[]>([]);
   const sharedRoleList: MemberRole[] = [MemberRole.CoMentor];
   const currentUserRoleList: MemberRole[] = [MemberRole.Mentor];
-  const projectProposalType = ref<ProjectProposalStateId | null>();
+
+  const currentProjectProposalComputed = computed(() =>
+    userProjectProposalList.data.value?.find(
+      (proposal) => Number(proposal.id) === Number(projectId.value),
+    ),
+  );
+  const currentProjectProposalState = computed<
+    ProjectProposalStateId | undefined
+  >(() => currentProjectProposalComputed.value?.state.id);
+
+  const isNotEditableProposalComputed = computed(
+    () =>
+      currentProjectProposalState.value &&
+      [
+        ProjectProposalStateId.Approved,
+        ProjectProposalStateId.UnderReview,
+        ProjectProposalStateId.Rejected,
+      ].includes(currentProjectProposalState.value),
+  );
+
+  const isEditableProposalComputed = computed(
+    () =>
+      !currentProjectProposalState.value ||
+      [ProjectProposalStateId.Draft].includes(
+        currentProjectProposalState.value,
+      ),
+  );
+
+  const disableAll = computed(
+    () =>
+      createProjectProposalMutation.isLoading.value ||
+      userProjectProposalList.isFetching.value ||
+      isNotEditableProposalComputed.value,
+  );
 
   const projectMentorComputed = computed<TeamMember | undefined>(
     () => teamRef.value[0],
@@ -645,193 +733,139 @@
     ];
   }
 
-  function prepareProjectProposal(
-    projectProposalState: ProjectProposalStateId,
-  ): NewProjectProposal | undefined {
+  function validateDraft(): string | undefined {
     if (!projectNameRef.value) {
-      toast('Введите название проекта');
-      return;
+      return 'Введите название проекта';
+    }
+
+    return undefined;
+  }
+
+  function validateProjectProposal(): string | undefined {
+    if (!projectNameRef.value) {
+      return 'Введите название проекта';
     }
     if (!projectGoalRef.value) {
-      toast('Введите цель проекта');
-      return;
+      return 'Введите цель проекта';
     }
     if (!projectDepartmentComputed.value) {
-      toast(
-        'Подразделение наставника проекта не найдено, выберите другого наставника, или обратитесь в службу поддержки',
-      );
-      return;
+      return 'Подразделение наставника проекта не найдено, выберите другого наставника, или обратитесь в службу поддержки';
     }
     if (!projectExpectedResultRef.value) {
-      toast('Введите ожидаемый результат проекта');
-      return;
+      return 'Введите ожидаемый результат проекта';
     }
     if (!skillsToBeFormed.value) {
-      toast('Введите формируемые в результате проекта навыки студентов');
-      return;
+      return 'Введите формируемые в результате проекта навыки студентов';
     }
     if (!projectDescriptionRef.value) {
-      toast('Введите описание проекта');
-      return;
+      return 'Введите описание проекта';
     }
     if (
       specialtiesOfMentorDepartmentComputed.value.length > 0 &&
       specialtyListRef.value.length === 0
     ) {
-      toast('Выберите основные специальности участников проекта');
-      return;
+      return 'Выберите основные специальности участников проекта';
     }
     if (
       specialtiesOfMentorDepartmentComputed.value.length === 0 &&
       additionalSpecialtyListRef.value.length === 0
     ) {
-      toast('Выберите приглашённые специальности участников проекта');
-      return;
+      return 'Выберите приглашённые специальности участников проекта';
     }
 
-    const date = calcProjectDate(projectDurationRef.value);
+    return undefined;
+  }
+
+  function collectProjectProposal(
+    projectProposalState: ProjectProposalStateId,
+  ): NewProjectProposal {
+    const projectDate = calcProjectDate(projectDurationRef.value);
+
+    const supervisors: ProjectProposalTeamMember[] = teamRef.value
+      .filter((member) => member.memberData && member.role)
+      .map((member) => ({
+        supervisor_id: member.memberData!.id,
+        role_ids: [member.role!],
+      }));
+
+    const specialities: ProjectProposalSpecialty[] = [
+      ...additionalSpecialtyListRef.value.map((specialty) => ({
+        course: specialty.course,
+        specialitiy_id: specialty.specialty_id,
+        priority: SpecialtyPriority.Low,
+      })),
+      ...specialtyListRef.value.map((specialty) => ({
+        course: specialty.course,
+        specialitiy_id: specialty.specialty_id,
+        priority: SpecialtyPriority.High,
+      })),
+    ];
+
+    const skillIds: number[] = skillListRef.value
+      .filter((skill) => !skill.isNew)
+      .map((skill) => skill.id);
+
+    const newSkills: string[] = skillListRef.value
+      .filter((skill) => skill.isNew)
+      .map((skill) => skill.name);
 
     return {
       title: projectNameRef.value,
       goal: projectGoalRef.value,
       customer: projectCustomerRef.value,
-      theme_source_id: projectThemeSourceIdRef.value,
+      theme_source_id: projectThemeSourceIdRef.value ?? null,
       prev_project_id: prevProjectIdRef.value,
       difficulty: projectDifficultyRef.value,
-      department_id: projectDepartmentComputed.value.id,
-      supervisors: teamRef.value
-        .filter((member) => member.memberData && member.role)
-        .map((member) => ({
-          supervisor_id: member.memberData!.id,
-          role_ids: [member.role!],
-        })),
+      department_id: projectDepartmentComputed.value!.id,
+      supervisors,
       product_result: projectExpectedResultRef.value,
-      specialities: [
-        ...additionalSpecialtyListRef.value.map((specialty) => ({
-          course: specialty.course,
-          specialitiy_id: specialty.specialty_id,
-          priority: SpecialtyPriority.Low,
-        })),
-        ...specialtyListRef.value.map((specialty) => ({
-          course: specialty.course,
-          specialitiy_id: specialty.specialty_id,
-          priority: SpecialtyPriority.High,
-        })),
-      ],
-      skill_ids: skillListRef.value
-        .filter((skill) => !skill.isNew)
-        .map((skill) => skill.id),
-      new_skills: skillListRef.value
-        .filter((skill) => skill.isNew)
-        .map((skill) => skill.name),
-      date_start: date.start,
-      date_end: date.end,
+      specialities,
+      skill_ids: skillIds,
+      new_skills: newSkills,
+      date_start: projectDate.start,
+      date_end: projectDate.end,
       description: projectDescriptionRef.value,
       state_id: projectProposalState,
       places: 0,
       type_id: ProjectTypeName.Applied,
       study_result: skillsToBeFormed.value,
-      additional_inf: '',
+      additional_inf: 'additional_inf',
       requirements: 'requirements',
     };
   }
 
-  function createProjectProposal(projectProposalState: ProjectProposalStateId) {
-    const projectProposal = prepareProjectProposal(projectProposalState);
-    if (!projectProposal) return;
-    createProjectProposalMutation.mutate(projectProposal, {
-      onSuccess: onSuccessfulEstablishment,
-      onError: onErrorfulEstablishment,
-    });
-  }
-
-  function onSuccessfulEstablishment() {
-    clearAllFields();
-
-    function agree() {
-      modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+  function sendProjectProposal(projectProposalState: ProjectProposalStateId) {
+    const isDraft = projectProposalState === ProjectProposalStateId.Draft;
+    const isRejectedToDraft =
+      isDraft &&
+      currentProjectProposalState.value === ProjectProposalStateId.Rejected;
+    const errorMessage = isDraft ? validateDraft() : validateProjectProposal();
+    if (errorMessage) {
+      toast(errorMessage);
+      return;
     }
 
-    function disagree() {
-      modalsStore.openConfirmModal();
+    const projectProposal = collectProjectProposal(projectProposalState);
+    const id = currentProjectProposalComputed.value?.id;
+
+    if (id) {
+      updateProjectProposalMutation.mutate(
+        { projectProposal, id },
+        {
+          onSuccess: isRejectedToDraft
+            ? onSuccessUpdateRejectedToDraft
+            : isDraft
+            ? onSuccessUpdateDraft
+            : onSuccessUpdateForReview,
+          onError: onErrorSendProposal,
+        },
+      );
+    } else {
+      createProjectProposalMutation.mutate(projectProposal, {
+        onSuccess: isDraft ? onSuccessCreateDraft : onSuccessCreateForReview,
+        onError: onErrorSendProposal,
+      });
     }
-
-    const startMessage =
-      projectProposalType.value === ProjectProposalStateId.Draft
-        ? 'Черновик успешно сохранён'
-        : 'Заявка успешно отправлена';
-
-    modalsStore.openConfirmModal(
-      `${startMessage}, вернуться в личный кабинет?`,
-      'вернуться в личный кабинет',
-      'создать новую заявку',
-      agree,
-      disagree,
-    );
-  }
-
-  function onErrorfulEstablishment(error: unknown) {
-    toast('Ошибка отправки: ' + String(error), { type: TYPE.ERROR });
-  }
-
-  function onCreateDraft() {
-    function agree() {
-      modalsStore.openConfirmModal();
-      projectProposalType.value = ProjectProposalStateId.Draft;
-      createProjectProposal(ProjectProposalStateId.Draft);
-    }
-
-    function disagree() {
-      modalsStore.openConfirmModal();
-    }
-
-    modalsStore.openConfirmModal(
-      'Сохранить черновик заявки?',
-      'сохранить черновик',
-      'отмена',
-      agree,
-      disagree,
-    );
-  }
-
-  function onCreateUnderReview() {
-    function agree() {
-      modalsStore.openConfirmModal();
-      projectProposalType.value = ProjectProposalStateId.UnderReview;
-      createProjectProposal(ProjectProposalStateId.UnderReview);
-    }
-
-    function disagree() {
-      modalsStore.openConfirmModal();
-    }
-
-    modalsStore.openConfirmModal(
-      'Подать заявку на проект?',
-      'подать заявку',
-      'отмена',
-      agree,
-      disagree,
-    );
-  }
-
-  function onCancel() {
-    function agree() {
-      modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.PROJECT_PROPOSALS });
-    }
-
-    function disagree() {
-      modalsStore.openConfirmModal();
-    }
-
-    modalsStore.openConfirmModal(
-      'Сбросить все данные и вернуться в личный кабинет?',
-      'сбросить и выйти',
-      'остаться',
-      agree,
-      disagree,
-    );
   }
 
   function projectDurationFromDate(isoDate: {
@@ -913,51 +947,64 @@
     projectExpectedResultRef.value = projectProposal.product_result;
     skillsToBeFormed.value = projectProposal.study_result;
     projectDescriptionRef.value = projectProposal.description;
-    specialtyListRef.value = projectProposal.project_specialities
-      .filter((specialty) => specialty.priority === SpecialtyPriority.High)
-      .map((specialty) => ({
-        course: specialty.course,
-        id: specialty.id,
-        name: specialtyFullName(specialty.speciality.name, specialty.course),
-        specialty_id: specialty.speciality.id,
-      }));
-    additionalSpecialtyListRef.value = projectProposal.project_specialities
-      .filter((specialty) => specialty.priority === SpecialtyPriority.Low)
-      .map((specialty) => ({
-        course: specialty.course,
-        id: specialty.id,
-        name: specialtyFullName(specialty.speciality.name, specialty.course),
-        specialty_id: specialty.speciality.id,
-      }));
     skillListRef.value = projectProposal.skills;
     projectDurationRef.value = projectDurationFromDate({
       start: projectProposal.date_start,
       end: projectProposal.date_end,
     });
-    const projectProposalTeam: TeamMember[] = projectProposal.supervisors
-      .filter(
-        ({ roles }) =>
-          roles.filter((role) =>
-            [...sharedRoleList, ...currentUserRoleList].includes(role.id),
-          ).length > 0,
-      )
-      .map<TeamMember>(({ roles, supervisor }) => {
-        const acceptedRoles = roles.filter((role) =>
-          [...sharedRoleList, ...currentUserRoleList].includes(role.id),
-        );
-        return {
-          role: acceptedRoles[0].id,
-          isCurrentUser: acceptedRoles[0].id === MemberRole.Mentor,
-          memberData: supervisor,
-        };
-      });
 
-    const mentor = projectProposalTeam.find((member) => member.isCurrentUser);
-    if (mentor) {
-      teamRef.value = [
-        mentor,
-        ...projectProposalTeam.filter((member) => !member.isCurrentUser),
-      ];
+    specialtyListRef.value = mapSpecialtyList(
+      projectProposal.project_specialities,
+      SpecialtyPriority.High,
+    );
+
+    additionalSpecialtyListRef.value = mapSpecialtyList(
+      projectProposal.project_specialities,
+      SpecialtyPriority.Low,
+    );
+
+    teamRef.value = mapProjectProposalTeam(
+      projectProposal.supervisors,
+      sharedRoleList,
+      currentUserRoleList,
+    );
+
+    function mapSpecialtyList(
+      projectSpecialities: SpecialtyGroup[],
+      priority: SpecialtyPriority,
+    ): SelectedSpecialty<number | string>[] {
+      return projectSpecialities
+        .filter((specialty) => specialty.priority === priority)
+        .map((specialty) => ({
+          course: specialty.course,
+          id: specialty.id,
+          name: specialtyFullName(specialty.speciality.name, specialty.course),
+          specialty_id: specialty.speciality.id,
+        }));
+    }
+
+    function mapProjectProposalTeam(
+      supervisors: ProjectSupervisor[],
+      sharedRoleList: MemberRole[],
+      currentUserRoleList: MemberRole[],
+    ): TeamMember[] {
+      return supervisors
+        .filter(
+          ({ roles }) =>
+            roles.filter((role) =>
+              [...sharedRoleList, ...currentUserRoleList].includes(role.id),
+            ).length > 0,
+        )
+        .map<TeamMember>(({ roles, supervisor }) => {
+          const acceptedRoles = roles.filter((role) =>
+            [...sharedRoleList, ...currentUserRoleList].includes(role.id),
+          );
+          return {
+            role: acceptedRoles[0].id,
+            isCurrentUser: acceptedRoles[0].id === MemberRole.Mentor,
+            memberData: supervisor,
+          };
+        });
     }
   }
 
@@ -976,6 +1023,176 @@
     skillListRef.value = [];
     projectDurationRef.value = ProjectDuration.FallSemester;
     teamRef.value = initTeam();
+  }
+
+  function onCreateDraft() {
+    function agree() {
+      modalsStore.openConfirmModal();
+      sendProjectProposal(ProjectProposalStateId.Draft);
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+    }
+
+    modalsStore.openConfirmModal(
+      'Сохранить черновик заявки?',
+      'сохранить черновик',
+      'отмена',
+      agree,
+      disagree,
+    );
+  }
+
+  function onCreateUnderReview() {
+    function agree() {
+      modalsStore.openConfirmModal();
+      sendProjectProposal(ProjectProposalStateId.UnderReview);
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+    }
+
+    modalsStore.openConfirmModal(
+      'Подать заявку на проект?',
+      'подать заявку',
+      'отмена',
+      agree,
+      disagree,
+    );
+  }
+
+  function onCancel() {
+    function agree() {
+      modalsStore.openConfirmModal();
+      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+    }
+
+    modalsStore.openConfirmModal(
+      'Последние введенные данные не сохранятся, перейти в личный кабинет?',
+      'сбросить и выйти',
+      'остаться',
+      agree,
+      disagree,
+    );
+  }
+
+  function onSuccessCreateDraft(
+    createdProjectProposal: CreatedProjectProposal,
+  ) {
+    router.push(toProjectCreateRoute(createdProjectProposal.id));
+
+    const title = 'Черновик успешно сохранён, вернуться в личный кабинет?';
+    const agreeButtonTitle = 'вернуться в личный кабинет';
+    const disagreeButtonTitle = 'продолжить редактирование';
+
+    function agree() {
+      modalsStore.openConfirmModal();
+      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+    }
+
+    modalsStore.openConfirmModal(
+      title,
+      agreeButtonTitle,
+      disagreeButtonTitle,
+      agree,
+      disagree,
+    );
+  }
+
+  function onSuccessCreateForReview() {
+    clearAllFields();
+
+    const title = 'Заявка успешно отправлена, вернуться в личный кабинет?';
+    const agreeButtonTitle = 'вернуться в личный кабинет';
+    const disagreeButtonTitle = 'создать новую заявку';
+
+    function agree() {
+      modalsStore.openConfirmModal();
+      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+    }
+
+    modalsStore.openConfirmModal(
+      title,
+      agreeButtonTitle,
+      disagreeButtonTitle,
+      agree,
+      disagree,
+    );
+  }
+
+  function onSuccessUpdateDraft() {
+    const title = 'Черновик успешно сохранён, вернуться в личный кабинет?';
+    const agreeButtonTitle = 'вернуться в личный кабинет';
+    const disagreeButtonTitle = 'продолжить редактирование';
+
+    function agree() {
+      modalsStore.openConfirmModal();
+      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+    }
+
+    modalsStore.openConfirmModal(
+      title,
+      agreeButtonTitle,
+      disagreeButtonTitle,
+      agree,
+      disagree,
+    );
+  }
+
+  function onSuccessUpdateForReview() {
+    const title = 'Заявка успешно отправлена, вернуться в личный кабинет?';
+    const agreeButtonTitle = 'вернуться в личный кабинет';
+    const disagreeButtonTitle = 'создать новую заявку';
+
+    function agree() {
+      modalsStore.openConfirmModal();
+      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+      router.push(toProjectCreateRoute());
+    }
+
+    modalsStore.openConfirmModal(
+      title,
+      agreeButtonTitle,
+      disagreeButtonTitle,
+      agree,
+      disagree,
+    );
+  }
+
+  function onSuccessUpdateRejectedToDraft(
+    createdProjectProposal: CreatedProjectProposal,
+  ) {
+    router.push(toProjectCreateRoute(createdProjectProposal.id));
+    modalsStore.openAlertModal(
+      'Черновик создан',
+      'Заявка сохранена как черновик, вы можете отредактировать заявку и отправить её ещё раз',
+    );
+  }
+
+  function onErrorSendProposal(error: unknown) {
+    toast('Ошибка отправки: ' + String(error), { type: TYPE.ERROR });
   }
 </script>
 

@@ -7,7 +7,12 @@ import {
 } from './Project';
 import { ProjectDifficulty } from './ProjectDifficulty';
 import { ProjectStateID } from './ProjectState';
-import { Specialty, SpecialtyCourse } from './Specialty';
+import {
+  Specialty,
+  SpecialtyCourse,
+  SpecialtyGroup,
+  SpecialtyPriority,
+} from './Specialty';
 import { State } from './State';
 import { Tag } from './Tag';
 
@@ -28,11 +33,6 @@ export const MemberRoleText: Record<MemberRole, string> = {
 export interface ProjectProposalTeamMember {
   supervisor_id: number;
   role_ids: MemberRole[];
-}
-
-export const enum SpecialtyPriority {
-  High = 1,
-  Low = 2,
 }
 
 export const enum ProjectProposalStateId {
@@ -102,10 +102,5 @@ export interface CreatedProjectProposal extends ProjectProposal {
   supervisors: ProjectSupervisor[];
   skills: Skill[];
   specialities: Specialty[];
-  project_specialities: {
-    id: number;
-    course: SpecialtyCourse;
-    priority: SpecialtyPriority;
-    speciality: Specialty;
-  }[];
+  project_specialities: SpecialtyGroup[];
 }

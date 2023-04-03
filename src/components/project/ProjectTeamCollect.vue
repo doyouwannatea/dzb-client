@@ -28,6 +28,7 @@
         <DeleteButton
           v-if="!member.isCurrentUser"
           :class="$style['member-delete-button']"
+          :disabled="props.disableAll"
           @click="() => onDeleteMember(member)"
         />
       </li>

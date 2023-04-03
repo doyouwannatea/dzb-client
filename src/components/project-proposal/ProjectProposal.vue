@@ -1,7 +1,10 @@
 <template>
   <BasePanel class="card">
     <header class="header">
-      <RouterLink class="title" :to="toProjectRoute(props.projectProposal.id)">
+      <RouterLink
+        class="title"
+        :to="toProjectCreateRoute(props.projectProposal.id)"
+      >
         {{ props.projectProposal.title }}
       </RouterLink>
       <ProjectProposalStatus
@@ -30,7 +33,7 @@
         </BaseButton> -->
         <BaseButton
           is="router-link"
-          :to="toProjectRoute(props.projectProposal.id)"
+          :to="toProjectCreateRoute(props.projectProposal.id)"
           variant="inline-link"
         >
           <span class="icon">
@@ -75,7 +78,7 @@
   import { computed } from 'vue';
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
-  import { toProjectRoute } from '@/router/utils/routes';
+  import { toProjectCreateRoute, toProjectRoute } from '@/router/utils/routes';
   import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
   import {
     CreatedProjectProposal,

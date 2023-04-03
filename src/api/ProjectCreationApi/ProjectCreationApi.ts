@@ -1,16 +1,29 @@
-import IProjectCreationApi from './IProjectCreationApi';
+import IProjectCreationApi, {
+  UpdateProjectProposalData,
+} from './IProjectCreationApi';
 import { baseKyInstance } from '../baseKy';
 import {
   CreatedProjectProposal,
-  ProjectProposal,
+  NewProjectProposal,
 } from '@/models/ProjectProposal';
 import { Tag } from '@/models/Tag';
 import { Specialty } from '@/models/Specialty';
 
 export default class ProjectCreationApi extends IProjectCreationApi {
-  async createProjectProposal(projectProposal: ProjectProposal): Promise<void> {
+  async createProjectProposal(
+    projectProposal: NewProjectProposal,
+  ): Promise<CreatedProjectProposal> {
     return baseKyInstance
       .post('api/supervisor/projects', { json: projectProposal })
+      .json();
+  }
+
+  async updateProjectProposal({
+    projectProposal,
+    id,
+  }: UpdateProjectProposalData): Promise<CreatedProjectProposal> {
+    return baseKyInstance
+      .patch(`api/supervisor/projects/${id}`, { json: projectProposal })
       .json();
   }
 
