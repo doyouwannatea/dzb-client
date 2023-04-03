@@ -733,14 +733,6 @@
     ];
   }
 
-  function validateDraft(): string | undefined {
-    if (!projectNameRef.value) {
-      return 'Введите название проекта';
-    }
-
-    return undefined;
-  }
-
   function validateProjectProposal(): string | undefined {
     if (!projectNameRef.value) {
       return 'Введите название проекта';
@@ -839,7 +831,7 @@
     const isRejectedToDraft =
       isDraft &&
       currentProjectProposalState.value === ProjectProposalStateId.Rejected;
-    const errorMessage = isDraft ? validateDraft() : validateProjectProposal();
+    const errorMessage = validateProjectProposal();
     if (errorMessage) {
       toast(errorMessage);
       return;
