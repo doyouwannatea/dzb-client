@@ -1,36 +1,34 @@
 import { RouteRecordRaw } from 'vue-router';
 import { RouteNames } from './types/route-names';
 
+// P.S. тут раньше были динамические импорты, т.е. "() => import('@/pages/ProjectPage/index.vue')", но они плохо работали на продакшене "projfair.istu.edu", так что было решено оставить обычные импорты для всего приложения
 // Project page
-const ProjectPage = () => import('@/pages/ProjectPage/index.vue');
-const ProjectParticipationList = () =>
-  import('@/pages/ProjectPage/ProjectParticipationList.vue');
-const ProjectParticipantsList = () =>
-  import('@/pages/ProjectPage/ProjectParticipantsList.vue');
-const ProjectDetails = () => import('@/pages/ProjectPage/ProjectDetails.vue');
+import ProjectPage from '@/pages/ProjectPage/index.vue';
+import ProjectParticipationList from '@/pages/ProjectPage/ProjectParticipationList.vue';
+import ProjectParticipantsList from '@/pages/ProjectPage/ProjectParticipantsList.vue';
+import ProjectDetails from '@/pages/ProjectPage/ProjectDetails.vue';
 
 // User page
-const UserPage = () => import('@/pages/UserPage/index.vue');
-const UserProfile = () => import('@/pages/UserPage/UserProfile.vue');
-const UserProjects = () => import('@/pages/UserPage/UserProjects.vue');
-const UserProjectProposals = () =>
-  import('@/pages/UserPage/UserProjectProposals.vue');
+import UserPage from '@/pages/UserPage/index.vue';
+import UserProfile from '@/pages/UserPage/UserProfile.vue';
+import UserProjects from '@/pages/UserPage/UserProjects.vue';
+import UserProjectProposals from '@/pages/UserPage/UserProjectProposals.vue';
 import UserParticipations from '@/pages/UserPage/UserParticipations.vue';
 
 // Home page
-const HomePage = () => import('@/pages/HomePage.vue');
+import HomePage from '@/pages/HomePage.vue';
 
 // FAQ page
-const FaqPage = () => import('@/pages/FaqPage.vue');
+import FaqPage from '@/pages/FaqPage.vue';
 
 // Contact page
-const ContactPage = () => import('@/pages/ContactPage.vue');
+import ContactPage from '@/pages/ContactPage.vue';
 
 // Create project page
-const CreateProjectPage = () => import('@/pages/CreateProjectPage.vue');
+import CreateProjectPage from '@/pages/CreateProjectPage.vue';
 
 // 404 page
-const NotFound = () => import('@/pages/NotFoundPage.vue');
+import NotFoundPage from '@/pages/NotFoundPage.vue';
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -188,7 +186,7 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     path: '/:pathMatch(.*)*',
-    component: NotFound,
+    component: NotFoundPage,
     name: RouteNames.NOT_FOUND,
   },
 ];
