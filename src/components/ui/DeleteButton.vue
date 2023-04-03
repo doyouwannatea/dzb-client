@@ -1,5 +1,10 @@
 <template>
-  <BaseButton :class="$style['delete-btn']" variant="outlined" color="red">
+  <BaseButton
+    :class="$style['delete-btn']"
+    variant="outlined"
+    color="red"
+    :disabled="props.disabled"
+  >
     <svg
       width="25"
       height="25"
@@ -27,11 +32,19 @@
 
 <script setup lang="ts">
   import BaseButton from './BaseButton.vue';
+
+  interface Props {
+    disabled?: boolean;
+  }
+
+  const props = withDefaults(defineProps<Props>(), { disabled: false });
 </script>
 
 <style module lang="scss">
   .delete-btn-path {
-    stroke: var(--red-color-1);
+    stroke: v-bind(
+      "props.disabled ? 'var(--disabled-color)' : 'var(--red-color-1)'"
+    );
   }
 
   .delete-btn {
