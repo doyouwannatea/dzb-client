@@ -79,7 +79,8 @@
   .modal.s {
     --top-p: 4rem;
 
-    max-width: 43.125rem;
+    width: min-content;
+    min-width: 43.125rem;
 
     @media (max-width: $tablet) {
       margin-right: 1.6875rem;
