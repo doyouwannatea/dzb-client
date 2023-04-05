@@ -9,14 +9,31 @@
       <template #sidebar>
         <UserNavigation variant="desktop" />
         <DeadlineTimer
-          v-if="!participationsStore.participationDeadlineDate"
+          v-if="
+            !participationsStore.participationTime ||
+            !participationsStore.projectTime
+          "
+          :start="new Date(Date.now())"
           :deadline="new Date(Date.now())"
           timer-text=""
           after-timer-text="Загрузка даты конца приёма заявок на проекты..."
         />
         <DeadlineTimer
-          v-if="participationsStore.participationDeadlineDate"
-          :deadline="new Date(participationsStore.participationDeadlineDate)"
+          v-if="
+            participationsStore.projectTime && authStore.profileData?.is_teacher
+          "
+          :start="new Date(participationsStore.projectTime[0])"
+          :deadline="new Date(participationsStore.projectTime[1])"
+          timer-text="до конца приема заявок на проектное обучение"
+          after-timer-text="Прием заявок на проектное обучение закончен"
+        />
+        <DeadlineTimer
+          v-if="
+            participationsStore.participationTime &&
+            authStore.profileData?.is_student
+          "
+          :start="new Date(participationsStore.participationTime[0])"
+          :deadline="new Date(participationsStore.participationTime[1])"
           timer-text="до конца приема заявок на проектное обучение"
           after-timer-text="Прием заявок на проектное обучение закончен"
         />
@@ -39,7 +56,9 @@
   import DeadlineTimer from '@/components/layout/DeadlineTimer.vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
   import UserCreateProjectLink from './UserCreateProjectLink.vue';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
+  const authStore = useAuthStore();
   const isSmallDevice = useSmallDevice();
   const participationsStore = useParticipationsStore();
   useWatchAuthorization();

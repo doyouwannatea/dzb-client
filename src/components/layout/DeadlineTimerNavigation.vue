@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isTimePass" class="timer">
+  <div v-if="isTime" class="timer">
     <div class="text">{{ props.timerText }}</div>
     <div class="time">{{ duration }}</div>
   </div>
@@ -8,10 +8,10 @@
 <script setup lang="ts">
   import { useDuration } from '@/hooks/useDuration';
 
-  type Props = { deadline: Date; timerText: string };
+  type Props = { start: Date; deadline: Date; timerText: string };
   const props = defineProps<Props>();
 
-  const { duration, isTimePass } = useDuration(props.deadline);
+  const { duration, isTime } = useDuration(props.start, props.deadline);
 </script>
 
 <style scoped>

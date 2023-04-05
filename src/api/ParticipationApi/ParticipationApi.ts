@@ -3,23 +3,48 @@ import {
   ParticipationWithProject,
   ParticipationPriority,
 } from '@/models/Participation';
+import { HarvestSettings } from '@/models/HarvestSetting';
 import { baseKyInstance } from '../baseKy';
 import IParticipationApi from './IParticipationApi';
 
 export default class ParticipationApi extends IParticipationApi {
-  async getParticipationDeadline(): Promise<string> {
+  async getParticipationTime(): Promise<string[]> {
     try {
-      const deadline: string = await baseKyInstance
-        .get(`api/participationsDeadline`)
-        .text();
-      const timestamp = Date.parse(deadline);
-      if (isNaN(timestamp)) {
-        throw new Error('неправильная дата из "api/participationsDeadline"');
+      const harvestSettings: HarvestSettings = await baseKyInstance
+        .get(`/api/harvestSettings/active`)
+        .json();
+      const start: string = harvestSettings.startDateParticipationHarvest;
+      const end: string = harvestSettings.endDateParticipationHarvest;
+      if (isNaN(Date.parse(start)) || isNaN(Date.parse(end))) {
+        throw new Error('неправильная дата из "/api/harvestSettings/active"');
       }
 
-      return deadline;
+      return [start, end];
     } catch (error) {
-      return new Date(Date.now()).toISOString();
+      return [
+        new Date(Date.now()).toISOString(),
+        new Date(Date.now()).toISOString(),
+      ];
+    }
+  }
+
+  async getProjectTime(): Promise<string[]> {
+    try {
+      const harvestSettings: HarvestSettings = await baseKyInstance
+        .get(`/api/harvestSettings/active`)
+        .json();
+      const start: string = harvestSettings.startDateProjectHarvest;
+      const end: string = harvestSettings.endDateProjectHarvest;
+      if (isNaN(Date.parse(start)) || isNaN(Date.parse(end))) {
+        throw new Error('неправильная дата из "/api/harvestSettings/active"');
+      }
+
+      return [start, end];
+    } catch (error) {
+      return [
+        new Date(Date.now()).toISOString(),
+        new Date(Date.now()).toISOString(),
+      ];
     }
   }
 

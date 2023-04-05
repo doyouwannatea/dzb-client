@@ -20,9 +20,11 @@
   import ConfirmModal from './components/layout/ConfirmModal.vue';
   import { useSavedRoute } from './hooks/useSaveRoute';
   import { useGetParticipationList } from './hooks/useFetchStudentData';
-  import { useGetParticipationDeadline } from './hooks/useGetParticipationDeadline';
+  import { useGetParticipationTime } from './hooks/useGetTime';
+  import { useGetProjectTime } from './hooks/useGetTime';
 
   useGetParticipationList();
-  useGetParticipationDeadline();
+  useGetParticipationTime();
+  useGetProjectTime();
   useSavedRoute();
 </script>
