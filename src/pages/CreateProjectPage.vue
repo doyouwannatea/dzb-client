@@ -653,8 +653,8 @@
       isNotEditableProposalComputed.value,
   );
 
-  const projectMentorComputed = computed<TeamMember | undefined>(
-    () => teamRef.value[0],
+  const projectMentorComputed = computed<TeamMember | undefined>(() =>
+    teamRef.value.find((member) => member.role === MemberRole.Mentor),
   );
   const projectDepartmentComputed = computed(
     () => projectMentorComputed.value?.memberData?.department,
