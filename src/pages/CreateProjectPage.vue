@@ -568,6 +568,7 @@
   import { ProjectStateID } from '@/models/ProjectState';
   import { toProjectCreateRoute } from '@/router/utils/routes';
   import { useUpdateProjectProposal } from '@/queries/useUpdateProjectProposal';
+  import { sortByRolePriority } from '@/helpers/project-member-role';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -979,24 +980,39 @@
       supervisors: ProjectSupervisor[],
       sharedRoleList: MemberRole[],
       currentUserRoleList: MemberRole[],
-    ): TeamMember[] {
-      return supervisors
-        .filter(
-          ({ roles }) =>
+    ): Required<TeamMember>[] {
+      const projectProposalTeam: Required<TeamMember>[] = supervisors
+        .filter(({ roles }) => {
+          return (
             roles.filter((role) =>
               [...sharedRoleList, ...currentUserRoleList].includes(role.id),
-            ).length > 0,
-        )
-        .map<TeamMember>(({ roles, supervisor }) => {
-          const acceptedRoles = roles.filter((role) =>
-            [...sharedRoleList, ...currentUserRoleList].includes(role.id),
+            ).length > 0
           );
+        })
+        .map<Required<TeamMember>>(({ roles, supervisor }) => {
+          // фильтруем только нужные роли
+          let acceptedRoles = roles
+            .map((role) => role.id)
+            .filter((role) =>
+              [...sharedRoleList, ...currentUserRoleList].includes(role),
+            );
+
+          // сортируем роли
+          acceptedRoles = sortByRolePriority(
+            acceptedRoles.map((role) => ({ role })),
+          ).map((role) => role.role);
+
           return {
-            role: acceptedRoles[0].id,
-            isCurrentUser: acceptedRoles[0].id === MemberRole.Mentor,
+            role: acceptedRoles[0],
+            isCurrentUser: Boolean(
+              acceptedRoles.find((role) => role === MemberRole.Mentor),
+            ),
             memberData: supervisor,
           };
         });
+
+      // сортируем команду по ролям
+      return sortByRolePriority(projectProposalTeam);
     }
   }
 

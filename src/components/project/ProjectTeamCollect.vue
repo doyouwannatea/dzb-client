@@ -55,6 +55,7 @@
   import BaseButton from '../ui/BaseButton.vue';
   import DeleteButton from '../ui/DeleteButton.vue';
 
+  // TODO: isCurrentUser переименовать
   export type TeamMember = {
     memberData?: Supervisor;
     role?: MemberRole;
