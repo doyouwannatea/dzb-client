@@ -646,9 +646,21 @@
       ),
   );
 
+  const canEdit = computed(() =>
+    Boolean(
+      currentProjectProposalComputed.value?.supervisors
+        .find(
+          (supervisor) => supervisor.supervisor.id === profileData?.value?.id,
+        )
+        ?.roles.find((role) => role.id === MemberRole.JobDeveloper),
+    ),
+  );
+
   const disableAll = computed(
     () =>
+      !canEdit.value ||
       createProjectProposalMutation.isLoading.value ||
+      updateProjectProposalMutation.isLoading.value ||
       userProjectProposalList.isFetching.value ||
       isNotEditableProposalComputed.value,
   );
