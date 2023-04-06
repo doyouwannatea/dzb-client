@@ -80,3 +80,7 @@ export function stringIncludes(text: string, value: string): boolean {
 export function stringsAreEqual(str1: string, str2: string): boolean {
   return str1.trim().toLowerCase() === str2.trim().toLowerCase();
 }
+
+export function withDefaultFiller(str?: string | number, filler = '-'): string {
+  return str ? String(str) : filler;
+}

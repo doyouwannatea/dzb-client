@@ -37,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+  import { storeToRefs } from 'pinia';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { isCandidate, isSupervisor } from '@/helpers/typeCheck';
   // components
@@ -44,47 +45,44 @@
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
   import { useDesktop } from '@/helpers/breakpoints';
+  import { withDefaultFiller } from '@/helpers/string';
 
   const isDesktop = useDesktop();
   const authStore = useAuthStore();
-  const profileData = authStore.profileData;
+  const { profileData } = storeToRefs(authStore);
 
   const contactInfo: AppListItemType[] = [
     {
       title: 'E-Mail:',
-      content: withDefaultFiller(profileData?.email),
+      content: withDefaultFiller(profileData?.value?.email),
     },
   ];
 
   const addInfo: AppListItemType[] = [];
 
-  if (profileData && isCandidate(profileData)) {
+  if (profileData?.value && isCandidate(profileData.value)) {
     contactInfo.push({
       title: 'Телефон:',
-      content: withDefaultFiller(profileData?.phone),
+      content: withDefaultFiller(profileData.value.phone),
     });
 
     addInfo.push(
       {
         title: 'Учебная группа:',
-        content: withDefaultFiller(profileData?.training_group),
+        content: withDefaultFiller(profileData.value.training_group),
       },
       {
         title: 'Курс:',
-        content: withDefaultFiller(profileData?.course),
+        content: withDefaultFiller(profileData.value.course),
       },
     );
   }
 
-  if (profileData && isSupervisor(profileData)) {
+  if (profileData?.value && isSupervisor(profileData.value)) {
     addInfo.push({
       title: 'Должность:',
-      content: withDefaultFiller(profileData?.position),
+      content: withDefaultFiller(profileData.value.position),
     });
-  }
-
-  function withDefaultFiller(str?: string | number, filler = '-'): string {
-    return str ? String(str) : filler;
   }
 
   function makeAppListItemsWide(items: AppListItemType[]) {
