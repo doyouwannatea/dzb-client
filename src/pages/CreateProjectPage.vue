@@ -328,9 +328,7 @@
         title="Направления (специальности), участников проекта"
       >
         <!-- <Project specialties> -->
-        <p
-          v-if="isNotEditableProposalComputed && specialtyListRef.length === 0"
-        >
+        <p v-if="!isEditableProposalComputed && specialtyListRef.length === 0">
           <b>Список пуст</b>
         </p>
         <TagList
@@ -386,7 +384,7 @@
         <!-- <Project specialties> -->
         <p
           v-if="
-            isNotEditableProposalComputed &&
+            !isEditableProposalComputed &&
             additionalSpecialtyListRef.length === 0
           "
         >
@@ -416,7 +414,7 @@
 
       <FormSection tag="7" title="Навыки, которые необходимы на проекте">
         <!-- <Project skills> -->
-        <p v-if="isNotEditableProposalComputed && skillListRef.length === 0">
+        <p v-if="!isEditableProposalComputed && skillListRef.length === 0">
           <b>Список пуст</b>
         </p>
         <TagList v-else show-all :tag-list="skillListRef">
@@ -444,8 +442,14 @@
 
     <div :class="$style.actions">
       <BaseButton
-        v-if="isEditableProposalComputed"
-        :disabled="createProjectProposalMutation.isLoading.value"
+        v-if="
+          isEditableProposalComputed &&
+          !userProjectProposalList.isFetching.value
+        "
+        :disabled="
+          createProjectProposalMutation.isLoading.value ||
+          updateProjectProposalMutation.isLoading.value
+        "
         color="red"
         variant="outlined"
         @click="onCancel"
@@ -455,7 +459,10 @@
 
       <BaseButton
         is="router-link"
-        v-if="isNotEditableProposalComputed"
+        v-if="
+          !isEditableProposalComputed ||
+          userProjectProposalList.isFetching.value
+        "
         :to="{ name: RouteNames.PROJECT_PROPOSALS }"
         variant="outlined"
       >
@@ -464,12 +471,14 @@
 
       <BaseButton
         v-if="
-          isEditableProposalComputed ||
-          currentProjectProposalState === ProjectProposalStateId.Rejected
+          !userProjectProposalList.isFetching.value &&
+          (isEditableProposalComputed ||
+            (currentProjectProposalState === ProjectProposalStateId.Rejected &&
+              canUserEdit))
         "
         :disabled="
           createProjectProposalMutation.isLoading.value ||
-          userProjectProposalList.isFetching.value
+          updateProjectProposalMutation.isLoading.value
         "
         :variant="
           currentProjectProposalState === ProjectProposalStateId.Rejected
@@ -478,7 +487,12 @@
         "
         @click="onCreateDraft"
       >
-        <template v-if="createProjectProposalMutation.isLoading.value">
+        <template
+          v-if="
+            createProjectProposalMutation.isLoading.value ||
+            updateProjectProposalMutation.isLoading.value
+          "
+        >
           Черновик сохраняется...
         </template>
         <template
@@ -494,11 +508,17 @@
         v-if="isEditableProposalComputed"
         :disabled="
           createProjectProposalMutation.isLoading.value ||
+          updateProjectProposalMutation.isLoading.value ||
           userProjectProposalList.isFetching.value
         "
         @click="onCreateUnderReview"
       >
-        <template v-if="createProjectProposalMutation.isLoading.value">
+        <template
+          v-if="
+            createProjectProposalMutation.isLoading.value ||
+            updateProjectProposalMutation.isLoading.value
+          "
+        >
           Заявка отправляется...
         </template>
         <template v-else>Подать заявку</template>
@@ -587,11 +607,21 @@
   const { profileData } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
 
-  const userProjectProposalList = useProjectProposalList();
-  const supervisorList = useAllSupervisors();
-  const projectSkills = useProjectSkills();
-  const specialtyList = useSpecialties();
-  const themeSources = useThemeSources();
+  const userProjectProposalList = useProjectProposalList({
+    onSuccess: onSuccessGetUserProjectProposalList,
+    onError: onErrorGetUserProjectProposalList,
+  });
+  const currentProjectProposalComputed = computed(() =>
+    getCurrentProjectProposal(
+      Number(projectId.value),
+      userProjectProposalList.data.value,
+    ),
+  );
+
+  const supervisorList = useAllSupervisors({ onError });
+  const projectSkills = useProjectSkills({ onError });
+  const specialtyList = useSpecialties({ onError });
+  const themeSources = useThemeSources({ onError });
   const createProjectProposalMutation = useCreateProjectProposal();
   const updateProjectProposalMutation = useUpdateProjectProposal();
 
@@ -619,36 +649,21 @@
   const sharedRoleList: MemberRole[] = [MemberRole.CoMentor];
   const currentUserRoleList: MemberRole[] = [MemberRole.Mentor];
 
-  const currentProjectProposalComputed = computed(() =>
-    userProjectProposalList.data.value?.find(
-      (proposal) => Number(proposal.id) === Number(projectId.value),
-    ),
-  );
+  if (userProjectProposalList.isFetched.value) {
+    if (currentProjectProposalComputed.value) {
+      fillFromProjectProposal(currentProjectProposalComputed.value);
+    } else {
+      teamRef.value = initTeam();
+    }
+  }
+
   const currentProjectProposalState = computed<
     ProjectProposalStateId | undefined
   >(() => currentProjectProposalComputed.value?.state.id);
 
-  const isNotEditableProposalComputed = computed(
-    () =>
-      currentProjectProposalState.value &&
-      [
-        ProjectProposalStateId.Approved,
-        ProjectProposalStateId.UnderReview,
-        ProjectProposalStateId.Rejected,
-      ].includes(currentProjectProposalState.value),
-  );
-
-  const isEditableProposalComputed = computed(
-    () =>
-      !currentProjectProposalState.value ||
-      [ProjectProposalStateId.Draft].includes(
-        currentProjectProposalState.value,
-      ),
-  );
-
-  const canEdit = computed(() =>
+  const canUserEdit = computed(() =>
     Boolean(
-      currentProjectProposalComputed.value?.supervisors
+      currentProjectProposalComputed?.value?.supervisors
         .find(
           (supervisor) => supervisor.supervisor.id === profileData?.value?.id,
         )
@@ -656,13 +671,21 @@
     ),
   );
 
+  const isEditableProposalComputed = computed(
+    () =>
+      !currentProjectProposalState.value ||
+      (canUserEdit.value &&
+        [ProjectProposalStateId.Draft].includes(
+          currentProjectProposalState.value,
+        )),
+  );
+
   const disableAll = computed(
     () =>
-      !canEdit.value ||
       createProjectProposalMutation.isLoading.value ||
       updateProjectProposalMutation.isLoading.value ||
       userProjectProposalList.isFetching.value ||
-      isNotEditableProposalComputed.value,
+      !isEditableProposalComputed.value,
   );
 
   const projectMentorComputed = computed<TeamMember | undefined>(() =>
@@ -717,18 +740,6 @@
     (isNewProject) => {
       if (isNewProject) prevProjectIdRef.value = null;
     },
-  );
-
-  watch(
-    () => currentProjectProposalComputed.value,
-    (currentProjectProposal) => {
-      if (currentProjectProposal) {
-        fillFromProjectProposal(currentProjectProposal);
-      } else {
-        teamRef.value = initTeam();
-      }
-    },
-    { immediate: true, deep: true },
   );
 
   function initTeam() {
@@ -871,6 +882,15 @@
         onError: onErrorSendProposal,
       });
     }
+  }
+
+  function getCurrentProjectProposal(
+    currentProjectId: number,
+    CreatedProjectProposalList?: CreatedProjectProposal[],
+  ): CreatedProjectProposal | undefined {
+    return CreatedProjectProposalList?.find(
+      (proposal) => Number(proposal.id) === currentProjectId,
+    );
   }
 
   function projectDurationFromDate(isoDate: {
@@ -1212,7 +1232,30 @@
   }
 
   function onErrorSendProposal(error: unknown) {
-    toast('Ошибка отправки: ' + String(error), { type: TYPE.ERROR });
+    onError(error, 'Ошибка отправки: ');
+  }
+
+  function onSuccessGetUserProjectProposalList(
+    projectProposalList: CreatedProjectProposal[],
+  ) {
+    const currentProjectProposal = getCurrentProjectProposal(
+      Number(projectId.value),
+      projectProposalList,
+    );
+    if (currentProjectProposal) {
+      fillFromProjectProposal(currentProjectProposal);
+    } else {
+      teamRef.value = initTeam();
+    }
+  }
+
+  function onErrorGetUserProjectProposalList(error: unknown) {
+    teamRef.value = initTeam();
+    onError(error);
+  }
+
+  function onError(error: unknown, message = 'Ошибка: ') {
+    toast(message + String(error), { type: TYPE.ERROR });
   }
 </script>
 
