@@ -873,7 +873,7 @@
             ? onSuccessUpdateRejectedToDraft
             : isDraft
             ? onSuccessUpdateDraft
-            : onSuccessUpdateForReview,
+            : onSuccessCreateForReview,
           onError: onErrorSendProposal,
         },
       );
@@ -1164,6 +1164,8 @@
 
     function disagree() {
       modalsStore.openConfirmModal();
+      router.push(toProjectCreateRoute());
+      clearAllFields();
     }
 
     modalsStore.openConfirmModal(
@@ -1187,30 +1189,6 @@
 
     function disagree() {
       modalsStore.openConfirmModal();
-    }
-
-    modalsStore.openConfirmModal(
-      title,
-      agreeButtonTitle,
-      disagreeButtonTitle,
-      agree,
-      disagree,
-    );
-  }
-
-  function onSuccessUpdateForReview() {
-    const title = 'Заявка успешно отправлена, вернуться в личный кабинет?';
-    const agreeButtonTitle = 'вернуться в личный кабинет';
-    const disagreeButtonTitle = 'создать новую заявку';
-
-    function agree() {
-      modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.PROJECT_PROPOSALS });
-    }
-
-    function disagree() {
-      modalsStore.openConfirmModal();
-      router.push(toProjectCreateRoute());
     }
 
     modalsStore.openConfirmModal(
