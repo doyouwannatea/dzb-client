@@ -1,11 +1,13 @@
 import { projectApi } from '@/api/ProjectApi';
 import { Project } from '@/models/Project';
-import { useQuery } from 'vue-query';
+import { UseQueryOptions, useQuery } from 'vue-query';
 
 // TODO: переименовать ключи для queries
 // TODO: useUserProjects возвращает проекты только для студентов, для преподавателей есть useProjectProposalList
 export const useUserProjectsKey = 'useUserProjectsKey';
-export const useUserProjects = () =>
+export const useUserProjects = <T = Project[]>(
+  options?: UseQueryOptions<Project[], unknown, T, typeof useUserProjectsKey>,
+) =>
   useQuery(
     useUserProjectsKey,
     async () => {
@@ -18,5 +20,5 @@ export const useUserProjects = () =>
       userProjectList.push(...arhiveProjects);
       return userProjectList;
     },
-    { staleTime: Infinity },
+    { staleTime: Infinity, ...options },
   );
