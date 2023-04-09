@@ -730,6 +730,7 @@
   watch(
     () => projectDepartmentComputed.value?.id,
     (departmentId, prevDepartmentId) => {
+      if (!prevDepartmentId) return;
       if (departmentId === prevDepartmentId) return;
       specialtyListRef.value = [];
     },
