@@ -83,6 +83,8 @@
     min-width: 43.125rem;
 
     @media (max-width: $tablet) {
+      width: 100%;
+      min-width: auto;
       margin-right: 1.6875rem;
       margin-left: 1.6875rem;
     }
