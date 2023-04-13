@@ -11,13 +11,34 @@
           <h1>Редактирование навыков</h1>
         </slot>
       </BaseTooltip>
-      <TagList
+
+      <BaseLabel
+        is="div"
+        label="Выбранные навыки"
         :class="$style['main-skill-list']"
-        :tag-list="skillListRef"
-        show-all
-        deletable
-        @delete="onDeleteSkill"
-      />
+      >
+        <TagList
+          v-if="skillListRef.length > 0"
+          :tag-list="skillListRef"
+          show-all
+          deletable
+          @delete="onDeleteSkill"
+        >
+          <template #after-list>
+            <BaseButton
+              variant="tag-outlined"
+              color="red"
+              case="lowercase"
+              @click="onClear"
+            >
+              очистить навыки
+            </BaseButton>
+          </template>
+        </TagList>
+        <ClickableGroupedListLabel v-else>
+          Навыки не выбраны
+        </ClickableGroupedListLabel>
+      </BaseLabel>
     </template>
     <!-- HEADER -->
 
@@ -123,6 +144,7 @@
   import ClickableGroupedList, {
     ListItem,
   } from '../ui/clickable-grouped-list/ClickableGroupedList.vue';
+  import ClickableGroupedListLabel from '../ui/clickable-grouped-list/ClickableGroupedListLabel.vue';
 
   export type EditedSkill = Skill & { isNew?: boolean };
 
@@ -240,6 +262,10 @@
   function onSave() {
     emit('update:skillList', skillListRef.value);
     onCloseModal();
+  }
+
+  function onClear() {
+    skillListRef.value = [];
   }
 </script>
 

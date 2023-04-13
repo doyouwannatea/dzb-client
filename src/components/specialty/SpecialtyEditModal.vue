@@ -5,13 +5,33 @@
       <slot name="title">
         <h1>Редактирование специальностей</h1>
       </slot>
-      <TagList
+      <BaseLabel
+        is="div"
+        label="Выбранные специальности"
         :class="$style['main-tag-list']"
-        :tag-list="specialtyListRef"
-        show-all
-        deletable
-        @delete="onDeleteSpecialty"
-      />
+      >
+        <TagList
+          v-if="specialtyListRef.length > 0"
+          :tag-list="specialtyListRef"
+          show-all
+          deletable
+          @delete="onDeleteSpecialty"
+        >
+          <template #after-list>
+            <BaseButton
+              variant="tag-outlined"
+              color="red"
+              case="lowercase"
+              @click="onClear"
+            >
+              очистить специальности
+            </BaseButton>
+          </template>
+        </TagList>
+        <ClickableGroupedListLabel v-else>
+          Специальности не выбраны
+        </ClickableGroupedListLabel>
+      </BaseLabel>
     </template>
     <!-- HEADER -->
 
@@ -75,9 +95,6 @@
 
     <!-- ACTIONS -->
     <div :class="$style.actions">
-      <BaseButton variant="outlined" color="red" @click="onClear">
-        очистить направления
-      </BaseButton>
       <BaseButton @click="onSave">сохранить и выйти</BaseButton>
     </div>
     <!-- ACTIONS -->
@@ -109,6 +126,7 @@
     ListItem,
   } from '../ui/clickable-grouped-list/ClickableGroupedList.vue';
   import ClickableGroupedListLabel from '../ui/clickable-grouped-list/ClickableGroupedListLabel.vue';
+  import BaseLabel from '../ui/label/BaseLabel.vue';
 
   type SpecialtyListItem = {
     course: SpecialtyCourse;
