@@ -10,6 +10,7 @@ import { Tag } from '@/models/Tag';
 import IProjectCreationApi, {
   UpdateProjectProposalData,
 } from './IProjectCreationApi';
+import { Project } from '@/models/Project';
 
 export default class ProjectCreationApiMock extends IProjectCreationApi {
   async createProjectProposal(
@@ -39,6 +40,10 @@ export default class ProjectCreationApiMock extends IProjectCreationApi {
   }
 
   async getProjectProposalList(): Promise<CreatedProjectProposal[]> {
+    return [];
+  }
+
+  async getSupervisorProjectList(): Promise<Project[]> {
     return [];
   }
 }
