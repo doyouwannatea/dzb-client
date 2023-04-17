@@ -48,6 +48,7 @@
 
 <script setup lang="ts">
   import { computed, ref, watch } from 'vue';
+  import { isEqual } from 'lodash';
   import ProjectRoleSelect from './ProjectRoleSelect.vue';
   import { Supervisor } from '@/models/Supervisor';
   import { MultiselectObjectItem } from '@/models/VMultiselect';
@@ -114,33 +115,46 @@
   // если обновляется multiselectTeamList, преобразовывает multiselectTeamList и обновляет props.team
   watch(
     () => multiselectTeamList.value,
-    (teamList, prevTeamList) => {
-      if (teamList !== prevTeamList) return;
-      emit(
-        'update:team',
-        teamList.map(({ isCurrentUser, memberId, role }) => ({
-          isCurrentUser,
-          role,
-          memberData: props.supervisorList.find(
-            (supervisor) => supervisor.id === memberId,
-          ),
-        })),
-      );
+    (multiselectTeam, prevTeam) => {
+      const team = multiselectToPropsTeamList(multiselectTeam);
+      if (multiselectTeam !== prevTeam) return;
+      if (isEqual(team, props.team)) return;
+      emit('update:team', team);
     },
     { deep: true },
   );
 
   watch(
     () => props.team,
-    (team) => {
-      multiselectTeamList.value = team.map((member) => ({
-        memberId: member.memberData?.id,
-        role: member.role,
-        isCurrentUser: member.isCurrentUser,
-      }));
+    (propsTeam) => {
+      const team = propsToMultiselectTeamList(propsTeam);
+      if (isEqual(team, multiselectTeamList.value)) return;
+      multiselectTeamList.value = team;
     },
     { immediate: true, deep: true },
   );
+
+  function propsToMultiselectTeamList(
+    teamList: TeamMember[],
+  ): MultiselectTeamMember[] {
+    return teamList.map((member) => ({
+      memberId: member.memberData?.id,
+      role: member.role,
+      isCurrentUser: member.isCurrentUser,
+    }));
+  }
+
+  function multiselectToPropsTeamList(
+    teamList: MultiselectTeamMember[],
+  ): TeamMember[] {
+    return teamList.map(({ isCurrentUser, memberId, role }) => ({
+      isCurrentUser,
+      role,
+      memberData: props.supervisorList.find(
+        (supervisor) => supervisor.id === memberId,
+      ),
+    }));
+  }
 
   // для каждого нового сотрудника фильтрует список сотрудников в выпадающем списке
   // так, чтобы в нём не было других сотрудников, кроме него самого
