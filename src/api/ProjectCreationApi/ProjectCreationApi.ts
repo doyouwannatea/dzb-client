@@ -10,6 +10,7 @@ import {
 import { Tag } from '@/models/Tag';
 import { Specialty } from '@/models/Specialty';
 import { Project } from '@/models/Project';
+import { formatProjectDate } from '@/helpers/project';
 
 export default class ProjectCreationApi extends IProjectCreationApi {
   async createProjectProposal(
@@ -58,6 +59,7 @@ export default class ProjectCreationApi extends IProjectCreationApi {
         supervisorsNames: proposal.supervisors
           .map((supervisor) => supervisor.supervisor.fio)
           .join(', '),
-      }));
+      }))
+      .map(formatProjectDate);
   }
 }

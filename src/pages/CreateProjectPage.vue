@@ -62,11 +62,11 @@
             v-model="prevProjectIdRef"
             class="multiselect"
             :placeholder="
-              userProjectProposalList.isFetching.value
+              prevUserProjects.isLoading.value
                 ? 'Ваши проекты загружаются...'
-                : userProjectProposalList.isError.value
+                : prevUserProjects.isError.value
                 ? 'Ошибка загрузки ваших проектов'
-                : prevProjectsMultiselectItems.length < 1
+                : prevUserProjects.data.value?.length === 0
                 ? 'Ваши старые проекты не найдены'
                 : isNewProjectRef
                 ? 'Переключите тип проекта на «Продолжить старый»'
@@ -589,6 +589,7 @@
   import { toProjectCreateRoute } from '@/router/utils/routes';
   import { useUpdateProjectProposal } from '@/queries/useUpdateProjectProposal';
   import { sortByRolePriority } from '@/helpers/project-member-role';
+  import { useUserProjects } from '@/queries/useUserProjects';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -618,6 +619,15 @@
     ),
   );
 
+  const prevUserProjects = useUserProjects({
+    onError,
+    select: (projects) =>
+      projects.filter((project) =>
+        [ProjectStateID.ActiveState, ProjectStateID.ArchivedState].includes(
+          project.state.id,
+        ),
+      ),
+  });
   const supervisorList = useAllSupervisors({ onError });
   const projectSkills = useProjectSkills({ onError });
   const specialtyList = useSpecialties({ onError });
@@ -705,16 +715,10 @@
     MultiselectObjectItem<number>[]
   >(
     () =>
-      userProjectProposalList.data.value
-        ?.filter(
-          (project) =>
-            project.state.id === ProjectStateID.ArchivedState ||
-            project.state.id === ProjectStateID.ActiveState,
-        )
-        .map((project) => ({
-          label: project.title,
-          value: project.id,
-        })) || [],
+      prevUserProjects.data.value?.map((project) => ({
+        label: `${project.date_start} ${project.title}`,
+        value: project.id,
+      })) || [],
   );
   const themeSourcesMultiselectItems = computed<
     MultiselectObjectItem<number>[]
@@ -964,6 +968,7 @@
   }
 
   function fillFromProjectProposal(projectProposal: CreatedProjectProposal) {
+    prevProjectIdRef.value = projectProposal.prevProjectId;
     isNewProjectRef.value = !projectProposal.prevProjectId;
     projectNameRef.value = projectProposal.title;
     projectGoalRef.value = projectProposal.goal;
