@@ -14,6 +14,8 @@
         :caret="props.memberList.length > 1"
         :searchable="true"
         :options="props.memberList"
+        :infinite="true"
+        :limit="10"
         :disabled="
           props.memberSelectOptions.selectDisabled ||
           props.memberList.length < 2
