@@ -9,13 +9,19 @@
       <template #sidebar>
         <UserNavigation variant="desktop" />
         <DeadlineTimer
-          v-if="!participationsStore.participationDeadlineDate"
+          v-if="
+            !participationsStore.participationDeadlineDate &&
+            authStore.profileData?.is_student
+          "
           :deadline="new Date(Date.now())"
           timer-text=""
           after-timer-text="Загрузка даты конца приёма заявок на проекты..."
         />
         <DeadlineTimer
-          v-if="participationsStore.participationDeadlineDate"
+          v-if="
+            participationsStore.participationDeadlineDate &&
+            authStore.profileData?.is_student
+          "
           :deadline="new Date(participationsStore.participationDeadlineDate)"
           timer-text="до конца приема заявок на проектное обучение"
           after-timer-text="Прием заявок на проектное обучение закончен"
@@ -39,7 +45,9 @@
   import DeadlineTimer from '@/components/layout/DeadlineTimer.vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
   import UserCreateProjectLink from './UserCreateProjectLink.vue';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
+  const authStore = useAuthStore();
   const isSmallDevice = useSmallDevice();
   const participationsStore = useParticipationsStore();
   useWatchAuthorization();
