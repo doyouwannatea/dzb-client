@@ -62,11 +62,11 @@
             v-model="prevProjectIdRef"
             class="multiselect"
             :placeholder="
-              userProjectProposalList.isFetching.value
+              prevUserProjects.isLoading.value
                 ? 'Ваши проекты загружаются...'
-                : userProjectProposalList.isError.value
+                : prevUserProjects.isError.value
                 ? 'Ошибка загрузки ваших проектов'
-                : prevProjectsMultiselectItems.length < 1
+                : prevUserProjects.data.value?.length === 0
                 ? 'Ваши старые проекты не найдены'
                 : isNewProjectRef
                 ? 'Переключите тип проекта на «Продолжить старый»'
@@ -328,9 +328,7 @@
         title="Направления (специальности), участников проекта"
       >
         <!-- <Project specialties> -->
-        <p
-          v-if="isNotEditableProposalComputed && specialtyListRef.length === 0"
-        >
+        <p v-if="!isEditableProposalComputed && specialtyListRef.length === 0">
           <b>Список пуст</b>
         </p>
         <TagList
@@ -386,7 +384,7 @@
         <!-- <Project specialties> -->
         <p
           v-if="
-            isNotEditableProposalComputed &&
+            !isEditableProposalComputed &&
             additionalSpecialtyListRef.length === 0
           "
         >
@@ -416,7 +414,7 @@
 
       <FormSection tag="7" title="Навыки, которые необходимы на проекте">
         <!-- <Project skills> -->
-        <p v-if="isNotEditableProposalComputed && skillListRef.length === 0">
+        <p v-if="!isEditableProposalComputed && skillListRef.length === 0">
           <b>Список пуст</b>
         </p>
         <TagList v-else show-all :tag-list="skillListRef">
@@ -444,8 +442,14 @@
 
     <div :class="$style.actions">
       <BaseButton
-        v-if="isEditableProposalComputed"
-        :disabled="createProjectProposalMutation.isLoading.value"
+        v-if="
+          isEditableProposalComputed &&
+          !userProjectProposalList.isFetching.value
+        "
+        :disabled="
+          createProjectProposalMutation.isLoading.value ||
+          updateProjectProposalMutation.isLoading.value
+        "
         color="red"
         variant="outlined"
         @click="onCancel"
@@ -455,7 +459,10 @@
 
       <BaseButton
         is="router-link"
-        v-if="isNotEditableProposalComputed"
+        v-if="
+          !isEditableProposalComputed ||
+          userProjectProposalList.isFetching.value
+        "
         :to="{ name: RouteNames.PROJECT_PROPOSALS }"
         variant="outlined"
       >
@@ -464,12 +471,14 @@
 
       <BaseButton
         v-if="
-          isEditableProposalComputed ||
-          currentProjectProposalState === ProjectProposalStateId.Rejected
+          !userProjectProposalList.isFetching.value &&
+          (isEditableProposalComputed ||
+            (currentProjectProposalState === ProjectProposalStateId.Rejected &&
+              canUserEdit))
         "
         :disabled="
           createProjectProposalMutation.isLoading.value ||
-          userProjectProposalList.isFetching.value
+          updateProjectProposalMutation.isLoading.value
         "
         :variant="
           currentProjectProposalState === ProjectProposalStateId.Rejected
@@ -478,7 +487,12 @@
         "
         @click="onCreateDraft"
       >
-        <template v-if="createProjectProposalMutation.isLoading.value">
+        <template
+          v-if="
+            createProjectProposalMutation.isLoading.value ||
+            updateProjectProposalMutation.isLoading.value
+          "
+        >
           Черновик сохраняется...
         </template>
         <template
@@ -494,11 +508,17 @@
         v-if="isEditableProposalComputed"
         :disabled="
           createProjectProposalMutation.isLoading.value ||
+          updateProjectProposalMutation.isLoading.value ||
           userProjectProposalList.isFetching.value
         "
         @click="onCreateUnderReview"
       >
-        <template v-if="createProjectProposalMutation.isLoading.value">
+        <template
+          v-if="
+            createProjectProposalMutation.isLoading.value ||
+            updateProjectProposalMutation.isLoading.value
+          "
+        >
           Заявка отправляется...
         </template>
         <template v-else>Подать заявку</template>
@@ -568,6 +588,8 @@
   import { ProjectStateID } from '@/models/ProjectState';
   import { toProjectCreateRoute } from '@/router/utils/routes';
   import { useUpdateProjectProposal } from '@/queries/useUpdateProjectProposal';
+  import { sortByRolePriority } from '@/helpers/project-member-role';
+  import { useUserProjects } from '@/queries/useUserProjects';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -586,11 +608,30 @@
   const { profileData } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
 
-  const userProjectProposalList = useProjectProposalList();
-  const supervisorList = useAllSupervisors();
-  const projectSkills = useProjectSkills();
-  const specialtyList = useSpecialties();
-  const themeSources = useThemeSources();
+  const userProjectProposalList = useProjectProposalList({
+    onSuccess: onSuccessGetUserProjectProposalList,
+    onError: onErrorGetUserProjectProposalList,
+  });
+  const currentProjectProposalComputed = computed(() =>
+    getCurrentProjectProposal(
+      Number(projectId.value),
+      userProjectProposalList.data.value,
+    ),
+  );
+
+  const prevUserProjects = useUserProjects({
+    onError,
+    select: (projects) =>
+      projects.filter((project) =>
+        [ProjectStateID.ActiveState, ProjectStateID.ArchivedState].includes(
+          project.state.id,
+        ),
+      ),
+  });
+  const supervisorList = useAllSupervisors({ onError });
+  const projectSkills = useProjectSkills({ onError });
+  const specialtyList = useSpecialties({ onError });
+  const themeSources = useThemeSources({ onError });
   const createProjectProposalMutation = useCreateProjectProposal();
   const updateProjectProposalMutation = useUpdateProjectProposal();
 
@@ -618,42 +659,47 @@
   const sharedRoleList: MemberRole[] = [MemberRole.CoMentor];
   const currentUserRoleList: MemberRole[] = [MemberRole.Mentor];
 
-  const currentProjectProposalComputed = computed(() =>
-    userProjectProposalList.data.value?.find(
-      (proposal) => Number(proposal.id) === Number(projectId.value),
-    ),
-  );
+  if (userProjectProposalList.isFetched.value) {
+    if (currentProjectProposalComputed.value) {
+      fillFromProjectProposal(currentProjectProposalComputed.value);
+    } else {
+      teamRef.value = initTeam();
+    }
+  }
+
   const currentProjectProposalState = computed<
     ProjectProposalStateId | undefined
   >(() => currentProjectProposalComputed.value?.state.id);
 
-  const isNotEditableProposalComputed = computed(
-    () =>
-      currentProjectProposalState.value &&
-      [
-        ProjectProposalStateId.Approved,
-        ProjectProposalStateId.UnderReview,
-        ProjectProposalStateId.Rejected,
-      ].includes(currentProjectProposalState.value),
+  const canUserEdit = computed(() =>
+    Boolean(
+      currentProjectProposalComputed?.value?.supervisors
+        .find(
+          (supervisor) => supervisor.supervisor.id === profileData?.value?.id,
+        )
+        ?.roles.find((role) => role.id === MemberRole.JobDeveloper),
+    ),
   );
 
   const isEditableProposalComputed = computed(
     () =>
       !currentProjectProposalState.value ||
-      [ProjectProposalStateId.Draft].includes(
-        currentProjectProposalState.value,
-      ),
+      (canUserEdit.value &&
+        [ProjectProposalStateId.Draft].includes(
+          currentProjectProposalState.value,
+        )),
   );
 
   const disableAll = computed(
     () =>
       createProjectProposalMutation.isLoading.value ||
+      updateProjectProposalMutation.isLoading.value ||
       userProjectProposalList.isFetching.value ||
-      isNotEditableProposalComputed.value,
+      !isEditableProposalComputed.value,
   );
 
-  const projectMentorComputed = computed<TeamMember | undefined>(
-    () => teamRef.value[0],
+  const projectMentorComputed = computed<TeamMember | undefined>(() =>
+    teamRef.value.find((member) => member.role === MemberRole.Mentor),
   );
   const projectDepartmentComputed = computed(
     () => projectMentorComputed.value?.memberData?.department,
@@ -669,16 +715,10 @@
     MultiselectObjectItem<number>[]
   >(
     () =>
-      userProjectProposalList.data.value
-        ?.filter(
-          (project) =>
-            project.state.id === ProjectStateID.ArchivedState ||
-            project.state.id === ProjectStateID.ActiveState,
-        )
-        .map((project) => ({
-          label: project.title,
-          value: project.id,
-        })) || [],
+      prevUserProjects.data.value?.map((project) => ({
+        label: `${project.date_start} ${project.title}`,
+        value: project.id,
+      })) || [],
   );
   const themeSourcesMultiselectItems = computed<
     MultiselectObjectItem<number>[]
@@ -694,6 +734,7 @@
   watch(
     () => projectDepartmentComputed.value?.id,
     (departmentId, prevDepartmentId) => {
+      if (!prevDepartmentId) return;
       if (departmentId === prevDepartmentId) return;
       specialtyListRef.value = [];
     },
@@ -704,18 +745,6 @@
     (isNewProject) => {
       if (isNewProject) prevProjectIdRef.value = null;
     },
-  );
-
-  watch(
-    () => currentProjectProposalComputed.value,
-    (currentProjectProposal) => {
-      if (currentProjectProposal) {
-        fillFromProjectProposal(currentProjectProposal);
-      } else {
-        teamRef.value = initTeam();
-      }
-    },
-    { immediate: true, deep: true },
   );
 
   function initTeam() {
@@ -848,7 +877,7 @@
             ? onSuccessUpdateRejectedToDraft
             : isDraft
             ? onSuccessUpdateDraft
-            : onSuccessUpdateForReview,
+            : onSuccessCreateForReview,
           onError: onErrorSendProposal,
         },
       );
@@ -858,6 +887,15 @@
         onError: onErrorSendProposal,
       });
     }
+  }
+
+  function getCurrentProjectProposal(
+    currentProjectId: number,
+    CreatedProjectProposalList?: CreatedProjectProposal[],
+  ): CreatedProjectProposal | undefined {
+    return CreatedProjectProposalList?.find(
+      (proposal) => Number(proposal.id) === currentProjectId,
+    );
   }
 
   function projectDurationFromDate(isoDate: {
@@ -930,6 +968,7 @@
   }
 
   function fillFromProjectProposal(projectProposal: CreatedProjectProposal) {
+    prevProjectIdRef.value = projectProposal.prevProjectId;
     isNewProjectRef.value = !projectProposal.prevProjectId;
     projectNameRef.value = projectProposal.title;
     projectGoalRef.value = projectProposal.goal;
@@ -979,24 +1018,39 @@
       supervisors: ProjectSupervisor[],
       sharedRoleList: MemberRole[],
       currentUserRoleList: MemberRole[],
-    ): TeamMember[] {
-      return supervisors
-        .filter(
-          ({ roles }) =>
+    ): Required<TeamMember>[] {
+      const projectProposalTeam: Required<TeamMember>[] = supervisors
+        .filter(({ roles }) => {
+          return (
             roles.filter((role) =>
               [...sharedRoleList, ...currentUserRoleList].includes(role.id),
-            ).length > 0,
-        )
-        .map<TeamMember>(({ roles, supervisor }) => {
-          const acceptedRoles = roles.filter((role) =>
-            [...sharedRoleList, ...currentUserRoleList].includes(role.id),
+            ).length > 0
           );
+        })
+        .map<Required<TeamMember>>(({ roles, supervisor }) => {
+          // фильтруем только нужные роли
+          let acceptedRoles = roles
+            .map((role) => role.id)
+            .filter((role) =>
+              [...sharedRoleList, ...currentUserRoleList].includes(role),
+            );
+
+          // сортируем роли
+          acceptedRoles = sortByRolePriority(
+            acceptedRoles.map((role) => ({ role })),
+          ).map((role) => role.role);
+
           return {
-            role: acceptedRoles[0].id,
-            isCurrentUser: acceptedRoles[0].id === MemberRole.Mentor,
+            role: acceptedRoles[0],
+            isCurrentUser: Boolean(
+              acceptedRoles.find((role) => role === MemberRole.Mentor),
+            ),
             memberData: supervisor,
           };
         });
+
+      // сортируем команду по ролям
+      return sortByRolePriority(projectProposalTeam);
     }
   }
 
@@ -1115,6 +1169,8 @@
 
     function disagree() {
       modalsStore.openConfirmModal();
+      router.push(toProjectCreateRoute());
+      clearAllFields();
     }
 
     modalsStore.openConfirmModal(
@@ -1149,30 +1205,6 @@
     );
   }
 
-  function onSuccessUpdateForReview() {
-    const title = 'Заявка успешно отправлена, вернуться в личный кабинет?';
-    const agreeButtonTitle = 'вернуться в личный кабинет';
-    const disagreeButtonTitle = 'создать новую заявку';
-
-    function agree() {
-      modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.PROJECT_PROPOSALS });
-    }
-
-    function disagree() {
-      modalsStore.openConfirmModal();
-      router.push(toProjectCreateRoute());
-    }
-
-    modalsStore.openConfirmModal(
-      title,
-      agreeButtonTitle,
-      disagreeButtonTitle,
-      agree,
-      disagree,
-    );
-  }
-
   function onSuccessUpdateRejectedToDraft(
     createdProjectProposal: CreatedProjectProposal,
   ) {
@@ -1184,7 +1216,30 @@
   }
 
   function onErrorSendProposal(error: unknown) {
-    toast('Ошибка отправки: ' + String(error), { type: TYPE.ERROR });
+    onError(error, 'Ошибка отправки: ');
+  }
+
+  function onSuccessGetUserProjectProposalList(
+    projectProposalList: CreatedProjectProposal[],
+  ) {
+    const currentProjectProposal = getCurrentProjectProposal(
+      Number(projectId.value),
+      projectProposalList,
+    );
+    if (currentProjectProposal) {
+      fillFromProjectProposal(currentProjectProposal);
+    } else {
+      teamRef.value = initTeam();
+    }
+  }
+
+  function onErrorGetUserProjectProposalList(error: unknown) {
+    teamRef.value = initTeam();
+    onError(error);
+  }
+
+  function onError(error: unknown, message = 'Ошибка: ') {
+    toast(message + String(error), { type: TYPE.ERROR });
   }
 </script>
 

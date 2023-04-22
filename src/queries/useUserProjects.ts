@@ -1,22 +1,39 @@
 import { projectApi } from '@/api/ProjectApi';
+import { projectCreationApi } from '@/api/ProjectCreationApi';
+import { isCandidate, isSupervisor } from '@/helpers/typeCheck';
 import { Project } from '@/models/Project';
-import { useQuery } from 'vue-query';
+import { useAuthStore } from '@/stores/auth/useAuthStore';
+import { AUTH_REQUIRED } from '@/values/error-messages';
+import { UseQueryOptions, useQuery } from 'vue-query';
 
 // TODO: переименовать ключи для queries
-// TODO: useUserProjects возвращает проекты только для студентов, для преподавателей есть useProjectProposalList
 export const useUserProjectsKey = 'useUserProjectsKey';
-export const useUserProjects = () =>
-  useQuery(
+export const useUserProjects = <T = Project[]>(
+  options?: UseQueryOptions<Project[], unknown, T, typeof useUserProjectsKey>,
+) => {
+  const authStore = useAuthStore();
+  const profileData = authStore.profileData;
+
+  return useQuery(
     useUserProjectsKey,
     async () => {
-      const [activeProject, arhiveProjects] = await Promise.all([
-        projectApi.getActiveUserProject(),
-        projectApi.getArhiveUserProjects(),
-      ]);
+      if (!profileData) throw new Error(AUTH_REQUIRED);
       const userProjectList: Project[] = [];
-      if (activeProject) userProjectList.push(activeProject);
-      userProjectList.push(...arhiveProjects);
+
+      if (isSupervisor(profileData)) {
+        const projectProposals =
+          await projectCreationApi.getSupervisorProjectList();
+        userProjectList.push(...projectProposals);
+      } else if (isCandidate(profileData)) {
+        const [activeProject, arhiveProjects] = await Promise.all([
+          projectApi.getActiveUserProject(),
+          projectApi.getArhiveUserProjects(),
+        ]);
+        if (activeProject) userProjectList.push(activeProject);
+        userProjectList.push(...arhiveProjects);
+      }
       return userProjectList;
     },
-    { staleTime: Infinity },
+    { ...options },
   );
+};

@@ -19,7 +19,7 @@ export const SpecialtyName: Record<SpecialtyCourse, string> = {
   [SpecialtyCourse.Second]: '2 курс',
   [SpecialtyCourse.Third]: '3 курс',
   [SpecialtyCourse.Fourth]: '4 курс',
-  [SpecialtyCourse.Fifth]: 'специалитет',
+  [SpecialtyCourse.Fifth]: '5 курс',
 };
 
 export interface Specialty<T = number> extends Tag<T> {

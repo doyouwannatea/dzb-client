@@ -1,14 +1,31 @@
 import { projectCreationApi } from '@/api/ProjectCreationApi';
-import { useMutation, useQueryClient } from 'vue-query';
+import { useMutation, useQueryClient, UseMutationOptions } from 'vue-query';
 import { useProjectProposalListKey } from './useProjectProposalList';
+import {
+  CreatedProjectProposal,
+  NewProjectProposal,
+} from '@/models/ProjectProposal';
 
-export const useCreateProjectProposal = () => {
+const useCreateProjectProposalKey = 'useCreateProjectProposal';
+
+export const useCreateProjectProposal = (
+  options?: UseMutationOptions<
+    CreatedProjectProposal,
+    unknown,
+    NewProjectProposal,
+    unknown
+  >,
+) => {
   const client = useQueryClient();
 
-  return useMutation({
-    mutationFn: projectCreationApi.createProjectProposal,
-    onSuccess: () => {
-      client.invalidateQueries(useProjectProposalListKey);
+  return useMutation(
+    useCreateProjectProposalKey,
+    projectCreationApi.createProjectProposal,
+    {
+      onSuccess: () => {
+        client.invalidateQueries(useProjectProposalListKey);
+      },
+      ...options,
     },
-  });
+  );
 };

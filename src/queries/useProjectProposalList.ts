@@ -1,15 +1,23 @@
 import { projectCreationApi } from '@/api/ProjectCreationApi';
-import { MaybeRef } from '@vueuse/core';
-import { useQuery } from 'vue-query';
+import { CreatedProjectProposal } from '@/models/ProjectProposal';
+import { useQuery, UseQueryOptions } from 'vue-query';
 
 export const useProjectProposalListKey = 'useProjectProposalListKey';
-export const useProjectProposalList = (enabled?: MaybeRef<boolean>) =>
+
+export const useProjectProposalList = <T = CreatedProjectProposal[]>(
+  options?: UseQueryOptions<
+    CreatedProjectProposal[],
+    unknown,
+    T,
+    typeof useProjectProposalListKey
+  >,
+) =>
   useQuery(
     useProjectProposalListKey,
     projectCreationApi.getProjectProposalList,
     {
       staleTime: Infinity,
       placeholderData: () => [],
-      enabled,
+      ...options,
     },
   );

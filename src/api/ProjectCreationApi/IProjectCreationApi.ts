@@ -1,3 +1,4 @@
+import { Project } from '@/models/Project';
 import {
   CreatedProjectProposal,
   NewProjectProposal,
@@ -20,4 +21,5 @@ export default abstract class IProjectCreationApi {
   abstract getThemeSources(): Promise<Tag[]>;
   abstract getSpecialties(): Promise<Specialty[]>;
   abstract getProjectProposalList(): Promise<CreatedProjectProposal[]>;
+  abstract getSupervisorProjectList(): Promise<Project[]>;
 }
