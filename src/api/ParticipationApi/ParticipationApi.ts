@@ -6,46 +6,59 @@ import {
 import { HarvestSettings } from '@/models/HarvestSetting';
 import { baseKyInstance } from '../baseKy';
 import IParticipationApi from './IParticipationApi';
+import { isValidDate } from '@/helpers/date';
 
 export default class ParticipationApi extends IParticipationApi {
-  async getParticipationTime(): Promise<string[]> {
+  async getHarvestSettings(): Promise<HarvestSettings> {
     try {
       const harvestSettings: HarvestSettings = await baseKyInstance
-        .get(`/api/harvestSettings/active`)
+        .get(`api/harvestSettings/active`)
         .json();
-      const start: string = harvestSettings.startDateParticipationHarvest;
-      const end: string = harvestSettings.endDateParticipationHarvest;
-      if (isNaN(Date.parse(start)) || isNaN(Date.parse(end))) {
+      const {
+        startDateParticipationHarvest,
+        endDateParticipationHarvest,
+        startDateProjectHarvest,
+        endDateProjectHarvest,
+      } = harvestSettings;
+
+      if (
+        ![
+          startDateParticipationHarvest,
+          endDateParticipationHarvest,
+          startDateProjectHarvest,
+          endDateProjectHarvest,
+        ]
+          .map(isValidDate)
+          .every(Boolean)
+      ) {
         throw new Error('неправильная дата из "/api/harvestSettings/active"');
       }
 
-      return [start, end];
+      return harvestSettings;
     } catch (error) {
-      return [
-        new Date(Date.now()).toISOString(),
-        new Date(Date.now()).toISOString(),
-      ];
+      console.error(error);
+      const currentTime = new Date(Date.now()).toISOString();
+      return {
+        id: 0,
+        startDateParticipationHarvest: currentTime,
+        endDateParticipationHarvest: currentTime,
+        startDateProjectHarvest: currentTime,
+        endDateProjectHarvest: currentTime,
+        bannedSpecialities: [],
+      };
     }
   }
 
-  async getProjectTime(): Promise<string[]> {
-    try {
-      const harvestSettings: HarvestSettings = await baseKyInstance
-        .get(`/api/harvestSettings/active`)
-        .json();
-      const start: string = harvestSettings.startDateProjectHarvest;
-      const end: string = harvestSettings.endDateProjectHarvest;
-      if (isNaN(Date.parse(start)) || isNaN(Date.parse(end))) {
-        throw new Error('неправильная дата из "/api/harvestSettings/active"');
-      }
+  async getCandidateParticipationTime(): Promise<string[]> {
+    const { startDateParticipationHarvest, endDateParticipationHarvest } =
+      await this.getHarvestSettings();
+    return [startDateParticipationHarvest, endDateParticipationHarvest];
+  }
 
-      return [start, end];
-    } catch (error) {
-      return [
-        new Date(Date.now()).toISOString(),
-        new Date(Date.now()).toISOString(),
-      ];
-    }
+  async getSupervisorParticipationTime(): Promise<string[]> {
+    const { startDateProjectHarvest, endDateProjectHarvest } =
+      await this.getHarvestSettings();
+    return [startDateProjectHarvest, endDateProjectHarvest];
   }
 
   async getParticipationList(): Promise<ParticipationWithProject[]> {
