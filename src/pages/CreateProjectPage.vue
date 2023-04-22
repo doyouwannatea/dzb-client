@@ -473,6 +473,23 @@
       </BaseButton>
 
       <BaseButton
+        v-if="
+          !userProjectProposalList.isFetching.value &&
+          isEditableProposalComputed &&
+          currentProjectProposalState === ProjectProposalStateId.Draft
+        "
+        :disabled="
+          createProjectProposalMutation.isLoading.value ||
+          updateProjectProposalMutation.isLoading.value
+        "
+        color="red"
+        variant="primary"
+        @click="onDeleteDraft"
+      >
+        Удалить черновик
+      </BaseButton>
+
+      <BaseButton
         is="router-link"
         v-if="
           !isEditableProposalComputed ||
@@ -1123,6 +1140,12 @@
       'отмена',
       agree,
       disagree,
+    );
+  }
+
+  function onDeleteDraft() {
+    modalsStore.openAlertModal(
+      'Функция удаления черновика на данный момент недоступна 😢',
     );
   }
 
