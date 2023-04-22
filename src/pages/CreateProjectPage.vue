@@ -23,7 +23,12 @@
   </SpecialtyEditModal>
   <PageLayout>
     <header class="header">
-      <h1 :class="[$style.title, 'page-title']">Создание проектной заявки</h1>
+      <h1 :class="[$style.title, 'page-title']">
+        <template v-if="currentProjectProposalComputed">
+          Редактирование проектной заявки
+        </template>
+        <template v-else>Создание проектной заявки</template>
+      </h1>
     </header>
     <BasePanel>
       <FormSection
