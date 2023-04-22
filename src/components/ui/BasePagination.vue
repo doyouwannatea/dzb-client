@@ -65,7 +65,9 @@
     () => props.page,
     (page, prevPage) => {
       if (page === prevPage) return;
-      updatePages(page || -1);
+      if (!page || page < 1) return setPage(1);
+      if (page > totalPages.value) return setPage(totalPages.value);
+      updatePages(page);
     },
     { immediate: true },
   );
@@ -87,7 +89,6 @@
 
   // обновляет состояние компонента
   function updatePages(page: number) {
-    if (page < 1) return setPage(1);
     startPage.value = page - Math.ceil(props.pagesVisible / 2);
     endPage.value = page + Math.floor(props.pagesVisible / 2) - 1;
 
