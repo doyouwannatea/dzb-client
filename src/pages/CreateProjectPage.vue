@@ -22,8 +22,23 @@
     </template>
   </SpecialtyEditModal>
   <PageLayout>
-    <header class="header">
-      <h1 :class="[$style.title, 'page-title']">Создание проектной заявки</h1>
+    <RouterLink
+      :class="$style['back-link']"
+      :to="{ name: RouteNames.PROJECT_PROPOSALS }"
+    >
+      &lt;&nbsp;&nbsp;К списку заявок
+    </RouterLink>
+    <header :class="$style.header">
+      <h1 class="page-title">
+        <template v-if="currentProjectProposalComputed">
+          Редактирование проектной заявки
+        </template>
+        <template v-else>Создание проектной заявки</template>
+      </h1>
+      <ProjectProposalStatus
+        v-if="currentProjectProposalComputed"
+        :state="currentProjectProposalComputed.state"
+      />
     </header>
     <BasePanel>
       <FormSection
@@ -458,6 +473,23 @@
       </BaseButton>
 
       <BaseButton
+        v-if="
+          !userProjectProposalList.isFetching.value &&
+          isEditableProposalComputed &&
+          currentProjectProposalState === ProjectProposalStateId.Draft
+        "
+        :disabled="
+          createProjectProposalMutation.isLoading.value ||
+          updateProjectProposalMutation.isLoading.value
+        "
+        color="red"
+        variant="primary"
+        @click="onDeleteDraft"
+      >
+        Удалить черновик
+      </BaseButton>
+
+      <BaseButton
         is="router-link"
         v-if="
           !isEditableProposalComputed ||
@@ -590,6 +622,8 @@
   import { useUpdateProjectProposal } from '@/queries/useUpdateProjectProposal';
   import { sortByRolePriority } from '@/helpers/project-member-role';
   import { useUserProjects } from '@/queries/useUserProjects';
+  import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
+  import { RouterLink } from 'vue-router';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -1109,6 +1143,12 @@
     );
   }
 
+  function onDeleteDraft() {
+    modalsStore.openAlertModal(
+      'Функция удаления черновика на данный момент недоступна 😢',
+    );
+  }
+
   function onCancel() {
     function agree() {
       modalsStore.openConfirmModal();
@@ -1244,9 +1284,24 @@
 </script>
 
 <style lang="scss" module>
-  .title {
-    margin-top: 4.75rem;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 3.5rem;
     margin-bottom: 1.875rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 3.5rem;
+    color: var(--text-color-2);
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .radio-buttons-label {
