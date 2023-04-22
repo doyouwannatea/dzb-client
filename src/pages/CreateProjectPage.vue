@@ -22,13 +22,17 @@
     </template>
   </SpecialtyEditModal>
   <PageLayout>
-    <header class="header">
-      <h1 :class="[$style.title, 'page-title']">
+    <header :class="$style.header">
+      <h1 class="page-title">
         <template v-if="currentProjectProposalComputed">
           Редактирование проектной заявки
         </template>
         <template v-else>Создание проектной заявки</template>
       </h1>
+      <ProjectProposalStatus
+        v-if="currentProjectProposalComputed"
+        :state="currentProjectProposalComputed.state"
+      />
     </header>
     <BasePanel>
       <FormSection
@@ -595,6 +599,7 @@
   import { useUpdateProjectProposal } from '@/queries/useUpdateProjectProposal';
   import { sortByRolePriority } from '@/helpers/project-member-role';
   import { useUserProjects } from '@/queries/useUserProjects';
+  import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -1249,7 +1254,10 @@
 </script>
 
 <style lang="scss" module>
-  .title {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-top: 4.75rem;
     margin-bottom: 1.875rem;
   }
