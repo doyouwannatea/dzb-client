@@ -22,6 +22,12 @@
     </template>
   </SpecialtyEditModal>
   <PageLayout>
+    <RouterLink
+      :class="$style['back-link']"
+      :to="{ name: RouteNames.PROJECT_PROPOSALS }"
+    >
+      &lt;&nbsp;&nbsp;К списку заявок
+    </RouterLink>
     <header :class="$style.header">
       <h1 class="page-title">
         <template v-if="currentProjectProposalComputed">
@@ -600,6 +606,7 @@
   import { sortByRolePriority } from '@/helpers/project-member-role';
   import { useUserProjects } from '@/queries/useUserProjects';
   import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
+  import { RouterLink } from 'vue-router';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -1258,8 +1265,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 4.75rem;
+    margin-top: 3.5rem;
     margin-bottom: 1.875rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 3.5rem;
+    color: var(--text-color-2);
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .radio-buttons-label {
