@@ -3,24 +3,62 @@ import {
   ParticipationWithProject,
   ParticipationPriority,
 } from '@/models/Participation';
+import { HarvestSettings } from '@/models/HarvestSetting';
 import { baseKyInstance } from '../baseKy';
 import IParticipationApi from './IParticipationApi';
+import { isValidDate } from '@/helpers/date';
 
 export default class ParticipationApi extends IParticipationApi {
-  async getParticipationDeadline(): Promise<string> {
+  async getHarvestSettings(): Promise<HarvestSettings> {
     try {
-      const deadline: string = await baseKyInstance
-        .get(`api/participationsDeadline`)
-        .text();
-      const timestamp = Date.parse(deadline);
-      if (isNaN(timestamp)) {
-        throw new Error('неправильная дата из "api/participationsDeadline"');
+      const harvestSettings: HarvestSettings = await baseKyInstance
+        .get(`api/harvestSettings/active`)
+        .json();
+      const {
+        startDateParticipationHarvest,
+        endDateParticipationHarvest,
+        startDateProjectHarvest,
+        endDateProjectHarvest,
+      } = harvestSettings;
+
+      if (
+        ![
+          startDateParticipationHarvest,
+          endDateParticipationHarvest,
+          startDateProjectHarvest,
+          endDateProjectHarvest,
+        ]
+          .map(isValidDate)
+          .every(Boolean)
+      ) {
+        throw new Error('неправильная дата из "/api/harvestSettings/active"');
       }
 
-      return deadline;
+      return harvestSettings;
     } catch (error) {
-      return new Date(Date.now()).toISOString();
+      console.error(error);
+      const currentTime = new Date(Date.now()).toISOString();
+      return {
+        id: 0,
+        startDateParticipationHarvest: currentTime,
+        endDateParticipationHarvest: currentTime,
+        startDateProjectHarvest: currentTime,
+        endDateProjectHarvest: currentTime,
+        bannedSpecialities: [],
+      };
     }
+  }
+
+  async getCandidateParticipationTime(): Promise<string[]> {
+    const { startDateParticipationHarvest, endDateParticipationHarvest } =
+      await this.getHarvestSettings();
+    return [startDateParticipationHarvest, endDateParticipationHarvest];
+  }
+
+  async getSupervisorParticipationTime(): Promise<string[]> {
+    const { startDateProjectHarvest, endDateProjectHarvest } =
+      await this.getHarvestSettings();
+    return [startDateProjectHarvest, endDateProjectHarvest];
   }
 
   async getParticipationList(): Promise<ParticipationWithProject[]> {

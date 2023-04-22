@@ -8,7 +8,8 @@ import { projectApi } from '../ProjectApi';
 
 export default abstract class IParticipationApi {
   abstract getParticipationList(): Promise<ParticipationWithProject[]>;
-  abstract getParticipationDeadline(): Promise<string>;
+  abstract getCandidateParticipationTime(): Promise<string[]>;
+  abstract getSupervisorParticipationTime(): Promise<string[]>;
   abstract updateParticipation(
     participationId: number,
     priority: number,

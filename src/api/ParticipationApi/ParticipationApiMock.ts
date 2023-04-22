@@ -13,8 +13,18 @@ import { getAuthTokenFromCookies } from '../CampusApi/utils/authToken';
 import IParticipationApi from './IParticipationApi';
 
 export default class ParticipationApiMock extends IParticipationApi {
-  async getParticipationDeadline(): Promise<string> {
-    return delayRes(new Date(Date.now() + 100000000).toISOString(), 1000);
+  async getCandidateParticipationTime(): Promise<string[]> {
+    return Promise.all([
+      delayRes(new Date(Date.now() + 10000).toISOString(), 1000),
+      delayRes(new Date(Date.now() + 100000000).toISOString(), 1000),
+    ]);
+  }
+
+  async getSupervisorParticipationTime(): Promise<string[]> {
+    return Promise.all([
+      delayRes(new Date(Date.now() + 10000).toISOString(), 1000),
+      delayRes(new Date(Date.now() + 200000000).toISOString(), 1000),
+    ]);
   }
 
   async getParticipationList(): Promise<ParticipationWithProject[]> {
