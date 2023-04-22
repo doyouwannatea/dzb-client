@@ -38,7 +38,7 @@
   }
 
   .status.approved {
-    --text-color: var(--accent-color-3);
-    --border-color: var(--accent-color-3);
+    --text-color: var(--green-color-1);
+    --border-color: var(--green-color-1);
   }
 </style>
