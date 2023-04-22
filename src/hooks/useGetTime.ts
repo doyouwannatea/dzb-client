@@ -1,12 +1,12 @@
 import { onBeforeMount } from 'vue';
 import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
 
-export const useGetParticipationTime = () => {
+export const useGetCandidateParticipationTime = () => {
   const participationsStore = useParticipationsStore();
-  onBeforeMount(() => participationsStore.getParticipationTime());
+  onBeforeMount(() => participationsStore.getCandidateParticipationTime());
 };
 
-export const useGetProjectTime = () => {
+export const useGetSupervisorParticipationTime = () => {
   const participationsStore = useParticipationsStore();
-  onBeforeMount(() => participationsStore.getProjectTime());
+  onBeforeMount(() => participationsStore.getSupervisorParticipationTime());
 };

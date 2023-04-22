@@ -53,11 +53,13 @@ export const useParticipationsStore = defineStore('participations', {
     // DELETE PARTICIPATION
 
     // GET PARTICIPATION AND PROJECT TIME
-    async getParticipationTime() {
-      this.participationTime = await participationApi.getParticipationTime();
+    async getCandidateParticipationTime() {
+      this.participationTime =
+        await participationApi.getCandidateParticipationTime();
     },
-    async getProjectTime() {
-      this.projectTime = await participationApi.getProjectTime();
+    async getSupervisorParticipationTime() {
+      this.projectTime =
+        await participationApi.getSupervisorParticipationTime();
     },
     // GET PARTICIPATION AND PROJECT TIME
 

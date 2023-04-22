@@ -7,17 +7,14 @@
       >
         <AppLogo />
       </RouterLink>
-      <AppNavigation class="navigation" />
+      <AppNavigation v-if="!isSmallDevice" />
       <DeadlineTimerNavigation
-        v-if="
-          participationsStore.participationTime &&
-          authStore.profileData?.is_student
-        "
-        :start="new Date(participationsStore.participationTime[0])"
-        :deadline="new Date(participationsStore.participationTime[1])"
+        v-if="time"
+        :start="new Date(time[0])"
+        :deadline="new Date(time[1])"
         timer-text="до конца приема заявок"
       />
-      <HeaderUserActions class="actions" />
+      <HeaderUserActions v-if="!isSmallDevice" />
     </BaseContainer>
   </header>
 </template>
@@ -25,17 +22,16 @@
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
   import { RouteNames } from '@/router/types/route-names';
-  // components
   import BaseContainer from '../ui/BaseContainer.vue';
   import AppLogo from '../ui/AppLogo.vue';
   import AppNavigation from './AppNavigation.vue';
   import HeaderUserActions from '../user/HeaderUserActions.vue';
   import DeadlineTimerNavigation from '@/components/layout/DeadlineTimerNavigation.vue';
-  import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { useUserTimer } from '@/hooks/useUserTimer';
 
-  const authStore = useAuthStore();
-  const participationsStore = useParticipationsStore();
+  const isSmallDevice = useSmallDevice();
+  const time = useUserTimer();
 </script>
 
 <style lang="scss" scoped>
@@ -67,12 +63,5 @@
     height: 1.5px;
     content: '';
     background-color: var(--gray-color-1);
-  }
-
-  .navigation,
-  .actions {
-    @media (max-width: $tablet) {
-      display: none;
-    }
   }
 </style>
