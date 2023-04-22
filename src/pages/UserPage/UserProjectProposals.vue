@@ -48,7 +48,9 @@
     isError,
     error,
     data: projectProposalList,
-  } = useProjectProposalList();
+  } = useProjectProposalList({
+    select: (list) => list.sort((a, b) => b.state.id - a.state.id),
+  });
 
   const PAGE_SIZE = 5;
   const PAGES_VISIBLE = 7;
