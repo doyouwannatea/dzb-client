@@ -30,10 +30,16 @@
     </RouterLink>
     <header :class="$style.header">
       <h1 class="page-title">
-        <template v-if="currentProjectProposalComputed">
+        <template v-if="userProjectProposalList.isFetching.value">
+          Загрузка...
+        </template>
+        <template v-else-if="!currentProjectProposalComputed">
+          Создание проектной заявки
+        </template>
+        <template v-else-if="isEditableProposalComputed">
           Редактирование проектной заявки
         </template>
-        <template v-else>Создание проектной заявки</template>
+        <template v-else>Просмотр проектной заявки</template>
       </h1>
       <ProjectProposalStatus
         v-if="currentProjectProposalComputed"
