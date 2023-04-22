@@ -25,7 +25,7 @@
         <ProjectSearchBadStub v-if="projectList && !projectList.length" />
         <template v-if="!loading && !error && projectList">
           <ProjectList :project-list="projectList" />
-          <ProjectListPagination
+          <BasePagination
             v-if="projectList && projectList.length"
             :page-size="PROJECTS_PER_PAGE"
             :pages-visible="
@@ -58,7 +58,7 @@
   import SidebarContainer from '@/components/layout/SidebarContainer.vue';
   import ProjectListFilter from '@/components/project/ProjectListFilter.vue';
   import ProjectList from '@/components/project/ProjectList.vue';
-  import ProjectListPagination from '@/components/project/ProjectListPagination.vue';
+  import BasePagination from '@/components/ui/BasePagination.vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
   import OpenProjectFilterModalButton from '@/components/project/OpenProjectFilterModalButton.vue';
   import ProjectListFilterModal from '../components/project/ProjectListFilterModal.vue';
