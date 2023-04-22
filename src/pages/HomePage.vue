@@ -32,6 +32,8 @@
               isSmallDevice ? PAGES_VISIBLE_MOBILE : PAGES_VISIBLE_DESKTOP
             "
             :total-items="projectCount"
+            :page="projectStore.filters.page"
+            @update:page="onPageChange"
           />
         </template>
       </template>
@@ -74,6 +76,11 @@
   const PROJECTS_PER_PAGE = 7;
   const PAGES_VISIBLE_DESKTOP = 7;
   const PAGES_VISIBLE_MOBILE = 4;
+
+  function onPageChange(page: number) {
+    projectStore.setFilters({ page });
+    projectStore.updateFilters();
+  }
 </script>
 
 <style lang="scss" scoped>
