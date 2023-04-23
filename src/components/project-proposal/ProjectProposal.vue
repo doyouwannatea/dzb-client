@@ -18,64 +18,91 @@
     <footer class="footer">
       <p class="subtitle">
         <template v-if="currentUserRoleList">
-          Роли в проекте: <b>{{ currentUserRoleList.join(', ') }}</b>
+          Роли в проекте:
+          <b
+            v-for="(role, index) in currentUserRoleList"
+            :key="role"
+            class="user-role"
+          >
+            {{
+              index === currentUserRoleList.length - 1 ? role : `${role},&nbsp;`
+            }}
+          </b>
         </template>
         <template v-else>Ваша роль в проекте не установлена</template>
       </p>
       <div class="actions">
-        <!-- TODO: вернуть после добавления функций удаления и редактирования -->
-        <!-- <BaseButton color="red" variant="inline-link">
-          <span class="icon" v-html="trashIcon"></span> удалить черновик
+        <BaseButton
+          v-if="showDeleteButton"
+          class="button-with-icon"
+          color="red"
+          variant="inline-link"
+          @click="deleteDraft"
+        >
+          <span class="icon" v-html="trashIcon"></span>
+          удалить черновик
         </BaseButton>
-        <BaseButton variant="inline-link">
-          <span class="icon" v-html="penIcon"></span>
-          редактировать заявку
-        </BaseButton> -->
+
+        <BaseButton
+          v-if="showRejectionReasonButton"
+          class="button-with-icon"
+          variant="inline-link"
+          @click="openRejectionModal"
+        >
+          <span class="icon" v-html="accentQuestionIcon"></span>
+          узнать причину отклонения
+        </BaseButton>
+
         <BaseButton
           is="router-link"
+          v-if="showEditButton"
+          class="button-with-icon"
           :to="toProjectCreateRoute(props.projectProposal.id)"
           variant="inline-link"
         >
-          <span class="icon">
-            <svg
-              width="25"
-              height="25"
-              viewBox="0 0 25 25"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12.7637 22.0663C18.2865 22.0663 22.7637 17.5891 22.7637 12.0663C22.7637 6.54344 18.2865 2.06628 12.7637 2.06628C7.24082 2.06628 2.76367 6.54344 2.76367 12.0663C2.76367 17.5891 7.24082 22.0663 12.7637 22.0663Z"
-                stroke="var(--accent-color-1)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M9.85352 9.06627C10.0886 8.39794 10.5527 7.83438 11.1635 7.47541C11.7743 7.11643 12.4924 6.98521 13.1907 7.10499C13.889 7.22476 14.5223 7.5878 14.9786 8.1298C15.4349 8.67181 15.6846 9.3578 15.6835 10.0663C15.6835 12.0663 12.6835 13.0663 12.6835 13.0663"
-                stroke="var(--accent-color-1)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M12.7637 17.0663H12.7737"
-                stroke="var(--accent-color-1)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </span>
+          <span class="icon" v-html="penIcon"></span>
+          редактировать заявку
+        </BaseButton>
+
+        <BaseButton
+          is="router-link"
+          v-else
+          class="button-with-icon"
+          :to="toProjectCreateRoute(props.projectProposal.id)"
+          variant="inline-link"
+        >
+          <span class="icon" v-html="accentQuestionIcon"></span>
           подробнее
         </BaseButton>
       </div>
     </footer>
   </BasePanel>
+
+  <ProjectProposalRejectionReasonModal
+    v-model:is-show="showRejectionModal"
+    :reason="props.projectProposal.rejection_reason"
+  >
+    <template #actions>
+      <BaseButton
+        v-if="showSaveAsDraftButton"
+        :disabled="updateProjectProposalMutation.isLoading.value"
+        variant="outlined"
+        @click="saveAsDraft"
+      >
+        <template v-if="updateProjectProposalMutation.isLoading.value">
+          сохранение...
+        </template>
+        <template v-else>сохранить как черновик</template>
+      </BaseButton>
+      <BaseButton variant="primary" @click="closeRejectionModal">
+        Закрыть
+      </BaseButton>
+    </template>
+  </ProjectProposalRejectionReasonModal>
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, ref } from 'vue';
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
   import { toProjectCreateRoute, toProjectRoute } from '@/router/utils/routes';
@@ -83,10 +110,17 @@
   import {
     CreatedProjectProposal,
     MemberRoleText,
+    MemberRole,
+    ProjectProposalStateId,
   } from '@/models/ProjectProposal';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import trashIcon from '@/assets/icons/trash.svg?raw';
   import penIcon from '@/assets/icons/pen.svg?raw';
+  import accentQuestionIcon from '@/assets/icons/accent-question-icon.svg?raw';
+  import ProjectProposalRejectionReasonModal from './ProjectProposalRejectionReasonModal.vue';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useUpdateProjectProposal } from '@/queries/useUpdateProjectProposal';
+  import { TYPE, useToast } from 'vue-toastification';
 
   interface Props {
     projectProposal: CreatedProjectProposal;
@@ -94,7 +128,13 @@
 
   const props = defineProps<Props>();
   const authStore = useAuthStore();
+  const modalsStore = useModalsStore();
+  const toast = useToast();
+  const updateProjectProposalMutation = useUpdateProjectProposal();
 
+  const showRejectionModal = ref(false);
+
+  // TODO: аналогичные кнопки и функции есть на странице CreateProjectPage.vue, надо отрефакторить
   const currentUser = computed(() =>
     props.projectProposal.supervisors.find(
       (member) => member.supervisor.id === authStore.profileData?.id,
@@ -103,6 +143,59 @@
   const currentUserRoleList = computed(() =>
     currentUser.value?.roles.map((role) => MemberRoleText[role.id]),
   );
+  const canUserEdit = computed(() =>
+    currentUser.value?.roles
+      .map((role) => role.id)
+      .includes(MemberRole.JobDeveloper),
+  );
+  const proposalState = computed(() => props.projectProposal.state.id);
+
+  const showEditButton = computed(
+    () =>
+      canUserEdit.value && proposalState.value === ProjectProposalStateId.Draft,
+  );
+  const showDeleteButton = computed(
+    () =>
+      canUserEdit.value && proposalState.value === ProjectProposalStateId.Draft,
+  );
+  const showSaveAsDraftButton = computed(
+    () =>
+      canUserEdit.value &&
+      proposalState.value === ProjectProposalStateId.Rejected,
+  );
+  const showRejectionReasonButton = computed(
+    () =>
+      proposalState.value === ProjectProposalStateId.Rejected ||
+      props.projectProposal.rejection_reason,
+  );
+
+  function saveAsDraft() {
+    updateProjectProposalMutation.mutate(
+      {
+        id: props.projectProposal.id,
+        projectProposal: { state_id: ProjectProposalStateId.Draft },
+      },
+      { onError },
+    );
+
+    function onError(error: unknown) {
+      toast(String(error), { type: TYPE.ERROR });
+    }
+  }
+
+  function deleteDraft() {
+    modalsStore.openAlertModal(
+      'Функция удаления черновика на данный момент недоступна 😢',
+    );
+  }
+
+  function closeRejectionModal() {
+    showRejectionModal.value = false;
+  }
+
+  function openRejectionModal() {
+    showRejectionModal.value = true;
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -119,10 +212,11 @@
     align-items: flex-end;
     justify-content: center;
     width: 1.6em;
+    height: 100%;
+  }
 
-    &:deep(svg) {
-      height: 100%;
-    }
+  .button-with-icon {
+    gap: 0.5rem;
   }
 
   .header {
@@ -184,5 +278,10 @@
     &:nth-child(4) {
       grid-row: 3;
     }
+  }
+
+  .user-role {
+    display: inline-block;
+    white-space: nowrap;
   }
 </style>

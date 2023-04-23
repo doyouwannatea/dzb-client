@@ -103,4 +103,5 @@ export interface CreatedProjectProposal extends ProjectProposal {
   skills: Skill[];
   specialities: Specialty[];
   project_specialities: SpecialtyGroup[];
+  rejection_reason?: string;
 }
