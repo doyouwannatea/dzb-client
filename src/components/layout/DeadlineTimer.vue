@@ -30,7 +30,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2.1875rem 2.5rem 1.375rem;
+    padding: 2.1875rem 1.8rem 1.375rem;
     margin-top: 1.25rem;
     text-align: center;
     background: #f1f4fe;
