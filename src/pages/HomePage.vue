@@ -25,13 +25,15 @@
         <ProjectSearchBadStub v-if="projectList && !projectList.length" />
         <template v-if="!loading && !error && projectList">
           <ProjectList :project-list="projectList" />
-          <ProjectListPagination
+          <BasePagination
             v-if="projectList && projectList.length"
             :page-size="PROJECTS_PER_PAGE"
             :pages-visible="
               isSmallDevice ? PAGES_VISIBLE_MOBILE : PAGES_VISIBLE_DESKTOP
             "
             :total-items="projectCount"
+            :page="projectStore.filters.page"
+            @update:page="onPageChange"
           />
         </template>
       </template>
@@ -56,7 +58,7 @@
   import SidebarContainer from '@/components/layout/SidebarContainer.vue';
   import ProjectListFilter from '@/components/project/ProjectListFilter.vue';
   import ProjectList from '@/components/project/ProjectList.vue';
-  import ProjectListPagination from '@/components/project/ProjectListPagination.vue';
+  import BasePagination from '@/components/ui/BasePagination.vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
   import OpenProjectFilterModalButton from '@/components/project/OpenProjectFilterModalButton.vue';
   import ProjectListFilterModal from '../components/project/ProjectListFilterModal.vue';
@@ -74,6 +76,11 @@
   const PROJECTS_PER_PAGE = 7;
   const PAGES_VISIBLE_DESKTOP = 7;
   const PAGES_VISIBLE_MOBILE = 4;
+
+  function onPageChange(page: number) {
+    projectStore.setFilters({ page });
+    projectStore.updateFilters();
+  }
 </script>
 
 <style lang="scss" scoped>

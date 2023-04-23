@@ -98,7 +98,7 @@
   }
 
   .action:hover,
-  .action.router-link-exact-active {
+  .action.router-link-active {
     color: var(--accent-color-1);
 
     &.mobile {

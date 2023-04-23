@@ -98,7 +98,7 @@ export const routes: RouteRecordRaw[] = [
     },
     children: [
       {
-        path: '',
+        path: 'info',
         name: RouteNames.USER_INFO,
         component: UserProfile,
         meta: {
@@ -125,7 +125,7 @@ export const routes: RouteRecordRaw[] = [
         },
       },
       {
-        path: 'project-proposals',
+        path: 'project-proposals/:page?',
         name: RouteNames.PROJECT_PROPOSALS,
         component: UserProjectProposals,
         meta: {

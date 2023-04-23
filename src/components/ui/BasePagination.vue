@@ -1,36 +1,36 @@
 <template>
   <nav class="pagination">
     <ul class="pagination-list">
-      <li :class="['pagination-item', { 'disabled-item': currentPage <= 1 }]">
+      <li :class="['pagination-item', { 'disabled-item': props.page <= 1 }]">
         <button
-          :disabled="currentPage <= 1"
+          :disabled="props.page <= 1"
           :class="['pagination-btn', 'pagination-arrow']"
-          :tabindex="currentPage <= 1 ? -1 : 0"
-          @click="setPage(currentPage - 1)"
+          :tabindex="props.page <= 1 ? -1 : 0"
+          @click="setPage(props.page - 1)"
         >
           &lt;
         </button>
       </li>
       <li
-        v-for="i in genPages()"
-        :key="i"
-        :class="['pagination-item', { active: i === currentPage }]"
+        v-for="pageLink in genPages()"
+        :key="pageLink"
+        :class="['pagination-item', { active: pageLink === props.page }]"
       >
-        <button class="pagination-btn" @click="setPage(i)">
-          {{ i }}
+        <button class="pagination-btn" @click="setPage(pageLink)">
+          {{ pageLink }}
         </button>
       </li>
       <li
         :class="[
           'pagination-item',
-          { 'disabled-item': currentPage >= totalPages },
+          { 'disabled-item': props.page >= totalPages },
         ]"
       >
         <button
-          :disabled="currentPage >= totalPages"
+          :disabled="props.page >= totalPages"
           :class="['pagination-btn', 'pagination-arrow']"
-          :tabindex="currentPage >= totalPages ? -1 : 0"
-          @click="setPage(currentPage + 1)"
+          :tabindex="props.page >= totalPages ? -1 : 0"
+          @click="setPage(props.page + 1)"
         >
           &gt;
         </button>
@@ -40,29 +40,37 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref, watch, withDefaults } from 'vue';
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { computed, ref, watch } from 'vue';
 
   type Props = {
+    page: number;
     totalItems: number;
     pageSize: number;
     pagesVisible: number;
-    defaultPage?: number;
+  };
+  type Emits = {
+    (event: 'update:page', page: number): void;
   };
 
-  const store = useProjectsStore();
-  const props = withDefaults(defineProps<Props>(), {
-    defaultPage: 1,
-  });
+  const props = defineProps<Props>();
+  const emit = defineEmits<Emits>();
 
   const totalPages = computed(() =>
     Math.ceil(props.totalItems / props.pageSize),
   );
-  const currentPage = ref(1);
   const startPage = ref(1);
   const endPage = ref(1);
 
-  watch(() => store.filters.page, updatePages, { immediate: true });
+  watch(
+    () => props.page,
+    (page, prevPage) => {
+      if (page === prevPage) return;
+      if (!page || page < 1) return setPage(1);
+      if (page > totalPages.value) return setPage(totalPages.value);
+      updatePages(page);
+    },
+    { immediate: true },
+  );
 
   // генерирует видимые ссылки пагинации
   function genPages() {
@@ -80,14 +88,9 @@
   }
 
   // обновляет состояние компонента
-  function updatePages(page?: number) {
-    currentPage.value = page || props.defaultPage;
-
-    if (currentPage.value < 1) {
-      currentPage.value = 1;
-    }
-    startPage.value = currentPage.value - Math.ceil(props.pagesVisible / 2);
-    endPage.value = currentPage.value + Math.floor(props.pagesVisible / 2) - 1;
+  function updatePages(page: number) {
+    startPage.value = page - Math.ceil(props.pagesVisible / 2);
+    endPage.value = page + Math.floor(props.pagesVisible / 2) - 1;
 
     if (startPage.value <= 0) {
       endPage.value -= startPage.value - 1;
@@ -103,8 +106,7 @@
   }
 
   function setPage(page: number) {
-    store.setFilters({ page });
-    store.updateFilters();
+    emit('update:page', page);
   }
 </script>
 
