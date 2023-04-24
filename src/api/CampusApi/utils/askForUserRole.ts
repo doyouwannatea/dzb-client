@@ -1,19 +1,19 @@
 import Cookies from 'js-cookie';
-import { UserMetadata } from '@/models/User';
+import { UserRole } from '@/models/User';
 
 // Выбор типа пользователя для тестирования
-type UserRole = keyof UserMetadata;
+type UserRoleKey = keyof UserRole;
 
-const isTeacherKey: UserRole = 'is_teacher';
-const isStudentKey: UserRole = 'is_student';
+const isTeacherKey: UserRoleKey = 'is_teacher';
+const isStudentKey: UserRoleKey = 'is_student';
 
-export function setUserRoleToCookies(role?: UserRole) {
+export function setUserRoleToCookies(role?: UserRoleKey) {
   Cookies.remove(isTeacherKey);
   Cookies.remove(isStudentKey);
   if (role) Cookies.set(role, '1');
 }
 
-export function getUserRoleFromCookies(): UserRole | undefined {
+export function getUserRoleFromCookies(): UserRoleKey | undefined {
   const isStudent = Cookies.get(isStudentKey);
   if (isStudent) return 'is_student';
 
@@ -23,7 +23,7 @@ export function getUserRoleFromCookies(): UserRole | undefined {
   return undefined;
 }
 
-export function askForUserRole(): UserRole | undefined {
+export function askForUserRole(): UserRoleKey | undefined {
   const isTeacher = window.confirm('Зайти как преподаватель?');
   if (isTeacher) return 'is_teacher';
 

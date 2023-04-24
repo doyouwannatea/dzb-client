@@ -8,9 +8,12 @@ export interface CommonUserData {
   about: string;
 }
 
-export interface UserMetadata {
+export interface UserRole {
   is_student: boolean;
   is_teacher: boolean;
+}
+
+export interface UserMetadata extends UserRole {
   canSendParticipations: boolean;
 }
 
