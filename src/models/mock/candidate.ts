@@ -13,6 +13,7 @@ export const userCandidate: UserCandidate = {
   canSendParticipations: true,
   is_student: true,
   is_teacher: false,
+  is_institute_director: false,
 };
 
 export const activeProjectId = 1;

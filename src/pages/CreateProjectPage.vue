@@ -24,7 +24,7 @@
   <PageLayout>
     <RouterLink
       :class="$style['back-link']"
-      :to="{ name: RouteNames.PROJECT_PROPOSALS }"
+      :to="{ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS }"
     >
       &lt;&nbsp;&nbsp;К списку заявок
     </RouterLink>
@@ -501,7 +501,7 @@
           !isEditableProposalComputed ||
           userProjectProposalList.isFetching.value
         "
-        :to="{ name: RouteNames.PROJECT_PROPOSALS }"
+        :to="{ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS }"
         variant="outlined"
       >
         Вернуться к заявкам
@@ -624,7 +624,7 @@
   import { specialtyFullName } from '@/helpers/specialty';
   import { TYPE, useToast } from 'vue-toastification';
   import { ProjectStateID } from '@/models/ProjectState';
-  import { toProjectCreateRoute } from '@/router/utils/routes';
+  import { toProjectProposalCreateRoute } from '@/router/utils/routes';
   import { useUpdateProjectProposal } from '@/queries/useUpdateProjectProposal';
   import { sortByRolePriority } from '@/helpers/project-member-role';
   import { useUserProjects } from '@/queries/useUserProjects';
@@ -1158,7 +1158,7 @@
   function onCancel() {
     function agree() {
       modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+      router.push({ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS });
     }
 
     function disagree() {
@@ -1177,7 +1177,7 @@
   function onSuccessCreateDraft(
     createdProjectProposal: CreatedProjectProposal,
   ) {
-    router.push(toProjectCreateRoute(createdProjectProposal.id));
+    router.push(toProjectProposalCreateRoute(createdProjectProposal.id));
 
     const title = 'Черновик успешно сохранён, вернуться в личный кабинет?';
     const agreeButtonTitle = 'вернуться в личный кабинет';
@@ -1185,7 +1185,7 @@
 
     function agree() {
       modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+      router.push({ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS });
     }
 
     function disagree() {
@@ -1210,12 +1210,12 @@
 
     function agree() {
       modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+      router.push({ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS });
     }
 
     function disagree() {
       modalsStore.openConfirmModal();
-      router.push(toProjectCreateRoute());
+      router.push(toProjectProposalCreateRoute());
       clearAllFields();
     }
 
@@ -1235,7 +1235,7 @@
 
     function agree() {
       modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+      router.push({ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS });
     }
 
     function disagree() {
@@ -1254,7 +1254,7 @@
   function onSuccessUpdateRejectedToDraft(
     createdProjectProposal: CreatedProjectProposal,
   ) {
-    router.push(toProjectCreateRoute(createdProjectProposal.id));
+    router.push(toProjectProposalCreateRoute(createdProjectProposal.id));
     modalsStore.openAlertModal(
       'Черновик создан',
       'Заявка сохранена как черновик, вы можете отредактировать заявку и отправить её ещё раз',

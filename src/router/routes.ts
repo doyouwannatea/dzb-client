@@ -80,12 +80,12 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     path: '/project/create/:id?',
-    name: RouteNames.USER_PROJECT_CREATE,
+    name: RouteNames.SUPERVISOR_PROJECT_PROPOSAL_CREATE,
     component: CreateProjectPage,
     meta: {
       title: 'Создать проектную заявку',
       requiresAuth: true,
-      role: ['teacher'],
+      role: ['is_teacher'],
     },
   },
   {
@@ -115,24 +115,24 @@ export const routes: RouteRecordRaw[] = [
       },
       {
         path: 'participations',
-        name: RouteNames.USER_PARTICIPATIONS,
+        name: RouteNames.CANDIDATE_PARTICIPATIONS,
         component: UserParticipations,
         meta: {
           type: ['user-nav'],
           order: 1,
           title: 'Мои заявки',
-          role: ['student'],
+          role: ['is_student'],
         },
       },
       {
         path: 'project-proposals/:page?',
-        name: RouteNames.PROJECT_PROPOSALS,
+        name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS,
         component: UserProjectProposals,
         meta: {
           type: ['user-nav'],
-          order: 1,
+          order: 2,
           title: 'Мои заявки',
-          role: ['teacher'],
+          role: ['is_teacher'],
         },
       },
       {
@@ -141,7 +141,7 @@ export const routes: RouteRecordRaw[] = [
         component: UserProjects,
         meta: {
           type: ['user-nav'],
-          order: 2,
+          order: 4,
           title: 'Мои проекты',
         },
       },

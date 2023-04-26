@@ -73,5 +73,6 @@ export const userSupervisor: UserSupervisor = {
   ...supervisorList[1],
   is_student: false,
   is_teacher: true,
+  is_institute_director: true,
   canSendParticipations: false,
 };

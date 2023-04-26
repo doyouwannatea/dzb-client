@@ -11,7 +11,10 @@ export interface CommonUserData {
 export interface UserRole {
   is_student: boolean;
   is_teacher: boolean;
+  is_institute_director: boolean;
 }
+
+export type UserRoleKey = keyof UserRole;
 
 export interface UserMetadata extends UserRole {
   canSendParticipations: boolean;

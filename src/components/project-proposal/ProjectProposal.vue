@@ -3,7 +3,7 @@
     <header class="header">
       <RouterLink
         class="title"
-        :to="toProjectCreateRoute(props.projectProposal.id)"
+        :to="toProjectProposalCreateRoute(props.projectProposal.id)"
       >
         {{ props.projectProposal.title }}
       </RouterLink>
@@ -57,7 +57,7 @@
           is="router-link"
           v-if="showEditButton"
           class="button-with-icon"
-          :to="toProjectCreateRoute(props.projectProposal.id)"
+          :to="toProjectProposalCreateRoute(props.projectProposal.id)"
           variant="inline-link"
         >
           <span class="icon" v-html="penIcon"></span>
@@ -68,7 +68,7 @@
           is="router-link"
           v-else
           class="button-with-icon"
-          :to="toProjectCreateRoute(props.projectProposal.id)"
+          :to="toProjectProposalCreateRoute(props.projectProposal.id)"
           variant="inline-link"
         >
           <span class="icon" v-html="accentQuestionIcon"></span>
@@ -105,7 +105,10 @@
   import { computed, ref } from 'vue';
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
-  import { toProjectCreateRoute, toProjectRoute } from '@/router/utils/routes';
+  import {
+    toProjectProposalCreateRoute,
+    toProjectRoute,
+  } from '@/router/utils/routes';
   import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
   import {
     CreatedProjectProposal,

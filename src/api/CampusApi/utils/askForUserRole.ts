@@ -1,8 +1,5 @@
 import Cookies from 'js-cookie';
-import { UserRole } from '@/models/User';
-
-// Выбор типа пользователя для тестирования
-type UserRoleKey = keyof UserRole;
+import { UserRoleKey } from '@/models/User';
 
 const isTeacherKey: UserRoleKey = 'is_teacher';
 const isStudentKey: UserRoleKey = 'is_student';
