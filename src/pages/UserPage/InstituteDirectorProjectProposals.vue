@@ -7,7 +7,7 @@
       :subtitle="String(error)"
     />
     <BaseStub
-      v-if="projectProposalList?.length === 0"
+      v-else-if="projectProposalList?.length === 0"
       title="Заявки на проекты не найдены :("
       subtitle="На данный момент Вам не отправили ни одной заявки на проект"
     />

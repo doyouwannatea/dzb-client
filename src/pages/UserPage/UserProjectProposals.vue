@@ -7,7 +7,7 @@
       :subtitle="String(error)"
     />
     <BaseStub
-      v-if="projectProposalList?.length === 0"
+      v-else-if="projectProposalList?.length === 0"
       title="Заявки на проекты не найдены :("
       subtitle="У вас пока нет ни одной заявки на проект"
     />
@@ -44,7 +44,6 @@
 
   const {
     isFetching,
-    isFetched,
     isError,
     error,
     data: projectProposalList,
