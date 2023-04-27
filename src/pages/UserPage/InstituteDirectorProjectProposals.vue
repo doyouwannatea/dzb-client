@@ -29,23 +29,47 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { useRouter } from 'vue-router';
-  import ProjectProposal from '../../components/project-proposal/ProjectProposal.vue';
   import { useProjectProposalList } from '@/queries/useProjectProposalList';
   import LoadingParticipationsList from './LoadingParticipationsList.vue';
   import BaseStub from '@/components/ui/BaseStub.vue';
   import BasePagination from '@/components/ui/BasePagination.vue';
   import { usePaginatedList } from '@/hooks/usePaginatedList';
   import InstituteDirectorProjectProposalCard from '@/components/project-proposal/InstituteDirectorProjectProposalCard.vue';
+  import {
+    FilterInstituteProjectProposalsBy,
+    toInstituteProjectProposals,
+  } from '@/router/utils/routes';
+  import { RouteNames } from '@/router/types/route-names';
 
   const router = useRouter();
   const route = useRoute();
 
+  const filterBy = computed<FilterInstituteProjectProposalsBy | null>(() =>
+    [
+      FilterInstituteProjectProposalsBy.Approved,
+      FilterInstituteProjectProposalsBy.New,
+      FilterInstituteProjectProposalsBy.Rejected,
+    ].includes(
+      String(route.params.filterBy) as FilterInstituteProjectProposalsBy,
+    )
+      ? (route.params.filterBy as FilterInstituteProjectProposalsBy)
+      : null,
+  );
+
+  watch(
+    () => filterBy.value,
+    (currentFilterBy) => {
+      if (route.name !== RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS) return;
+      if (!currentFilterBy) router.replace(toInstituteProjectProposals());
+    },
+    { immediate: true },
+  );
+
   const {
     isFetching,
-    isFetched,
     isError,
     error,
     data: projectProposalList,
@@ -55,6 +79,7 @@
 
   const PAGE_SIZE = 5;
   const PAGES_VISIBLE = 7;
+
   const currentPage = computed(() => Number(route.params.page) || 1);
   const paginatedProposals = usePaginatedList(projectProposalList, {
     pageSize: PAGE_SIZE,

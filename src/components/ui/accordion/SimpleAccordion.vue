@@ -1,9 +1,5 @@
 <template>
-  <BaseAccordion
-    :animated="animated"
-    :opened="opened"
-    @toggle="opened = !opened"
-  >
+  <BaseAccordion v-model:opened="opened" :animated="animated">
     <template #title>
       <slot name="title"></slot>
     </template>

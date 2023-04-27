@@ -1,5 +1,9 @@
 import { RouteRecordRaw } from 'vue-router';
 import { RouteNames } from './types/route-names';
+import {
+  FilterInstituteProjectProposalsBy,
+  toInstituteProjectProposals,
+} from './utils/routes';
 
 // P.S. тут раньше были динамические импорты, т.е. "() => import('@/pages/ProjectPage/index.vue')", но они плохо работали на продакшене "projfair.istu.edu", так что было решено оставить обычные импорты для всего приложения
 // Project page
@@ -137,7 +141,7 @@ export const routes: RouteRecordRaw[] = [
         },
       },
       {
-        path: 'inst-project-proposals/:page?',
+        path: 'inst-project-proposals/:filterBy?/:page?',
         name: RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS,
         component: InstituteDirectorProjectProposals,
         meta: {
@@ -145,6 +149,32 @@ export const routes: RouteRecordRaw[] = [
           order: 3,
           title: 'Заявки от института',
           role: ['is_institute_director'],
+          links: [
+            {
+              name: RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_NEW,
+              title: 'Новые заявки',
+              location: toInstituteProjectProposals(
+                FilterInstituteProjectProposalsBy.New,
+                1,
+              ),
+            },
+            {
+              name: RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_APPROVED,
+              title: 'Одобренные заявки',
+              location: toInstituteProjectProposals(
+                FilterInstituteProjectProposalsBy.Approved,
+                1,
+              ),
+            },
+            {
+              name: RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_REJECTED,
+              title: 'Отклонённые заявки',
+              location: toInstituteProjectProposals(
+                FilterInstituteProjectProposalsBy.Rejected,
+                1,
+              ),
+            },
+          ],
         },
       },
       {

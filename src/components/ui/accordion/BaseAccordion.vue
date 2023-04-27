@@ -1,7 +1,11 @@
 <template>
   <section :class="['accordion', { opened: opened, closed: !opened }]">
     <header class="header">
-      <button type="button" class="title" @click="emits('toggle')">
+      <button
+        type="button"
+        class="title"
+        @click="emits('update:opened', !props.opened)"
+      >
         <slot name="title"></slot>
         <slot name="icon">
           <span class="icon"></span>
@@ -11,8 +15,8 @@
     <Transition
       name="dropdown"
       :css="props.animated"
-      @enter="onEnter"
-      @leave="onLeave"
+      @enter="(el: Element) => onEnter(el as HTMLElement)"
+      @leave="(el: Element) => onLeave(el as HTMLElement)"
     >
       <div
         v-if="props.opened"
@@ -33,7 +37,7 @@
     animated?: boolean;
   }
   interface Emits {
-    (e: 'toggle'): void;
+    (e: 'update:opened', opened: boolean): void;
   }
 
   const props = withDefaults(defineProps<Props>(), {
