@@ -12,7 +12,7 @@
       :subtitle="String(error)"
     />
     <template v-else>
-      <SupervisorProjectProposalCard
+      <InstituteDirectorProjectProposalCard
         v-for="projectProposal in paginatedProposals"
         :key="projectProposal.id"
         :project-proposal="projectProposal"
@@ -32,12 +32,13 @@
   import { computed } from 'vue';
   import { useRoute } from 'vue-router';
   import { useRouter } from 'vue-router';
+  import ProjectProposal from '../../components/project-proposal/ProjectProposal.vue';
   import { useProjectProposalList } from '@/queries/useProjectProposalList';
   import LoadingParticipationsList from './LoadingParticipationsList.vue';
   import BaseStub from '@/components/ui/BaseStub.vue';
   import BasePagination from '@/components/ui/BasePagination.vue';
   import { usePaginatedList } from '@/hooks/usePaginatedList';
-  import SupervisorProjectProposalCard from '@/components/project-proposal/SupervisorProjectProposalCard.vue';
+  import InstituteDirectorProjectProposalCard from '@/components/project-proposal/InstituteDirectorProjectProposalCard.vue';
 
   const router = useRouter();
   const route = useRoute();

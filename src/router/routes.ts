@@ -13,6 +13,7 @@ import UserPage from '@/pages/UserPage/index.vue';
 import UserProfile from '@/pages/UserPage/UserProfile.vue';
 import UserProjects from '@/pages/UserPage/UserProjects.vue';
 import UserProjectProposals from '@/pages/UserPage/UserProjectProposals.vue';
+import InstituteDirectorProjectProposals from '@/pages/UserPage/InstituteDirectorProjectProposals.vue';
 import UserParticipations from '@/pages/UserPage/UserParticipations.vue';
 
 // Home page
@@ -133,6 +134,17 @@ export const routes: RouteRecordRaw[] = [
           order: 2,
           title: 'Мои заявки',
           role: ['is_teacher'],
+        },
+      },
+      {
+        path: 'inst-project-proposals/:page?',
+        name: RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS,
+        component: InstituteDirectorProjectProposals,
+        meta: {
+          type: ['user-nav'],
+          order: 3,
+          title: 'Заявки от института',
+          role: ['is_institute_director'],
         },
       },
       {

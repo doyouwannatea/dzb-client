@@ -1,82 +1,67 @@
 <template>
-  <BasePanel class="card">
-    <header class="header">
-      <RouterLink
-        class="title"
-        :to="toProjectProposalCreateRoute(props.projectProposal.id)"
+  <ProjectProposalCard :project-proposal="props.projectProposal">
+    <template #team-member="{ teamMember }">
+      <template v-if="teamMember.supervisor.id === authStore.profileData?.id">
+        <p :class="$style['member-roles-title']">Роли в проекте:&nbsp;</p>
+        <b
+          v-for="(role, index) in teamMember.roles"
+          :key="role.id"
+          :class="$style['user-role']"
+        >
+          {{
+            index === teamMember.roles.length - 1
+              ? role.name
+              : `${role.name},&nbsp;`
+          }}
+        </b>
+      </template>
+    </template>
+
+    <template #actions>
+      <BaseButton
+        v-if="showDeleteButton"
+        :class="$style['button-with-icon']"
+        color="red"
+        variant="inline-link"
+        @click="deleteDraft"
       >
-        {{ props.projectProposal.title }}
-      </RouterLink>
-      <ProjectProposalStatus
-        class="status"
-        :state="props.projectProposal.state"
-      />
-      <p class="subtitle">
-        {{ props.projectProposal.goal }}
-      </p>
-    </header>
-    <footer class="footer">
-      <p class="subtitle">
-        <template v-if="currentUserRoleList">
-          Роли в проекте:
-          <b
-            v-for="(role, index) in currentUserRoleList"
-            :key="role"
-            class="user-role"
-          >
-            {{
-              index === currentUserRoleList.length - 1 ? role : `${role},&nbsp;`
-            }}
-          </b>
-        </template>
-        <template v-else>Ваша роль в проекте не установлена</template>
-      </p>
-      <div class="actions">
-        <BaseButton
-          v-if="showDeleteButton"
-          class="button-with-icon"
-          color="red"
-          variant="inline-link"
-          @click="deleteDraft"
-        >
-          <span class="icon" v-html="trashIcon"></span>
-          удалить черновик
-        </BaseButton>
+        <span :class="$style.icon" v-html="trashIcon"></span>
+        удалить черновик
+      </BaseButton>
 
-        <BaseButton
-          v-if="showRejectionReasonButton"
-          class="button-with-icon"
-          variant="inline-link"
-          @click="openRejectionModal"
-        >
-          <span class="icon" v-html="accentQuestionIcon"></span>
-          узнать причину отклонения
-        </BaseButton>
+      <BaseButton
+        v-if="showRejectionReasonButton"
+        :class="$style['button-with-icon']"
+        variant="inline-link"
+        @click="openRejectionModal"
+      >
+        <span :class="$style.icon" v-html="accentQuestionIcon"></span>
+        узнать причину отклонения
+      </BaseButton>
 
-        <BaseButton
-          is="router-link"
-          v-if="showEditButton"
-          class="button-with-icon"
-          :to="toProjectProposalCreateRoute(props.projectProposal.id)"
-          variant="inline-link"
-        >
-          <span class="icon" v-html="penIcon"></span>
-          редактировать заявку
-        </BaseButton>
+      <BaseButton
+        is="router-link"
+        v-if="showEditButton"
+        :class="$style['button-with-icon']"
+        :to="toProjectProposalCreateRoute(props.projectProposal.id)"
+        variant="inline-link"
+      >
+        <span :class="$style.icon" v-html="penIcon"></span>
+        редактировать заявку
+      </BaseButton>
 
-        <BaseButton
-          is="router-link"
-          v-else
-          class="button-with-icon"
-          :to="toProjectProposalCreateRoute(props.projectProposal.id)"
-          variant="inline-link"
-        >
-          <span class="icon" v-html="accentQuestionIcon"></span>
-          подробнее
-        </BaseButton>
-      </div>
-    </footer>
-  </BasePanel>
+      <BaseButton
+        is="router-link"
+        v-else
+        :class="$style['button-with-icon']"
+        :to="toProjectProposalCreateRoute(props.projectProposal.id)"
+        variant="inline-link"
+      >
+        <span :class="$style.icon" v-html="accentQuestionIcon"></span>
+        подробнее
+      </BaseButton>
+    </template>
+  </ProjectProposalCard>
 
   <ProjectProposalRejectionReasonModal
     v-model:is-show="showRejectionModal"
@@ -103,16 +88,10 @@
 
 <script setup lang="ts">
   import { computed, ref } from 'vue';
-  import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
-  import {
-    toProjectProposalCreateRoute,
-    toProjectRoute,
-  } from '@/router/utils/routes';
-  import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
+  import { toProjectProposalCreateRoute } from '@/router/utils/routes';
   import {
     CreatedProjectProposal,
-    MemberRoleText,
     MemberRole,
     ProjectProposalStateId,
   } from '@/models/ProjectProposal';
@@ -124,6 +103,7 @@
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useUpdateProjectProposal } from '@/queries/useUpdateProjectProposal';
   import { TYPE, useToast } from 'vue-toastification';
+  import ProjectProposalCard from './ProjectProposalCard.vue';
 
   interface Props {
     projectProposal: CreatedProjectProposal;
@@ -142,9 +122,6 @@
     props.projectProposal.supervisors.find(
       (member) => member.supervisor.id === authStore.profileData?.id,
     ),
-  );
-  const currentUserRoleList = computed(() =>
-    currentUser.value?.roles.map((role) => MemberRoleText[role.id]),
   );
   const canUserEdit = computed(() =>
     currentUser.value?.roles
@@ -201,14 +178,8 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
   @import '@styles/breakpoints';
-
-  .actions {
-    display: flex;
-    gap: 1.25rem;
-    align-items: center;
-  }
 
   .icon {
     display: flex;
@@ -219,72 +190,15 @@
   }
 
   .button-with-icon {
-    gap: 0.5rem;
-  }
-
-  .header {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0.8125rem;
-    align-items: center;
-    padding-bottom: 1.25rem;
-  }
-
-  .status {
-    align-self: flex-start;
-    justify-self: flex-end;
-    white-space: nowrap;
-
-    @media (max-width: $tablet) {
-      grid-column: 2;
-      padding-right: 1rem;
-      padding-left: 1rem;
-    }
-  }
-
-  .card {
-    padding: 1.375rem 1.3125rem;
-  }
-
-  .footer {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .title {
-    max-width: 26.375rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    line-height: 1.9375rem;
-    color: #4f5569;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  .subtitle {
-    grid-column: 1 / -1;
-    max-width: 26.3125rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.25rem;
-    color: #4f5569;
-
-    &:nth-child(3) {
-      grid-row: 2;
-    }
-
-    &:nth-child(4) {
-      grid-row: 3;
-    }
+    gap: 0.5rem !important;
   }
 
   .user-role {
     display: inline-block;
     white-space: nowrap;
+  }
+
+  .member-roles-title {
+    display: inline-block;
   }
 </style>

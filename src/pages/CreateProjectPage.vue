@@ -1075,10 +1075,7 @@
               [...sharedRoleList, ...currentUserRoleList].includes(role),
             );
 
-          // сортируем роли
-          acceptedRoles = sortByRolePriority(
-            acceptedRoles.map((role) => ({ role })),
-          ).map((role) => role.role);
+          acceptedRoles = sortByRolePriority(acceptedRoles, (role) => role);
 
           return {
             role: acceptedRoles[0],
@@ -1090,7 +1087,7 @@
         });
 
       // сортируем команду по ролям
-      return sortByRolePriority(projectProposalTeam);
+      return sortByRolePriority(projectProposalTeam, (member) => member.role);
     }
   }
 
