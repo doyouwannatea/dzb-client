@@ -1,15 +1,15 @@
 <template>
   <section>
-    <BaseStub
-      v-if="!isError && isFetched && projectProposalList?.length === 0"
-      title="Заявки на проекты не найдены :("
-      subtitle="У вас пока нет ни одной заявки на проект"
-    />
     <LoadingParticipationsList v-if="isFetching" />
     <BaseStub
       v-else-if="isError"
       title="Ошибка загрузки списка заявок"
       :subtitle="String(error)"
+    />
+    <BaseStub
+      v-if="projectProposalList?.length === 0"
+      title="Заявки на проекты не найдены :("
+      subtitle="У вас пока нет ни одной заявки на проект"
     />
     <template v-else>
       <SupervisorProjectProposalCard
