@@ -11,6 +11,15 @@
 
     <template #actions>
       <BaseButton
+        v-if="proposalState === ProjectProposalStateId.Rejected"
+        variant="outlined"
+        :disabled="reviewProjectProposalMutation.isLoading.value"
+        @click="onOpenRejectionModal"
+      >
+        изменить причину отклонения
+      </BaseButton>
+      <BaseButton
+        v-else
         color="red"
         variant="outlined"
         :disabled="reviewProjectProposalMutation.isLoading.value"
@@ -19,6 +28,7 @@
         отклонить
       </BaseButton>
       <BaseButton
+        v-if="proposalState !== ProjectProposalStateId.Approved"
         variant="outlined"
         :disabled="reviewProjectProposalMutation.isLoading.value"
         @click="onApprove"
@@ -38,6 +48,7 @@
   <ProjectProposalRejectionReasonEditModal
     v-model:is-show="showRejectionReasonModal"
     :is-loading="reviewProjectProposalMutation.isLoading.value"
+    :reason="props.projectProposal.rejection_reason"
     @reject="onReject"
   />
 </template>
@@ -72,6 +83,9 @@
 
   const showRejectionReasonModal = ref(false);
 
+  const proposalState = computed<ProjectProposalStateId>(
+    () => props.projectProposal.state.id,
+  );
   const teamList = computed(() =>
     sortByRolePriority(
       Array.from(

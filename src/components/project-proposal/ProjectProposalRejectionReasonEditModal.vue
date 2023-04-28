@@ -3,7 +3,7 @@
     <h2>Причина отклонения заявки</h2>
 
     <BaseTextarea
-      v-model="reason"
+      v-model="reasonRef"
       :class="$style.textarea"
       :disabled="props.isLoading"
       placeholder="Опишите причину отклонения заявки"
@@ -11,6 +11,7 @@
 
     <div :class="$style.actions">
       <BaseButton variant="primary" @click="onCloseModal">Закрыть</BaseButton>
+
       <BaseButton
         color="red"
         variant="primary"
@@ -32,6 +33,7 @@
   type Props = {
     isShow: boolean;
     isLoading: boolean;
+    reason?: string;
   };
   type Emits = {
     (event: 'update:isShow', isShow: boolean): void;
@@ -41,13 +43,14 @@
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
 
-  const reason = ref('');
+  const reasonRef = ref(props.reason || '');
 
   function onCloseModal() {
+    if (props.reason) reasonRef.value = props.reason;
     emit('update:isShow', false);
   }
   function onReject() {
-    emit('reject', reason.value);
+    emit('reject', reasonRef.value);
   }
 </script>
 
