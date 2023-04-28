@@ -7,7 +7,7 @@
       :subtitle="String(error)"
     />
     <BaseStub
-      v-else-if="projectProposalList?.length === 0"
+      v-else-if="filteredProjectProposalList?.length === 0"
       title="Заявки на проекты не найдены :("
       subtitle="На данный момент Вам не отправили ни одной заявки на проект"
     />
@@ -19,7 +19,7 @@
       />
       <BasePagination
         :page="currentPage"
-        :total-items="projectProposalList?.length || 0"
+        :total-items="filteredProjectProposalList?.length || 0"
         :page-size="PAGE_SIZE"
         :pages-visible="PAGES_VISIBLE"
         @update:page="onPageChange"
@@ -39,25 +39,22 @@
   import { usePaginatedList } from '@/hooks/usePaginatedList';
   import InstituteDirectorProjectProposalCard from '@/components/project-proposal/InstituteDirectorProjectProposalCard.vue';
   import {
+    FilterByToProjectProposalStateId,
     FilterInstituteProjectProposalsBy,
     toInstituteProjectProposals,
   } from '@/router/utils/routes';
   import { RouteNames } from '@/router/types/route-names';
+  import { ProjectProposalStateId } from '@/models/ProjectProposal';
 
   const router = useRouter();
   const route = useRoute();
 
-  const filterBy = computed<FilterInstituteProjectProposalsBy | null>(() =>
-    [
-      FilterInstituteProjectProposalsBy.Approved,
-      FilterInstituteProjectProposalsBy.New,
-      FilterInstituteProjectProposalsBy.Rejected,
-    ].includes(
-      String(route.params.filterBy) as FilterInstituteProjectProposalsBy,
-    )
-      ? (route.params.filterBy as FilterInstituteProjectProposalsBy)
-      : null,
-  );
+  const filterBy = computed<ProjectProposalStateId | undefined>(() => {
+    const filterBy = String(
+      route.params.filterBy,
+    ) as FilterInstituteProjectProposalsBy;
+    return FilterByToProjectProposalStateId[filterBy];
+  });
 
   watch(
     () => filterBy.value,
@@ -77,11 +74,17 @@
     select: (list) => list.sort((a, b) => b.state.id - a.state.id),
   });
 
+  const filteredProjectProposalList = computed(() =>
+    projectProposalList.value?.filter(
+      (proposal) => proposal.state.id === filterBy.value,
+    ),
+  );
+
   const PAGE_SIZE = 5;
   const PAGES_VISIBLE = 7;
 
   const currentPage = computed(() => Number(route.params.page) || 1);
-  const paginatedProposals = usePaginatedList(projectProposalList, {
+  const paginatedProposals = usePaginatedList(filteredProjectProposalList, {
     pageSize: PAGE_SIZE,
     currentPage: currentPage,
   });

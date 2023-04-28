@@ -1,5 +1,6 @@
 import { LocationAsRelativeRaw, RouteLocationRaw } from 'vue-router';
 import { RouteNames } from '../types/route-names';
+import { ProjectProposalStateId } from '@/models/ProjectProposal';
 
 export function toProjectRoute(projectId: number): RouteLocationRaw {
   return { name: RouteNames.PROJECT_DETAILS, params: { id: projectId } };
@@ -19,6 +20,15 @@ export const enum FilterInstituteProjectProposalsBy {
   Approved = 'approved',
   Rejected = 'rejected',
 }
+
+export const FilterByToProjectProposalStateId: Record<
+  FilterInstituteProjectProposalsBy,
+  ProjectProposalStateId
+> = {
+  [FilterInstituteProjectProposalsBy.New]: ProjectProposalStateId.UnderReview,
+  [FilterInstituteProjectProposalsBy.Approved]: ProjectProposalStateId.Approved,
+  [FilterInstituteProjectProposalsBy.Rejected]: ProjectProposalStateId.Rejected,
+};
 
 export function toInstituteProjectProposals(
   filterBy = FilterInstituteProjectProposalsBy.New,
