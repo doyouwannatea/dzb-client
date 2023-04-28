@@ -14,7 +14,7 @@
         color="red"
         variant="outlined"
         :disabled="reviewProjectProposalMutation.isLoading.value"
-        @click="onReject"
+        @click="onOpenRejectionModal"
       >
         отклонить
       </BaseButton>
@@ -34,6 +34,12 @@
       </BaseButton>
     </template>
   </ProjectProposalCard>
+
+  <ProjectProposalRejectionReasonEditModal
+    v-model:is-show="showRejectionReasonModal"
+    :is-loading="reviewProjectProposalMutation.isLoading.value"
+    @reject="onReject"
+  />
 </template>
 
 <script setup lang="ts">
@@ -53,15 +59,18 @@
   } from '@/helpers/project-member-role';
   import { toProjectProposalCreateRoute } from '@/router/utils/routes';
   import { useReviewProjectProposal } from '@/queries/useReviewProjectProposal';
+  import ProjectProposalRejectionReasonEditModal from './ProjectProposalRejectionReasonEditModal.vue';
+  import { useToast } from 'vue-toastification';
 
   interface Props {
     projectProposal: CreatedProjectProposal;
   }
 
   const props = defineProps<Props>();
-  const reviewProjectProposalMutation = useReviewProjectProposal();
+  const reviewProjectProposalMutation = useReviewProjectProposal({ onError });
+  const toast = useToast();
 
-  const rejectionReason = ref<string>('');
+  const showRejectionReasonModal = ref(false);
 
   const teamList = computed(() =>
     sortByRolePriority(
@@ -82,12 +91,20 @@
     });
   }
 
-  function onReject() {
+  function onOpenRejectionModal() {
+    showRejectionReasonModal.value = true;
+  }
+
+  function onReject(reason: string) {
     reviewProjectProposalMutation.mutate({
       project_proposal_id: props.projectProposal.id,
       state_id: ProjectProposalStateId.Rejected,
-      rejection_reason: rejectionReason.value,
+      rejection_reason: reason,
     });
+  }
+
+  function onError(error: unknown) {
+    toast.error(String(error));
   }
 </script>
 
