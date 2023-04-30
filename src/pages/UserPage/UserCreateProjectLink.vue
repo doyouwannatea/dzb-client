@@ -1,8 +1,8 @@
 <template>
   <BaseButton
     is="router-link"
-    v-if="authStore.profileData && isSupervisor(authStore.profileData)"
-    :to="toProjectProposalCreateRoute(props.projectId)"
+    v-if="authStore.isTeacher"
+    :to="toProjectProposalCreateRoute()"
   >
     создать проектную заявку
   </BaseButton>
@@ -10,12 +10,8 @@
 
 <script setup lang="ts">
   import BaseButton from '@/components/ui/BaseButton.vue';
-  import { isSupervisor } from '@/helpers/typeCheck';
   import { toProjectProposalCreateRoute } from '@/router/utils/routes';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
 
-  type Props = { projectId?: number };
-
-  const props = defineProps<Props>();
   const authStore = useAuthStore();
 </script>
