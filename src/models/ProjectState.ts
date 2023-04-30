@@ -10,6 +10,14 @@ export const enum ProjectStateID {
 
 export type ProjectState = State<ProjectStateID>;
 
+export const PROJECT_IDS = [
+  ProjectStateID.ActiveState,
+  ProjectStateID.ArchivedState,
+  ProjectStateID.ExtraState,
+  ProjectStateID.ProcessingState,
+  ProjectStateID.RecruitingState,
+];
+
 export const StateClass: Record<ProjectStateID, string> = {
   [ProjectStateID.RecruitingState]: 'recruiting',
   [ProjectStateID.ActiveState]: 'active',

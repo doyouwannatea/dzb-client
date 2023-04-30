@@ -10,7 +10,7 @@ import {
 import { Tag } from '@/models/Tag';
 import { Specialty } from '@/models/Specialty';
 import { Project } from '@/models/Project';
-import { formatProjectDate } from '@/helpers/project';
+import { formatProjectDate, isProject, isProposal } from '@/helpers/project';
 
 export default class ProjectCreationApi extends IProjectCreationApi {
   async createProjectProposal(
@@ -42,24 +42,14 @@ export default class ProjectCreationApi extends IProjectCreationApi {
     const projectProposals = await baseKyInstance
       .get('api/supervisor/projects')
       .json<CreatedProjectProposal[]>();
-    return projectProposals.filter((proposal) =>
-      PROJECT_PROPOSAL_IDS.includes(proposal.state.id),
-    );
+    return projectProposals.filter(isProposal).map(formatProjectDate);
   }
 
   async getSupervisorProjectList(): Promise<Project[]> {
     const projectProposals = await baseKyInstance
       .get('api/supervisor/projects')
-      .json<CreatedProjectProposal[]>();
+      .json<(Project | CreatedProjectProposal)[]>();
 
-    return projectProposals
-      .filter((proposal) => !PROJECT_PROPOSAL_IDS.includes(proposal.state.id))
-      .map((proposal) => ({
-        ...proposal,
-        supervisorsNames: proposal.supervisors
-          .map((supervisor) => supervisor.supervisor.fio)
-          .join(', '),
-      }))
-      .map(formatProjectDate);
+    return projectProposals.filter(isProject).map(formatProjectDate);
   }
 }

@@ -42,9 +42,8 @@ export const enum ProjectProposalStateId {
   Approved = 9,
 }
 
-export type ProjectProposalState = State<
-  ProjectProposalStateId & ProjectStateID
->;
+export type ProjectProposalState = State<ProjectProposalStateId>;
+
 export const PROJECT_PROPOSAL_IDS = [
   ProjectProposalStateId.UnderReview,
   ProjectProposalStateId.Draft,
