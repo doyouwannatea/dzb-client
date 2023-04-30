@@ -35,11 +35,11 @@
                         v-if="
                           childLink.name ===
                             RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_NEW &&
-                          newCount
+                          proposalsCount[ProjectProposalStateId.UnderReview]
                         "
                         class="label"
                       >
-                        {{ newCount }}
+                        {{ proposalsCount[ProjectProposalStateId.UnderReview] }}
                       </span>
                       <span
                         v-else-if="
@@ -47,7 +47,9 @@
                           RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_APPROVED
                         "
                       >
-                        ({{ approvedCount }}/10)
+                        ({{
+                          proposalsCount[ProjectProposalStateId.Approved]
+                        }}/10)
                       </span>
                     </RouterLink>
                   </li>
@@ -79,6 +81,7 @@
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useInstituteProposalsInfo } from '@/hooks/useInstituteProposalsInfo';
+  import { ProjectProposalStateId } from '@/models/ProjectProposal';
 
   type Props = { variant: 'desktop' | 'mobile' };
   const props = withDefaults(defineProps<Props>(), { variant: 'desktop' });
@@ -88,7 +91,7 @@
   const authStore = useAuthStore();
   const { isInstDirector } = storeToRefs(authStore);
 
-  const { approvedCount, newCount } = useInstituteProposalsInfo({
+  const { proposalsCount } = useInstituteProposalsInfo({
     enabled: isInstDirector,
   });
 </script>

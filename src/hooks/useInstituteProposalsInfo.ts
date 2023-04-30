@@ -3,34 +3,37 @@ import { MaybeRef } from '@vueuse/core';
 import { ProjectProposalStateId } from '@/models/ProjectProposal';
 import { useProjectProposalList } from '@/queries/useProjectProposalList';
 
-export type Settings = {
+export type Options = {
   enabled?: MaybeRef<boolean>;
 };
 
-export type InstProposalsInfo = {
-  newCount: ComputedRef<number>;
-  approvedCount: ComputedRef<number>;
+type ProposalsCount = Record<ProjectProposalStateId, number>;
+
+export type UseInstituteProposalsInfoReturn = {
+  proposalsCount: ComputedRef<ProposalsCount>;
 };
 
 export function useInstituteProposalsInfo(
-  settings: Settings = {},
-): InstProposalsInfo {
+  options: Options = {},
+): UseInstituteProposalsInfoReturn {
   const projectProposalList = useProjectProposalList({
-    enabled: settings.enabled,
+    enabled: options.enabled,
   });
 
-  const newCount = computed(
-    () =>
-      projectProposalList.data.value?.filter(
-        (proposal) => proposal.state.id === ProjectProposalStateId.UnderReview,
-      )?.length || 0,
-  );
-  const approvedCount = computed(
-    () =>
-      projectProposalList.data.value?.filter(
-        (proposal) => proposal.state.id === ProjectProposalStateId.Approved,
-      )?.length || 0,
-  );
+  const proposalsCount = computed(() => {
+    const count: ProposalsCount = {
+      [ProjectProposalStateId.Approved]: 0,
+      [ProjectProposalStateId.Draft]: 0,
+      [ProjectProposalStateId.Rejected]: 0,
+      [ProjectProposalStateId.UnderReview]: 0,
+    };
+    if (!projectProposalList.data.value) return count;
 
-  return { approvedCount, newCount };
+    for (const proposal of projectProposalList.data.value) {
+      count[proposal.state.id] += 1;
+    }
+    return count;
+  });
+
+  return { proposalsCount };
 }
