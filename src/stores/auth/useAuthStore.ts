@@ -50,4 +50,15 @@ export const useAuthStore = defineStore('auth', {
     },
     // ON ASYNC
   },
+  getters: {
+    isInstDirector(): boolean {
+      return Boolean(this.profileData?.is_institute_director);
+    },
+    isTeacher(): boolean {
+      return Boolean(this.profileData?.is_teacher);
+    },
+    isStudent(): boolean {
+      return Boolean(this.profileData?.is_student);
+    },
+  },
 });

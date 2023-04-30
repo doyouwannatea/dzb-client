@@ -34,11 +34,12 @@
                       <span
                         v-if="
                           childLink.name ===
-                          RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_NEW
+                            RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_NEW &&
+                          newCount
                         "
                         class="label"
                       >
-                        50
+                        {{ newCount }}
                       </span>
                       <span
                         v-else-if="
@@ -46,7 +47,7 @@
                           RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_APPROVED
                         "
                       >
-                        (5/10)
+                        ({{ approvedCount }}/10)
                       </span>
                     </RouterLink>
                   </li>
@@ -70,16 +71,26 @@
 </template>
 
 <script setup lang="ts">
+  import { RouterLink } from 'vue-router';
+  import { storeToRefs } from 'pinia';
   import SimpleAccordion from '@/components/ui/accordion/SimpleAccordion.vue';
   import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
   import { RouteNames } from '@/router/types/route-names';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { RouterLink } from 'vue-router';
+  import { useInstituteProposalsInfo } from '@/hooks/useInstituteProposalsInfo';
 
   type Props = { variant: 'desktop' | 'mobile' };
   const props = withDefaults(defineProps<Props>(), { variant: 'desktop' });
   const modalsStore = useModalsStore();
   const routes = useRoledUserNavigationRoutes();
+
+  const authStore = useAuthStore();
+  const { isInstDirector } = storeToRefs(authStore);
+
+  const { approvedCount, newCount } = useInstituteProposalsInfo({
+    enabled: isInstDirector,
+  });
 </script>
 
 <style lang="scss" scoped>
