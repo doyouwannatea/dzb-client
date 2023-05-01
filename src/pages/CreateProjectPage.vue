@@ -613,21 +613,21 @@
   } from '@/models/Specialty';
   import { MultiselectObjectItem } from '@/models/VMultiselect';
 
-  import { useAllSupervisors } from '@/queries/useAllSupervisors';
-  import { useProjectSkills } from '@/queries/useProjectSkills';
-  import { useSpecialties } from '@/queries/useSpecialties';
-  import { useThemeSources } from '@/queries/useThemeSources';
-  import { useCreateProjectProposal } from '@/queries/useCreateProjectProposal';
+  import { useGetAllSupervisorsQuery } from '@/queries/useGetAllSupervisorsQuery';
+  import { useGetProjectSkillsQuery } from '@/queries/useAllProjectTagsQuery';
+  import { useGetSpecialtiesQuery } from '@/queries/useGetSpecialtiesQuery';
+  import { useGetThemeSourcesQuery } from '@/queries/useGetThemeSourcesQuery';
+  import { useCreateProjectProposalMutation } from '@/queries/useCreateProjectProposalMutation';
   import { ProjectDifficulty } from '@/models/ProjectDifficulty';
   import { RouteNames } from '@/router/types/route-names';
-  import { useProjectProposalList } from '@/queries/useProjectProposalList';
+  import { useGetProjectProposalListQuery } from '@/queries/useGetProjectProposalListQuery';
   import { specialtyFullName } from '@/helpers/specialty';
   import { TYPE, useToast } from 'vue-toastification';
   import { ProjectStateID } from '@/models/ProjectState';
   import { toProjectProposalCreateRoute } from '@/router/utils/routes';
-  import { useUpdateProjectProposal } from '@/queries/useUpdateProjectProposal';
+  import { useUpdateProjectProposalMutation } from '@/queries/useUpdateProjectProposalMutation';
   import { sortByRolePriority } from '@/helpers/project-member-role';
-  import { useUserProjects } from '@/queries/useUserProjects';
+  import { useGetUserProjectsQuery } from '@/queries/useGetUserProjectsQuery';
   import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
   import { RouterLink } from 'vue-router';
 
@@ -648,7 +648,7 @@
   const { profileData } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
 
-  const userProjectProposalList = useProjectProposalList({
+  const userProjectProposalList = useGetProjectProposalListQuery({
     onSuccess: onSuccessGetUserProjectProposalList,
     onError: onErrorGetUserProjectProposalList,
   });
@@ -659,7 +659,7 @@
     ),
   );
 
-  const prevUserProjects = useUserProjects({
+  const prevUserProjects = useGetUserProjectsQuery({
     onError,
     select: (projects) =>
       projects.filter((project) =>
@@ -668,12 +668,12 @@
         ),
       ),
   });
-  const supervisorList = useAllSupervisors({ onError });
-  const projectSkills = useProjectSkills({ onError });
-  const specialtyList = useSpecialties({ onError });
-  const themeSources = useThemeSources({ onError });
-  const createProjectProposalMutation = useCreateProjectProposal();
-  const updateProjectProposalMutation = useUpdateProjectProposal();
+  const supervisorList = useGetAllSupervisorsQuery({ onError });
+  const projectSkills = useGetProjectSkillsQuery({ onError });
+  const specialtyList = useGetSpecialtiesQuery({ onError });
+  const themeSources = useGetThemeSourcesQuery({ onError });
+  const createProjectProposalMutation = useCreateProjectProposalMutation();
+  const updateProjectProposalMutation = useUpdateProjectProposalMutation();
 
   const showSkillsEditModal = ref<boolean>(false);
   const showSpecialtyEditModal = ref<boolean>(false);

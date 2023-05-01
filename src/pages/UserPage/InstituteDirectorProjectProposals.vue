@@ -32,7 +32,7 @@
   import { computed, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { useRouter } from 'vue-router';
-  import { useProjectProposalList } from '@/queries/useProjectProposalList';
+  import { useGetProjectProposalListQuery } from '@/queries/useGetProjectProposalListQuery';
   import LoadingParticipationsList from './LoadingParticipationsList.vue';
   import BaseStub from '@/components/ui/BaseStub.vue';
   import BasePagination from '@/components/ui/BasePagination.vue';
@@ -70,7 +70,7 @@
     isError,
     error,
     data: projectProposalList,
-  } = useProjectProposalList({
+  } = useGetProjectProposalListQuery({
     select: (list) => list.sort((a, b) => b.state.id - a.state.id),
   });
 

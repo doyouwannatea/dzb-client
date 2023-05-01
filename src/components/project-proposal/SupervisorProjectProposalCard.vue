@@ -101,7 +101,7 @@
   import accentQuestionIcon from '@/assets/icons/accent-question-icon.svg?raw';
   import ProjectProposalRejectionReasonModal from './ProjectProposalRejectionReasonModal.vue';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { useUpdateProjectProposal } from '@/queries/useUpdateProjectProposal';
+  import { useUpdateProjectProposalMutation } from '@/queries/useUpdateProjectProposalMutation';
   import { TYPE, useToast } from 'vue-toastification';
   import ProjectProposalCard from './ProjectProposalCard.vue';
 
@@ -113,7 +113,7 @@
   const authStore = useAuthStore();
   const modalsStore = useModalsStore();
   const toast = useToast();
-  const updateProjectProposalMutation = useUpdateProjectProposal();
+  const updateProjectProposalMutation = useUpdateProjectProposalMutation();
 
   const showRejectionModal = ref(false);
 

@@ -69,7 +69,7 @@
     sortByRolePriority,
   } from '@/helpers/project-member-role';
   import { toProjectProposalCreateRoute } from '@/router/utils/routes';
-  import { useReviewProjectProposal } from '@/queries/useReviewProjectProposal';
+  import { useReviewProjectProposalMutation } from '@/queries/useReviewProjectProposalMutation';
   import ProjectProposalRejectionReasonEditModal from './ProjectProposalRejectionReasonEditModal.vue';
   import { useToast } from 'vue-toastification';
 
@@ -78,7 +78,9 @@
   }
 
   const props = defineProps<Props>();
-  const reviewProjectProposalMutation = useReviewProjectProposal({ onError });
+  const reviewProjectProposalMutation = useReviewProjectProposalMutation({
+    onError,
+  });
   const toast = useToast();
 
   const showRejectionReasonModal = ref(false);

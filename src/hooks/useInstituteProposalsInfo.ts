@@ -1,11 +1,9 @@
 import { ComputedRef, computed } from 'vue';
-import { MaybeRef } from '@vueuse/core';
 import { ProjectProposalStateId } from '@/models/ProjectProposal';
-import { useProjectProposalList } from '@/queries/useProjectProposalList';
-
-export type Options = {
-  enabled?: MaybeRef<boolean>;
-};
+import {
+  UseGetProjectProposalListQueryOptions,
+  useGetProjectProposalListQuery,
+} from '@/queries/useGetProjectProposalListQuery';
 
 type ProposalsCount = Record<ProjectProposalStateId, number>;
 
@@ -14,11 +12,9 @@ export type UseInstituteProposalsInfoReturn = {
 };
 
 export function useInstituteProposalsInfo(
-  options: Options = {},
+  options?: UseGetProjectProposalListQueryOptions,
 ): UseInstituteProposalsInfoReturn {
-  const projectProposalList = useProjectProposalList({
-    enabled: options.enabled,
-  });
+  const projectProposalList = useGetProjectProposalListQuery(options);
 
   const proposalsCount = computed(() => {
     const count: ProposalsCount = {

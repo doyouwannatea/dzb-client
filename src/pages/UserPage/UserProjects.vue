@@ -18,7 +18,7 @@
 <script setup lang="ts">
   import ProjectList from '@/components/project/ProjectList.vue';
   import BaseStub from '@/components/ui/BaseStub.vue';
-  import { useUserProjects } from '@/queries/useUserProjects';
+  import { useGetUserProjectsQuery } from '@/queries/useGetUserProjectsQuery';
 
-  const userProjects = useUserProjects();
+  const userProjects = useGetUserProjectsQuery();
 </script>
