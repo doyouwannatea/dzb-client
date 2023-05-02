@@ -17,14 +17,16 @@ export const useModalsStore = defineStore('modals', {
       const participationsStore = useParticipationsStore();
       const projectsStore = useProjectsStore();
 
-      if (!authStore.profileData) {
+      const { profileData } = authStore;
+
+      if (!profileData) {
         this.authModal = true;
         return;
       }
 
-      if (!isCandidate(authStore.profileData)) return;
+      if (!isCandidate(profileData)) return;
 
-      if (!authStore.profileData.canSendParticipations) {
+      if (!profileData.canSendParticipations) {
         this.openAlertModal(
           'На данный момент Вы не можете подавать заявки на проекты',
         );
@@ -41,10 +43,7 @@ export const useModalsStore = defineStore('modals', {
       }
 
       const isSameInstitute = await this._onAsync(() =>
-        projectIncludesCandidateSpeciality(
-          authStore.profileData as UserCandidate,
-          project,
-        ),
+        projectIncludesCandidateSpeciality(profileData, project),
       );
 
       if (!isSameInstitute) {

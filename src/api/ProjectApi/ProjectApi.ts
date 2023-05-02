@@ -5,19 +5,18 @@ import {
   ProjectType,
   ProjectTags,
 } from '@/models/Project';
-import IProjectApi, {
+import ProjectApiType, {
   OnDownloadProgress,
   ProjectListResponse,
-} from './IProjectApi';
+} from './ProjectApiType';
 import { ProjectState } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
-import { Supervisor } from '@/models/Supervisor';
 import { baseKyInstance } from '../baseKy';
 import { Candidate } from '@/models/Candidate';
 import { compareString } from '@/helpers/string';
 import { Tag } from '@/models/Tag';
 
-export default class ProjectApi extends IProjectApi {
+export default class ProjectApi implements ProjectApiType {
   async getSingleProject(projectId: number): Promise<Project> {
     const [project, participants] = await Promise.all([
       baseKyInstance.get(`api/projects/${projectId}`).json<Project>(),
@@ -58,10 +57,6 @@ export default class ProjectApi extends IProjectApi {
     return tags as unknown as ProjectTags;
   }
 
-  async getAllSupervisors(): Promise<Supervisor[]> {
-    return baseKyInstance.get('api/supervisors').json();
-  }
-
   async getAllProjectTypes(): Promise<ProjectType[]> {
     return baseKyInstance.get('api/types').json();
   }
@@ -86,22 +81,6 @@ export default class ProjectApi extends IProjectApi {
         .get(`api/projects/${projectId}/history`)
         .json();
       return projectList.map(formatProjectDate);
-    } catch (error) {
-      return [];
-    }
-  }
-
-  async getActiveUserProject(): Promise<Project | undefined> {
-    try {
-      return await baseKyInstance.get('api/activeProject').json();
-    } catch (error) {
-      return undefined;
-    }
-  }
-
-  async getArhiveUserProjects(): Promise<Project[]> {
-    try {
-      return await baseKyInstance.get('api/arhiveProjects').json();
     } catch (error) {
       return [];
     }

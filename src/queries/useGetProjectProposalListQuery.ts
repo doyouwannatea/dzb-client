@@ -1,9 +1,9 @@
 import { useQuery, UseQueryOptions } from 'vue-query';
-import { projectCreationApi } from '@/api/ProjectCreationApi';
-import IProjectCreationApi from '@/api/ProjectCreationApi/IProjectCreationApi';
+import SupervisorApiType from '@/api/SupervisorApi/SupervisorApiType';
+import { supervisorApi } from '@/api/SupervisorApi';
 
 type TQueryFnData = Awaited<
-  ReturnType<IProjectCreationApi['getProjectProposalList']>
+  ReturnType<SupervisorApiType['getProjectProposalList']>
 >;
 
 export type UseGetProjectProposalListQueryOptions<T = TQueryFnData> =
@@ -22,7 +22,7 @@ export const useGetProjectProposalListQuery = <T = TQueryFnData>(
 ) =>
   useQuery(
     USE_GET_PROJECT_PROPOSAL_LIST_QUERY_KEY,
-    projectCreationApi.getProjectProposalList,
+    supervisorApi.getProjectProposalList,
     {
       staleTime: Infinity,
       placeholderData: () => [],

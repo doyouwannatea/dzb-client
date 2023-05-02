@@ -1,10 +1,10 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
-import { projectApi } from '@/api/ProjectApi';
-import { projectCreationApi } from '@/api/ProjectCreationApi';
+import { supervisorApi } from '@/api/SupervisorApi';
 import { isCandidate, isSupervisor } from '@/helpers/typeCheck';
 import { Project } from '@/models/Project';
 import { useAuthStore } from '@/stores/auth/useAuthStore';
 import { AUTH_REQUIRED } from '@/values/error-messages';
+import { candidateApi } from '@/api/CandidateApi';
 
 type TQueryFnData = Project[];
 
@@ -30,14 +30,14 @@ export const useGetUserProjectsQuery = <T = TQueryFnData>(
       if (!profileData) throw new Error(AUTH_REQUIRED);
 
       if (isSupervisor(profileData)) {
-        return projectCreationApi.getSupervisorProjectList();
+        return supervisorApi.getProjectList();
       }
 
       if (isCandidate(profileData)) {
         const candidateProjectList: Project[] = [];
         const [activeProject, arhiveProjects] = await Promise.all([
-          projectApi.getActiveUserProject(),
-          projectApi.getArhiveUserProjects(),
+          candidateApi.getActiveProject(),
+          candidateApi.getArchiveProjectList(),
         ]);
         if (activeProject) candidateProjectList.push(activeProject);
         candidateProjectList.push(...arhiveProjects);

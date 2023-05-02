@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { participationApi } from '@/api/ParticipationApi';
 import {
   ParticipationPriority,
   ParticipationWithProject,
@@ -7,6 +6,8 @@ import {
 import { useModalsStore } from '../modals/useModalsStore';
 import { useProjectsStore } from '../projects/useProjectsStore';
 import { state } from './state';
+import { candidateApi } from '@/api/CandidateApi';
+import { supervisorApi } from '@/api/SupervisorApi';
 
 export const useParticipationsStore = defineStore('participations', {
   state,
@@ -14,7 +15,7 @@ export const useParticipationsStore = defineStore('participations', {
     // OPEN PARTICIPATION MODAL
     getParticipationList() {
       return this._onAsync(async () => {
-        this.participationList = await participationApi.getParticipationList();
+        this.participationList = await candidateApi.getParticipationList();
       });
     },
     // OPEN PARTICIPATION MODAL
@@ -25,8 +26,8 @@ export const useParticipationsStore = defineStore('participations', {
       const projectsStore = useProjectsStore();
 
       return this._onAsync(async () => {
-        await participationApi.createProjectParticipation(priority, projectId);
-        this.participationList = await participationApi.getParticipationList();
+        await candidateApi.createProjectParticipation(priority, projectId);
+        this.participationList = await candidateApi.getParticipationList();
         await projectsStore.getSingleProject(projectId);
         modalsStore.participationSuccessModal = true;
         modalsStore.participationModal = false;
@@ -37,7 +38,7 @@ export const useParticipationsStore = defineStore('participations', {
     // UPDATE PARTICIPATIONS PRIORITIES
     updateParticipationsPriorities(participations: ParticipationWithProject[]) {
       return this._onAsync(async () => {
-        await participationApi.updateParticipationList(participations);
+        await candidateApi.updateParticipationList(participations);
         this.participationList = participations;
       });
     },
@@ -46,20 +47,19 @@ export const useParticipationsStore = defineStore('participations', {
     // DELETE PARTICIPATION
     deleteParticipation(id: number) {
       return this._onAsync(async () => {
-        await participationApi.deleteParticipation(id);
-        this.participationList = await participationApi.getParticipationList();
+        await candidateApi.deleteParticipation(id);
+        this.participationList = await candidateApi.getParticipationList();
       });
     },
     // DELETE PARTICIPATION
 
     // GET PARTICIPATION AND PROJECT TIME
     async getCandidateParticipationTime() {
-      this.participationTime =
-        await participationApi.getCandidateParticipationTime();
+      this.participationTime = await candidateApi.getParticipationsTime();
     },
+
     async getSupervisorParticipationTime() {
-      this.projectTime =
-        await participationApi.getSupervisorParticipationTime();
+      this.projectTime = await supervisorApi.getProposalsTime();
     },
     // GET PARTICIPATION AND PROJECT TIME
 

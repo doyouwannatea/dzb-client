@@ -50,21 +50,6 @@ export const useProjectsStore = () => {
       },
       // GET PROJECT LIST
 
-      // GET USER PROJECT LIST
-      async getUserProjectList() {
-        this.userProjectList = undefined;
-        return this._onAsync(async () => {
-          const [activeProject, arhiveProjects] = await Promise.all([
-            projectApi.getActiveUserProject(),
-            projectApi.getArhiveUserProjects(),
-          ]);
-          this.userProjectList = [];
-          if (activeProject) this.userProjectList.push(activeProject);
-          this.userProjectList.push(...arhiveProjects);
-        });
-      },
-      // GET USER PROJECT LIST
-
       // GET SINGLE PROJECT
       async getSingleProject(projectId: number) {
         this.openedProject = undefined;

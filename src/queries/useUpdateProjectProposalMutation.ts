@@ -1,10 +1,11 @@
 import { UseMutationOptions, useMutation, useQueryClient } from 'vue-query';
-import { projectCreationApi } from '@/api/ProjectCreationApi';
-import IProjectCreationApi from '@/api/ProjectCreationApi/IProjectCreationApi';
-import { USE_GET_PROJECT_PROPOSAL_LIST_QUERY_KEY } from './useGetProjectProposalListQuery';
 
-type TData = Awaited<ReturnType<IProjectCreationApi['updateProjectProposal']>>;
-type TVariables = Parameters<IProjectCreationApi['updateProjectProposal']>[0];
+import { USE_GET_PROJECT_PROPOSAL_LIST_QUERY_KEY } from './useGetProjectProposalListQuery';
+import SupervisorApiType from '@/api/SupervisorApi/SupervisorApiType';
+import { supervisorApi } from '@/api/SupervisorApi';
+
+type TData = Awaited<ReturnType<SupervisorApiType['updateProjectProposal']>>;
+type TVariables = Parameters<SupervisorApiType['updateProjectProposal']>[0];
 
 export type UseCreateProjectProposalMutationOptions = UseMutationOptions<
   TData,
@@ -23,7 +24,7 @@ export const useUpdateProjectProposalMutation = (
 
   return useMutation(
     USE_UPDATE_PROJECT_PROPOSAL_MUTATION_KEY,
-    projectCreationApi.updateProjectProposal,
+    supervisorApi.updateProjectProposal,
     {
       onSuccess: () => {
         client.invalidateQueries(USE_GET_PROJECT_PROPOSAL_LIST_QUERY_KEY);

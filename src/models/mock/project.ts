@@ -1,4 +1,4 @@
-import { ProjectListResponse } from '@/api/ProjectApi/IProjectApi';
+import { ProjectListResponse } from '@/api/ProjectApi/ProjectApiType';
 import { ParticipationState } from '../Participation';
 import { Project, ProjectType } from '../Project';
 import { ProjectState, ProjectStateID } from '../ProjectState';

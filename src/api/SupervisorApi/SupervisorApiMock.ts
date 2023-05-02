@@ -7,12 +7,20 @@ import {
 } from '@/models/ProjectProposal';
 import { Specialty } from '@/models/Specialty';
 import { Tag } from '@/models/Tag';
-import IProjectCreationApi, {
-  UpdateProjectProposalData,
-} from './IProjectCreationApi';
-import { Project } from '@/models/Project';
 
-export default class ProjectCreationApiMock extends IProjectCreationApi {
+import { Project } from '@/models/Project';
+import SupervisorApiType, {
+  UpdateProjectProposalData,
+} from './SupervisorApiType';
+
+export default class SupervisorApiMock implements SupervisorApiType {
+  async getProposalsTime(): Promise<[string, string]> {
+    return Promise.all([
+      delayRes(new Date(Date.now() + 10000).toISOString(), 1000),
+      delayRes(new Date(Date.now() + 200000000).toISOString(), 1000),
+    ]);
+  }
+
   async createProjectProposal(
     projectProposal: NewProjectProposal,
   ): Promise<CreatedProjectProposal> {
@@ -43,7 +51,7 @@ export default class ProjectCreationApiMock extends IProjectCreationApi {
     return [];
   }
 
-  async getSupervisorProjectList(): Promise<Project[]> {
+  async getProjectList(): Promise<Project[]> {
     return [];
   }
 }

@@ -1,8 +1,8 @@
+import { supervisorApi } from '@/api/SupervisorApi';
+import SupervisorApiType from '@/api/SupervisorApi/SupervisorApiType';
 import { UseQueryOptions, useQuery } from 'vue-query';
-import { projectCreationApi } from '@/api/ProjectCreationApi';
-import IProjectCreationApi from '@/api/ProjectCreationApi/IProjectCreationApi';
 
-type TQueryFnData = Awaited<ReturnType<IProjectCreationApi['getThemeSources']>>;
+type TQueryFnData = Awaited<ReturnType<SupervisorApiType['getThemeSources']>>;
 
 export type UseGetThemeSourcesQueryOptions<T = TQueryFnData> = UseQueryOptions<
   TQueryFnData,
@@ -17,11 +17,7 @@ export const USE_GET_THEME_SOURCES_QUERY_KEY =
 export const useGetThemeSourcesQuery = <T = TQueryFnData>(
   options?: UseGetThemeSourcesQueryOptions<T>,
 ) =>
-  useQuery(
-    USE_GET_THEME_SOURCES_QUERY_KEY,
-    projectCreationApi.getThemeSources,
-    {
-      staleTime: Infinity,
-      ...options,
-    },
-  );
+  useQuery(USE_GET_THEME_SOURCES_QUERY_KEY, supervisorApi.getThemeSources, {
+    staleTime: Infinity,
+    ...options,
+  });

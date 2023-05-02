@@ -1,10 +1,12 @@
 import { CreatedProjectProposal } from '@/models/ProjectProposal';
-import IInstituteDirectorApi, {
+import InstituteDirectorApiType, {
   ReviewProjectProposalData,
-} from './IInstituteDirectorApi';
+} from './InstituteDirectorApiType';
 import { delayRes } from '@/helpers/promise';
 
-export default class InstituteDirectorApiMock extends IInstituteDirectorApi {
+export default class InstituteDirectorApiMock
+  implements InstituteDirectorApiType
+{
   async reviewProjectProposal(
     data: ReviewProjectProposalData,
   ): Promise<CreatedProjectProposal> {

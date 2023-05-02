@@ -1,9 +1,9 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
 import { projectApi } from '@/api/ProjectApi';
-import IProjectApi from '@/api/ProjectApi/IProjectApi';
+import ProjectApiType from '@/api/ProjectApi/ProjectApiType';
 import { Skill } from '@/models/Project';
 
-type TQueryFnData = Awaited<ReturnType<IProjectApi['getAllProjectTags']>>;
+type TQueryFnData = Awaited<ReturnType<ProjectApiType['getAllProjectTags']>>;
 
 export type UseGetAllProjectTagsQueryOptions<T = TQueryFnData> =
   UseQueryOptions<

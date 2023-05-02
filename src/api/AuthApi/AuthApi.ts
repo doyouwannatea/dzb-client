@@ -1,4 +1,4 @@
-import ICampusApi from './ICampusApi';
+import AuthApiType from './AuthApiType';
 import { baseKyInstance } from '../baseKy';
 import { UserCandidate, UserSupervisor } from '@/models/User';
 import {
@@ -11,7 +11,7 @@ import {
   setAuthTokenToCookies,
 } from './utils/authToken';
 
-export default class CampusApi extends ICampusApi {
+export default class AuthApi implements AuthApiType {
   async auth(): Promise<void> {
     const isMockAuth = import.meta.env.VITE_MOCK_AUTH;
     if (!isMockAuth || isMockAuth === 'false') {

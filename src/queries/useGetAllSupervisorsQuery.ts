@@ -1,8 +1,8 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
-import { projectApi } from '@/api/ProjectApi';
-import IProjectApi from '@/api/ProjectApi/IProjectApi';
+import { sharedApi } from '@/api/SharedApi';
+import SharedApiType from '@/api/SharedApi/SharedApiType';
 
-type TQueryFnData = Awaited<ReturnType<IProjectApi['getAllSupervisors']>>;
+type TQueryFnData = Awaited<ReturnType<SharedApiType['getAllSupervisors']>>;
 
 export type UseGetAllSupervisorsQueryOptions<T = TQueryFnData> =
   UseQueryOptions<
@@ -18,7 +18,7 @@ export const USE_GET_ALL_SUPERVISORS_QUERY_KEY =
 export const useGetAllSupervisorsQuery = <T = TQueryFnData>(
   options?: UseGetAllSupervisorsQueryOptions<T>,
 ) =>
-  useQuery(USE_GET_ALL_SUPERVISORS_QUERY_KEY, projectApi.getAllSupervisors, {
+  useQuery(USE_GET_ALL_SUPERVISORS_QUERY_KEY, sharedApi.getAllSupervisors, {
     staleTime: Infinity,
     placeholderData: () => [],
     ...options,

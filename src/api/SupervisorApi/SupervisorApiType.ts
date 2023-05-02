@@ -11,15 +11,16 @@ export interface UpdateProjectProposalData {
   id: number;
 }
 
-export default abstract class IProjectCreationApi {
-  abstract createProjectProposal(
+export default interface SupervisorApiType {
+  createProjectProposal(
     projectProposal: NewProjectProposal,
   ): Promise<CreatedProjectProposal>;
-  abstract updateProjectProposal(
+  updateProjectProposal(
     data: UpdateProjectProposalData,
   ): Promise<CreatedProjectProposal>;
-  abstract getThemeSources(): Promise<Tag[]>;
-  abstract getSpecialties(): Promise<Specialty[]>;
-  abstract getProjectProposalList(): Promise<CreatedProjectProposal[]>;
-  abstract getSupervisorProjectList(): Promise<Project[]>;
+  getThemeSources(): Promise<Tag[]>;
+  getSpecialties(): Promise<Specialty[]>;
+  getProjectProposalList(): Promise<CreatedProjectProposal[]>;
+  getProjectList(): Promise<Project[]>;
+  getProposalsTime(): Promise<[string, string]>;
 }

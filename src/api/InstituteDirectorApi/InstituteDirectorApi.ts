@@ -1,10 +1,10 @@
 import { CreatedProjectProposal } from '@/models/ProjectProposal';
 import { baseKyInstance } from '../baseKy';
-import IInstituteDirectorApi, {
+import InstituteDirectorApiType, {
   ReviewProjectProposalData,
-} from './IInstituteDirectorApi';
+} from './InstituteDirectorApiType';
 
-export default class InstituteDirectorApi extends IInstituteDirectorApi {
+export default class InstituteDirectorApi implements InstituteDirectorApiType {
   async reviewProjectProposal(
     data: ReviewProjectProposalData,
   ): Promise<CreatedProjectProposal> {

@@ -3,7 +3,7 @@ import { useToast } from 'vue-toastification';
 import {
   AUTH_TOKEN_KEY,
   getAuthTokenFromCookies,
-} from './CampusApi/utils/authToken';
+} from './AuthApi/utils/authToken';
 
 const toast = useToast();
 

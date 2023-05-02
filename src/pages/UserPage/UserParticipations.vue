@@ -134,8 +134,8 @@
   import LoadingParticipationsList from '@/pages/UserPage/LoadingParticipationsList.vue';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { participationApi } from '@/api/ParticipationApi';
   import { isCandidate } from '@/helpers/typeCheck';
+  import { isAutoParticipation } from '@/api/CandidateApi/utils/participations';
 
   type EditableListItem = {
     order: number;
@@ -171,7 +171,7 @@
       initList();
       if (
         participationList?.find((participation) =>
-          participationApi.isAutoParticipation(participation.priority),
+          isAutoParticipation(participation.priority),
         )
       ) {
         modalsStore.openAutoParticipationInfoModal();

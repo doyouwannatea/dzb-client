@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { state } from './state';
-import { campusApi } from '@/api/CampusApi';
+import { authApi } from '@/api/AuthApi';
 import { useProjectsStore } from '../projects/useProjectsStore';
 import { RouteNames } from '@/router/types/route-names';
 import { useSaveCurrentRoute } from '@/hooks/useSaveRoute';
@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', {
     auth() {
       return this._onAsync(async () => {
         useSaveCurrentRoute(this.$router.currentRoute.value.fullPath);
-        await campusApi.auth();
+        await authApi.auth();
       });
     },
     // AUTH
@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', {
     async exit() {
       const projectStore = useProjectsStore();
 
-      await campusApi.logout();
+      await authApi.logout();
       this.$router.replace({ name: RouteNames.HOME });
       this.profileData = undefined;
       await projectStore.getAddProjectData();
@@ -31,7 +31,7 @@ export const useAuthStore = defineStore('auth', {
     // FETCH USER DATA
     fetchUserData() {
       return this._onAsync(async () => {
-        this.profileData = await campusApi.getUserInfo();
+        this.profileData = await authApi.getUserInfo();
       });
     },
     // FETCH USER DATA

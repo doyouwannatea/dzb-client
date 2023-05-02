@@ -3,7 +3,7 @@ import { delayRes, sleep } from '@/helpers/promise';
 import { userCandidate } from '@/models/mock/candidate';
 import { userSupervisor } from '@/models/mock/supervisor';
 import { UserCandidate, UserSupervisor } from '@/models/User';
-import ICampusApi from './ICampusApi';
+import AuthApiType from './AuthApiType';
 import {
   askForUserRole,
   setUserRoleToCookies,
@@ -16,7 +16,7 @@ import {
   setAuthTokenToCookies,
 } from './utils/authToken';
 
-export default class CampusApiMock extends ICampusApi {
+export default class AuthApiMock implements AuthApiType {
   async auth(): Promise<void> {
     const mockRole = askForUserRole();
     if (!mockRole) return;

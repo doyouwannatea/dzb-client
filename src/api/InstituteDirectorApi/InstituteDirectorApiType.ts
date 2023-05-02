@@ -9,8 +9,8 @@ export interface ReviewProjectProposalData {
   project_proposal_id: number;
 }
 
-export default abstract class IInstituteDirectorApi {
-  abstract reviewProjectProposal(
+export default interface InstituteDirectorApiType {
+  reviewProjectProposal(
     data: ReviewProjectProposalData,
   ): Promise<CreatedProjectProposal>;
 }

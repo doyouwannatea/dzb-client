@@ -23,16 +23,14 @@
     ParticipationPriorityText,
   } from '@/models/Participation';
   import { intToRoman } from '@/helpers/string';
-  import { participationApi } from '@/api/ParticipationApi';
+  import { isAutoParticipation } from '@/api/CandidateApi/utils/participations';
 
   type Props = {
     priority: ParticipationPriority;
     disabled: boolean;
   };
   const props = withDefaults(defineProps<Props>(), { disabled: false });
-  const isAuto = computed(() =>
-    participationApi.isAutoParticipation(props.priority),
-  );
+  const isAuto = computed(() => isAutoParticipation(props.priority));
   const statusText = computed(() =>
     isAuto.value
       ? 'Автоматическое распределение'

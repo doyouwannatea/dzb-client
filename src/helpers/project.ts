@@ -1,4 +1,3 @@
-import { insituteApi } from '@/api/InsituteApi';
 import { Candidate } from '@/models/Candidate';
 import { Project } from '@/models/Project';
 import { ProjectDifficulty } from '@/models/ProjectDifficulty';
@@ -10,6 +9,7 @@ import {
   PROJECT_PROPOSAL_IDS,
   ProjectProposalStateId,
 } from '@/models/ProjectProposal';
+import { sharedApi } from '@/api/SharedApi';
 
 export function formatProjectDate<T extends Project | CreatedProjectProposal>(
   project: T,
@@ -30,7 +30,7 @@ export async function projectIncludesCandidateSpeciality(
 ): Promise<boolean> {
   const matchedSpecialities = await Promise.all(
     project.specialities.map((speciality) =>
-      insituteApi.isInSameInstitute(
+      sharedApi.isInSameInstitute(
         speciality.name,
         candidate.training_group.split('-')[0],
       ),

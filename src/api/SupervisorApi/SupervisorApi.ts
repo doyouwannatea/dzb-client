@@ -1,18 +1,35 @@
-import IProjectCreationApi, {
-  UpdateProjectProposalData,
-} from './IProjectCreationApi';
 import { baseKyInstance } from '../baseKy';
 import {
   CreatedProjectProposal,
   NewProjectProposal,
-  PROJECT_PROPOSAL_IDS,
 } from '@/models/ProjectProposal';
 import { Tag } from '@/models/Tag';
 import { Specialty } from '@/models/Specialty';
 import { Project } from '@/models/Project';
 import { formatProjectDate, isProject, isProposal } from '@/helpers/project';
+import SupervisorApiType, {
+  UpdateProjectProposalData,
+} from './SupervisorApiType';
+import { isValidDate } from '@/helpers/date';
+import { sharedApi } from '../SharedApi';
 
-export default class ProjectCreationApi extends IProjectCreationApi {
+export default class SupervisorApi implements SupervisorApiType {
+  async getProposalsTime(): Promise<[string, string]> {
+    try {
+      const { startDateProjectHarvest, endDateProjectHarvest } =
+        await sharedApi.getHarvestSettings();
+      if (
+        !isValidDate(startDateProjectHarvest) ||
+        !isValidDate(endDateProjectHarvest)
+      )
+        throw new Error('неправильная дата из sharedApi.getHarvestSettings()');
+      return [startDateProjectHarvest, endDateProjectHarvest];
+    } catch (error) {
+      const currentTime = new Date(Date.now()).toISOString();
+      return [currentTime, currentTime];
+    }
+  }
+
   async createProjectProposal(
     projectProposal: NewProjectProposal,
   ): Promise<CreatedProjectProposal> {
@@ -45,7 +62,7 @@ export default class ProjectCreationApi extends IProjectCreationApi {
     return projectProposals.filter(isProposal).map(formatProjectDate);
   }
 
-  async getSupervisorProjectList(): Promise<Project[]> {
+  async getProjectList(): Promise<Project[]> {
     const projectProposals = await baseKyInstance
       .get('api/supervisor/projects')
       .json<(Project | CreatedProjectProposal)[]>();
