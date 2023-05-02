@@ -55,6 +55,7 @@
 
 <script setup lang="ts">
   import { computed, ref } from 'vue';
+  import { useToast } from 'vue-toastification';
   import BaseButton from '@/components/ui/BaseButton.vue';
   import {
     CreatedProjectProposal,
@@ -69,9 +70,8 @@
     sortByRolePriority,
   } from '@/helpers/project-member-role';
   import { toProjectProposalCreateRoute } from '@/router/utils/routes';
-  import { useReviewProjectProposalMutation } from '@/queries/useReviewProjectProposalMutation';
   import ProjectProposalRejectionReasonEditModal from './ProjectProposalRejectionReasonEditModal.vue';
-  import { useToast } from 'vue-toastification';
+  import { useReviewProjectProposalMutation } from '@/api/InstituteDirectorApi/hooks/useReviewProjectProposalMutation';
 
   interface Props {
     projectProposal: CreatedProjectProposal;

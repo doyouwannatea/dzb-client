@@ -3,7 +3,7 @@ import { ProjectProposalStateId } from '@/models/ProjectProposal';
 import {
   UseGetProjectProposalListQueryOptions,
   useGetProjectProposalListQuery,
-} from '@/queries/useGetProjectProposalListQuery';
+} from '@/api/SupervisorApi/hooks/useGetProjectProposalListQuery';
 
 type ProposalsCount = Record<ProjectProposalStateId, number>;
 

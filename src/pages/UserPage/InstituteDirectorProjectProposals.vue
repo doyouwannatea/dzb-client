@@ -32,7 +32,6 @@
   import { computed, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { useRouter } from 'vue-router';
-  import { useGetProjectProposalListQuery } from '@/queries/useGetProjectProposalListQuery';
   import LoadingParticipationsList from './LoadingParticipationsList.vue';
   import BaseStub from '@/components/ui/BaseStub.vue';
   import BasePagination from '@/components/ui/BasePagination.vue';
@@ -45,6 +44,7 @@
   } from '@/router/utils/routes';
   import { RouteNames } from '@/router/types/route-names';
   import { ProjectProposalStateId } from '@/models/ProjectProposal';
+  import { useGetProjectProposalListQuery } from '@/api/SupervisorApi/hooks/useGetProjectProposalListQuery';
 
   const router = useRouter();
   const route = useRoute();

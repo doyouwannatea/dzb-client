@@ -569,7 +569,7 @@
   // TODO: отрефакторить логику компонента, а то большой слишком
   import { computed, ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useRoute, useRouter } from 'vue-router';
+  import { useRoute, useRouter, RouterLink } from 'vue-router';
   import { DateTime } from 'luxon';
 
   import { useAuthStore } from '@/stores/auth/useAuthStore';
@@ -613,23 +613,22 @@
   } from '@/models/Specialty';
   import { MultiselectObjectItem } from '@/models/VMultiselect';
 
-  import { useGetAllSupervisorsQuery } from '@/queries/useGetAllSupervisorsQuery';
-  import { useGetProjectSkillsQuery } from '@/queries/useAllProjectTagsQuery';
-  import { useGetSpecialtiesQuery } from '@/queries/useGetSpecialtiesQuery';
-  import { useGetThemeSourcesQuery } from '@/queries/useGetThemeSourcesQuery';
-  import { useCreateProjectProposalMutation } from '@/queries/useCreateProjectProposalMutation';
   import { ProjectDifficulty } from '@/models/ProjectDifficulty';
   import { RouteNames } from '@/router/types/route-names';
-  import { useGetProjectProposalListQuery } from '@/queries/useGetProjectProposalListQuery';
   import { specialtyFullName } from '@/helpers/specialty';
   import { TYPE, useToast } from 'vue-toastification';
   import { ProjectStateID } from '@/models/ProjectState';
   import { toProjectProposalCreateRoute } from '@/router/utils/routes';
-  import { useUpdateProjectProposalMutation } from '@/queries/useUpdateProjectProposalMutation';
   import { sortByRolePriority } from '@/helpers/project-member-role';
-  import { useGetUserProjectsQuery } from '@/queries/useGetUserProjectsQuery';
   import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
-  import { RouterLink } from 'vue-router';
+  import { useGetProjectProposalListQuery } from '@/api/SupervisorApi/hooks/useGetProjectProposalListQuery';
+  import { useCreateProjectProposalMutation } from '@/api/SupervisorApi/hooks/useCreateProjectProposalMutation';
+  import { useGetSpecialtiesQuery } from '@/api/SupervisorApi/hooks/useGetSpecialtiesQuery';
+  import { useGetThemeSourcesQuery } from '@/api/SupervisorApi/hooks/useGetThemeSourcesQuery';
+  import { useUpdateProjectProposalMutation } from '@/api/SupervisorApi/hooks/useUpdateProjectProposalMutation';
+  import { useGetAllSupervisorsQuery } from '@/api/SharedApi/hooks/useGetAllSupervisorsQuery';
+  import { useGetProjectSkillsQuery } from '@/api/ProjectApi/hooks/useAllProjectTagsQuery';
+  import { useGetUserProjectsQuery } from '@/api/SharedApi/hooks/useGetUserProjectsQuery';
 
   const enum ProjectDuration {
     SpringSemester = 1,

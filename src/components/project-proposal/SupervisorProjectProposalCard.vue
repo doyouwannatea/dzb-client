@@ -101,9 +101,9 @@
   import accentQuestionIcon from '@/assets/icons/accent-question-icon.svg?raw';
   import ProjectProposalRejectionReasonModal from './ProjectProposalRejectionReasonModal.vue';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { useUpdateProjectProposalMutation } from '@/queries/useUpdateProjectProposalMutation';
   import { TYPE, useToast } from 'vue-toastification';
   import ProjectProposalCard from './ProjectProposalCard.vue';
+  import { useUpdateProjectProposalMutation } from '@/api/SupervisorApi/hooks/useUpdateProjectProposalMutation';
 
   interface Props {
     projectProposal: CreatedProjectProposal;
