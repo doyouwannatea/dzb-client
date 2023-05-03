@@ -18,9 +18,7 @@
 
 <script setup lang="ts">
   import { computed, watchEffect } from 'vue';
-  import { storeToRefs } from 'pinia';
   import { useRoute, useRouter } from 'vue-router';
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { compareString } from '@/helpers/string';
   import { canViewParticipants } from '@/helpers/project';
   import { Candidate } from '@/models/Candidate';

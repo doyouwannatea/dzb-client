@@ -40,7 +40,6 @@
   import { computed } from 'vue';
   import { RouterView, useRoute } from 'vue-router';
   import { RouteNames } from '@/router/types/route-names';
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   // components
   import PageLayout from '@/components/layout/PageLayout.vue';
   import BaseBreadcrumbs from '@/components/ui/BaseBreadcrumbs.vue';
@@ -49,7 +48,6 @@
   import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
 
   const route = useRoute();
-  const projectsStore = useProjectsStore();
 
   const projectId = computed(() => Number(route.params.id));
   const {

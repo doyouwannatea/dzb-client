@@ -1,3 +1,4 @@
+import { computed } from 'vue';
 import { UseQueryOptions, useQuery } from 'vue-query';
 import { MaybeRef, get } from '@vueuse/core';
 import { projectApi } from '@/api/ProjectApi';
@@ -28,8 +29,13 @@ export const getSingleProjectQueryKey = (
 export const useGetSingleProjectQuery = <T = TQueryFnData>(
   projectIdRef: MaybeRef<number>,
   options?: UseGetSingleProjectQueryOptions<T>,
-) =>
-  useQuery(
+) => {
+  const enabled = computed(() => {
+    const projectId = get(projectIdRef);
+    return typeof projectId === 'number' && !isNaN(projectId);
+  });
+
+  return useQuery(
     getSingleProjectQueryKey(projectIdRef),
     async () => {
       const projectId = get(projectIdRef);
@@ -41,6 +47,8 @@ export const useGetSingleProjectQuery = <T = TQueryFnData>(
     },
     {
       staleTime: DEFAULT_QUERY_STALE_TIME,
+      enabled,
       ...options,
     },
   );
+};
