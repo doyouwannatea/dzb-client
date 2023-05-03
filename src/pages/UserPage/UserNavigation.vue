@@ -1,7 +1,7 @@
 <template>
   <!-- Вёрстка тут трешб конечно -->
   <!-- TODO: можно раскидать как-то по компонентам мб -->
-  <div class="wrapper">
+  <div :class="['wrapper', props.variant]">
     <ul :class="['list', props.variant]">
       <template v-for="link in routes" :key="link.name">
         <li :class="['item', props.variant]">
@@ -96,13 +96,19 @@
 <style lang="scss" scoped>
   .wrapper {
     overflow: hidden;
-    background: var(--light-color);
     border: 1px solid var(--gray-color-1);
     border-radius: 0.625rem;
+
+    &.mobile {
+      overflow: visible;
+      border: none;
+      border-radius: 0;
+    }
   }
 
   .list {
     padding: 0 1.375rem;
+    background: var(--light-color);
 
     &.mobile {
       position: sticky;
