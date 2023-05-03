@@ -44,7 +44,7 @@
   } from '@/router/utils/routes';
   import { RouteNames } from '@/router/types/route-names';
   import { ProjectProposalStateId } from '@/models/ProjectProposal';
-  import { useGetProjectProposalListQuery } from '@/api/SupervisorApi/hooks/useGetProjectProposalListQuery';
+  import { useGetInstituteProjectProposalsQuery } from '@/api/InstituteDirectorApi/hooks/useGetInstituteProjectProposalsQuery';
 
   const router = useRouter();
   const route = useRoute();
@@ -70,7 +70,7 @@
     isError,
     error,
     data: projectProposalList,
-  } = useGetProjectProposalListQuery({
+  } = useGetInstituteProjectProposalsQuery({
     select: (list) => list.sort((a, b) => b.state.id - a.state.id),
   });
 

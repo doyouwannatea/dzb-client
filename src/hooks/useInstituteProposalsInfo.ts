@@ -1,9 +1,9 @@
 import { ComputedRef, computed } from 'vue';
 import { ProjectProposalStateId } from '@/models/ProjectProposal';
 import {
-  UseGetProjectProposalListQueryOptions,
-  useGetProjectProposalListQuery,
-} from '@/api/SupervisorApi/hooks/useGetProjectProposalListQuery';
+  UseGetInstituteProjectProposalsQueryOptions,
+  useGetInstituteProjectProposalsQuery,
+} from '@/api/InstituteDirectorApi/hooks/useGetInstituteProjectProposalsQuery';
 
 type ProposalsCount = Record<ProjectProposalStateId, number>;
 
@@ -12,9 +12,9 @@ export type UseInstituteProposalsInfoReturn = {
 };
 
 export function useInstituteProposalsInfo(
-  options?: UseGetProjectProposalListQueryOptions,
+  options?: UseGetInstituteProjectProposalsQueryOptions,
 ): UseInstituteProposalsInfoReturn {
-  const projectProposalList = useGetProjectProposalListQuery(options);
+  const projectProposalList = useGetInstituteProjectProposalsQuery(options);
 
   const proposalsCount = computed(() => {
     const count: ProposalsCount = {

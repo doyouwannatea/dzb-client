@@ -13,4 +13,5 @@ export default interface InstituteDirectorApiType {
   reviewProjectProposal(
     data: ReviewProjectProposalData,
   ): Promise<CreatedProjectProposal>;
+  getInstituteProjectProposals(): Promise<CreatedProjectProposal[]>;
 }

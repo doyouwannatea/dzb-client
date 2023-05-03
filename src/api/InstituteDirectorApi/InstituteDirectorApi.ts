@@ -14,4 +14,8 @@ export default class InstituteDirectorApi implements InstituteDirectorApiType {
       .patch(`api/director/projects/${id}`, { json: rest })
       .json();
   }
+
+  async getInstituteProjectProposals(): Promise<CreatedProjectProposal[]> {
+    return baseKyInstance.get('api/director/projects').json();
+  }
 }

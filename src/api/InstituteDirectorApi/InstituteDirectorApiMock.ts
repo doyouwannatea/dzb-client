@@ -12,4 +12,8 @@ export default class InstituteDirectorApiMock
   ): Promise<CreatedProjectProposal> {
     return delayRes({} as CreatedProjectProposal, 500);
   }
+
+  async getInstituteProjectProposals(): Promise<CreatedProjectProposal[]> {
+    return delayRes([], 500);
+  }
 }

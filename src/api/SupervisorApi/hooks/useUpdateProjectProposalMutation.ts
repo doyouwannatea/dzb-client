@@ -1,8 +1,8 @@
 import { UseMutationOptions, useMutation, useQueryClient } from 'vue-query';
-
 import { USE_GET_PROJECT_PROPOSAL_LIST_QUERY_KEY } from './useGetProjectProposalListQuery';
 import SupervisorApiType from '@/api/SupervisorApi/SupervisorApiType';
 import { supervisorApi } from '@/api/SupervisorApi';
+import { USE_GET_INSTITUTE_PROJECT_PROPOSALS_QUERY_KEY } from '@/api/InstituteDirectorApi/hooks/useGetInstituteProjectProposalsQuery';
 
 type TData = Awaited<ReturnType<SupervisorApiType['updateProjectProposal']>>;
 type TVariables = Parameters<SupervisorApiType['updateProjectProposal']>[0];
@@ -28,6 +28,7 @@ export const useUpdateProjectProposalMutation = (
     {
       onSuccess: () => {
         client.invalidateQueries(USE_GET_PROJECT_PROPOSAL_LIST_QUERY_KEY);
+        client.invalidateQueries(USE_GET_INSTITUTE_PROJECT_PROPOSALS_QUERY_KEY);
       },
       ...options,
     },
