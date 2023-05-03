@@ -1,6 +1,7 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
 import { candidateApi } from '..';
 import CandidateApiType from '../CandidateApiType';
+import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 
 type TQueryFnData = Awaited<
   ReturnType<CandidateApiType['getParticipationsTime']>
@@ -24,7 +25,7 @@ export const useGetParticipationsTimeQuery = <T = TQueryFnData>(
     USE_GET_PARTICIPATIONS_TIME_QUERY_KEY,
     () => candidateApi.getParticipationsTime(),
     {
-      staleTime: Infinity,
+      staleTime: DEFAULT_QUERY_STALE_TIME,
       ...options,
     },
   );

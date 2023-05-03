@@ -1,6 +1,7 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
 import InstituteDirectorApiType from '../InstituteDirectorApiType';
 import { instituteDirectorApi } from '..';
+import { DEFAULT_QUERY_STALE_TIME } from '../../baseKy';
 
 type TQueryFnData = Awaited<
   ReturnType<InstituteDirectorApiType['getInstituteProjectProposals']>
@@ -24,7 +25,7 @@ export const useGetInstituteProjectProposalsQuery = <T = TQueryFnData>(
     USE_GET_INSTITUTE_PROJECT_PROPOSALS_QUERY_KEY,
     () => instituteDirectorApi.getInstituteProjectProposals(),
     {
-      staleTime: Infinity,
+      staleTime: DEFAULT_QUERY_STALE_TIME,
       ...options,
     },
   );

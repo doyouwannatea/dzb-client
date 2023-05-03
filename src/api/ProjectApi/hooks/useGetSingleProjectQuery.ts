@@ -1,7 +1,8 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
+import { MaybeRef, get } from '@vueuse/core';
 import { projectApi } from '@/api/ProjectApi';
 import { Project } from '@/models/Project';
-import { MaybeRef, get } from '@vueuse/core';
+import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 
 type TQueryFnData = { project: Project; projectHistory: Project[] };
 
@@ -39,7 +40,7 @@ export const useGetSingleProjectQuery = <T = TQueryFnData>(
       return { project, projectHistory };
     },
     {
-      staleTime: Infinity,
+      staleTime: DEFAULT_QUERY_STALE_TIME,
       ...options,
     },
   );

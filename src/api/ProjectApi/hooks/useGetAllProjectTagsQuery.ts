@@ -2,6 +2,7 @@ import { UseQueryOptions, useQuery } from 'vue-query';
 import { projectApi } from '@/api/ProjectApi';
 import ProjectApiType from '@/api/ProjectApi/ProjectApiType';
 import { Skill } from '@/models/Project';
+import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 
 type TQueryFnData = Awaited<ReturnType<ProjectApiType['getAllProjectTags']>>;
 
@@ -23,7 +24,7 @@ export const useGetAllProjectTagsQuery = <T = TQueryFnData>(
     USE_GET_ALL_PROJECT_TAGS_QUERY_KEY,
     () => projectApi.getAllProjectTags(),
     {
-      staleTime: Infinity,
+      staleTime: DEFAULT_QUERY_STALE_TIME,
       ...options,
     },
   );

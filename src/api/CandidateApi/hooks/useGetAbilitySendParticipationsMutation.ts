@@ -26,7 +26,7 @@ export const useGetAbilitySendParticipationsMutation = (
 
   return useMutation(
     USE_GET_ABILITY_SEND_PARTICIPATIONS_MUTATION,
-    async ({ participations, project }: TData) => {
+    async ({ participations, project }) => {
       if (!participations || !profileData || !isCandidate(profileData))
         throw AUTH_REQUIRED;
       if (!profileData.canSendParticipations) {

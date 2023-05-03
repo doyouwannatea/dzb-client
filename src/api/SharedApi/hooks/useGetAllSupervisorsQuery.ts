@@ -1,6 +1,7 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
 import { sharedApi } from '@/api/SharedApi';
 import SharedApiType from '@/api/SharedApi/SharedApiType';
+import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 
 type TQueryFnData = Awaited<ReturnType<SharedApiType['getAllSupervisors']>>;
 
@@ -22,7 +23,7 @@ export const useGetAllSupervisorsQuery = <T = TQueryFnData>(
     USE_GET_ALL_SUPERVISORS_QUERY_KEY,
     () => sharedApi.getAllSupervisors(),
     {
-      staleTime: Infinity,
+      staleTime: DEFAULT_QUERY_STALE_TIME,
       placeholderData: () => [],
       ...options,
     },

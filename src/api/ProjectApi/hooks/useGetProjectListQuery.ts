@@ -1,8 +1,9 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
+import { MaybeRef, get } from '@vueuse/core';
 import { projectApi } from '@/api/ProjectApi';
 import { ProjectFilters } from '@/models/Project';
 import ProjectApiType, { OnDownloadProgress } from '../ProjectApiType';
-import { MaybeRef, get } from '@vueuse/core';
+import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 
 type TQueryFnData = Awaited<ReturnType<ProjectApiType['filterProjectList']>>;
 
@@ -44,7 +45,7 @@ export const useGetProjectListQuery = <T = TQueryFnData>(
       return projectApi.filterProjectList(projectFilters, onDownloadProgress);
     },
     {
-      staleTime: Infinity,
+      staleTime: DEFAULT_QUERY_STALE_TIME,
       ...options,
     },
   );

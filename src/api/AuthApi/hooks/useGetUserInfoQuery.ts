@@ -1,8 +1,8 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
+import { get } from '@vueuse/core';
 import AuthApiType from '../AuthApiType';
 import { authApi } from '..';
 import { useAuthStore } from '@/stores/auth/useAuthStore';
-import { get } from '@vueuse/core';
 
 type TQueryFnData = Awaited<ReturnType<AuthApiType['getUserInfo']>>;
 

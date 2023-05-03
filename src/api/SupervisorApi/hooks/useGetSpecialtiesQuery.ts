@@ -1,6 +1,7 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
 import SupervisorApiType from '@/api/SupervisorApi/SupervisorApiType';
 import { supervisorApi } from '@/api/SupervisorApi';
+import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 
 type TQueryFnData = Awaited<ReturnType<SupervisorApiType['getSpecialties']>>;
 
@@ -20,7 +21,7 @@ export const useGetSpecialtiesQuery = <T = TQueryFnData>(
     USE_GET_SPECIALTIES_QUERY_KEY,
     () => supervisorApi.getSpecialties(),
     {
-      staleTime: Infinity,
+      staleTime: DEFAULT_QUERY_STALE_TIME,
       ...options,
     },
   );

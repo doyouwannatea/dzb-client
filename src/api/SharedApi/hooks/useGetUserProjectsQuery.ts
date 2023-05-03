@@ -5,6 +5,7 @@ import { Project } from '@/models/Project';
 import { useAuthStore } from '@/stores/auth/useAuthStore';
 import { AUTH_REQUIRED } from '@/values/error-messages';
 import { candidateApi } from '@/api/CandidateApi';
+import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 
 type TQueryFnData = Project[];
 
@@ -46,6 +47,6 @@ export const useGetUserProjectsQuery = <T = TQueryFnData>(
 
       return [];
     },
-    { staleTime: Infinity, ...options },
+    { staleTime: DEFAULT_QUERY_STALE_TIME, ...options },
   );
 };

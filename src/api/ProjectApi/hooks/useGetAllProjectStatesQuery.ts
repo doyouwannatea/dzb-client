@@ -1,6 +1,7 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
 import { projectApi } from '@/api/ProjectApi';
 import ProjectApiType from '@/api/ProjectApi/ProjectApiType';
+import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 
 type TQueryFnData = Awaited<ReturnType<ProjectApiType['getAllProjectStates']>>;
 
@@ -22,7 +23,7 @@ export const useGetAllProjectStatesQuery = <T = TQueryFnData>(
     USE_GET_ALL_PROJECT_STATES_QUERY_KEY,
     () => projectApi.getAllProjectStates(),
     {
-      staleTime: Infinity,
+      staleTime: DEFAULT_QUERY_STALE_TIME,
       ...options,
     },
   );

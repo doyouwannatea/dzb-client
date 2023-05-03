@@ -1,6 +1,7 @@
+import { UseQueryOptions, useQuery } from 'vue-query';
 import { supervisorApi } from '@/api/SupervisorApi';
 import SupervisorApiType from '@/api/SupervisorApi/SupervisorApiType';
-import { UseQueryOptions, useQuery } from 'vue-query';
+import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 
 type TQueryFnData = Awaited<ReturnType<SupervisorApiType['getThemeSources']>>;
 
@@ -21,7 +22,7 @@ export const useGetThemeSourcesQuery = <T = TQueryFnData>(
     USE_GET_THEME_SOURCES_QUERY_KEY,
     () => supervisorApi.getThemeSources(),
     {
-      staleTime: Infinity,
+      staleTime: DEFAULT_QUERY_STALE_TIME,
       ...options,
     },
   );
