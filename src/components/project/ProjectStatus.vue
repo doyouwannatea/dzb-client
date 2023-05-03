@@ -12,12 +12,15 @@
   } from '@/models/ProjectState';
   // components
   import BaseBadge from '../ui/BaseBadge.vue';
+  import { computed } from 'vue';
 
   type Props = { state: ProjectState; useAcronyms?: boolean };
   const props = withDefaults(defineProps<Props>(), { useAcronyms: false });
 
-  const stateClass = StateClass[props.state.id];
-  const stateAcronyms = StateAcronyms[props.state.id] || props.state.state;
+  const stateClass = computed(() => StateClass[props.state.id]);
+  const stateAcronyms = computed(
+    () => StateAcronyms[props.state.id] || props.state.state,
+  );
 </script>
 
 <style scoped>

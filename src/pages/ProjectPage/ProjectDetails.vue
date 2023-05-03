@@ -1,52 +1,53 @@
 <template>
-  <section v-if="project && !loading && !error">
+  <section v-if="projectData && !isFetching && !isError">
     <ProjectHistoryModal
-      v-if="history"
-      :current-project-id="project.id"
+      v-if="projectData.projectHistory"
+      :current-project-id="projectData.project.id"
       :is-show="showHistoryModal"
-      :project-list="history"
+      :project-list="projectData.projectHistory"
       size="m"
       @close="showHistoryModal = false"
     />
     <ProjectMobileDetails
       v-if="isSmallDevice"
-      :project="project"
+      :project="projectData.project"
       :show-history-modal="showHistoryModal"
-      :history="history"
+      :history="projectData.projectHistory"
       @show-history="showHistoryModal = true"
     />
     <ProjectDesktopDetails
       v-else
-      :project="project"
+      :project="projectData.project"
       :show-history-modal="showHistoryModal"
-      :history="history"
+      :history="projectData.projectHistory"
       @show-history="showHistoryModal = true"
     />
   </section>
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
-  import { storeToRefs } from 'pinia';
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { computed, ref, watch } from 'vue';
+  import { useRoute } from 'vue-router';
   import { useSmallDevice } from '@/helpers/breakpoints';
   // components
   import ProjectMobileDetails from './ProjectMobileDetails.vue';
   import ProjectHistoryModal from '@/components/project/ProjectHistoryModal.vue';
   import ProjectDesktopDetails from './ProjectDesktopDetails.vue';
+  import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
 
   const isSmallDevice = useSmallDevice();
-  const projectsStore = useProjectsStore();
   const showHistoryModal = ref(false);
+
+  const route = useRoute();
+  const projectId = computed(() => Number(route.params.id));
   const {
-    openedProject: project,
-    openedProjectHistory: history,
-    loading,
-    error,
-  } = storeToRefs(projectsStore);
+    isFetching,
+    isError,
+    data: projectData,
+  } = useGetSingleProjectQuery(projectId);
 
   watch(
-    () => project,
+    () => projectData.value,
     () => (showHistoryModal.value = false),
     { deep: true },
   );

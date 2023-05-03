@@ -1,20 +1,9 @@
-import {
-  Project,
-  AdditionalProjectData,
-  ProjectFilters,
-} from '@/models/Project';
+import { Project, ProjectFilters } from '@/models/Project';
 
 interface State {
-  loading: boolean;
-  error: string;
-  projectList?: Project[];
-  userProjectList?: Project[];
-  projectCount: number;
-  openedProject?: Project;
-  openedProjectHistory?: Project[];
+  loadingProgress: number;
   filters: ProjectFilters;
-  additionalProjectData: AdditionalProjectData;
-  projectProgress: number;
+  selectedProject?: Project;
 }
 
 export const DEFAULT_FILTERS: ProjectFilters = {
@@ -29,17 +18,7 @@ export const DEFAULT_FILTERS: ProjectFilters = {
 };
 
 export const state = (): State => ({
-  loading: false,
-  error: '',
-  projectList: undefined,
-  userProjectList: undefined,
-  projectCount: 0,
-  openedProject: undefined,
-  openedProjectHistory: undefined,
+  selectedProject: undefined,
   filters: { ...DEFAULT_FILTERS },
-  additionalProjectData: {
-    states: undefined,
-    tags: undefined,
-  },
-  projectProgress: 0,
+  loadingProgress: 0,
 });

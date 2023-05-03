@@ -1,6 +1,6 @@
 <template>
   <ProjectList
-    v-if="userProjects.isLoading.value"
+    v-if="userProjects.isFetching.value"
     loading
     :loading-cards-length="3"
   />

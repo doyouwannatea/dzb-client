@@ -1,7 +1,6 @@
 // TODO: надо Alert и Confirm вынести в отдельный store
 
 export interface State {
-  loading: boolean;
   authModal: boolean;
   participationSuccessModal: boolean;
   participationModal: boolean;
@@ -19,7 +18,6 @@ export interface State {
 }
 
 export const state = (): State => ({
-  loading: false,
   authModal: false,
   participationModal: false,
   participationSuccessModal: false,

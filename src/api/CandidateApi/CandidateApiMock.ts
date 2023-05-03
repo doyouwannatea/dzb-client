@@ -11,7 +11,9 @@ import {
 } from '@/models/Participation';
 import { AUTH_REQUIRED } from '@/values/error-messages';
 
-import CandidateApiType from './CandidateApiType';
+import CandidateApiType, {
+  CreateProjectParticipationData,
+} from './CandidateApiType';
 import CandidateApi from './CandidateApi';
 import { Project } from '@/models/Project';
 import { formatProjectDate } from '@/helpers/project';
@@ -86,10 +88,10 @@ export default class CandidateApiMock implements CandidateApiType {
     return delayRes(undefined, 300);
   }
 
-  async createProjectParticipation(
-    priority: ParticipationPriority,
-    projectId: number,
-  ): Promise<void> {
+  async createProjectParticipation({
+    priority,
+    projectId,
+  }: CreateProjectParticipationData): Promise<void> {
     // проверки на стороне клиента
     const authToken = getAuthTokenFromCookies();
     if (!authToken) throw new Error(AUTH_REQUIRED);

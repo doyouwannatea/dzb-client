@@ -1,19 +1,21 @@
 import { computed, ComputedRef } from 'vue';
 import { storeToRefs } from 'pinia';
-import { isSupervisor, isCandidate } from '@/helpers/typeCheck';
 import { useAuthStore } from '@/stores/auth/useAuthStore';
-import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
+import { useGetProposalsTimeQuery } from '@/api/SupervisorApi/hooks/useGetProposalsTimeQuery';
+import { useGetParticipationsTimeQuery } from '@/api/CandidateApi/hooks/useGetParticipationsTimeQuery';
 
 export function useUserTimer(): ComputedRef<string[] | undefined> {
   const authStore = useAuthStore();
-  const participationsStore = useParticipationsStore();
-  const { profileData } = storeToRefs(authStore);
-  const { participationTime, projectTime } = storeToRefs(participationsStore);
+  const { isStudent, isTeacher } = storeToRefs(authStore);
+
+  const proposalsTimeQuery = useGetProposalsTimeQuery({ enabled: isTeacher });
+  const participationsTimeQuery = useGetParticipationsTimeQuery({
+    enabled: isStudent,
+  });
 
   return computed(() => {
-    if (!profileData?.value) return undefined;
-    if (isSupervisor(profileData.value)) return projectTime?.value;
-    if (isCandidate(profileData.value)) return participationTime?.value;
+    if (isTeacher.value) return proposalsTimeQuery.data.value;
+    if (isStudent.value) return participationsTimeQuery.data.value;
     return undefined;
   });
 }

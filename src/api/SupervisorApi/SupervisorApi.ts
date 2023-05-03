@@ -25,6 +25,7 @@ export default class SupervisorApi implements SupervisorApiType {
         throw new Error('неправильная дата из sharedApi.getHarvestSettings()');
       return [startDateProjectHarvest, endDateProjectHarvest];
     } catch (error) {
+      console.error(error);
       const currentTime = new Date(Date.now()).toISOString();
       return [currentTime, currentTime];
     }

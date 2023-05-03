@@ -19,10 +19,14 @@ export const USE_GET_ALL_PROJECT_TAGS_QUERY_KEY =
 export const useGetAllProjectTagsQuery = <T = TQueryFnData>(
   options?: UseGetAllProjectTagsQueryOptions<T>,
 ) =>
-  useQuery(USE_GET_ALL_PROJECT_TAGS_QUERY_KEY, projectApi.getAllProjectTags, {
-    staleTime: Infinity,
-    ...options,
-  });
+  useQuery(
+    USE_GET_ALL_PROJECT_TAGS_QUERY_KEY,
+    () => projectApi.getAllProjectTags(),
+    {
+      staleTime: Infinity,
+      ...options,
+    },
+  );
 
 export const useGetProjectSkillsQuery = (
   options?: UseGetAllProjectTagsQueryOptions<Skill[]>,

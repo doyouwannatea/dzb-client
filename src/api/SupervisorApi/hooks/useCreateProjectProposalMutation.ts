@@ -23,7 +23,7 @@ export const useCreateProjectProposalMutation = (
 
   return useMutation(
     USE_CREATE_PROJECT_PROPOSAL_MUTATION_KEY,
-    supervisorApi.createProjectProposal,
+    (data: TVariables) => supervisorApi.createProjectProposal(data),
     {
       onSuccess: () => {
         client.invalidateQueries(USE_GET_PROJECT_PROPOSAL_LIST_QUERY_KEY);

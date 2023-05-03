@@ -13,7 +13,7 @@
   import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
   // components
   import DropdownList, { DropdownItem } from '../ui/DropdownList.vue';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useLogoutWithModalMutation } from '@/api/AuthApi/hooks/useLogoutWithModalMutation';
 
   type Props = {
     isOpen: boolean;
@@ -28,7 +28,7 @@
 
   const route = useRoute();
   const routes = useRoledUserNavigationRoutes();
-  const modalsStore = useModalsStore();
+  const { logout } = useLogoutWithModalMutation();
 
   watch(
     () => route.path,
@@ -44,6 +44,6 @@
   items.push({
     content: 'Выйти',
     type: 'button',
-    action: () => modalsStore.openExitConfirmModal(),
+    action: logout,
   });
 </script>

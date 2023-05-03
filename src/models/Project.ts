@@ -69,8 +69,3 @@ export interface ProjectTags {
   skills: Skill[];
   specialties: Specialty[];
 }
-
-export interface AdditionalProjectData {
-  tags?: ProjectTags;
-  states?: ProjectState[];
-}

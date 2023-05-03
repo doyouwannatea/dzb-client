@@ -1,6 +1,8 @@
 <template>
   <BaseTable
-    v-if="project && sortedParticipants.length > 0 && !loading && !error"
+    v-if="
+      projectData && sortedParticipants.length > 0 && !isFetching && !isError
+    "
     class="table"
     :headers="['№', 'ФИО', 'Группа']"
     :rows="tableRows"
@@ -17,7 +19,7 @@
 <script setup lang="ts">
   import { computed, watchEffect } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useRouter } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { compareString } from '@/helpers/string';
   import { canViewParticipants } from '@/helpers/project';
@@ -27,22 +29,29 @@
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseTable, { RowData } from '@/components/ui/BaseTable.vue';
   import BaseStub from '@/components/ui/BaseStub.vue';
+  import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
 
   const router = useRouter();
-  const projectsStore = useProjectsStore();
-  const { openedProject: project, loading, error } = storeToRefs(projectsStore);
+
+  const route = useRoute();
+  const projectId = computed(() => Number(route.params.id));
+  const {
+    isFetching,
+    isError,
+    data: projectData,
+  } = useGetSingleProjectQuery(projectId);
 
   watchEffect(() => {
-    const stateId = project?.value?.state.id;
-    const projectId = project?.value?.id;
+    const stateId = projectData.value?.project?.state.id;
+    const projectId = projectData.value?.project?.id;
     if (projectId && stateId && !canViewParticipants(stateId)) {
       router.replace(toProjectRoute(projectId));
     }
   });
 
   const sortedParticipants = computed<Candidate[]>(() => {
-    if (!project?.value) return [];
-    const participants = project.value.participants || [];
+    if (!projectData.value) return [];
+    const participants = projectData.value.project.participants || [];
     return [...participants].sort((a, b) =>
       compareString(a.fio.toLowerCase(), b.fio.toLowerCase()),
     );

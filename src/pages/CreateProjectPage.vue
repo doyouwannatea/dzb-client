@@ -83,7 +83,7 @@
             v-model="prevProjectIdRef"
             class="multiselect"
             :placeholder="
-              prevUserProjects.isLoading.value
+              prevUserProjects.isFetching.value
                 ? 'Ваши проекты загружаются...'
                 : prevUserProjects.isError.value
                 ? 'Ошибка загрузки ваших проектов'
@@ -627,8 +627,8 @@
   import { useGetThemeSourcesQuery } from '@/api/SupervisorApi/hooks/useGetThemeSourcesQuery';
   import { useUpdateProjectProposalMutation } from '@/api/SupervisorApi/hooks/useUpdateProjectProposalMutation';
   import { useGetAllSupervisorsQuery } from '@/api/SharedApi/hooks/useGetAllSupervisorsQuery';
-  import { useGetProjectSkillsQuery } from '@/api/ProjectApi/hooks/useAllProjectTagsQuery';
   import { useGetUserProjectsQuery } from '@/api/SharedApi/hooks/useGetUserProjectsQuery';
+  import { useGetProjectSkillsQuery } from '@/api/ProjectApi/hooks/useGetAllProjectTagsQuery';
 
   const enum ProjectDuration {
     SpringSemester = 1,

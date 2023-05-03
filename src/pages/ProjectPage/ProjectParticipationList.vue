@@ -1,6 +1,8 @@
 <template>
   <BaseTable
-    v-if="project && clearedParticipations.length > 0 && !loading && !error"
+    v-if="
+      projectData && clearedParticipations.length > 0 && !isFetching && !isError
+    "
     class="table"
     :headers="['№', 'ФИО', 'Группа', 'Приоритетность', 'Время подачи заявки']"
     :rows="tableRows"
@@ -8,7 +10,7 @@
     <template #row="{ row, index, key }">
       <tr
         :key="key || index"
-        :class="{ accepted: index + 1 <= project.places }"
+        :class="{ accepted: index + 1 <= projectData.project.places }"
       >
         <td v-for="(column, columnIndex) in row" :key="columnIndex">
           {{ column }}
@@ -18,16 +20,14 @@
   </BaseTable>
 
   <BasePanel v-else>
-    <ProjectParticipationListStub />
+    <ProjectParticipationListStub :project="projectData?.project" />
   </BasePanel>
 </template>
 
 <script setup lang="ts">
-  import { useRouter } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { computed, watchEffect } from 'vue';
-  import { storeToRefs } from 'pinia';
   import { DateTime } from 'luxon';
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { Participation } from '@/models/Participation';
   import { canViewParticipations } from '@/helpers/project';
   // components
@@ -35,14 +35,21 @@
   import ProjectParticipationListStub from './ProjectParticipationListStub.vue';
   import BaseTable, { RowData } from '@/components/ui/BaseTable.vue';
   import { toProjectRoute } from '@/router/utils/routes';
+  import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
 
   const router = useRouter();
-  const projectsStore = useProjectsStore();
-  const { openedProject: project, loading, error } = storeToRefs(projectsStore);
+
+  const route = useRoute();
+  const projectId = computed(() => Number(route.params.id));
+  const {
+    isFetching,
+    isError,
+    data: projectData,
+  } = useGetSingleProjectQuery(projectId);
 
   watchEffect(() => {
-    const stateId = project?.value?.state.id;
-    const projectId = project?.value?.id;
+    const stateId = projectData.value?.project?.state.id;
+    const projectId = projectData.value?.project?.id;
     if (projectId && stateId && !canViewParticipations(stateId)) {
       router.replace(toProjectRoute(projectId));
     }
@@ -62,7 +69,7 @@
   }
 
   const clearedParticipations = computed<Participation[]>(() => {
-    let participations = project?.value?.participations;
+    let participations = projectData.value?.project?.participations;
     if (!participations) return [];
     // сортировка по приоритету
     return sortParticipations(participations);

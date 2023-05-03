@@ -4,7 +4,9 @@ import {
   ParticipationPriority,
 } from '@/models/Participation';
 import { baseKyInstance } from '../baseKy';
-import CandidateApiType from './CandidateApiType';
+import CandidateApiType, {
+  CreateProjectParticipationData,
+} from './CandidateApiType';
 import { isValidDate } from '@/helpers/date';
 import { projectApi } from '../ProjectApi';
 import { sharedApi } from '../SharedApi';
@@ -13,11 +15,19 @@ import { filterValidParticipations } from './utils/participations';
 
 export default class CandidateApi implements CandidateApiType {
   async getActiveProject(): Promise<Project | undefined> {
-    return await baseKyInstance.get('api/activeProject').json();
+    try {
+      return await baseKyInstance.get('api/activeProject').json();
+    } catch (error) {
+      return undefined;
+    }
   }
 
   async getArchiveProjectList(): Promise<Project[]> {
-    return await baseKyInstance.get('api/arhiveProjects').json();
+    try {
+      return await baseKyInstance.get('api/arhiveProjects').json();
+    } catch (error) {
+      return [];
+    }
   }
 
   async getParticipationsTime(): Promise<[string, string]> {
@@ -31,6 +41,7 @@ export default class CandidateApi implements CandidateApiType {
         throw new Error('неправильная дата из sharedApi.getHarvestSettings()');
       return [startDateParticipationHarvest, endDateParticipationHarvest];
     } catch (error) {
+      console.error(error);
       const currentTime = new Date(Date.now()).toISOString();
       return [currentTime, currentTime];
     }
@@ -57,10 +68,10 @@ export default class CandidateApi implements CandidateApiType {
       .json();
   }
 
-  async createProjectParticipation(
-    priority: ParticipationPriority,
-    projectId: number,
-  ): Promise<void> {
+  async createProjectParticipation({
+    priority,
+    projectId,
+  }: CreateProjectParticipationData): Promise<void> {
     return baseKyInstance
       .post(`api/participations/${projectId}`, { json: { priority } })
       .json();
@@ -69,7 +80,7 @@ export default class CandidateApi implements CandidateApiType {
   async getParticipationsWithProjects(
     participations: Participation[],
   ): Promise<ParticipationWithProject[]> {
-    return await Promise.all(
+    return Promise.all(
       participations.map(async (participation) => {
         const project = await projectApi.getSingleProject(
           participation.project_id,

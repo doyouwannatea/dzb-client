@@ -23,12 +23,13 @@ export const useReviewProjectProposalMutation = (
 
   return useMutation(
     USE_REVIEW_PROJECT_PROPOSAL_MUTATION_KEY,
-    instituteDirectorApi.reviewProjectProposal,
+    (data: TVariables) => instituteDirectorApi.reviewProjectProposal(data),
     {
-      onSuccess: () => {
+      ...options,
+      onSuccess: (data, variables, context) => {
+        options?.onSuccess?.(data, variables, context);
         client.invalidateQueries(USE_GET_PROJECT_PROPOSAL_LIST_QUERY_KEY);
       },
-      ...options,
     },
   );
 };

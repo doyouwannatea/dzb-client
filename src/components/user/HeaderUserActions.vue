@@ -25,11 +25,11 @@
       <BaseButton
         class="auth-btn"
         variant="link"
-        :disabled="authStore.loading"
-        @click="authStore.auth()"
+        :disabled="authMutation.isLoading.value"
+        @click="authMutation.mutate()"
       >
         <img
-          v-if="authStore.loading"
+          v-if="authMutation.isLoading.value"
           :src="userPictureGrayUrl"
           alt=""
           class="user-icon"
@@ -51,12 +51,21 @@
   // components
   import UserNavigationDropdown from './UserNavigationDropdown.vue';
   import BaseButton from '../ui/BaseButton.vue';
+  import { useGetUserInfoQuery } from '@/api/AuthApi/hooks/useGetUserInfoQuery';
+  import { useAuthMutation } from '@/api/AuthApi/hooks/useAuthMutation';
+  import { useToast } from 'vue-toastification';
 
+  const toast = useToast();
+  const authMutation = useAuthMutation({ onError });
   const authStore = useAuthStore();
   const handleMenuNode = ref();
   const isMenuOpen = ref(false);
   const closeMenu = () => (isMenuOpen.value = false);
   const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
+
+  function onError(error: unknown) {
+    toast.error(String(error));
+  }
 </script>
 
 <style scoped>

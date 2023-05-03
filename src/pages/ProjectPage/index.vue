@@ -9,19 +9,19 @@
             to: { name: RouteNames.HOME },
           },
           {
-            title: project?.title || '',
+            title: projectData?.project.title || '',
           },
         ]"
       />
       <h1 class="page-title">
-        <span v-if="loading">загрузка...</span>
-        <span v-if="error">{{ error }}</span>
-        <span v-if="project">{{ project.title }}</span>
+        <span v-if="isError">{{ error }}</span>
+        <span v-else-if="isFetching">загрузка...</span>
+        <span v-else>{{ projectData?.project.title }}</span>
       </h1>
     </header>
     <ProjectTabs
-      v-if="!error && !loading && project"
-      :project-state="project.state"
+      v-if="projectData && !isFetching && !isError"
+      :project-state="projectData.project.state"
     />
     <RouterView></RouterView>
     <div class="d-flex justify-content-center mt-3">
@@ -37,8 +37,7 @@
 </template>
 
 <script setup lang="ts">
-  import { watch } from 'vue';
-  import { storeToRefs } from 'pinia';
+  import { computed } from 'vue';
   import { RouterView, useRoute } from 'vue-router';
   import { RouteNames } from '@/router/types/route-names';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
@@ -47,20 +46,18 @@
   import BaseBreadcrumbs from '@/components/ui/BaseBreadcrumbs.vue';
   import ProjectTabs from '@/components/project/ProjectTabs.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
+  import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
 
   const route = useRoute();
   const projectsStore = useProjectsStore();
-  const { loading, error, openedProject: project } = storeToRefs(projectsStore);
 
-  watch(
-    () => route.params.id,
-    (projectId) => {
-      if (projectId) {
-        projectsStore.getSingleProject(Number(projectId));
-      }
-    },
-    { immediate: true },
-  );
+  const projectId = computed(() => Number(route.params.id));
+  const {
+    isFetching,
+    isError,
+    error,
+    data: projectData,
+  } = useGetSingleProjectQuery(projectId);
 </script>
 
 <style lang="scss" scoped>

@@ -17,7 +17,11 @@ export const USE_GET_THEME_SOURCES_QUERY_KEY =
 export const useGetThemeSourcesQuery = <T = TQueryFnData>(
   options?: UseGetThemeSourcesQueryOptions<T>,
 ) =>
-  useQuery(USE_GET_THEME_SOURCES_QUERY_KEY, supervisorApi.getThemeSources, {
-    staleTime: Infinity,
-    ...options,
-  });
+  useQuery(
+    USE_GET_THEME_SOURCES_QUERY_KEY,
+    () => supervisorApi.getThemeSources(),
+    {
+      staleTime: Infinity,
+      ...options,
+    },
+  );

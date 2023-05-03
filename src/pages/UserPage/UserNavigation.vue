@@ -61,10 +61,7 @@
       </template>
 
       <li :class="['item', props.variant]">
-        <button
-          :class="['action', props.variant]"
-          @click="modalsStore.openExitConfirmModal()"
-        >
+        <button :class="['action', props.variant]" @click="logout">
           Выйти из профиля
         </button>
       </li>
@@ -79,17 +76,17 @@
   import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
   import { RouteNames } from '@/router/types/route-names';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useInstituteProposalsInfo } from '@/hooks/useInstituteProposalsInfo';
   import { ProjectProposalStateId } from '@/models/ProjectProposal';
+  import { useLogoutWithModalMutation } from '@/api/AuthApi/hooks/useLogoutWithModalMutation';
 
   type Props = { variant: 'desktop' | 'mobile' };
   const props = withDefaults(defineProps<Props>(), { variant: 'desktop' });
-  const modalsStore = useModalsStore();
   const routes = useRoledUserNavigationRoutes();
 
   const authStore = useAuthStore();
   const { isInstDirector } = storeToRefs(authStore);
+  const { logout } = useLogoutWithModalMutation();
 
   const { proposalsCount } = useInstituteProposalsInfo({
     enabled: isInstDirector,

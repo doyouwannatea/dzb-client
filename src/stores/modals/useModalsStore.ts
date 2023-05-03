@@ -1,62 +1,13 @@
 import { defineStore } from 'pinia';
 import Cookies from 'js-cookie';
-import { projectIncludesCandidateSpeciality } from '@/helpers/project';
-import { isCandidate } from '@/helpers/typeCheck';
-import { UserCandidate } from '@/models/User';
 import { Project } from '@/models/Project';
 import { useAuthStore } from '../auth/useAuthStore';
-import { useParticipationsStore } from '../participations/useParticipationsStore';
 import { useProjectsStore } from '../projects/useProjectsStore';
 import { state } from './state';
 
 export const useModalsStore = defineStore('modals', {
   state,
   actions: {
-    async openParticipationModal(project: Project) {
-      const authStore = useAuthStore();
-      const participationsStore = useParticipationsStore();
-      const projectsStore = useProjectsStore();
-
-      const { profileData } = authStore;
-
-      if (!profileData) {
-        this.authModal = true;
-        return;
-      }
-
-      if (!isCandidate(profileData)) return;
-
-      if (!profileData.canSendParticipations) {
-        this.openAlertModal(
-          'На данный момент Вы не можете подавать заявки на проекты',
-        );
-        return;
-      }
-
-      if (participationsStore.participationList) {
-        for (const participation of participationsStore.participationList) {
-          if (participation.project_id === project.id) {
-            this.openAlertModal('Вы уже подали заявку на этот проект');
-            return;
-          }
-        }
-      }
-
-      const isSameInstitute = await this._onAsync(() =>
-        projectIncludesCandidateSpeciality(profileData, project),
-      );
-
-      if (!isSameInstitute) {
-        this.openAlertModal(
-          'Вы не можете подать заявку на проект другого института',
-        );
-        return;
-      }
-
-      projectsStore.openedProject = project;
-      this.participationModal = true;
-    },
-
     openAlertModal(title?: string, subtitle?: string) {
       this.alertModalTitle = title;
       this.alertModalSubtitle = subtitle;
@@ -89,20 +40,13 @@ export const useModalsStore = defineStore('modals', {
       this.confirmModalDisagreeAction = undefined;
     },
 
-    openExitConfirmModal() {
-      const authStore = useAuthStore();
-
+    openExitConfirmModal(agreeAction: () => void, disagreeAction: () => void) {
       this.openConfirmModal(
         'Вы уверены, что хотите выйти из аккаунта?',
         'Выйти из аккаунта',
         'Остаться',
-        () => {
-          authStore.exit();
-          this.closeConfirmModal();
-        },
-        () => {
-          this.closeConfirmModal();
-        },
+        agreeAction,
+        disagreeAction,
       );
     },
 
@@ -115,7 +59,7 @@ export const useModalsStore = defineStore('modals', {
         return;
       }
 
-      projectsStore.openedProject = project;
+      projectsStore.selectedProject = project;
       this.projectFeedbackModal = true;
     },
 
@@ -132,17 +76,6 @@ export const useModalsStore = defineStore('modals', {
         'Внимание',
         'У Вас есть автоматически созданная заявка на проект. В связи с тем, что в прошлом семестре Вы не заполнили заявки на проекты через Ярмарку проектов, Вас распределили на свободный, наиболее подходящий под Вашу специальность проект. Эта заявка имеет наименьший приоритет среди остальных заявок, Вы можете изменить её приоритет или удалить.',
       );
-    },
-
-    async _onAsync<T>(callback: () => Promise<T>) {
-      this.loading = true;
-      try {
-        return await callback();
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.loading = false;
-      }
     },
   },
 });

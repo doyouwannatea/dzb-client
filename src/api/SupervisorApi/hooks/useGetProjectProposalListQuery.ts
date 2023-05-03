@@ -22,7 +22,7 @@ export const useGetProjectProposalListQuery = <T = TQueryFnData>(
 ) =>
   useQuery(
     USE_GET_PROJECT_PROPOSAL_LIST_QUERY_KEY,
-    supervisorApi.getProjectProposalList,
+    () => supervisorApi.getProjectProposalList(),
     {
       staleTime: Infinity,
       placeholderData: () => [],

@@ -5,6 +5,11 @@ import {
 } from '@/models/Participation';
 import { Project } from '@/models/Project';
 
+export interface CreateProjectParticipationData {
+  priority: ParticipationPriority;
+  projectId: number;
+}
+
 export default interface CandidateApiType {
   getActiveProject(): Promise<Project | undefined>;
   getArchiveProjectList(): Promise<Project[]>;
@@ -13,8 +18,7 @@ export default interface CandidateApiType {
   deleteParticipation(id: number): Promise<void>;
   updateParticipation(participationId: number, priority: number): Promise<void>;
   createProjectParticipation(
-    priority: number,
-    projectId: number,
+    data: CreateProjectParticipationData,
   ): Promise<void>;
   getParticipationsWithProjects(
     participations: Participation[],

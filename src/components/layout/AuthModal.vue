@@ -12,13 +12,7 @@
         через систему «Кампус»
       </p>
       <div class="modal-buttons">
-        <BaseButton
-          case="uppercase"
-          @click="
-            authStore.auth();
-            modalsStore.authModal = false;
-          "
-        >
+        <BaseButton case="uppercase" @click="auth">
           войти через кампус
         </BaseButton>
       </div>
@@ -29,13 +23,23 @@
 
 <script setup lang="ts">
   import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
-  // components
   import BaseModal from '../ui/BaseModal.vue';
   import BaseButton from '../ui/BaseButton.vue';
+  import { useAuthMutation } from '@/api/AuthApi/hooks/useAuthMutation';
+  import { useToast } from 'vue-toastification';
 
+  const toast = useToast();
   const modalsStore = useModalsStore();
-  const authStore = useAuthStore();
+  const authMutation = useAuthMutation({ onError });
+
+  function auth() {
+    modalsStore.authModal = false;
+    authMutation.mutate();
+  }
+
+  function onError(error: unknown) {
+    toast.error(String(error));
+  }
 </script>
 
 <style scoped>

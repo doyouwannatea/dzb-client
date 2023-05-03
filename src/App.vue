@@ -18,13 +18,7 @@
   import ToUpButton from './components/ui/ToUpButton.vue';
   import AlertModal from './components/layout/AlertModal.vue';
   import ConfirmModal from './components/layout/ConfirmModal.vue';
-  import { useSavedRoute } from './hooks/useSaveRoute';
-  import { useGetParticipationList } from './hooks/useFetchStudentData';
-  import { useGetCandidateParticipationTime } from './hooks/useGetTime';
-  import { useGetSupervisorParticipationTime } from './hooks/useGetTime';
+  import { useGetUserInfoQuery } from './api/AuthApi/hooks/useGetUserInfoQuery';
 
-  useGetParticipationList();
-  useGetCandidateParticipationTime();
-  useGetSupervisorParticipationTime();
-  useSavedRoute();
+  useGetUserInfoQuery();
 </script>

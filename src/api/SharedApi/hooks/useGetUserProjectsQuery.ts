@@ -46,6 +46,6 @@ export const useGetUserProjectsQuery = <T = TQueryFnData>(
 
       return [];
     },
-    { ...options },
+    { staleTime: Infinity, ...options },
   );
 };

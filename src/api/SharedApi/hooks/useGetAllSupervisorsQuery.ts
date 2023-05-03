@@ -18,8 +18,12 @@ export const USE_GET_ALL_SUPERVISORS_QUERY_KEY =
 export const useGetAllSupervisorsQuery = <T = TQueryFnData>(
   options?: UseGetAllSupervisorsQueryOptions<T>,
 ) =>
-  useQuery(USE_GET_ALL_SUPERVISORS_QUERY_KEY, sharedApi.getAllSupervisors, {
-    staleTime: Infinity,
-    placeholderData: () => [],
-    ...options,
-  });
+  useQuery(
+    USE_GET_ALL_SUPERVISORS_QUERY_KEY,
+    () => sharedApi.getAllSupervisors(),
+    {
+      staleTime: Infinity,
+      placeholderData: () => [],
+      ...options,
+    },
+  );
