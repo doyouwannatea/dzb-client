@@ -115,10 +115,8 @@ export default class CandidateApiMock implements CandidateApiType {
       id: Math.floor(Math.random() * 100),
       candidate,
       priority,
-      candidate_id: candidate.id,
       project_id: project.id,
-      state_id: ParticipationState.Active,
-      review: 'review',
+      state: { id: ParticipationState.Active, state: 'активный' },
       created_at: new Date(Date.now()).toISOString(),
       updated_at: new Date(Date.now()).toISOString(),
     });

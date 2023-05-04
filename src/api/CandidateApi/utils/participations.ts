@@ -8,9 +8,9 @@ export function filterValidParticipations(
   participations: Participation[],
 ): Participation[] {
   return participations.filter(
-    ({ state_id }) =>
-      state_id !== ParticipationState.Archived &&
-      state_id !== ParticipationState.Rejected,
+    ({ state }) =>
+      state.id !== ParticipationState.Archived &&
+      state.id !== ParticipationState.Rejected,
   );
 }
 

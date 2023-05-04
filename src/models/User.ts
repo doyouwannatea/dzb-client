@@ -1,7 +1,7 @@
 import { Candidate } from './Candidate';
 import { Supervisor } from './Supervisor';
 
-export interface CommonUserData {
+export interface SharedUserData {
   id: number;
   fio: string;
   email: string;
