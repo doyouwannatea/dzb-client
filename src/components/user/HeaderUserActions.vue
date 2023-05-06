@@ -63,8 +63,8 @@
   const fio = computed(() => {
     const fio = authStore.profileData?.fio;
     if (!fio) return '';
-    const [f, i, o] = fio.split(' ');
-    return `${f} ${i[0]}. ${o[0]}.`;
+    const [f, ...rest] = fio.split(' ');
+    return `${f} ${rest.map((str) => str[0]).join('. ')}.`;
   });
 
   function closeMenu() {
