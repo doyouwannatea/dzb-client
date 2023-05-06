@@ -30,6 +30,7 @@ export default class AuthApiMock implements AuthApiType {
     await sleep(200);
     deleteAuthTokenFromCookies();
     setUserRoleToCookies(undefined);
+    window.location.reload();
   }
 
   async getCandidateInfo(): Promise<UserCandidate> {
