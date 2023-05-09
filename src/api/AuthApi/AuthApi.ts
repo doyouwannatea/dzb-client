@@ -54,9 +54,6 @@ export default class AuthApi implements AuthApiType {
       .json();
     userInfo.is_student = true;
     userInfo.is_teacher = false;
-    if (userInfo.canSendParticipations === undefined) {
-      userInfo.canSendParticipations = false;
-    }
     return userInfo;
   }
 
@@ -66,6 +63,7 @@ export default class AuthApi implements AuthApiType {
       .json();
     userInfo.is_student = false;
     userInfo.is_teacher = true;
+    userInfo.is_institute_director = userInfo.canReviewProjects;
     return userInfo;
   }
 
