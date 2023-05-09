@@ -4,17 +4,24 @@ import {
   UseGetInstituteProjectProposalsQueryOptions,
   useGetInstituteProjectProposalsQuery,
 } from '@/api/InstituteDirectorApi/hooks/useGetInstituteProjectProposalsQuery';
+import { useAuthStore } from '@/stores/auth/useAuthStore';
+import { storeToRefs } from 'pinia';
 
 type ProposalsCount = Record<ProjectProposalStateId, number>;
 
 export type UseInstituteProposalsInfoReturn = {
   proposalsCount: ComputedRef<ProposalsCount>;
+  approvedProjectsLimitExceeded: ComputedRef<boolean>;
+  isLoading: ComputedRef<boolean>;
 };
 
 export function useInstituteProposalsInfo(
   options?: UseGetInstituteProjectProposalsQueryOptions,
 ): UseInstituteProposalsInfoReturn {
-  const projectProposalList = useGetInstituteProjectProposalsQuery(options);
+  const authStore = useAuthStore();
+  const { intituteProjectsQuota } = storeToRefs(authStore);
+  const projectProposalListQuery =
+    useGetInstituteProjectProposalsQuery(options);
 
   const proposalsCount = computed(() => {
     const count: ProposalsCount = {
@@ -23,13 +30,21 @@ export function useInstituteProposalsInfo(
       [ProjectProposalStateId.Rejected]: 0,
       [ProjectProposalStateId.UnderReview]: 0,
     };
-    if (!projectProposalList.data.value) return count;
+    if (!projectProposalListQuery.data.value) return count;
 
-    for (const proposal of projectProposalList.data.value) {
+    for (const proposal of projectProposalListQuery.data.value) {
       count[proposal.state.id] += 1;
     }
     return count;
   });
 
-  return { proposalsCount };
+  const approvedProjectsLimitExceeded = computed(
+    () =>
+      proposalsCount.value[ProjectProposalStateId.Approved] >
+      intituteProjectsQuota.value,
+  );
+
+  const isLoading = computed(() => projectProposalListQuery.isFetching.value);
+
+  return { proposalsCount, approvedProjectsLimitExceeded, isLoading };
 }

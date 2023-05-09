@@ -31,26 +31,18 @@
                       :to="childLink.location"
                     >
                       {{ childLink.title }}
-                      <span
+                      <OnReviewProposalsLabel
                         v-if="
                           childLink.name ===
-                            RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_NEW &&
-                          proposalsCount[ProjectProposalStateId.UnderReview]
+                          RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_NEW
                         "
-                        class="label"
-                      >
-                        {{ proposalsCount[ProjectProposalStateId.UnderReview] }}
-                      </span>
-                      <span
+                      />
+                      <IntituteProjectsQuota
                         v-else-if="
                           childLink.name ===
                           RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_APPROVED
                         "
-                      >
-                        ({{
-                          proposalsCount[ProjectProposalStateId.Approved]
-                        }}/10)
-                      </span>
+                      />
                     </RouterLink>
                   </li>
                 </ul>
@@ -71,26 +63,18 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import { storeToRefs } from 'pinia';
   import SimpleAccordion from '@/components/ui/accordion/SimpleAccordion.vue';
   import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
   import { RouteNames } from '@/router/types/route-names';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { useInstituteProposalsInfo } from '@/hooks/useInstituteProposalsInfo';
-  import { ProjectProposalStateId } from '@/models/ProjectProposal';
   import { useLogoutWithModalMutation } from '@/api/AuthApi/hooks/useLogoutWithModalMutation';
+  import IntituteProjectsQuota from '@/components/project-proposal/IntituteProjectsQuota.vue';
+  import OnReviewProposalsLabel from './OnReviewProposalsLabel.vue';
 
   type Props = { variant: 'desktop' | 'mobile' };
   const props = withDefaults(defineProps<Props>(), { variant: 'desktop' });
   const routes = useRoledUserNavigationRoutes();
 
-  const authStore = useAuthStore();
-  const { isInstDirector } = storeToRefs(authStore);
   const { logout } = useLogoutWithModalMutation();
-
-  const { proposalsCount } = useInstituteProposalsInfo({
-    enabled: isInstDirector,
-  });
 </script>
 
 <style lang="scss" scoped>
@@ -187,20 +171,5 @@
     &.opened:deep(.title) {
       border-bottom: 1px solid var(--gray-color-1);
     }
-  }
-
-  .label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    padding: 0.125rem;
-    font-size: 0.875rem;
-    color: var(--light-color);
-    text-align: center;
-    text-transform: uppercase;
-    background: var(--accent-color-1);
-    border-radius: 50%;
   }
 </style>

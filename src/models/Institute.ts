@@ -1,3 +1,3 @@
 import { Tag } from './Tag';
 
-export type Institute = Tag;
+export type Institute = Tag & { maxApprovedProjects: number };
