@@ -38,7 +38,7 @@
 
   const modalsStore = useModalsStore();
   const projectsStore = useProjectsStore();
-  const { openedProject: project } = storeToRefs(projectsStore);
+  const { selectedProject: project } = storeToRefs(projectsStore);
 </script>
 
 <style scoped>

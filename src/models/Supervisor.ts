@@ -1,7 +1,7 @@
-import { Institute } from './Institute';
-import { CommonUserData } from './User';
+import { Department } from './Department';
+import { SharedUserData } from './User';
 
-export interface Supervisor extends CommonUserData {
+export interface Supervisor extends SharedUserData {
   position: string;
-  department: Institute | null;
+  department: Department;
 }

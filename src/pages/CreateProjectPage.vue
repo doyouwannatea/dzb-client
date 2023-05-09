@@ -24,7 +24,7 @@
   <PageLayout>
     <RouterLink
       :class="$style['back-link']"
-      :to="{ name: RouteNames.PROJECT_PROPOSALS }"
+      :to="{ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS }"
     >
       &lt;&nbsp;&nbsp;К списку заявок
     </RouterLink>
@@ -83,7 +83,7 @@
             v-model="prevProjectIdRef"
             class="multiselect"
             :placeholder="
-              prevUserProjects.isLoading.value
+              prevUserProjects.isFetching.value
                 ? 'Ваши проекты загружаются...'
                 : prevUserProjects.isError.value
                 ? 'Ошибка загрузки ваших проектов'
@@ -501,7 +501,7 @@
           !isEditableProposalComputed ||
           userProjectProposalList.isFetching.value
         "
-        :to="{ name: RouteNames.PROJECT_PROPOSALS }"
+        :to="{ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS }"
         variant="outlined"
       >
         Вернуться к заявкам
@@ -569,7 +569,7 @@
   // TODO: отрефакторить логику компонента, а то большой слишком
   import { computed, ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useRoute, useRouter } from 'vue-router';
+  import { useRoute, useRouter, RouterLink } from 'vue-router';
   import { DateTime } from 'luxon';
 
   import { useAuthStore } from '@/stores/auth/useAuthStore';
@@ -613,23 +613,22 @@
   } from '@/models/Specialty';
   import { MultiselectObjectItem } from '@/models/VMultiselect';
 
-  import { useAllSupervisors } from '@/queries/useAllSupervisors';
-  import { useProjectSkills } from '@/queries/useProjectSkills';
-  import { useSpecialties } from '@/queries/useSpecialties';
-  import { useThemeSources } from '@/queries/useThemeSources';
-  import { useCreateProjectProposal } from '@/queries/useCreateProjectProposal';
   import { ProjectDifficulty } from '@/models/ProjectDifficulty';
   import { RouteNames } from '@/router/types/route-names';
-  import { useProjectProposalList } from '@/queries/useProjectProposalList';
   import { specialtyFullName } from '@/helpers/specialty';
   import { TYPE, useToast } from 'vue-toastification';
   import { ProjectStateID } from '@/models/ProjectState';
-  import { toProjectCreateRoute } from '@/router/utils/routes';
-  import { useUpdateProjectProposal } from '@/queries/useUpdateProjectProposal';
+  import { toProjectProposalCreateRoute } from '@/router/utils/routes';
   import { sortByRolePriority } from '@/helpers/project-member-role';
-  import { useUserProjects } from '@/queries/useUserProjects';
   import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
-  import { RouterLink } from 'vue-router';
+  import { useGetProjectProposalListQuery } from '@/api/SupervisorApi/hooks/useGetProjectProposalListQuery';
+  import { useCreateProjectProposalMutation } from '@/api/SupervisorApi/hooks/useCreateProjectProposalMutation';
+  import { useGetSpecialtiesQuery } from '@/api/SupervisorApi/hooks/useGetSpecialtiesQuery';
+  import { useGetThemeSourcesQuery } from '@/api/SupervisorApi/hooks/useGetThemeSourcesQuery';
+  import { useUpdateProjectProposalMutation } from '@/api/SupervisorApi/hooks/useUpdateProjectProposalMutation';
+  import { useGetAllSupervisorsQuery } from '@/api/SharedApi/hooks/useGetAllSupervisorsQuery';
+  import { useGetUserProjectsQuery } from '@/api/SharedApi/hooks/useGetUserProjectsQuery';
+  import { useGetProjectSkillsQuery } from '@/api/ProjectApi/hooks/useGetAllProjectTagsQuery';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -648,7 +647,7 @@
   const { profileData } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
 
-  const userProjectProposalList = useProjectProposalList({
+  const userProjectProposalList = useGetProjectProposalListQuery({
     onSuccess: onSuccessGetUserProjectProposalList,
     onError: onErrorGetUserProjectProposalList,
   });
@@ -659,7 +658,7 @@
     ),
   );
 
-  const prevUserProjects = useUserProjects({
+  const prevUserProjects = useGetUserProjectsQuery({
     onError,
     select: (projects) =>
       projects.filter((project) =>
@@ -668,12 +667,12 @@
         ),
       ),
   });
-  const supervisorList = useAllSupervisors({ onError });
-  const projectSkills = useProjectSkills({ onError });
-  const specialtyList = useSpecialties({ onError });
-  const themeSources = useThemeSources({ onError });
-  const createProjectProposalMutation = useCreateProjectProposal();
-  const updateProjectProposalMutation = useUpdateProjectProposal();
+  const supervisorList = useGetAllSupervisorsQuery({ onError });
+  const projectSkills = useGetProjectSkillsQuery({ onError });
+  const specialtyList = useGetSpecialtiesQuery({ onError });
+  const themeSources = useGetThemeSourcesQuery({ onError });
+  const createProjectProposalMutation = useCreateProjectProposalMutation();
+  const updateProjectProposalMutation = useUpdateProjectProposalMutation();
 
   const showSkillsEditModal = ref<boolean>(false);
   const showSpecialtyEditModal = ref<boolean>(false);
@@ -1075,10 +1074,7 @@
               [...sharedRoleList, ...currentUserRoleList].includes(role),
             );
 
-          // сортируем роли
-          acceptedRoles = sortByRolePriority(
-            acceptedRoles.map((role) => ({ role })),
-          ).map((role) => role.role);
+          acceptedRoles = sortByRolePriority(acceptedRoles, (role) => role);
 
           return {
             role: acceptedRoles[0],
@@ -1090,7 +1086,7 @@
         });
 
       // сортируем команду по ролям
-      return sortByRolePriority(projectProposalTeam);
+      return sortByRolePriority(projectProposalTeam, (member) => member.role);
     }
   }
 
@@ -1158,7 +1154,7 @@
   function onCancel() {
     function agree() {
       modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+      router.push({ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS });
     }
 
     function disagree() {
@@ -1177,7 +1173,7 @@
   function onSuccessCreateDraft(
     createdProjectProposal: CreatedProjectProposal,
   ) {
-    router.push(toProjectCreateRoute(createdProjectProposal.id));
+    router.push(toProjectProposalCreateRoute(createdProjectProposal.id));
 
     const title = 'Черновик успешно сохранён, вернуться в личный кабинет?';
     const agreeButtonTitle = 'вернуться в личный кабинет';
@@ -1185,7 +1181,7 @@
 
     function agree() {
       modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+      router.push({ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS });
     }
 
     function disagree() {
@@ -1210,12 +1206,12 @@
 
     function agree() {
       modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+      router.push({ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS });
     }
 
     function disagree() {
       modalsStore.openConfirmModal();
-      router.push(toProjectCreateRoute());
+      router.push(toProjectProposalCreateRoute());
       clearAllFields();
     }
 
@@ -1235,7 +1231,7 @@
 
     function agree() {
       modalsStore.openConfirmModal();
-      router.push({ name: RouteNames.PROJECT_PROPOSALS });
+      router.push({ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS });
     }
 
     function disagree() {
@@ -1254,7 +1250,7 @@
   function onSuccessUpdateRejectedToDraft(
     createdProjectProposal: CreatedProjectProposal,
   ) {
-    router.push(toProjectCreateRoute(createdProjectProposal.id));
+    router.push(toProjectProposalCreateRoute(createdProjectProposal.id));
     modalsStore.openAlertModal(
       'Черновик создан',
       'Заявка сохранена как черновик, вы можете отредактировать заявку и отправить её ещё раз',

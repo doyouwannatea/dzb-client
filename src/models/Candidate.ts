@@ -1,6 +1,6 @@
-import { CommonUserData } from './User';
+import { SharedUserData } from './User';
 
-export interface Candidate extends CommonUserData {
+export interface Candidate extends SharedUserData {
   numz: string;
   phone: string;
   course: number;

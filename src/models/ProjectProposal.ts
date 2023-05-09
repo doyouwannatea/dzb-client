@@ -1,4 +1,4 @@
-import { Institute } from './Institute';
+import { Department } from './Department';
 import {
   ProjectSupervisor,
   ProjectType,
@@ -6,7 +6,6 @@ import {
   Skill,
 } from './Project';
 import { ProjectDifficulty } from './ProjectDifficulty';
-import { ProjectStateID } from './ProjectState';
 import {
   Specialty,
   SpecialtyCourse,
@@ -42,9 +41,8 @@ export const enum ProjectProposalStateId {
   Approved = 9,
 }
 
-export type ProjectProposalState = State<
-  ProjectProposalStateId & ProjectStateID
->;
+export type ProjectProposalState = State<ProjectProposalStateId>;
+
 export const PROJECT_PROPOSAL_IDS = [
   ProjectProposalStateId.UnderReview,
   ProjectProposalStateId.Draft,
@@ -96,7 +94,7 @@ export interface CreatedProjectProposal extends ProjectProposal {
   id: number;
   type: ProjectType;
   theme_source?: Tag;
-  department: Institute;
+  department: Department;
   prevProjectId: number | null;
   state: ProjectProposalState;
   supervisors: ProjectSupervisor[];

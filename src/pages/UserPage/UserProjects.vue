@@ -1,6 +1,6 @@
 <template>
   <ProjectList
-    v-if="userProjects.isLoading.value"
+    v-if="userProjects.isFetching.value"
     loading
     :loading-cards-length="3"
   />
@@ -16,9 +16,9 @@
 </template>
 
 <script setup lang="ts">
+  import { useGetUserProjectsQuery } from '@/api/SharedApi/hooks/useGetUserProjectsQuery';
   import ProjectList from '@/components/project/ProjectList.vue';
   import BaseStub from '@/components/ui/BaseStub.vue';
-  import { useUserProjects } from '@/queries/useUserProjects';
 
-  const userProjects = useUserProjects();
+  const userProjects = useGetUserProjectsQuery();
 </script>

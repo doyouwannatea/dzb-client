@@ -1,7 +1,7 @@
 import { Candidate } from './Candidate';
 import { Supervisor } from './Supervisor';
 
-export interface CommonUserData {
+export interface SharedUserData {
   id: number;
   fio: string;
   email: string;
@@ -11,11 +11,15 @@ export interface CommonUserData {
 export interface UserRole {
   is_student: boolean;
   is_teacher: boolean;
+  is_institute_director: boolean;
 }
+
+export type UserRoleKey = keyof UserRole;
 
 export interface UserMetadata extends UserRole {
   canSendParticipations: boolean;
+  canReviewProjects: boolean;
 }
 
-export interface UserCandidate extends Candidate, UserMetadata {}
-export interface UserSupervisor extends Supervisor, UserMetadata {}
+export interface UserCandidate extends Candidate, Partial<UserMetadata> {}
+export interface UserSupervisor extends Supervisor, Partial<UserMetadata> {}

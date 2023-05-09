@@ -1,45 +1,98 @@
 <template>
-  <ul :class="['list', props.variant]">
-    <template v-for="link in routes" :key="link.name">
-      <li :class="['item', props.variant]">
-        <RouterLink
-          :class="['action', props.variant]"
-          :to="{ name: link.name }"
-        >
-          {{ link.meta.title }}
-        </RouterLink>
-      </li>
-    </template>
+  <!-- Вёрстка тут трешб конечно -->
+  <!-- TODO: можно раскидать как-то по компонентам мб -->
+  <div :class="['wrapper', props.variant]">
+    <ul :class="['list', props.variant]">
+      <template v-for="link in routes" :key="link.name">
+        <li :class="['item', props.variant]">
+          <RouterLink
+            v-if="!link.meta.links"
+            :class="['action', props.variant]"
+            :to="{ name: link.name }"
+          >
+            {{ link.meta.title }}
+          </RouterLink>
+          <template v-else>
+            <SimpleAccordion class="accordion" default-opened>
+              <template #title>
+                <p :class="['action', props.variant]">
+                  {{ link.meta.title }}
+                </p>
+              </template>
+              <template #content>
+                <ul :class="['list', props.variant]">
+                  <li
+                    v-for="childLink in link.meta.links"
+                    :key="childLink.title"
+                    :class="['item', props.variant]"
+                  >
+                    <RouterLink
+                      :class="['action', props.variant]"
+                      :to="childLink.location"
+                    >
+                      {{ childLink.title }}
+                      <OnReviewProposalsLabel
+                        v-if="
+                          childLink.name ===
+                          RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_NEW
+                        "
+                      />
+                      <IntituteProjectsQuota
+                        v-else-if="
+                          childLink.name ===
+                          RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_APPROVED
+                        "
+                      />
+                    </RouterLink>
+                  </li>
+                </ul>
+              </template>
+            </SimpleAccordion>
+          </template>
+        </li>
+      </template>
 
-    <li :class="['item', props.variant]">
-      <button
-        :class="['action', props.variant]"
-        @click="modalsStore.openExitConfirmModal()"
-      >
-        Выйти из профиля
-      </button>
-    </li>
-  </ul>
+      <li :class="['item', props.variant]">
+        <button :class="['action', props.variant]" @click="logout">
+          Выйти из профиля
+        </button>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">
-  import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { RouterLink } from 'vue-router';
+  import SimpleAccordion from '@/components/ui/accordion/SimpleAccordion.vue';
+  import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
+  import { RouteNames } from '@/router/types/route-names';
+  import { useLogoutWithModalMutation } from '@/api/AuthApi/hooks/useLogoutWithModalMutation';
+  import IntituteProjectsQuota from '@/components/project-proposal/IntituteProjectsQuota.vue';
+  import OnReviewProposalsLabel from './OnReviewProposalsLabel.vue';
 
   type Props = { variant: 'desktop' | 'mobile' };
   const props = withDefaults(defineProps<Props>(), { variant: 'desktop' });
-  const modalsStore = useModalsStore();
   const routes = useRoledUserNavigationRoutes();
+
+  const { logout } = useLogoutWithModalMutation();
 </script>
 
 <style lang="scss" scoped>
-  .list {
-    padding: 0 1.375rem;
-    background: #fff;
+  .wrapper {
+    overflow: hidden;
     border: 1px solid var(--gray-color-1);
     border-radius: 0.625rem;
+
+    &.mobile {
+      overflow: visible;
+      border: none;
+      border-radius: 0;
+    }
+  }
+
+  .list {
+    padding: 0 1.375rem;
+    background: var(--light-color);
 
     &.mobile {
       position: sticky;
@@ -75,7 +128,9 @@
   }
 
   .action {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     padding: 1.25rem 0;
     font-size: 1.25rem;
@@ -103,6 +158,18 @@
 
     &.mobile {
       border-bottom: 2px solid var(--accent-color-1);
+    }
+  }
+
+  .accordion {
+    &:deep(.title) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &.opened:deep(.title) {
+      border-bottom: 1px solid var(--gray-color-1);
     }
   }
 </style>

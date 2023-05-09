@@ -2,8 +2,8 @@
   <BaseStub :title="title" :subtitle="subtitle">
     <template #button>
       <OpenParticipationModalButton
-        v-if="projectsStore.openedProject"
-        :project="projectsStore.openedProject"
+        v-if="props.project"
+        :project="props.project"
         variant="primary"
       />
     </template>
@@ -11,12 +11,15 @@
 </template>
 
 <script setup lang="ts">
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  // components
   import BaseStub from '@/components/ui/BaseStub.vue';
   import OpenParticipationModalButton from '@/components/participation/OpenParticipationModalButton.vue';
+  import { Project } from '@/models/Project';
 
-  const projectsStore = useProjectsStore();
+  type Props = {
+    project?: Project;
+  };
+
+  const props = defineProps<Props>();
 
   const title = 'Ни одной заявки :(';
   const subtitle =

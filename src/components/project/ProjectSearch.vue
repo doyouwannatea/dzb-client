@@ -12,10 +12,10 @@
     />
     <transition name="loading">
       <div
-        v-if="loading"
+        v-if="loadingProgress > 0"
         class="loading"
         :style="{
-          width: `calc(${progress * 100}% - 2px)`,
+          width: `calc(${loadingProgress * 100}% - 2px)`,
         }"
       ></div>
     </transition>
@@ -24,18 +24,17 @@
 
 <script setup lang="ts">
   import searchIconUrl from '@/assets/icons/search.svg?url';
-  import { computed } from 'vue';
   import { useProjectSearch } from '@/hooks/useProjectSearch';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   // components
   import BaseInput from '../ui/BaseInput.vue';
+  import { storeToRefs } from 'pinia';
 
-  const useProjectStore = useProjectsStore();
-  const loading = computed(() => useProjectStore.loading);
+  const projectStore = useProjectsStore();
+  const { loadingProgress } = storeToRefs(projectStore);
   const { debouncedSubmit, term, getInputRef } = useProjectSearch({
     triggerOnInput: true,
   });
-  const progress = computed(() => useProjectStore.projectProgress);
 </script>
 
 <style scoped>

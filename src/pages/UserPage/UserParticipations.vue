@@ -1,24 +1,26 @@
 <template>
   <!-- CONTENT -->
-  <section v-if="authStore.profileData && isCandidate(authStore.profileData)">
-    <!-- STUB -->
-    <UserParticipationListStub
-      v-if="!participationsStore.listNotEmpty && !participationsStore.loading"
-    />
-    <!-- STUB -->
+  <section v-if="authStore.isStudent">
+    <!-- ERROR -->
+    <div v-if="participationListQuery.isError.value">
+      {{ participationListQuery.error.value }}
+    </div>
+    <!-- ERROR -->
 
     <!-- LOADING -->
     <LoadingParticipationsList
-      v-if="participationsStore.loading && !participationsStore.listNotEmpty"
+      v-else-if="participationListQuery.isFetching.value"
     />
     <!-- LOADING -->
 
-    <!-- ERROR -->
-    <div v-if="participationsStore.error">{{ participationsStore.error }}</div>
-    <!-- ERROR -->
+    <!-- STUB -->
+    <UserParticipationListStub
+      v-else-if="participationListQuery.data.value?.length === 0"
+    />
+    <!-- STUB -->
 
     <!-- PARTICIPATION LIST -->
-    <template v-if="participationsStore.listNotEmpty">
+    <template v-else>
       <!-- <div> нужен для DnD -->
       <div>
         <Draggable
@@ -72,7 +74,7 @@
             v-if="!dragDisabled"
             class="btn"
             case="uppercase"
-            :disabled="participationsStore.loading"
+            :disabled="disableControls"
             @click="onSave"
           >
             сохранить изменения
@@ -83,7 +85,7 @@
             case="uppercase"
             variant="outlined"
             color="red"
-            :disabled="participationsStore.loading"
+            :disabled="disableControls"
             @click="onDisableDrag"
           >
             отмена
@@ -93,7 +95,7 @@
             class="btn edit-btn"
             variant="outlined"
             case="uppercase"
-            :disabled="participationsStore.loading"
+            :disabled="disableControls"
             @click="onEnableDrag"
           >
             Редактировать заявки
@@ -123,7 +125,6 @@
     ParticipationWithProject,
   } from '@/models/Participation';
   import { immutableArraySort } from '@/helpers/object';
-  import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
   import { useSmallDevice } from '@/helpers/breakpoints';
   import cursorIconUrl from '@/assets/icons/cursor.svg?url';
   // components
@@ -134,17 +135,24 @@
   import LoadingParticipationsList from '@/pages/UserPage/LoadingParticipationsList.vue';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { participationApi } from '@/api/ParticipationApi';
   import { isCandidate } from '@/helpers/typeCheck';
+  import { isAutoParticipation } from '@/api/CandidateApi/utils/participations';
+  import { useDeleteParticipationMutation } from '@/api/CandidateApi/hooks/useDeleteParticipationMutation';
+  import { useGetParticipationListQuery } from '@/api/CandidateApi/hooks/useGetParticipationListQuery';
+  import { useUpdateParticipationListMutation } from '@/api/CandidateApi/hooks/useUpdateParticipationListMutation';
+  import { useToast } from 'vue-toastification';
+  import { storeToRefs } from 'pinia';
 
   type EditableListItem = {
     order: number;
     content?: ParticipationWithProject;
   };
 
+  const toast = useToast();
   const isSmallDevice = useSmallDevice();
   const modalsStore = useModalsStore();
   const authStore = useAuthStore();
+  const { isStudent } = storeToRefs(authStore);
   const dragOptions = computed(() => ({
     animation: 200,
     delay: isSmallDevice.value ? 300 : 0,
@@ -155,7 +163,21 @@
     itemKey: 'order',
   }));
 
-  const participationsStore = useParticipationsStore();
+  const deleteParticipationMutation = useDeleteParticipationMutation({
+    onError,
+  });
+  const updateParticipationListMutation = useUpdateParticipationListMutation({
+    onError,
+  });
+  const participationListQuery = useGetParticipationListQuery({
+    enabled: isStudent,
+  });
+
+  const disableControls = computed(
+    () =>
+      updateParticipationListMutation.isLoading.value ||
+      deleteParticipationMutation.isLoading.value,
+  );
 
   const deleteParticipationModalShow = ref(false);
   const dragDisabled = ref(true);
@@ -166,12 +188,12 @@
   const editableAutoParticipationListRef = ref<EditableListItem[]>([]);
 
   watch(
-    () => participationsStore.participationList,
+    () => participationListQuery.data.value,
     (participationList) => {
       initList();
       if (
         participationList?.find((participation) =>
-          participationApi.isAutoParticipation(participation.priority),
+          isAutoParticipation(participation.priority),
         )
       ) {
         modalsStore.openAutoParticipationInfoModal();
@@ -190,10 +212,9 @@
   }
 
   function initList() {
-    if (!participationsStore.participationList) return;
-    const editableParticipationList = createEditableList(
-      participationsStore.participationList,
-    );
+    const participationList = participationListQuery.data.value;
+    if (!participationList) return;
+    const editableParticipationList = createEditableList(participationList);
     editableParticipationListRef.value = immutableArraySort(
       editableParticipationList.filter(
         ({ content }) =>
@@ -285,17 +306,15 @@
           });
       }
       // Автоматически сгенерированные заявки
-      for (const [
-        index,
-        item,
-      ] of editableAutoParticipationListRef.value.entries()) {
+      for (const item of editableAutoParticipationListRef.value) {
         if (item.content)
           participations.push({
             ...item.content,
             priority: item.content.priority as ParticipationPriority,
           });
       }
-      participationsStore.updateParticipationsPriorities(participations);
+
+      updateParticipationListMutation.mutate(participations);
     }
   }
 
@@ -306,8 +325,13 @@
 
   function deleteParticipation(participation: Participation) {
     if (editableParticipationListRef.value) {
-      participationsStore.deleteParticipation(participation.id);
+      deleteParticipationMutation.mutate(participation.id);
     }
+  }
+
+  function onError(error: unknown) {
+    initList();
+    toast.error(String(error));
   }
 </script>
 

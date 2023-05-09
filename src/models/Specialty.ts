@@ -1,3 +1,4 @@
+import { Department } from './Department';
 import { Institute } from './Institute';
 import { Tag } from './Tag';
 
@@ -24,7 +25,7 @@ export const SpecialtyName: Record<SpecialtyCourse, string> = {
 
 export interface Specialty<T = number> extends Tag<T> {
   institute: Institute | null;
-  department: Institute | null;
+  department: Department | null;
 }
 
 export interface SelectedSpecialty<T = number> extends Tag<T> {

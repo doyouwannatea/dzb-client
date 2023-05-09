@@ -12,7 +12,7 @@
         </button>
       </li>
       <li
-        v-for="pageLink in genPages()"
+        v-for="pageLink in pages"
         :key="pageLink"
         :class="['pagination-item', { active: pageLink === props.page }]"
       >
@@ -61,19 +61,8 @@
   const startPage = ref(1);
   const endPage = ref(1);
 
-  watch(
-    () => props.page,
-    (page, prevPage) => {
-      if (page === prevPage) return;
-      if (!page || page < 1) return setPage(1);
-      if (page > totalPages.value) return setPage(totalPages.value);
-      updatePages(page);
-    },
-    { immediate: true },
-  );
-
   // генерирует видимые ссылки пагинации
-  function genPages() {
+  const pages = computed(() => {
     const pages = [1];
 
     for (let i = startPage.value + 1; i <= endPage.value - 1; i++) {
@@ -85,7 +74,18 @@
     }
 
     return pages;
-  }
+  });
+
+  watch(
+    () => [props.page, props.totalItems, props.pagesVisible],
+    ([page, totalItems, pagesVisible, prevPage]) => {
+      if (page === prevPage) return;
+      if (!page || page < 1) return setPage(1);
+      if (page > totalPages.value) return setPage(totalPages.value);
+      updatePages(page);
+    },
+    { immediate: true },
+  );
 
   // обновляет состояние компонента
   function updatePages(page: number) {

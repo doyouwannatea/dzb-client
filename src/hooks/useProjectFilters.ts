@@ -38,8 +38,6 @@ export const useWatchProjectQueries = (routeName: RouteNames) => {
       if (!isEqualFilters) {
         projectStore.setFilters(queryFilters);
       }
-
-      projectStore.getProjectList();
     },
     { immediate: true },
   );

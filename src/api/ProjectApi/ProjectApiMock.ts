@@ -1,5 +1,4 @@
 import { DownloadProgress } from 'ky';
-import { OnDownloadProgress, ProjectListResponse } from './IProjectApi';
 import type {
   Project,
   ProjectFilters,
@@ -8,16 +7,15 @@ import type {
 } from '@/models/Project';
 import { projectListResponse, states, types } from '@/models/mock/project';
 import { delayRes, sleep } from '@/helpers/promise';
-import { supervisorList } from '@/models/mock/supervisor';
-import IProjectApi from './IProjectApi';
 import { ProjectState } from '@/models/ProjectState';
 import { formatProjectDate } from '@/helpers/project';
-import { Supervisor } from '@/models/Supervisor';
 import { skills } from '@/models/mock/project-skills';
-import { deepClone } from '@/helpers/object';
 import { Candidate } from '@/models/Candidate';
-import { activeProjectId, archiveProjectIdList } from '@/models/mock/candidate';
 import { specialties } from '@/models/mock/specialties';
+import ProjectApiType, {
+  OnDownloadProgress,
+  ProjectListResponse,
+} from './ProjectApiType';
 
 const createDownloadProgress =
   (totalBytes: number) =>
@@ -27,7 +25,7 @@ const createDownloadProgress =
     transferredBytes: totalBytes * percent,
   });
 
-export default class ProjectApiMock extends IProjectApi {
+export default class ProjectApiMock implements ProjectApiType {
   async filterProjectList(
     filters: ProjectFilters,
     onDownloadProgress?: OnDownloadProgress,
@@ -100,10 +98,6 @@ export default class ProjectApiMock extends IProjectApi {
     return delayRes({ skills, specialties }, 300);
   }
 
-  async getAllSupervisors(): Promise<Supervisor[]> {
-    return delayRes(supervisorList, 400);
-  }
-
   async getAllProjectTypes(): Promise<ProjectType[]> {
     return delayRes(types, 300);
   }
@@ -151,25 +145,5 @@ export default class ProjectApiMock extends IProjectApi {
     }
 
     return history.map(formatProjectDate);
-  }
-
-  async getActiveUserProject(): Promise<Project | undefined> {
-    const project = projectListResponse.data.find(
-      (project) => project.id === activeProjectId,
-    );
-    if (!project) return delayRes(project, 300);
-
-    return delayRes(deepClone(formatProjectDate(project)), 300);
-  }
-
-  async getArhiveUserProjects(): Promise<Project[]> {
-    return delayRes(
-      deepClone(
-        projectListResponse.data
-          .filter((project) => archiveProjectIdList.includes(project.id))
-          .map(formatProjectDate),
-      ),
-      300,
-    );
   }
 }

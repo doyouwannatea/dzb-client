@@ -8,9 +8,7 @@
     <!-- HEADER -->
     <template #header>
       <h1 class="title">Подача заявки на проект</h1>
-      <h2>{{ projectsStore.openedProject?.title }}</h2>
-      <h3 v-if="participationsStore.loading">загрузка...</h3>
-      <h3 v-if="participationsStore.error">{{ participationsStore.error }}</h3>
+      <h2>{{ projectsStore.selectedProject?.title }}</h2>
     </template>
     <!-- HEADER -->
 
@@ -142,10 +140,15 @@
         <BaseButton
           case="uppercase"
           class="participation-btn"
-          :disabled="participationsStore.loading || !priorityValue"
+          :disabled="
+            createProjectParticipationMutation.isLoading.value || !priorityValue
+          "
           @click="onCreateParticipation"
         >
-          Подать заявку
+          <template v-if="createProjectParticipationMutation.isLoading.value">
+            подача заявки...
+          </template>
+          <template v-else>Подать заявку</template>
         </BaseButton>
       </div>
     </template>
@@ -163,7 +166,6 @@
   import checkedIconUrl from '@/assets/icons/checked.svg?url';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { useParticipationsStore } from '@/stores/participations/useParticipationsStore';
   import { isCandidate } from '@/helpers/typeCheck';
   import { useSmallDevice } from '@/helpers/breakpoints';
   // components
@@ -173,10 +175,15 @@
   import BaseRadioButton from '../ui/BaseRadioButton.vue';
   import BaseButton from '../ui/BaseButton.vue';
   import LabelRequiredIcon from '../ui/label/LabelRequiredIcon.vue';
+  import { useGetParticipationListQuery } from '@/api/CandidateApi/hooks/useGetParticipationListQuery';
+  import { useCreateProjectParticipationMutation } from '@/api/CandidateApi/hooks/useCreateProjectParticipationMutation';
+  import { useToast } from 'vue-toastification';
+  import { storeToRefs } from 'pinia';
 
+  const toast = useToast();
   const projectsStore = useProjectsStore();
   const authStore = useAuthStore();
-  const participationsStore = useParticipationsStore();
+  const { isStudent } = storeToRefs(authStore);
   const modalsStore = useModalsStore();
   const isSmallDevice = useSmallDevice();
 
@@ -187,7 +194,13 @@
   const priorityTooltipMsg =
     'Вы можете подать заявки на 3 проекта сразу, но чтобы мы смогли вас распределить в проект, в который вы хотите попасть с большей вероятностью, вы ставите ему больший приоритет. Вы сможете поменять приоритет проекта в личном кабинете после отправки заявки';
 
-  watch(() => participationsStore.participationList, initParticipations, {
+  const participationListQuery = useGetParticipationListQuery({
+    enabled: isStudent,
+  });
+  const createProjectParticipationMutation =
+    useCreateProjectParticipationMutation({ onError, onSuccess });
+
+  watch(() => participationListQuery.data.value, initParticipations, {
     immediate: true,
     deep: true,
   });
@@ -195,32 +208,32 @@
   watch(() => modalsStore.participationModal, initParticipations);
 
   function initParticipations() {
-    if (participationsStore.participationList) {
-      highSelected.value = false;
-      mediumSelected.value = false;
-      lowSelected.value = false;
+    const participationList = participationListQuery.data.value;
+    if (!participationList) return;
+    highSelected.value = false;
+    mediumSelected.value = false;
+    lowSelected.value = false;
 
-      for (const participation of participationsStore.participationList) {
-        switch (participation.priority) {
-          case 1:
-            highSelected.value = true;
-            break;
-          case 2:
-            mediumSelected.value = true;
-            break;
-          case 3:
-            lowSelected.value = true;
-            break;
-        }
+    for (const participation of participationList) {
+      switch (participation.priority) {
+        case 1:
+          highSelected.value = true;
+          break;
+        case 2:
+          mediumSelected.value = true;
+          break;
+        case 3:
+          lowSelected.value = true;
+          break;
       }
+    }
 
-      if (!highSelected.value) {
-        priorityValue.value = ParticipationPriority.High;
-      } else if (!mediumSelected.value) {
-        priorityValue.value = ParticipationPriority.Medium;
-      } else if (!lowSelected.value) {
-        priorityValue.value = ParticipationPriority.Low;
-      }
+    if (!highSelected.value) {
+      priorityValue.value = ParticipationPriority.High;
+    } else if (!mediumSelected.value) {
+      priorityValue.value = ParticipationPriority.Medium;
+    } else if (!lowSelected.value) {
+      priorityValue.value = ParticipationPriority.Low;
     }
   }
 
@@ -229,11 +242,11 @@
       return;
     }
 
-    if (projectsStore.openedProject) {
-      participationsStore.createPatricipation(
-        priorityValue.value,
-        projectsStore.openedProject.id,
-      );
+    if (projectsStore.selectedProject) {
+      createProjectParticipationMutation.mutate({
+        priority: priorityValue.value,
+        projectId: projectsStore.selectedProject.id,
+      });
       priorityValue.value = undefined;
     }
   }
@@ -241,6 +254,15 @@
   function onCloseModal() {
     modalsStore.participationModal = false;
     priorityValue.value = undefined;
+  }
+
+  function onSuccess() {
+    modalsStore.participationSuccessModal = true;
+    modalsStore.participationModal = false;
+  }
+
+  function onError(error: unknown) {
+    toast.error(String(error));
   }
 </script>
 

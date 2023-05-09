@@ -1,9 +1,8 @@
 <template>
   <BaseAccordion
     ref="accordionEl"
-    :animated="animated"
-    :opened="opened"
-    @toggle="opened = !opened"
+    v-model:opened="opened"
+    :animated="props.animated"
   >
     <template #title>
       <slot name="title"></slot>
@@ -21,12 +20,14 @@
 
   interface Props {
     animated?: boolean;
+    defaultOpened?: boolean;
   }
 
-  withDefaults(defineProps<Props>(), {
+  const props = withDefaults(defineProps<Props>(), {
     animated: false,
+    defaultOpened: false,
   });
   const accordionEl = ref<HTMLElement | null>(null);
-  const opened = ref(false);
+  const opened = ref(props.defaultOpened);
   onClickOutside(accordionEl, () => (opened.value = false));
 </script>
