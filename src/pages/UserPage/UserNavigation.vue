@@ -47,12 +47,9 @@
                           RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_APPROVED
                         "
                       >
-                        <template v-if="isLoading">...</template>
-                        <template v-else>
-                          ({{
-                            proposalsCount[ProjectProposalStateId.Approved]
-                          }}/{{ instituteProjectQuota }})
-                        </template>
+                        ({{
+                          proposalsCount[ProjectProposalStateId.Approved]
+                        }}/10)
                       </span>
                     </RouterLink>
                   </li>
@@ -91,10 +88,9 @@
   const { isInstDirector } = storeToRefs(authStore);
   const { logout } = useLogoutWithModalMutation();
 
-  const { proposalsCount, instituteProjectQuota, isLoading } =
-    useInstituteProposalsInfo({
-      enabled: isInstDirector,
-    });
+  const { proposalsCount } = useInstituteProposalsInfo({
+    enabled: isInstDirector,
+  });
 </script>
 
 <style lang="scss" scoped>

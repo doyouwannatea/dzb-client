@@ -16,9 +16,4 @@ export default class InstituteDirectorApiMock
   async getInstituteProjectProposals(): Promise<CreatedProjectProposal[]> {
     return delayRes([], 500);
   }
-
-  async getInstituteProjectQuota(): Promise<number> {
-    const quota = 15;
-    return delayRes(quota, 300);
-  }
 }
