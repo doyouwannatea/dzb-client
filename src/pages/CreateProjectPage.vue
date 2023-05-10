@@ -250,6 +250,39 @@
         title="Роли в проекте"
         divider
       >
+        <!-- <Jod developer> -->
+        <BaseLabel
+          is="div"
+          :class="$style['institute-input']"
+          label="Разработчик проекта"
+        >
+          <template #label="{ label }">
+            <BaseTooltip
+              :position-x="isSmallDevice ? 'left' : 'right'"
+              message="Разработчиком проекта становится сотрудник ИРНИТУ, создавший проектную заявку через Ярмарку проектов"
+            >
+              {{ label }}
+            </BaseTooltip>
+          </template>
+
+          <template #default>
+            <BaseInput
+              :model-value="
+                userProjectProposalList.isFetching.value
+                  ? undefined
+                  : projectJobDeveloperComputed?.fio
+              "
+              :placeholder="
+                userProjectProposalList.isFetching.value
+                  ? 'Загрузка проектной заявки...'
+                  : ''
+              "
+              disabled
+            />
+          </template>
+        </BaseLabel>
+        <!-- </Jod developer> -->
+
         <!-- <Project institute> -->
         <BaseLabel
           is="div"
@@ -742,6 +775,12 @@
   );
   const projectDepartmentComputed = computed(
     () => projectMentorComputed.value?.memberData?.department,
+  );
+  const projectJobDeveloperComputed = computed(
+    () =>
+      currentProjectProposalComputed.value?.supervisors.find((member) =>
+        member.roles.find((role) => role.id === MemberRole.JobDeveloper),
+      )?.supervisor || profileData?.value,
   );
   const specialtiesOfMentorDepartmentComputed = computed(
     () =>
@@ -1348,6 +1387,10 @@
     }
 
     & > *:nth-child(2) {
+      grid-column: 1;
+    }
+
+    & > *:nth-child(3) {
       grid-column: 1 / -1;
     }
   }
