@@ -24,16 +24,24 @@
   } from '@/models/Participation';
   import { intToRoman } from '@/helpers/string';
   import { isAutoParticipation } from '@/api/CandidateApi/utils/participations';
+  import { useMobile } from '@/helpers/breakpoints';
 
   type Props = {
     priority: ParticipationPriority;
     disabled: boolean;
+    useAcronyms?: boolean;
   };
-  const props = withDefaults(defineProps<Props>(), { disabled: false });
+  const props = withDefaults(defineProps<Props>(), {
+    disabled: false,
+    useAcronyms: false,
+  });
   const isAuto = computed(() => isAutoParticipation(props.priority));
+  const isMobile = useMobile();
   const statusText = computed(() =>
     isAuto.value
-      ? 'Автоматическое распределение'
+      ? props.useAcronyms
+        ? 'Авт. распределение'
+        : 'Автоматическое распределение'
       : ParticipationPriorityText[props.priority] + ' приоритет',
   );
 </script>
