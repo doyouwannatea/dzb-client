@@ -5,9 +5,17 @@ import { defineConfig, loadEnv } from 'vite';
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
-  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+  const env = loadEnv(mode, process.cwd());
+  const defineEnv: Record<string, string> = {};
+
+  for (const key in env) {
+    defineEnv[`process.env.${key}`] = JSON.stringify(env[key]);
+  }
+
+  process.env = { ...process.env, ...env };
 
   return defineConfig({
+    define: { ...defineEnv },
     plugins: [vue(), svgLoader()],
     resolve: {
       alias: {

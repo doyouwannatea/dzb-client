@@ -11,7 +11,7 @@ const toast = useToast();
 export const DEFAULT_QUERY_STALE_TIME = 2 * 3600000;
 
 export const baseKyInstance = ky.create({
-  prefixUrl: import.meta.env.VITE_API_URL,
+  prefixUrl: process.env.VITE_API_URL,
   retry: { limit: 5, statusCodes: [408, 413, 429, 502, 503, 504] },
   hooks: {
     beforeRequest: [
