@@ -28,12 +28,18 @@
   type Props = {
     priority: ParticipationPriority;
     disabled: boolean;
+    useAcronyms?: boolean;
   };
-  const props = withDefaults(defineProps<Props>(), { disabled: false });
+  const props = withDefaults(defineProps<Props>(), {
+    disabled: false,
+    useAcronyms: false,
+  });
   const isAuto = computed(() => isAutoParticipation(props.priority));
   const statusText = computed(() =>
     isAuto.value
-      ? 'Автоматическое распределение'
+      ? props.useAcronyms
+        ? 'Авт. распределение'
+        : 'Автоматическое распределение'
       : ParticipationPriorityText[props.priority] + ' приоритет',
   );
 </script>
