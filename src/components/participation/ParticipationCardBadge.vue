@@ -24,7 +24,6 @@
   } from '@/models/Participation';
   import { intToRoman } from '@/helpers/string';
   import { isAutoParticipation } from '@/api/CandidateApi/utils/participations';
-  import { useMobile } from '@/helpers/breakpoints';
 
   type Props = {
     priority: ParticipationPriority;
@@ -36,7 +35,6 @@
     useAcronyms: false,
   });
   const isAuto = computed(() => isAutoParticipation(props.priority));
-  const isMobile = useMobile();
   const statusText = computed(() =>
     isAuto.value
       ? props.useAcronyms
