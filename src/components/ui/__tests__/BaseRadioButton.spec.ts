@@ -21,10 +21,16 @@ describe('BaseRadioButton.vue', () => {
 
     it('modelValue обновляется', async () => {
       const wrapper = shallowMount(BaseRadioButton, {
-        props: { modelValue, value },
+        props: {
+          modelValue,
+          value,
+          'onUpdate:modelValue': async (modelValue: any) => {
+            await wrapper.setProps({ modelValue });
+          },
+        },
       });
       await wrapper.find('input[type=radio]').setValue(true);
-      expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe(value);
+      expect(wrapper.vm.modelValue).toBe(value);
     });
 
     it('disabled не даёт обновить modelValue', async () => {
