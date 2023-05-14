@@ -1,12 +1,12 @@
 <template>
   <BaseDropdown
-    :is-open="isOpen"
-    :handle-node="handleNode"
-    :position="position"
-    @update:is-open="(value) => $emit('update:isOpen', value)"
+    :is-open="props.isOpen"
+    :handle-node="props.handleNode"
+    :position="props.position"
+    @update:is-open="(value) => emit('update:isOpen', value)"
   >
     <ul>
-      <li v-for="item in itemList" :key="item.content" class="item">
+      <li v-for="item in props.itemList" :key="item.content" class="item">
         <!-- if item is a link -->
         <template v-if="item.type === 'link'">
           <!-- if item is a ROUTER link -->
@@ -31,33 +31,25 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import { RouteLocationRaw } from 'vue-router';
-  // components
   import BaseDropdown, { Position } from './BaseDropdown.vue';
+  import { DropdownItem } from '@/models/DropdownItem';
 
-  export type DropdownItem =
-    | {
-        content: string;
-        type: 'link';
-        href?: string;
-        location?: RouteLocationRaw;
-      }
-    | { content: string; type: 'button'; action: () => void };
   type Props = {
     isOpen: boolean;
-    handleNode: HTMLElement;
     itemList: DropdownItem[];
+    handleNode?: HTMLElement;
     position?: Position;
   };
   type Emits = {
     (e: 'update:isOpen', isOpen: boolean): void;
   };
 
-  withDefaults(defineProps<Props>(), {
+  const props = withDefaults(defineProps<Props>(), {
     itemList: () => [],
     position: () => ({}),
+    handleNode: undefined,
   });
-  defineEmits<Emits>();
+  const emit = defineEmits<Emits>();
 </script>
 
 <style scoped>

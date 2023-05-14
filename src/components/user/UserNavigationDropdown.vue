@@ -11,8 +11,9 @@
   import { watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
+  import { DropdownItem } from '@/models/DropdownItem';
   // components
-  import DropdownList, { DropdownItem } from '../ui/DropdownList.vue';
+  import DropdownList from '../ui/DropdownList.vue';
   import { useLogoutWithModalMutation } from '@/api/AuthApi/hooks/useLogoutWithModalMutation';
 
   type Props = {
