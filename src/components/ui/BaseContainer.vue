@@ -8,16 +8,20 @@
 </template>
 
 <script setup lang="ts">
-  const props = defineProps<{ size: 'lg' | 'md' }>();
-  let maxWidth = 0;
-  switch (props.size) {
-    case 'lg':
-      maxWidth = 1800;
-      break;
-    case 'md':
-      maxWidth = 1400;
-      break;
-  }
+  import { computed } from 'vue';
+
+  type Props = { size: 'lg' | 'md' };
+
+  const props = defineProps<Props>();
+  const maxWidth = computed(() => {
+    switch (props.size) {
+      case 'lg':
+        return 1800;
+      case 'md':
+      default:
+        return 1400;
+    }
+  });
 </script>
 
 <style scoped>
