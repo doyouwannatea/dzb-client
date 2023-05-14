@@ -3,7 +3,7 @@
     :is-open="isOpen"
     :handle-node="handleNode"
     :position="position"
-    @close="$emit('close')"
+    @update:is-open="(value) => $emit('update:isOpen', value)"
   >
     <ul>
       <li v-for="item in itemList" :key="item.content" class="item">
@@ -50,7 +50,7 @@
     position?: Position;
   };
   type Emits = {
-    (e: 'close'): void;
+    (e: 'update:isOpen', isOpen: boolean): void;
   };
 
   withDefaults(defineProps<Props>(), {

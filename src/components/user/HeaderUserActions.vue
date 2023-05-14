@@ -14,9 +14,8 @@
           </button>
         </div>
         <UserNavigationDropdown
+          v-model:is-open="isMenuOpen"
           :handle-node="handleMenuNode"
-          :is-open="isMenuOpen"
-          @close="closeMenu"
         />
       </div>
     </template>
@@ -67,9 +66,6 @@
     return `${f} ${rest.map((str) => str[0]).join('. ')}.`;
   });
 
-  function closeMenu() {
-    isMenuOpen.value = false;
-  }
   function toggleMenu() {
     isMenuOpen.value = !isMenuOpen.value;
   }

@@ -3,7 +3,7 @@
     :handle-node="props.handleNode"
     :is-open="props.isOpen"
     :item-list="items"
-    @close="emit('close')"
+    @update:is-open="(value) => emit('update:isOpen', value)"
   />
 </template>
 
@@ -20,7 +20,7 @@
     handleNode: HTMLElement;
   };
   type Emits = {
-    (e: 'close'): void;
+    (e: 'update:isOpen', isOpen: boolean): void;
   };
 
   const props = defineProps<Props>();
@@ -32,7 +32,7 @@
 
   watch(
     () => route.path,
-    () => emit('close'),
+    () => emit('update:isOpen', false),
   );
 
   const items = routes.map<DropdownItem>((route) => ({

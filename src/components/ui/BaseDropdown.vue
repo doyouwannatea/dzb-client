@@ -13,7 +13,6 @@
   import { ref } from 'vue';
   import { isPartOfNode } from '@/helpers/dom';
   import { onClickOutside } from '@vueuse/core';
-  // components
   import BasePanel from './BasePanel.vue';
 
   export type Position = {
@@ -24,22 +23,23 @@
   };
   type Props = {
     isOpen: boolean;
-    handleNode: HTMLElement;
+    handleNode?: HTMLElement;
     position?: Position;
   };
   type Emits = {
-    (e: 'close'): void;
+    (e: 'update:isOpen', isOpen: boolean): void;
   };
 
   const props = withDefaults(defineProps<Props>(), {
     position: () => ({}),
+    handleNode: undefined,
   });
   const emit = defineEmits<Emits>();
   const root = ref(null);
 
   onClickOutside(root, (evt) => {
     if (isPartOfNode(evt.target as HTMLElement, props.handleNode)) return;
-    emit('close');
+    emit('update:isOpen', false);
   });
 </script>
 
