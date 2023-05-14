@@ -39,11 +39,11 @@
 <script setup lang="ts">
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { isCandidate, isSupervisor } from '@/helpers/typeCheck';
-  // components
-  import AppList, { AppListItemType } from '@/components/ui/AppList.vue';
+  import AppList from '@/components/ui/AppList.vue';
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
   import { useDesktop } from '@/helpers/breakpoints';
+  import { AppListItemType } from '@/models/AppList';
 
   const isDesktop = useDesktop();
   const authStore = useAuthStore();
