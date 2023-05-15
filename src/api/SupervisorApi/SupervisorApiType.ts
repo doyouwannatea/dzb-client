@@ -18,6 +18,9 @@ export default interface SupervisorApiType {
   updateProjectProposal(
     data: UpdateProjectProposalData,
   ): Promise<CreatedProjectProposal>;
+  deleteProjectProposal(
+    projectProposalId: number,
+  ): Promise<CreatedProjectProposal>;
   getThemeSources(): Promise<Tag[]>;
   getSpecialties(): Promise<Specialty[]>;
   getProjectProposalList(): Promise<CreatedProjectProposal[]>;

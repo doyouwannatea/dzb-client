@@ -662,6 +662,7 @@
   import { useGetAllSupervisorsQuery } from '@/api/SharedApi/hooks/useGetAllSupervisorsQuery';
   import { useGetUserProjectsQuery } from '@/api/SharedApi/hooks/useGetUserProjectsQuery';
   import { useGetProjectSkillsQuery } from '@/api/ProjectApi/hooks/useGetAllProjectTagsQuery';
+  import { useDeleteProjectProposalMutation } from '@/api/SupervisorApi/hooks/useDeleteProjectProposalMutation';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -704,8 +705,15 @@
   const projectSkills = useGetProjectSkillsQuery({ onError });
   const specialtyList = useGetSpecialtiesQuery({ onError });
   const themeSources = useGetThemeSourcesQuery({ onError });
-  const createProjectProposalMutation = useCreateProjectProposalMutation();
-  const updateProjectProposalMutation = useUpdateProjectProposalMutation();
+  const createProjectProposalMutation = useCreateProjectProposalMutation({
+    onError,
+  });
+  const updateProjectProposalMutation = useUpdateProjectProposalMutation({
+    onError,
+  });
+  const deleteProjectProposalMutation = useDeleteProjectProposalMutation({
+    onError,
+  });
 
   const showSkillsEditModal = ref<boolean>(false);
   const showSpecialtyEditModal = ref<boolean>(false);
@@ -766,6 +774,7 @@
     () =>
       createProjectProposalMutation.isLoading.value ||
       updateProjectProposalMutation.isLoading.value ||
+      deleteProjectProposalMutation.isLoading.value ||
       userProjectProposalList.isFetching.value ||
       !isEditableProposalComputed.value,
   );
@@ -956,13 +965,11 @@
             : isDraft
             ? onSuccessUpdateDraft
             : onSuccessCreateForReview,
-          onError: onErrorSendProposal,
         },
       );
     } else {
       createProjectProposalMutation.mutate(projectProposal, {
         onSuccess: isDraft ? onSuccessCreateDraft : onSuccessCreateForReview,
-        onError: onErrorSendProposal,
       });
     }
   }
@@ -1185,8 +1192,30 @@
   }
 
   function onDeleteDraft() {
-    modalsStore.openAlertModal(
-      'Функция удаления черновика на данный момент недоступна 😢',
+    if (!currentProjectProposalComputed.value) return;
+    const { id, title } = currentProjectProposalComputed.value;
+    function agree() {
+      modalsStore.openConfirmModal();
+      deleteProjectProposalMutation.mutate(id, {
+        onSuccess: () => {
+          router.replace({
+            name: RouteNames.SUPERVISOR_PROJECT_PROPOSAL_CREATE,
+          });
+          clearAllFields();
+        },
+      });
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+    }
+
+    modalsStore.openConfirmModal(
+      `Удалить черновик заявки «${title}»?`,
+      'удалить',
+      'отмена',
+      agree,
+      disagree,
     );
   }
 
@@ -1251,7 +1280,6 @@
     function disagree() {
       modalsStore.openConfirmModal();
       router.push(toProjectProposalCreateRoute());
-      clearAllFields();
     }
 
     modalsStore.openConfirmModal(
@@ -1296,10 +1324,6 @@
     );
   }
 
-  function onErrorSendProposal(error: unknown) {
-    onError(error, 'Ошибка отправки: ');
-  }
-
   function onSuccessGetUserProjectProposalList(
     projectProposalList: CreatedProjectProposal[],
   ) {
@@ -1319,8 +1343,8 @@
     onError(error);
   }
 
-  function onError(error: unknown, message = 'Ошибка: ') {
-    toast(message + String(error), { type: TYPE.ERROR });
+  function onError(error: unknown) {
+    toast.error('Ошибка: ' + String(error));
   }
 </script>
 

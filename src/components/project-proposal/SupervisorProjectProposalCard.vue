@@ -23,10 +23,45 @@
         :class="$style['button-with-icon']"
         color="red"
         variant="inline-link"
+        :disabled="deleteProjectProposalMutation.isLoading.value"
         @click="deleteDraft"
       >
-        <span :class="$style.icon" v-html="trashIcon"></span>
-        удалить черновик
+        <svg
+          :class="$style.icon"
+          width="25"
+          height="25"
+          viewBox="0 0 25 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M3.8208 6.8877H5.8208H21.8208"
+            :stroke="
+              deleteProjectProposalMutation.isLoading.value
+                ? 'var(--gray-color-2)'
+                : 'var(--red-color-1)'
+            "
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M8.8208 6.8877V4.8877C8.8208 4.35726 9.03151 3.84855 9.40659 3.47348C9.78166 3.09841 10.2904 2.8877 10.8208 2.8877H14.8208C15.3512 2.8877 15.8599 3.09841 16.235 3.47348C16.6101 3.84855 16.8208 4.35726 16.8208 4.8877V6.8877M19.8208 6.8877V20.8877C19.8208 21.4181 19.6101 21.9268 19.235 22.3019C18.8599 22.677 18.3512 22.8877 17.8208 22.8877H7.8208C7.29037 22.8877 6.78166 22.677 6.40659 22.3019C6.03151 21.9268 5.8208 21.4181 5.8208 20.8877V6.8877H19.8208Z"
+            :stroke="
+              deleteProjectProposalMutation.isLoading.value
+                ? 'var(--gray-color-2)'
+                : 'var(--red-color-1)'
+            "
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+
+        <template v-if="deleteProjectProposalMutation.isLoading.value">
+          удаление черновика...
+        </template>
+        <template v-else>удалить черновик</template>
       </BaseButton>
 
       <BaseButton
@@ -96,14 +131,14 @@
     ProjectProposalStateId,
   } from '@/models/ProjectProposal';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import trashIcon from '@/assets/icons/trash.svg?raw';
   import penIcon from '@/assets/icons/pen.svg?raw';
   import accentQuestionIcon from '@/assets/icons/accent-question-icon.svg?raw';
   import ProjectProposalRejectionReasonModal from './ProjectProposalRejectionReasonModal.vue';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { TYPE, useToast } from 'vue-toastification';
+  import { useToast } from 'vue-toastification';
   import ProjectProposalCard from './ProjectProposalCard.vue';
   import { useUpdateProjectProposalMutation } from '@/api/SupervisorApi/hooks/useUpdateProjectProposalMutation';
+  import { useDeleteProjectProposalMutation } from '@/api/SupervisorApi/hooks/useDeleteProjectProposalMutation';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
 
   interface Props {
     projectProposal: CreatedProjectProposal;
@@ -111,9 +146,15 @@
 
   const props = defineProps<Props>();
   const authStore = useAuthStore();
-  const modalsStore = useModalsStore();
   const toast = useToast();
-  const updateProjectProposalMutation = useUpdateProjectProposalMutation();
+  const updateProjectProposalMutation = useUpdateProjectProposalMutation({
+    onError,
+  });
+  const deleteProjectProposalMutation = useDeleteProjectProposalMutation({
+    onError,
+  });
+
+  const modalsStore = useModalsStore();
 
   const showRejectionModal = ref(false);
 
@@ -150,22 +191,28 @@
   );
 
   function saveAsDraft() {
-    updateProjectProposalMutation.mutate(
-      {
-        id: props.projectProposal.id,
-        projectProposal: { state_id: ProjectProposalStateId.Draft },
-      },
-      { onError },
-    );
-
-    function onError(error: unknown) {
-      toast(String(error), { type: TYPE.ERROR });
-    }
+    updateProjectProposalMutation.mutate({
+      id: props.projectProposal.id,
+      projectProposal: { state_id: ProjectProposalStateId.Draft },
+    });
   }
 
   function deleteDraft() {
-    modalsStore.openAlertModal(
-      'Функция удаления черновика на данный момент недоступна 😢',
+    function agree() {
+      modalsStore.openConfirmModal();
+      deleteProjectProposalMutation.mutate(props.projectProposal.id);
+    }
+
+    function disagree() {
+      modalsStore.openConfirmModal();
+    }
+
+    modalsStore.openConfirmModal(
+      `Удалить черновик заявки «${props.projectProposal.title}»?`,
+      'удалить',
+      'отмена',
+      agree,
+      disagree,
     );
   }
 
@@ -175,6 +222,10 @@
 
   function openRejectionModal() {
     showRejectionModal.value = true;
+  }
+
+  function onError(error: unknown) {
+    toast.error(String(error));
   }
 </script>
 

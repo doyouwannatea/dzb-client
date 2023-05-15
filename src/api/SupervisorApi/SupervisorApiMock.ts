@@ -39,6 +39,14 @@ export default class SupervisorApiMock implements SupervisorApiType {
     return {} as CreatedProjectProposal;
   }
 
+  async deleteProjectProposal(
+    projectProposalId: number,
+  ): Promise<CreatedProjectProposal> {
+    await sleep(500);
+    console.log(projectProposalId);
+    return {} as CreatedProjectProposal;
+  }
+
   async getThemeSources(): Promise<Tag[]> {
     return delayRes(themeSources, 400);
   }

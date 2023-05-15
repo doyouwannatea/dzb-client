@@ -48,6 +48,14 @@ export default class SupervisorApi implements SupervisorApiType {
       .json();
   }
 
+  async deleteProjectProposal(
+    projectProposalId: number,
+  ): Promise<CreatedProjectProposal> {
+    return baseKyInstance
+      .delete(`api/supervisor/projects/${projectProposalId}`)
+      .json();
+  }
+
   async getThemeSources(): Promise<Tag[]> {
     return baseKyInstance.get('api/themeSources').json();
   }
