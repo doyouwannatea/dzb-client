@@ -25,7 +25,11 @@
         <div class="stub-line"></div>
         <div class="stub-line"></div>
       </div>
-      <ParticipationCardBadge :priority="priority" :disabled="!project" />
+      <ParticipationCardBadge
+        :priority="priority"
+        :disabled="!project"
+        :use-acronyms="isMobile"
+      />
       <DeleteButton
         v-if="editable && participation"
         class="delete-btn"
@@ -40,10 +44,13 @@
   import { toProjectRoute } from '@/router/utils/routes';
   import { Participation, ParticipationPriority } from '@/models/Participation';
   import { Project } from '@/models/Project';
+  import { useMobile } from '@/helpers/breakpoints';
   // components
   import BasePanel from '../ui/BasePanel.vue';
   import ParticipationCardBadge from './ParticipationCardBadge.vue';
   import DeleteButton from '../ui/DeleteButton.vue';
+
+  const isMobile = useMobile();
 
   type Props = {
     editable: boolean;
