@@ -1,10 +1,10 @@
 <template>
   <div class="timer">
-    <template v-if="!isTimePass">
+    <template v-if="isTime">
       <div class="title time">{{ duration }}</div>
       <div>{{ props.timerText }}</div>
     </template>
-    <template v-if="isTimePass">
+    <template v-if="!isTime">
       <div class="title">{{ props.afterTimerText }}</div>
     </template>
   </div>
@@ -13,10 +13,15 @@
 <script setup lang="ts">
   import { useDuration } from '@/hooks/useDuration';
 
-  type Props = { deadline: Date; timerText: string; afterTimerText: string };
+  type Props = {
+    start: Date;
+    deadline: Date;
+    timerText: string;
+    afterTimerText: string;
+  };
   const props = defineProps<Props>();
 
-  const { duration, isTimePass } = useDuration(props.deadline);
+  const { duration, isTime } = useDuration(props.start, props.deadline);
 </script>
 
 <style scoped>
@@ -25,7 +30,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2.1875rem 2.5rem 1.375rem;
+    padding: 2.1875rem 1.8rem 1.375rem;
     margin-top: 1.25rem;
     text-align: center;
     background: #f1f4fe;

@@ -2,20 +2,24 @@ import { ref, watchEffect, onUnmounted } from 'vue';
 import { Duration } from 'luxon';
 import { declOfNum } from '@/helpers/string';
 
-export const useDuration = (deadline: Date) => {
+export const useDuration = (start: Date, deadline: Date) => {
   const timer = ref<number | undefined>(undefined);
   const duration = ref<string>('');
-  const isTimePass = ref<boolean>(false);
+  const isTime = ref<boolean>(true);
 
   function calcTime() {
-    isTimePass.value = false;
-    const diff = deadline.getTime() - Date.now();
-    if (diff <= 0) {
-      isTimePass.value = true;
-      return clearTimer();
+    isTime.value = true;
+    const diff_start = start.getTime() - Date.now();
+    const diff_end = deadline.getTime() - Date.now();
+    if (diff_start >= 0 || diff_end <= 0) {
+      isTime.value = false;
     }
 
-    const durationObject = Duration.fromMillis(diff);
+    if (diff_end <= 0) {
+      clearTimer();
+    }
+
+    const durationObject = Duration.fromMillis(diff_end);
 
     const day = Math.floor(durationObject.as('days'));
     const hour = Math.floor(durationObject.as('hours') % 24);
@@ -48,7 +52,7 @@ export const useDuration = (deadline: Date) => {
   onUnmounted(clearTimer);
 
   return {
-    isTimePass,
+    isTime,
     duration,
   };
 };

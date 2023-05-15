@@ -1,12 +1,19 @@
-import { insituteApi } from '@/api/InsituteApi';
 import { Candidate } from '@/models/Candidate';
 import { Project } from '@/models/Project';
 import { ProjectDifficulty } from '@/models/ProjectDifficulty';
-import { ProjectStateID } from '@/models/ProjectState';
+import { PROJECT_IDS, ProjectStateID } from '@/models/ProjectState';
 import { deepClone } from './object';
 import { formatDate } from './string';
+import {
+  CreatedProjectProposal,
+  PROJECT_PROPOSAL_IDS,
+  ProjectProposalStateId,
+} from '@/models/ProjectProposal';
+import { sharedApi } from '@/api/SharedApi';
 
-export function formatProjectDate(project: Project): Project {
+export function formatProjectDate<T extends Project | CreatedProjectProposal>(
+  project: T,
+): T {
   const formattedProject = deepClone(project);
   formattedProject.date_start = formatDate(project.date_start);
   formattedProject.date_end = formatDate(project.date_end);
@@ -23,7 +30,7 @@ export async function projectIncludesCandidateSpeciality(
 ): Promise<boolean> {
   const matchedSpecialities = await Promise.all(
     project.specialities.map((speciality) =>
-      insituteApi.isInSameInstitute(
+      sharedApi.isInSameInstitute(
         speciality.name,
         candidate.training_group.split('-')[0],
       ),
@@ -47,6 +54,18 @@ export function isArchivedState(stateId: ProjectStateID): boolean {
 }
 export function isProcessingState(stateId: ProjectStateID): boolean {
   return stateId === ProjectStateID.ProcessingState;
+}
+
+export function isProject(
+  obj: Project | CreatedProjectProposal,
+): obj is Project {
+  return PROJECT_IDS.includes(obj.state.id as ProjectStateID);
+}
+
+export function isProposal(
+  obj: Project | CreatedProjectProposal,
+): obj is CreatedProjectProposal {
+  return PROJECT_PROPOSAL_IDS.includes(obj.state.id as ProjectProposalStateId);
 }
 
 export function canViewParticipations(stateId: ProjectStateID): boolean {

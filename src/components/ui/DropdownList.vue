@@ -10,11 +10,7 @@
         <!-- if item is a link -->
         <template v-if="item.type === 'link'">
           <!-- if item is a ROUTER link -->
-          <RouterLink
-            v-if="item.routeName"
-            class="action"
-            :to="{ name: item.routeName }"
-          >
+          <RouterLink v-if="item.location" class="action" :to="item.location">
             {{ item.content }}
           </RouterLink>
           <!-- if item is a COMMON link -->
@@ -35,7 +31,7 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import { RouteNames } from '@/router/types/route-names';
+  import { RouteLocationRaw } from 'vue-router';
   // components
   import BaseDropdown, { Position } from './BaseDropdown.vue';
 
@@ -44,7 +40,7 @@
         content: string;
         type: 'link';
         href?: string;
-        routeName?: RouteNames;
+        location?: RouteLocationRaw;
       }
     | { content: string; type: 'button'; action: () => void };
   type Props = {

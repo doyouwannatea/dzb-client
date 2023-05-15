@@ -1,25 +1,24 @@
 <template>
+  <ProjectList
+    v-if="userProjects.isFetching.value"
+    loading
+    :loading-cards-length="3"
+  />
+  <div v-else-if="userProjects.isError.value">
+    {{ userProjects.error.value }}
+  </div>
   <BaseStub
-    v-if="userProjectList && !userProjectList.length"
+    v-else-if="userProjects.data.value?.length === 0"
     title="Проекты не найдены :("
     subtitle="У вас пока нет ни одного активного или архивного проекта"
   />
-  <div v-if="error">{{ error }}</div>
-  <ProjectList v-if="loading" loading :loading-cards-length="3" />
-  <ProjectList
-    v-if="!loading && !error && userProjectList"
-    :project-list="userProjectList"
-  />
+  <ProjectList v-else :project-list="userProjects.data.value" />
 </template>
 
 <script setup lang="ts">
-  import { storeToRefs } from 'pinia';
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { useGetUserProjectList } from '@/hooks/useFetchStudentData';
-  // components
+  import { useGetUserProjectsQuery } from '@/api/SharedApi/hooks/useGetUserProjectsQuery';
   import ProjectList from '@/components/project/ProjectList.vue';
   import BaseStub from '@/components/ui/BaseStub.vue';
 
-  useGetUserProjectList();
-  const { userProjectList, loading, error } = storeToRefs(useProjectsStore());
+  const userProjects = useGetUserProjectsQuery();
 </script>

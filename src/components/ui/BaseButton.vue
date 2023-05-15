@@ -72,8 +72,8 @@
 
     &.red {
       --background-color: var(--red-color-1);
-      --hover-color: var(--red-color-1);
-      --active-color: var(--red-color-2);
+      --hover-color: var(--red-color-2);
+      --active-color: #f14646;
     }
 
     &.white {

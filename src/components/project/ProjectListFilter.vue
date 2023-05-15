@@ -8,7 +8,11 @@
   >
     <ProjectFilterAccordion>
       <template #title>
-        <span v-if="statesLoading" class="multiselect-spinner"></span>
+        <span
+          v-if="allProjectStates.isFetching.value"
+          class="multiselect-spinner"
+        >
+        </span>
         <span>Статус проекта</span>
       </template>
       <template #content>
@@ -21,8 +25,8 @@
         >
           {{ capitalizeFirstLetter(state.state) }}
         </BaseCheckbox>
-        <div v-if="error" class="mt-2">
-          {{ error }}
+        <div v-if="allProjectStates.isError.value" class="mt-2">
+          {{ allProjectStates.error.value }}
         </div>
       </template>
     </ProjectFilterAccordion>
@@ -36,12 +40,14 @@
           v-model="filters.specialties"
           mode="tags"
           placeholder="Введите специальности"
-          no-results-text="Специальности не найдены"
+          no-results-text="Специальность не найдена"
+          no-options-text="Специальности не найдены"
           class="miltiselect"
           :close-on-select="false"
           :searchable="true"
-          :options="additionalProjectData.tags?.specialties"
-          :loading="tagsLoading"
+          :options="allProjectTags.data.value?.specialties"
+          :disabled="allProjectTags.isFetching.value"
+          :loading="allProjectTags.isFetching.value"
           :label="SkillKeys.name"
           :track-by="SkillKeys.name"
           :value-prop="SkillKeys.id"
@@ -50,18 +56,20 @@
           v-model="filters.skills"
           mode="tags"
           placeholder="Введите навыки"
-          no-results-text="Навыки не найдены"
+          no-results-text="Навык не найден"
+          no-options-text="Навыки не найдены"
           class="miltiselect"
           :close-on-select="false"
           :searchable="true"
-          :options="additionalProjectData.tags?.skills"
-          :loading="tagsLoading"
+          :options="allProjectTags.data.value?.skills"
+          :disabled="allProjectTags.isFetching.value"
+          :loading="allProjectTags.isFetching.value"
           :label="SkillKeys.name"
           :track-by="SkillKeys.name"
           :value-prop="SkillKeys.id"
         />
-        <div v-if="error" class="mt-2">
-          {{ error }}
+        <div v-if="allProjectTags.isError.value" class="mt-2">
+          {{ allProjectTags.error.value }}
         </div>
       </template>
     </ProjectFilterAccordion>
@@ -96,7 +104,7 @@
     </ProjectFilterAccordion>
 
     <footer class="footer">
-      <BaseButton case="uppercase" full-width :disabled="loading">
+      <BaseButton case="uppercase" full-width :disabled="projectsLoading">
         найти
       </BaseButton>
       <BaseButton
@@ -104,7 +112,7 @@
         type="button"
         full-width
         variant="link"
-        :disabled="loading"
+        :disabled="projectsLoading"
         @click="
           clearFilter();
           modalsStore.projectFilterModal = false;
@@ -118,10 +126,8 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { storeToRefs } from 'pinia';
   import { capitalizeFirstLetter } from '@/helpers/string';
   import { SkillKeys } from '@/values/models-keys';
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import {
     useProjectFilters,
     ACCEPTED_PROJECT_STATES,
@@ -136,13 +142,19 @@
   import BaseButton from '@/components/ui/BaseButton.vue';
   import ProjectFilterAccordion from '../ui/accordion/ProjectFilterAccordion.vue';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useGetAllProjectStatesQuery } from '@/api/ProjectApi/hooks/useGetAllProjectStatesQuery';
+  import { useGetAllProjectTagsQuery } from '@/api/ProjectApi/hooks/useGetAllProjectTagsQuery';
+  import { useGetProjectListWithFiltersQuery } from '@/api/ProjectApi/hooks/useGetProjectListWithFiltersQuery';
 
   const modalsStore = useModalsStore();
-  const { additionalProjectData, loading, error, tagsLoading, statesLoading } =
-    storeToRefs(useProjectsStore());
+
+  const { isFetching: projectsLoading } = useGetProjectListWithFiltersQuery();
+
+  const allProjectStates = useGetAllProjectStatesQuery();
+  const allProjectTags = useGetAllProjectTagsQuery();
 
   const acceptedProjectStates = computed(() =>
-    additionalProjectData.value.states?.filter((state) =>
+    allProjectStates.data.value?.filter((state) =>
       ACCEPTED_PROJECT_STATES.includes(state.id),
     ),
   );

@@ -3,9 +3,12 @@ import { useToast } from 'vue-toastification';
 import {
   AUTH_TOKEN_KEY,
   getAuthTokenFromCookies,
-} from './CampusApi/utils/authToken';
+} from './AuthApi/utils/authToken';
 
 const toast = useToast();
+
+// 1 час = 3600000 мс
+export const DEFAULT_QUERY_STALE_TIME = 2 * 3600000;
 
 export const baseKyInstance = ky.create({
   prefixUrl: import.meta.env.VITE_API_URL,

@@ -8,7 +8,7 @@
       <div class="dropdown-container">
         <div ref="handleMenuNode" class="user" @click="toggleMenu">
           <img :src="userPictureUrl" alt="" class="user-icon" />
-          <span class="username">{{ authStore.profileData?.fio }}</span>
+          <span class="username">{{ fio }}</span>
           <button :class="['menu-btn', { active: isMenuOpen }]">
             <img :src="arrowIconUrl" alt="↓" />
           </button>
@@ -25,11 +25,11 @@
       <BaseButton
         class="auth-btn"
         variant="link"
-        :disabled="authStore.loading"
-        @click="authStore.auth()"
+        :disabled="authMutation.isLoading.value"
+        @click="authMutation.mutate()"
       >
         <img
-          v-if="authStore.loading"
+          v-if="authMutation.isLoading.value"
           :src="userPictureGrayUrl"
           alt=""
           class="user-icon"
@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import arrowIconUrl from '@/assets/icons/dropdown-arrow.svg?url';
   import ringIconUrl from '@/assets/icons/ring.svg?url';
@@ -51,12 +51,31 @@
   // components
   import UserNavigationDropdown from './UserNavigationDropdown.vue';
   import BaseButton from '../ui/BaseButton.vue';
+  import { useAuthMutation } from '@/api/AuthApi/hooks/useAuthMutation';
+  import { useToast } from 'vue-toastification';
 
+  const toast = useToast();
+  const authMutation = useAuthMutation({ onError });
   const authStore = useAuthStore();
   const handleMenuNode = ref();
   const isMenuOpen = ref(false);
-  const closeMenu = () => (isMenuOpen.value = false);
-  const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
+
+  const fio = computed(() => {
+    const fio = authStore.profileData?.fio;
+    if (!fio) return '';
+    const [f, ...rest] = fio.split(' ');
+    return `${f} ${rest.map((str) => str[0]).join('. ')}.`;
+  });
+
+  function closeMenu() {
+    isMenuOpen.value = false;
+  }
+  function toggleMenu() {
+    isMenuOpen.value = !isMenuOpen.value;
+  }
+  function onError(error: unknown) {
+    toast.error(String(error));
+  }
 </script>
 
 <style scoped>
@@ -116,10 +135,13 @@
   }
 
   .username {
+    overflow: hidden;
     font-size: 1.125rem;
     font-weight: 600;
     line-height: 1.4375em;
     color: var(--accent-color-1);
+    text-overflow: ellipsis;
+    white-space: nowrap;
     user-select: none;
   }
 </style>

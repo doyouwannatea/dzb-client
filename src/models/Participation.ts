@@ -1,5 +1,6 @@
 import { Candidate } from './Candidate';
 import { Project } from './Project';
+import { State } from './State';
 
 export const enum ParticipationPriority {
   AutoWithoutApplication = 5,
@@ -18,12 +19,10 @@ export const enum ParticipationState {
 
 export interface Participation {
   id: number;
-  candidate_id: number;
-  candidate: Candidate;
-  state_id: ParticipationState;
-  project_id: number;
   priority: ParticipationPriority;
-  review: string;
+  project_id: number;
+  candidate: Candidate;
+  state: State<ParticipationState>;
   created_at: string;
   updated_at: string;
 }

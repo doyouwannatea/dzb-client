@@ -4,7 +4,9 @@
     <button class="btn">
       <img class="icon" :src="questionIconUrl" alt="«?»" />
       <div :class="['tooltip-msg', props.positionY, props.positionX]">
-        {{ props.message }}
+        <slot name="message" :message="props.message">
+          {{ props.message }}
+        </slot>
       </div>
     </button>
   </div>
@@ -13,11 +15,12 @@
 <script setup lang="ts">
   import questionIconUrl from '@/assets/icons/question.svg?url';
   type Props = {
-    message: string;
+    message?: string;
     positionY?: 'top' | 'bottom';
     positionX?: 'left' | 'right';
   };
   const props = withDefaults(defineProps<Props>(), {
+    message: '',
     positionY: 'top',
     positionX: 'right',
   });

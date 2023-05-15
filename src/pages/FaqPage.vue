@@ -45,7 +45,7 @@
         <br />
         <br />
         Поменять приоритет Вы можете в
-        <RouterLink :to="{ name: RouteNames.USER_PARTICIPATIONS }">
+        <RouterLink :to="{ name: RouteNames.CANDIDATE_PARTICIPATIONS }">
           личном кабинете </RouterLink
         >.
       </template>
@@ -64,7 +64,7 @@
       <template #title>Как поменять приоритет/отозвать заявку?</template>
       <template #content>
         Поменять приоритет или отозвать заявку можно в своем профиле в разделе
-        <RouterLink :to="{ name: RouteNames.USER_PARTICIPATIONS }">
+        <RouterLink :to="{ name: RouteNames.CANDIDATE_PARTICIPATIONS }">
           «Мои заявки» </RouterLink
         >. В случае отмены заяки вы потеряте место в очереди на зачисление.
       </template>

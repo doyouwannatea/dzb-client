@@ -1,18 +1,5 @@
 import { Specialty } from '../Specialty';
-import { Institute } from '../Institute';
-
-export const institutes: Institute[] = [
-  { id: 1, name: 'Байкальский институт БРИКС' },
-  { id: 2, name: 'Институт авиамашиностроения и транспорта' },
-  { id: 3, name: 'Институт архитектуры, строительства и дизайна' },
-  { id: 4, name: 'Институт высоких технологий' },
-  { id: 5, name: 'Институт заочно-вечернего обучения' },
-  { id: 6, name: 'Институт информационных технологий и анализа данных' },
-  { id: 7, name: 'Институт лингвистики и межкультурной коммуникации' },
-  { id: 8, name: 'Институт недропользования' },
-  { id: 9, name: 'Институт экономики, управления и права' },
-  { id: 10, name: 'Институт энергетики' },
-];
+import { institutes } from './department';
 
 export const specialties: Specialty[] = [
   {

@@ -5,15 +5,15 @@
 </template>
 
 <script setup lang="ts">
+  import { computed } from 'vue';
   import { ProjectProposalState, StateClass } from '@/models/ProjectProposal';
-  // components
   import BaseBadge from '../ui/BaseBadge.vue';
 
   type Props = { state: ProjectProposalState };
   const props = defineProps<Props>();
 
   // TODO: стоит добавить в props BaseBadge массив с состояниями и привязкой к цветам, тогда не надо будет создавать несколько компонентов с одниковой логикой
-  const stateClass = StateClass[props.state.id];
+  const stateClass = computed(() => StateClass[props.state.id]);
 </script>
 
 <style scoped>
@@ -38,7 +38,7 @@
   }
 
   .status.approved {
-    --text-color: var(--accent-color-3);
-    --border-color: var(--accent-color-3);
+    --text-color: var(--green-color-1);
+    --border-color: var(--green-color-1);
   }
 </style>

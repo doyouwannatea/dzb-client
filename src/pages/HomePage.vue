@@ -16,22 +16,27 @@
         <ProjectListFilter />
       </template>
       <template #main>
+        <div v-if="projectListQuery.isError.value">
+          {{ projectListQuery.error.value }}
+        </div>
         <ProjectList
-          v-if="loading"
-          :loading="loading"
+          v-else-if="projectListQuery.isFetching.value"
+          loading
           :loading-cards-length="PROJECTS_PER_PAGE"
         />
-        <div v-if="error">{{ error }}</div>
-        <ProjectSearchBadStub v-if="projectList && !projectList.length" />
-        <template v-if="!loading && !error && projectList">
-          <ProjectList :project-list="projectList" />
-          <ProjectListPagination
-            v-if="projectList && projectList.length"
+        <ProjectSearchBadStub
+          v-else-if="projectListQuery.data.value?.data.length === 0"
+        />
+        <template v-else>
+          <ProjectList :project-list="projectListQuery.data.value?.data" />
+          <BasePagination
             :page-size="PROJECTS_PER_PAGE"
             :pages-visible="
               isSmallDevice ? PAGES_VISIBLE_MOBILE : PAGES_VISIBLE_DESKTOP
             "
-            :total-items="projectCount"
+            :total-items="projectListQuery.data.value?.projectCount || 0"
+            :page="projectStore.filters.page"
+            @update:page="onPageChange"
           />
         </template>
       </template>
@@ -40,14 +45,8 @@
 </template>
 
 <script setup lang="ts">
-  import { storeToRefs } from 'pinia';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { useWatchProjectQueries } from '@/hooks/useProjectFilters';
-  import { useFetchAdditionalProjectData } from '@/hooks/useFetchAdditionalProjectData';
-  import {
-    useHomePageSavedScrollPosition,
-    useSaveHomePageScrollPosition,
-  } from '@/hooks/useHomePageScrollPosition';
+
   import { useSmallDevice } from '@/helpers/breakpoints';
   import { RouteNames } from '@/router/types/route-names';
   // components
@@ -56,24 +55,28 @@
   import SidebarContainer from '@/components/layout/SidebarContainer.vue';
   import ProjectListFilter from '@/components/project/ProjectListFilter.vue';
   import ProjectList from '@/components/project/ProjectList.vue';
-  import ProjectListPagination from '@/components/project/ProjectListPagination.vue';
+  import BasePagination from '@/components/ui/BasePagination.vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
   import OpenProjectFilterModalButton from '@/components/project/OpenProjectFilterModalButton.vue';
   import ProjectListFilterModal from '../components/project/ProjectListFilterModal.vue';
+  import { useGetProjectListWithFiltersQuery } from '@/api/ProjectApi/hooks/useGetProjectListWithFiltersQuery';
+  import { useWatchProjectQueries } from '@/hooks/useProjectFilters';
 
   useWatchProjectQueries(RouteNames.HOME);
-  useFetchAdditionalProjectData();
-  useSaveHomePageScrollPosition();
-  useHomePageSavedScrollPosition();
 
   const projectStore = useProjectsStore();
-  const { error, loading, projectList, projectCount } =
-    storeToRefs(projectStore);
   const isSmallDevice = useSmallDevice();
+
+  const projectListQuery = useGetProjectListWithFiltersQuery();
 
   const PROJECTS_PER_PAGE = 7;
   const PAGES_VISIBLE_DESKTOP = 7;
   const PAGES_VISIBLE_MOBILE = 4;
+
+  function onPageChange(page: number) {
+    projectStore.setFilters({ page });
+    projectStore.updateFilters();
+  }
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,9 @@
 import { RouteRecordRaw } from 'vue-router';
 import { RouteNames } from './types/route-names';
+import {
+  FilterInstituteProjectProposalsBy,
+  toInstituteProjectProposals,
+} from './utils/routes';
 
 // P.S. тут раньше были динамические импорты, т.е. "() => import('@/pages/ProjectPage/index.vue')", но они плохо работали на продакшене "projfair.istu.edu", так что было решено оставить обычные импорты для всего приложения
 // Project page
@@ -13,6 +17,7 @@ import UserPage from '@/pages/UserPage/index.vue';
 import UserProfile from '@/pages/UserPage/UserProfile.vue';
 import UserProjects from '@/pages/UserPage/UserProjects.vue';
 import UserProjectProposals from '@/pages/UserPage/UserProjectProposals.vue';
+import InstituteDirectorProjectProposals from '@/pages/UserPage/InstituteDirectorProjectProposals.vue';
 import UserParticipations from '@/pages/UserPage/UserParticipations.vue';
 
 // Home page
@@ -80,12 +85,12 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     path: '/project/create/:id?',
-    name: RouteNames.USER_PROJECT_CREATE,
+    name: RouteNames.SUPERVISOR_PROJECT_PROPOSAL_CREATE,
     component: CreateProjectPage,
     meta: {
       title: 'Создать проектную заявку',
       requiresAuth: true,
-      role: ['teacher'],
+      role: ['is_teacher'],
     },
   },
   {
@@ -98,7 +103,7 @@ export const routes: RouteRecordRaw[] = [
     },
     children: [
       {
-        path: '',
+        path: 'info',
         name: RouteNames.USER_INFO,
         component: UserProfile,
         meta: {
@@ -115,24 +120,61 @@ export const routes: RouteRecordRaw[] = [
       },
       {
         path: 'participations',
-        name: RouteNames.USER_PARTICIPATIONS,
+        name: RouteNames.CANDIDATE_PARTICIPATIONS,
         component: UserParticipations,
         meta: {
           type: ['user-nav'],
           order: 1,
           title: 'Мои заявки',
-          role: ['student'],
+          role: ['is_student'],
         },
       },
       {
-        path: 'project-proposals',
-        name: RouteNames.PROJECT_PROPOSALS,
+        path: 'project-proposals/:page?',
+        name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS,
         component: UserProjectProposals,
         meta: {
           type: ['user-nav'],
-          order: 1,
+          order: 2,
           title: 'Мои заявки',
-          role: ['teacher'],
+          role: ['is_teacher'],
+        },
+      },
+      {
+        path: 'inst-project-proposals/:filterBy?/:page?',
+        name: RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS,
+        component: InstituteDirectorProjectProposals,
+        meta: {
+          type: ['user-nav'],
+          order: 3,
+          title: 'Заявки от института',
+          role: ['is_institute_director'],
+          links: [
+            {
+              name: RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_NEW,
+              title: 'Новые заявки',
+              location: toInstituteProjectProposals(
+                FilterInstituteProjectProposalsBy.New,
+                1,
+              ),
+            },
+            {
+              name: RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_APPROVED,
+              title: 'Одобренные заявки',
+              location: toInstituteProjectProposals(
+                FilterInstituteProjectProposalsBy.Approved,
+                1,
+              ),
+            },
+            {
+              name: RouteNames.INST_DIRECTOR_PROJECT_PROPOSALS_REJECTED,
+              title: 'Отклонённые заявки',
+              location: toInstituteProjectProposals(
+                FilterInstituteProjectProposalsBy.Rejected,
+                1,
+              ),
+            },
+          ],
         },
       },
       {
@@ -141,7 +183,7 @@ export const routes: RouteRecordRaw[] = [
         component: UserProjects,
         meta: {
           type: ['user-nav'],
-          order: 2,
+          order: 4,
           title: 'Мои проекты',
         },
       },
