@@ -1,7 +1,7 @@
 <template>
   <ul class="breadcrumbs">
     <li
-      v-for="({ to, title, back }, index) in breadcrumbs"
+      v-for="({ to, title, back }, index) in props.breadcrumbs"
       :key="index"
       class="breadcrumbs-item"
     >
@@ -25,17 +25,16 @@
 </template>
 
 <script setup lang="ts">
-  import type { RouteLocationRaw } from 'vue-router';
   import { RouterLink } from 'vue-router';
   import { hasHistory } from '@/helpers/history';
   import { RouteNames } from '@/router/types/route-names';
-  defineProps<{
-    breadcrumbs: {
-      to?: RouteLocationRaw;
-      back?: boolean;
-      title: string;
-    }[];
-  }>();
+  import { Breadcrumb } from '@/models/BaseBreadcrumbs';
+
+  interface Props {
+    breadcrumbs: Breadcrumb[];
+  }
+
+  const props = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
