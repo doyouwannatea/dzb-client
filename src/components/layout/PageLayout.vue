@@ -5,7 +5,7 @@
       <BottomNavigationBar v-if="isSmallDevice" />
     </template>
     <template #content>
-      <BaseContainer v-bind="$attrs" size="md">
+      <BaseContainer v-bind="$attrs" :size="ContainerSize.md">
         <slot></slot>
       </BaseContainer>
     </template>
@@ -23,13 +23,13 @@
 </script>
 
 <script setup lang="ts">
-  // components
   import BaseLayout from '../ui/BaseLayout.vue';
   import AppHeader from './AppHeader.vue';
   import AppFooter from './AppFooter.vue';
   import BaseContainer from '../ui/BaseContainer.vue';
   import BottomNavigationBar from './mobile/BottomNavigationBar.vue';
   import { useSmallDevice } from '@/helpers/breakpoints';
+  import { ContainerSize } from '@/models/BaseContainer';
 
   const isSmallDevice = useSmallDevice();
 </script>

@@ -1,7 +1,7 @@
 <template>
   <transition name="nav">
     <nav v-if="visible" class="navigation">
-      <BaseContainer class="container" size="lg">
+      <BaseContainer class="container" :size="ContainerSize.lg">
         <template v-for="link in mobileRoutes" :key="link.name">
           <RouterLink class="link" :to="{ name: link.name }">
             <div v-if="link.meta.svg" v-html="link.meta.svg"></div>
@@ -18,6 +18,7 @@
   import { useMobileNavigationRoutes } from '@/hooks/useRoutes';
   import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
   import BaseContainer from '@/components/ui/BaseContainer.vue';
+  import { ContainerSize } from '@/models/BaseContainer';
 
   const mobileRoutes = useMobileNavigationRoutes();
 

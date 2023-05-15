@@ -1,6 +1,6 @@
 <template>
   <footer id="footer" class="footer">
-    <BaseContainer size="lg" class="container">
+    <BaseContainer class="container" :size="ContainerSize.lg">
       <div>
         <RouterLink class="clear-link" :to="{ name: RouteNames.HOME }">
           <AppLogo class="logo" />
@@ -110,6 +110,7 @@
   // components
   import AppLogo from '../ui/AppLogo.vue';
   import BaseContainer from '../ui/BaseContainer.vue';
+  import { ContainerSize } from '@/models/BaseContainer';
 
   const authStore = useAuthStore();
   const mainRoutes = useMainNavigationRoutes();

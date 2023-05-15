@@ -1,27 +1,20 @@
 <template>
   <div
     class="container"
-    :style="{ maxWidth: `calc(${maxWidth}px + var(--side-padding) * 2)` }"
+    :style="{ maxWidth: `calc(${size}px + var(--side-padding) * 2)` }"
   >
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { toRefs } from '@vueuse/core';
+  import { ContainerSize } from '@/models/BaseContainer';
 
-  type Props = { size: 'lg' | 'md' };
+  type Props = { size?: ContainerSize };
 
-  const props = defineProps<Props>();
-  const maxWidth = computed(() => {
-    switch (props.size) {
-      case 'lg':
-        return 1800;
-      case 'md':
-      default:
-        return 1400;
-    }
-  });
+  const props = withDefaults(defineProps<Props>(), { size: ContainerSize.lg });
+  const { size } = toRefs(props);
 </script>
 
 <style scoped>
