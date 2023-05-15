@@ -26,14 +26,14 @@
   type Case = 'uppercase' | 'lowercase' | 'none';
   type Color = 'red' | 'white';
 
-  type Props = {
+  interface Props {
     variant?: Variant;
     is?: Is;
     disabled?: boolean;
     fullWidth?: boolean;
     case?: Case;
     color?: Color;
-  };
+  }
 
   const props = withDefaults(defineProps<Props>(), {
     is: 'button',

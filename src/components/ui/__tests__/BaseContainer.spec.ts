@@ -11,11 +11,11 @@ describe('BaseContainer.vue', () => {
   describe(':props', () => {
     it('компонент не ломается если передать пропсы', async () => {
       const wrapper = shallowMount(BaseContainer, {
-        props: {
-          size: ContainerSize.lg,
-        },
+        props: { size: ContainerSize.lg },
         slots: { default: 'тестовый текст' },
       });
+      expect(wrapper.exists()).toBeTruthy();
+      await wrapper.setProps({ size: ContainerSize.md });
       expect(wrapper.exists()).toBeTruthy();
     });
   });
