@@ -498,7 +498,8 @@
       <BaseButton
         v-if="
           isEditableProposalComputed &&
-          !userProjectProposalList.isFetching.value
+          !userProjectProposalList.isFetching.value &&
+          !instituteProjectProposalsQuery.isFetching.value
         "
         :disabled="
           createProjectProposalMutation.isLoading.value ||
@@ -514,6 +515,7 @@
       <BaseButton
         v-if="
           !userProjectProposalList.isFetching.value &&
+          !instituteProjectProposalsQuery.isFetching.value &&
           isEditableProposalComputed &&
           currentProjectProposalState === ProjectProposalStateId.Draft
         "
@@ -532,7 +534,8 @@
         is="router-link"
         v-if="
           !isEditableProposalComputed ||
-          userProjectProposalList.isFetching.value
+          userProjectProposalList.isFetching.value ||
+          instituteProjectProposalsQuery.isFetching.value
         "
         :to="{ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS }"
         variant="outlined"
@@ -543,6 +546,7 @@
       <BaseButton
         v-if="
           !userProjectProposalList.isFetching.value &&
+          !instituteProjectProposalsQuery.isFetching.value &&
           (isEditableProposalComputed ||
             (currentProjectProposalState === ProjectProposalStateId.Rejected &&
               canUserEdit))
@@ -580,6 +584,7 @@
         :disabled="
           createProjectProposalMutation.isLoading.value ||
           updateProjectProposalMutation.isLoading.value ||
+          instituteProjectProposalsQuery.isFetching.value ||
           userProjectProposalList.isFetching.value
         "
         @click="onCreateUnderReview"
@@ -663,6 +668,7 @@
   import { useGetUserProjectsQuery } from '@/api/SharedApi/hooks/useGetUserProjectsQuery';
   import { useGetProjectSkillsQuery } from '@/api/ProjectApi/hooks/useGetAllProjectTagsQuery';
   import { useDeleteProjectProposalMutation } from '@/api/SupervisorApi/hooks/useDeleteProjectProposalMutation';
+  import { useGetInstituteProjectProposalsQuery } from '@/api/InstituteDirectorApi/hooks/useGetInstituteProjectProposalsQuery';
 
   const enum ProjectDuration {
     SpringSemester = 1,
@@ -678,18 +684,23 @@
   const route = useRoute();
   const authStore = useAuthStore();
   const modalsStore = useModalsStore();
-  const { profileData } = storeToRefs(authStore);
+  const { profileData, isInstDirector } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
 
+  const instituteProjectProposalsQuery = useGetInstituteProjectProposalsQuery({
+    enabled: isInstDirector,
+    onSuccess: onSuccessGetUserProjectProposalList,
+    onError,
+  });
   const userProjectProposalList = useGetProjectProposalListQuery({
     onSuccess: onSuccessGetUserProjectProposalList,
     onError: onErrorGetUserProjectProposalList,
   });
   const currentProjectProposalComputed = computed(() =>
-    getCurrentProjectProposal(
-      Number(projectId.value),
-      userProjectProposalList.data.value,
-    ),
+    getCurrentProjectProposal(Number(projectId.value), [
+      ...(userProjectProposalList.data.value || []),
+      ...(instituteProjectProposalsQuery.data.value || []),
+    ]),
   );
 
   const prevUserProjects = useGetUserProjectsQuery({
@@ -739,12 +750,11 @@
   const sharedRoleList: MemberRole[] = [MemberRole.CoMentor];
   const currentUserRoleList: MemberRole[] = [MemberRole.Mentor];
 
-  if (userProjectProposalList.isFetched.value) {
-    if (currentProjectProposalComputed.value) {
-      fillFromProjectProposal(currentProjectProposalComputed.value);
-    } else {
-      teamRef.value = initTeam();
-    }
+  if (currentProjectProposalComputed.value) {
+    fillFromProjectProposal(currentProjectProposalComputed.value);
+  } else {
+    if (teamRef.value.length === 0) teamRef.value = initTeam();
+    teamRef.value = initTeam();
   }
 
   const currentProjectProposalState = computed<
@@ -776,6 +786,7 @@
       updateProjectProposalMutation.isLoading.value ||
       deleteProjectProposalMutation.isLoading.value ||
       userProjectProposalList.isFetching.value ||
+      instituteProjectProposalsQuery.isFetching.value ||
       !isEditableProposalComputed.value,
   );
 
@@ -1334,7 +1345,7 @@
     if (currentProjectProposal) {
       fillFromProjectProposal(currentProjectProposal);
     } else {
-      teamRef.value = initTeam();
+      if (teamRef.value.length === 0) teamRef.value = initTeam();
     }
   }
 
