@@ -23,7 +23,7 @@
       v-model:project-proposal-form-value="projectProposalFormValue"
       :is-loading="isLoading"
       :can-user-edit="canUserEdit"
-      :prev-project-list="prevUserProjectsQuery.data.value"
+      :prev-project-list="prevProjectList"
       :specialty-list="specialtyListQuery.data.value"
       :supervisor-list="supervisorListQuery.data.value"
       :project-skill-list="projectSkillsQuery.data.value"
@@ -180,6 +180,7 @@
     ProjectProposalFormValue,
   } from '@/models/ProjectProposalForm';
   import { useNavigateBack } from '@/hooks/useRoutes';
+  import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
 
   useWatchAuthorization();
 
@@ -225,15 +226,6 @@
   const userProjectProposalListQuery = useGetProjectProposalListQuery({
     onError,
   });
-  const prevUserProjectsQuery = useGetUserProjectsQuery({
-    onError,
-    select: (projects) =>
-      projects.filter((project) =>
-        [ProjectStateID.ActiveState, ProjectStateID.ArchivedState].includes(
-          project.state.id,
-        ),
-      ),
-  });
   const supervisorListQuery = useGetAllSupervisorsQuery({ onError });
   const projectSkillsQuery = useGetProjectSkillsQuery({ onError });
   const specialtyListQuery = useGetSpecialtiesQuery({ onError });
@@ -247,18 +239,45 @@
   const deleteProjectProposalMutation = useDeleteProjectProposalMutation({
     onError,
   });
-
   const { mentorSpecialties, projectDepartment } = useProjectProposalInfo(
     projectProposalFormValue,
     specialtyListQuery.data,
   );
-
   const currentProjectProposalComputed = computed(() =>
     getCurrentProjectProposal(Number(projectId.value), [
       ...(userProjectProposalListQuery.data.value || []),
       ...(instituteProjectProposalsQuery.data.value || []),
     ]),
   );
+  const prevProjectId = computed(
+    () => currentProjectProposalComputed.value?.prevProjectId || -1,
+  );
+  const prevUserProjectsQuery = useGetUserProjectsQuery({
+    onError,
+    select: (projects) =>
+      projects.filter((project) =>
+        [ProjectStateID.ActiveState, ProjectStateID.ArchivedState].includes(
+          project.state.id,
+        ),
+      ),
+  });
+  const enableSingleProjectQuery = computed(
+    () => typeof prevProjectId.value === 'number' && prevProjectId.value !== -1,
+  );
+  const singleProjectQuery = useGetSingleProjectQuery(prevProjectId, {
+    enabled: enableSingleProjectQuery,
+  });
+  const prevProjectList = computed(() => {
+    const projects = prevUserProjectsQuery.data.value;
+    const prevProjectId = currentProjectProposalComputed.value?.prevProjectId;
+    if (!projects) return [];
+    if (projects.find((project) => project.id === prevProjectId)) {
+      return projects;
+    }
+    const singleProject = singleProjectQuery.data.value?.project;
+    if (!singleProject) return projects;
+    return [...projects, singleProject];
+  });
 
   const currentProjectProposalState = computed<
     ProjectProposalStateId | undefined
@@ -294,7 +313,8 @@
       projectSkillsQuery.isFetching.value ||
       specialtyListQuery.isFetching.value ||
       themeSourcesQuery.isFetching.value ||
-      prevUserProjectsQuery.isFetching.value,
+      prevUserProjectsQuery.isFetching.value ||
+      singleProjectQuery.isFetching.value,
   );
 
   const projectJobDeveloperComputed = computed(
