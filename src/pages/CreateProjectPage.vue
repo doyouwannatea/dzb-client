@@ -541,8 +541,7 @@
   function onSuccessCreateDraft(
     createdProjectProposal: CreatedProjectProposal,
   ) {
-    router.push(toProjectProposalCreateRoute(createdProjectProposal.id));
-
+    router.replace(toProjectProposalCreateRoute(createdProjectProposal.id));
     const title = 'Черновик успешно сохранён, вернуться в личный кабинет?';
     const agreeButtonTitle = 'вернуться в личный кабинет';
     const disagreeButtonTitle = 'продолжить редактирование';
@@ -565,7 +564,10 @@
     );
   }
 
-  function onSuccessCreateForReview() {
+  function onSuccessCreateForReview(
+    createdProjectProposal: CreatedProjectProposal,
+  ) {
+    router.replace(toProjectProposalCreateRoute(createdProjectProposal.id));
     const title = 'Заявка успешно отправлена, вернуться в личный кабинет?';
     const agreeButtonTitle = 'вернуться в личный кабинет';
     const disagreeButtonTitle = 'создать новую заявку';
