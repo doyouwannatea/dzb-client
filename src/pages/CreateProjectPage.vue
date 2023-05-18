@@ -1,26 +1,4 @@
 <template>
-  <SkillsEditModal
-    v-if="projectSkills.data.value"
-    v-model:is-show="showSkillsEditModal"
-    v-model:skill-list="skillListRef"
-    :shared-skill-list="projectSkills.data.value"
-  />
-  <SpecialtyEditModal
-    v-if="specialtiesOfMentorDepartmentComputed"
-    v-model:is-show="showSpecialtyEditModal"
-    v-model:specialty-list="specialtyListRef"
-    :shared-specialty-list="specialtiesOfMentorDepartmentComputed"
-  />
-  <SpecialtyEditModal
-    v-if="specialtyList.data.value"
-    v-model:is-show="showAdditionalSpecialtyEditModal"
-    v-model:specialty-list="additionalSpecialtyListRef"
-    :shared-specialty-list="specialtyList.data.value"
-  >
-    <template #title>
-      <h1>Редактирование приглашённых специальностей</h1>
-    </template>
-  </SpecialtyEditModal>
   <PageLayout>
     <RouterLink
       :class="$style['back-link']"
@@ -30,13 +8,11 @@
     </RouterLink>
     <header :class="$style.header">
       <h1 class="page-title">
-        <template v-if="userProjectProposalList.isFetching.value">
-          Загрузка...
-        </template>
+        <template v-if="isLoading">Загрузка...</template>
         <template v-else-if="!currentProjectProposalComputed">
           Создание проектной заявки
         </template>
-        <template v-else-if="isEditableProposalComputed">
+        <template v-else-if="canUserEdit">
           Редактирование проектной заявки
         </template>
         <template v-else>Просмотр проектной заявки</template>
@@ -46,465 +22,25 @@
         :state="currentProjectProposalComputed.state"
       />
     </header>
-    <BasePanel>
-      <FormSection
-        :class="$style['project-type-section']"
-        tag="1"
-        title="Тип проекта"
-        divider
-      >
-        <!-- <Project type> -->
-        <BaseLabel
-          is="fieldset"
-          :class="$style['radio-buttons-label']"
-          label="Выберите тип проекта"
-          required
-        >
-          <BaseRadioButton
-            v-model="isNewProjectRef"
-            :value="true"
-            :disabled="disableAll || prevProjectsMultiselectItems.length < 1"
-          >
-            Новый проект
-          </BaseRadioButton>
-          <BaseRadioButton
-            v-model="isNewProjectRef"
-            :value="false"
-            :disabled="disableAll || prevProjectsMultiselectItems.length < 1"
-          >
-            Продолжить старый
-          </BaseRadioButton>
-        </BaseLabel>
-        <!-- </Project type> -->
-
-        <!-- <Prev project> -->
-        <BaseLabel is="div" label="Выберите проект, который хотите продолжить">
-          <VMultiselect
-            v-model="prevProjectIdRef"
-            class="multiselect"
-            :placeholder="
-              prevUserProjects.isFetching.value
-                ? 'Ваши проекты загружаются...'
-                : prevUserProjects.isError.value
-                ? 'Ошибка загрузки ваших проектов'
-                : prevUserProjects.data.value?.length === 0
-                ? 'Ваши старые проекты не найдены'
-                : isNewProjectRef
-                ? 'Переключите тип проекта на «Продолжить старый»'
-                : 'Выберите проект для продолжения'
-            "
-            no-results-text="Проект не найден"
-            no-options-text="Проекты не найдены"
-            :searchable="true"
-            :options="prevProjectsMultiselectItems"
-            :disabled="
-              isNewProjectRef ||
-              userProjectProposalList.isFetching.value ||
-              prevProjectsMultiselectItems.length < 1 ||
-              disableAll
-            "
-          />
-        </BaseLabel>
-
-        <!-- </Prev project> -->
-      </FormSection>
-
-      <FormSection
-        :class="$style['project-data-section']"
-        tag="2"
-        title="Данные о проекте"
-        divider
-      >
-        <!-- <Project name> -->
-        <BaseLabel label="Название проекта" required>
-          <BaseTextarea
-            v-model="projectNameRef"
-            :disabled="disableAll"
-            :class="$style['small-textarea']"
-            placeholder="Например, платформа для размещения вузовских олимпиад"
-            resize="vertical"
-          />
-        </BaseLabel>
-        <!-- </Project name> -->
-
-        <!-- <Project goal> -->
-        <BaseLabel label="Цель проекта" required>
-          <BaseTextarea
-            v-model="projectGoalRef"
-            :disabled="disableAll"
-            :class="$style['small-textarea']"
-            placeholder="Например, создать платформу (страничку) для рекламы олимпиад"
-            resize="vertical"
-          />
-        </BaseLabel>
-        <!-- </Project goal> -->
-
-        <!-- <Project customer> -->
-        <BaseLabel label="Заказчик">
-          <BaseInput
-            v-model="projectCustomerRef"
-            :disabled="disableAll"
-            placeholder="ЦЭО, Лукьянов Н.Д."
-          />
-        </BaseLabel>
-        <!-- </Project customer> -->
-
-        <!-- <Project theme source> -->
-        <BaseLabel is="div" label="Источник темы">
-          <template #label="{ label }">
-            <BaseTooltip
-              :position-x="isSmallDevice ? 'left' : 'right'"
-              message="Eсли на момент заполнения аннотации нет информации, ее можно предоставить позднее, в сроки оговоренные положением о проектном обучении, либо оставить поле пустым"
-            >
-              {{ label }}
-            </BaseTooltip>
-          </template>
-
-          <template #default>
-            <VMultiselect
-              v-model="projectThemeSourceIdRef"
-              class="multiselect"
-              :disabled="themeSources.isFetching.value || disableAll"
-              :placeholder="
-                themeSources.isFetching.value
-                  ? 'Источники темы загружаются...'
-                  : themeSources.isError.value
-                  ? 'Ошибка загрузки источников темы'
-                  : 'Ввыберите источник темы'
-              "
-              no-results-text="Источник не найден"
-              no-options-text="Источники не найдены"
-              :searchable="true"
-              :options="themeSourcesMultiselectItems"
-            />
-          </template>
-        </BaseLabel>
-        <!-- </Project theme source> -->
-
-        <!-- <Project duration> -->
-        <BaseLabel
-          is="fieldset"
-          :class="$style['radio-buttons-label']"
-          label="Длительность проекта"
-          required
-        >
-          <BaseRadioButton
-            v-model="projectDurationRef"
-            :disabled="disableAll"
-            :value="ProjectDuration.FallSemester"
-          >
-            1 семестр (осень {{ currentYear }} года)
-          </BaseRadioButton>
-          <BaseRadioButton
-            v-model="projectDurationRef"
-            :disabled="disableAll"
-            :value="ProjectDuration.SpringSemester"
-          >
-            1 семестр (весна {{ currentYear + 1 }} года)
-          </BaseRadioButton>
-          <BaseRadioButton
-            v-model="projectDurationRef"
-            :disabled="disableAll"
-            :value="ProjectDuration.FullYear"
-          >
-            2 семестра ({{ currentYear }} - {{ currentYear + 1 }} год)
-          </BaseRadioButton>
-        </BaseLabel>
-        <!-- </Project duration> -->
-
-        <!-- <Project difficulty> -->
-        <BaseLabel
-          is="fieldset"
-          :class="$style['radio-buttons-label']"
-          label="Сложность проекта"
-          required
-        >
-          <BaseRadioButton
-            v-model="projectDifficultyRef"
-            :disabled="disableAll"
-            :value="ProjectDifficulty.Low"
-          >
-            Легкий
-          </BaseRadioButton>
-          <BaseRadioButton
-            v-model="projectDifficultyRef"
-            :disabled="disableAll"
-            :value="ProjectDifficulty.Medium"
-          >
-            Средний
-          </BaseRadioButton>
-          <BaseRadioButton
-            v-model="projectDifficultyRef"
-            :disabled="disableAll"
-            :value="ProjectDifficulty.High"
-          >
-            Сложный
-          </BaseRadioButton>
-        </BaseLabel>
-        <!-- </Project difficulty> -->
-      </FormSection>
-
-      <FormSection
-        :class="$style['project-team-section']"
-        tag="3"
-        title="Роли в проекте"
-        divider
-      >
-        <!-- <Jod developer> -->
-        <BaseLabel
-          is="div"
-          :class="$style['institute-input']"
-          label="Разработчик проекта"
-        >
-          <template #label="{ label }">
-            <BaseTooltip
-              :position-x="isSmallDevice ? 'left' : 'right'"
-              message="Разработчиком проекта становится сотрудник ИРНИТУ, создавший проектную заявку через Ярмарку проектов"
-            >
-              {{ label }}
-            </BaseTooltip>
-          </template>
-
-          <template #default>
-            <BaseInput
-              :model-value="
-                userProjectProposalList.isFetching.value
-                  ? undefined
-                  : projectJobDeveloperComputed?.fio
-              "
-              :placeholder="
-                userProjectProposalList.isFetching.value
-                  ? 'Загрузка проектной заявки...'
-                  : ''
-              "
-              disabled
-            />
-          </template>
-        </BaseLabel>
-        <!-- </Jod developer> -->
-
-        <!-- <Project institute> -->
-        <BaseLabel
-          is="div"
-          :class="$style['institute-input']"
-          label="Подразделение, к которому будет привязан проект"
-        >
-          <template #label="{ label }">
-            <BaseTooltip
-              :position-x="isSmallDevice ? 'left' : 'right'"
-              message="Заполняется автоматически в зависимости от выбранного на проекте наставника"
-            >
-              {{ label }}
-            </BaseTooltip>
-          </template>
-
-          <template #default>
-            <BaseInput
-              :model-value="projectDepartmentComputed?.name"
-              :placeholder="
-                projectMentorComputed?.memberData
-                  ? 'Подразделение наставника не установлено'
-                  : 'Выберите наставника проекта'
-              "
-              disabled
-            />
-          </template>
-        </BaseLabel>
-        <!-- </Project institute> -->
-
-        <!-- <Project team> -->
-        <ProjectTeamCollect
-          v-if="supervisorList.data.value"
-          v-model:team="teamRef"
-          :supervisor-list="supervisorList.data.value"
-          :role-list="sharedRoleList"
-          :current-user-role-list="currentUserRoleList"
-          :disable-all="supervisorList.isFetching.value || disableAll"
-        >
-          <template #add-button>
-            <template v-if="supervisorList.isFetching.value">
-              Преподаватели загружаются...
-            </template>
-            <template v-else-if="supervisorList.isError.value">
-              Ошибка загрузки преподавателей
-            </template>
-            <template v-else>+ добавить сонаставника</template>
-          </template>
-        </ProjectTeamCollect>
-        <!-- </Project team> -->
-      </FormSection>
-
-      <FormSection
-        :class="$style['project-results-section']"
-        tag="4"
-        title="Описание и предполагаемые результаты проекта"
-        divider
-      >
-        <!-- <Project expected result> -->
-        <BaseLabel required label="Ожидаемый результат">
-          <BaseTextarea
-            v-model="projectExpectedResultRef"
-            :disabled="disableAll"
-            :class="$style['small-textarea']"
-            placeholder="Создать платформу (страничку) для рекламы олимпиад"
-            resize="vertical"
-          />
-        </BaseLabel>
-        <!-- </Project expected result> -->
-
-        <!-- <Project requirements for participants> -->
-        <BaseLabel required label="Формируемые навыки">
-          <BaseTextarea
-            v-model="skillsToBeFormed"
-            :disabled="disableAll"
-            :class="$style['small-textarea']"
-            placeholder="Например, знание основ верстки  и дизайна веб-страниц"
-            resize="vertical"
-          />
-        </BaseLabel>
-        <!-- </Project requirements for participants> -->
-
-        <!-- <Project description> -->
-        <BaseLabel required label="Описание проекта">
-          <BaseTextarea
-            v-model="projectDescriptionRef"
-            :disabled="disableAll"
-            :class="$style['large-textarea']"
-            placeholder="Опишите идею своего проекта"
-            resize="vertical"
-          />
-        </BaseLabel>
-        <!-- </Project description> -->
-      </FormSection>
-
-      <FormSection
-        tag="5"
-        title="Направления (специальности), участников проекта"
-      >
-        <!-- <Project specialties> -->
-        <p v-if="!isEditableProposalComputed && specialtyListRef.length === 0">
-          <b>Список пуст</b>
-        </p>
-        <TagList
-          v-else-if="
-            specialtyList.isFetching.value ||
-            specialtiesOfMentorDepartmentComputed.length > 0
-          "
-          show-all
-          :tag-list="specialtyListRef"
-        >
-          <template #after-list>
-            <BaseButton
-              v-if="isEditableProposalComputed"
-              case="none"
-              variant="tag"
-              :disabled="
-                specialtyList.isFetching.value ||
-                !projectDepartmentComputed ||
-                disableAll
-              "
-              @click="() => (showSpecialtyEditModal = true)"
-            >
-              <template v-if="projectSkills.isFetching.value">
-                Специальности загружаются...
-              </template>
-              <template v-else-if="projectSkills.isError.value">
-                Ошибка загрузки специальностей
-              </template>
-              <template v-else-if="!projectDepartmentComputed">
-                Выберите наставника с кафедрой
-              </template>
-              <template v-else>Редактировать специальности +</template>
-            </BaseButton>
-          </template>
-        </TagList>
-        <p v-else>
-          Кафедра <b>«{{ projectDepartmentComputed?.name }}»</b> не выпускает
-          специальности.
-          <br />
-          <br />
-          Вы можете пригласить любые специальности в пункте
-          <b>6</b>, студенты этих направлений самостоятельно смогут подать
-          заявку на участие в Вашем проекте.
-        </p>
-        <!-- </Project specialties> -->
-      </FormSection>
-
-      <FormSection
-        tag="6"
-        title="Приглашённые направления (специальности), участников проекта"
-        divider
-      >
-        <!-- <Project specialties> -->
-        <p
-          v-if="
-            !isEditableProposalComputed &&
-            additionalSpecialtyListRef.length === 0
-          "
-        >
-          <b>Список пуст</b>
-        </p>
-        <TagList v-else show-all :tag-list="additionalSpecialtyListRef">
-          <template #after-list>
-            <BaseButton
-              v-if="isEditableProposalComputed"
-              case="none"
-              variant="tag"
-              :disabled="specialtyList.isFetching.value || disableAll"
-              @click="() => (showAdditionalSpecialtyEditModal = true)"
-            >
-              <template v-if="projectSkills.isFetching.value">
-                Специальности загружаются...
-              </template>
-              <template v-else-if="projectSkills.isError.value">
-                Ошибка загрузки специальностей
-              </template>
-              <template v-else>Редактировать специальности +</template>
-            </BaseButton>
-          </template>
-        </TagList>
-        <!-- </Project specialties> -->
-      </FormSection>
-
-      <FormSection tag="7" title="Навыки, которые необходимы на проекте">
-        <!-- <Project skills> -->
-        <p v-if="!isEditableProposalComputed && skillListRef.length === 0">
-          <b>Список пуст</b>
-        </p>
-        <TagList v-else show-all :tag-list="skillListRef">
-          <template #after-list>
-            <BaseButton
-              v-if="isEditableProposalComputed"
-              case="none"
-              variant="tag"
-              :disabled="projectSkills.isFetching.value || disableAll"
-              @click="() => (showSkillsEditModal = true)"
-            >
-              <template v-if="projectSkills.isFetching.value">
-                Навыки загружаются...
-              </template>
-              <template v-else-if="projectSkills.isError.value">
-                Ошибка загрузки навыков
-              </template>
-              <template v-else>Редактировать навыки +</template>
-            </BaseButton>
-          </template>
-        </TagList>
-        <!-- </Project skills> -->
-      </FormSection>
-    </BasePanel>
-
+    <ProjectProposalForm
+      v-model:project-proposal-form-value="projectProposalFormValue"
+      :is-loading="isLoading"
+      :can-user-edit="canUserEdit"
+      :prev-project-list="prevUserProjectsQuery.data.value"
+      :specialty-list="specialtyListQuery.data.value"
+      :supervisor-list="supervisorListQuery.data.value"
+      :project-skill-list="projectSkillsQuery.data.value"
+      :project-job-developer="projectJobDeveloperComputed"
+      :theme-source-list="themeSourcesQuery.data.value"
+    />
     <div :class="$style.actions">
       <BaseButton
         v-if="
-          isEditableProposalComputed &&
-          !userProjectProposalList.isFetching.value &&
+          canUserEdit &&
+          !userProjectProposalListQuery.isFetching.value &&
           !instituteProjectProposalsQuery.isFetching.value
         "
-        :disabled="
-          createProjectProposalMutation.isLoading.value ||
-          updateProjectProposalMutation.isLoading.value
-        "
+        :disabled="isLoading"
         color="red"
         variant="outlined"
         @click="onCancel"
@@ -514,15 +50,12 @@
 
       <BaseButton
         v-if="
-          !userProjectProposalList.isFetching.value &&
+          canUserEdit &&
+          !userProjectProposalListQuery.isFetching.value &&
           !instituteProjectProposalsQuery.isFetching.value &&
-          isEditableProposalComputed &&
           currentProjectProposalState === ProjectProposalStateId.Draft
         "
-        :disabled="
-          createProjectProposalMutation.isLoading.value ||
-          updateProjectProposalMutation.isLoading.value
-        "
+        :disabled="isLoading"
         color="red"
         variant="primary"
         @click="onDeleteDraft"
@@ -533,8 +66,8 @@
       <BaseButton
         is="router-link"
         v-if="
-          !isEditableProposalComputed ||
-          userProjectProposalList.isFetching.value ||
+          !canUserEdit ||
+          userProjectProposalListQuery.isFetching.value ||
           instituteProjectProposalsQuery.isFetching.value
         "
         :to="{ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS }"
@@ -545,21 +78,13 @@
 
       <BaseButton
         v-if="
-          !userProjectProposalList.isFetching.value &&
+          !userProjectProposalListQuery.isFetching.value &&
           !instituteProjectProposalsQuery.isFetching.value &&
-          (isEditableProposalComputed ||
-            (currentProjectProposalState === ProjectProposalStateId.Rejected &&
-              canUserEdit))
+          currentProjectProposalState === ProjectProposalStateId.Rejected &&
+          isUserJobDeveloper
         "
-        :disabled="
-          createProjectProposalMutation.isLoading.value ||
-          updateProjectProposalMutation.isLoading.value
-        "
-        :variant="
-          currentProjectProposalState === ProjectProposalStateId.Rejected
-            ? 'primary'
-            : 'outlined'
-        "
+        variant="primary"
+        :disabled="isLoading"
         @click="onCreateDraft"
       >
         <template
@@ -570,23 +95,33 @@
         >
           Черновик сохраняется...
         </template>
+        <template v-else>Сохранить как черновик</template>
+      </BaseButton>
+
+      <BaseButton
+        v-if="
+          !userProjectProposalListQuery.isFetching.value &&
+          !instituteProjectProposalsQuery.isFetching.value &&
+          canUserEdit
+        "
+        variant="outlined"
+        :disabled="isLoading"
+        @click="onCreateDraft"
+      >
         <template
-          v-else-if="
-            currentProjectProposalState === ProjectProposalStateId.Rejected
+          v-if="
+            createProjectProposalMutation.isLoading.value ||
+            updateProjectProposalMutation.isLoading.value
           "
-          >Сохранить как черновик</template
         >
+          Черновик сохраняется...
+        </template>
         <template v-else>Сохранить черновик</template>
       </BaseButton>
 
       <BaseButton
-        v-if="isEditableProposalComputed"
-        :disabled="
-          createProjectProposalMutation.isLoading.value ||
-          updateProjectProposalMutation.isLoading.value ||
-          instituteProjectProposalsQuery.isFetching.value ||
-          userProjectProposalList.isFetching.value
-        "
+        v-if="canUserEdit"
+        :disabled="isLoading"
         @click="onCreateUnderReview"
       >
         <template
@@ -604,60 +139,26 @@
 </template>
 
 <script setup lang="ts">
-  // TODO: отрефакторить логику компонента, а то большой слишком
   import { computed, ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useRoute, useRouter, RouterLink } from 'vue-router';
-  import { DateTime } from 'luxon';
-
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
   import { isSupervisor } from '@/helpers/typeCheck';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
-
   import {
     MemberRole,
-    NewProjectProposal,
     CreatedProjectProposal,
     ProjectProposalStateId,
-    ProjectProposalTeamMember,
-    ProjectProposalSpecialty,
   } from '@/models/ProjectProposal';
-  import { ProjectSupervisor, ProjectTypeName } from '@/models/Project';
-
   import PageLayout from '@/components/layout/PageLayout.vue';
-  import BasePanel from '@/components/ui/BasePanel.vue';
-  import FormSection from '@/components/ui/FormSection.vue';
-  import ProjectTeamCollect, {
-    TeamMember,
-  } from '@/components/project/ProjectTeamCollect.vue';
-  import BaseLabel from '@/components/ui/label/BaseLabel.vue';
-  import BaseRadioButton from '@/components/ui/BaseRadioButton.vue';
-  import VMultiselect from '@vueform/multiselect';
-  import BaseTextarea from '@/components/ui/BaseTextarea.vue';
-  import BaseInput from '@/components/ui/BaseInput.vue';
-  import TagList from '@/components/ui/TagList.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
-  import SkillsEditModal, {
-    EditedSkill,
-  } from '@/components/skill/SkillsEditModal.vue';
-  import BaseTooltip from '@/components/ui/BaseTooltip.vue';
-  import { useSmallDevice } from '@/helpers/breakpoints';
-  import SpecialtyEditModal from '@/components/specialty/SpecialtyEditModal.vue';
-  import {
-    SelectedSpecialty,
-    SpecialtyGroup,
-    SpecialtyPriority,
-  } from '@/models/Specialty';
-  import { MultiselectObjectItem } from '@/models/VMultiselect';
-
+  import { SpecialtyPriority } from '@/models/Specialty';
   import { ProjectDifficulty } from '@/models/ProjectDifficulty';
   import { RouteNames } from '@/router/types/route-names';
-  import { specialtyFullName } from '@/helpers/specialty';
-  import { TYPE, useToast } from 'vue-toastification';
+  import { useToast } from 'vue-toastification';
   import { ProjectStateID } from '@/models/ProjectState';
   import { toProjectProposalCreateRoute } from '@/router/utils/routes';
-  import { sortByRolePriority } from '@/helpers/project-member-role';
   import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
   import { useGetProjectProposalListQuery } from '@/api/SupervisorApi/hooks/useGetProjectProposalListQuery';
   import { useCreateProjectProposalMutation } from '@/api/SupervisorApi/hooks/useCreateProjectProposalMutation';
@@ -669,17 +170,23 @@
   import { useGetProjectSkillsQuery } from '@/api/ProjectApi/hooks/useGetAllProjectTagsQuery';
   import { useDeleteProjectProposalMutation } from '@/api/SupervisorApi/hooks/useDeleteProjectProposalMutation';
   import { useGetInstituteProjectProposalsQuery } from '@/api/InstituteDirectorApi/hooks/useGetInstituteProjectProposalsQuery';
-
-  const enum ProjectDuration {
-    SpringSemester = 1,
-    FallSemester = 2,
-    FullYear = 3,
-  }
+  import ProjectProposalForm from '@/components/project-proposal/ProjectProposalForm.vue';
+  import { useProjectProposalInfo } from '@/hooks/projectProposalForm';
+  import {
+    collectProjectProposal,
+    getCurrentProjectProposal,
+    mapProjectProposalTeam,
+    mapSpecialtyList,
+    projectDurationFromDate,
+  } from '@/helpers/projectProposalForm';
+  import {
+    ProjectDuration,
+    ProjectProposalFormValue,
+  } from '@/models/ProjectProposalForm';
 
   useWatchAuthorization();
 
   const toast = useToast();
-  const isSmallDevice = useSmallDevice();
   const router = useRouter();
   const route = useRoute();
   const authStore = useAuthStore();
@@ -687,23 +194,38 @@
   const { profileData, isInstDirector } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
 
+  const defaultProjectProposalFormValue: ProjectProposalFormValue = {
+    isNewProject: true,
+    prevProjectId: null,
+    projectName: '',
+    projectGoal: '',
+    projectCustomer: '',
+    projectThemeSourceId: null,
+    projectDuration: ProjectDuration.FallSemester,
+    projectDifficulty: ProjectDifficulty.Low,
+    skillsToBeFormed: '',
+    projectExpectedResult: '',
+    projectDescription: '',
+    specialtyList: [],
+    additionalSpecialtyList: [],
+    skillList: [],
+    team: initTeam(),
+    sharedRoleList: [MemberRole.CoMentor],
+    currentUserRoleList: [MemberRole.Mentor],
+  };
+
+  const projectProposalFormValue = ref<ProjectProposalFormValue>({
+    ...defaultProjectProposalFormValue,
+  });
+
   const instituteProjectProposalsQuery = useGetInstituteProjectProposalsQuery({
     enabled: isInstDirector,
-    onSuccess: onSuccessGetUserProjectProposalList,
     onError,
   });
-  const userProjectProposalList = useGetProjectProposalListQuery({
-    onSuccess: onSuccessGetUserProjectProposalList,
-    onError: onErrorGetUserProjectProposalList,
+  const userProjectProposalListQuery = useGetProjectProposalListQuery({
+    onError,
   });
-  const currentProjectProposalComputed = computed(() =>
-    getCurrentProjectProposal(Number(projectId.value), [
-      ...(userProjectProposalList.data.value || []),
-      ...(instituteProjectProposalsQuery.data.value || []),
-    ]),
-  );
-
-  const prevUserProjects = useGetUserProjectsQuery({
+  const prevUserProjectsQuery = useGetUserProjectsQuery({
     onError,
     select: (projects) =>
       projects.filter((project) =>
@@ -712,10 +234,10 @@
         ),
       ),
   });
-  const supervisorList = useGetAllSupervisorsQuery({ onError });
-  const projectSkills = useGetProjectSkillsQuery({ onError });
-  const specialtyList = useGetSpecialtiesQuery({ onError });
-  const themeSources = useGetThemeSourcesQuery({ onError });
+  const supervisorListQuery = useGetAllSupervisorsQuery({ onError });
+  const projectSkillsQuery = useGetProjectSkillsQuery({ onError });
+  const specialtyListQuery = useGetSpecialtiesQuery({ onError });
+  const themeSourcesQuery = useGetThemeSourcesQuery({ onError });
   const createProjectProposalMutation = useCreateProjectProposalMutation({
     onError,
   });
@@ -726,42 +248,23 @@
     onError,
   });
 
-  const showSkillsEditModal = ref<boolean>(false);
-  const showSpecialtyEditModal = ref<boolean>(false);
-  const showAdditionalSpecialtyEditModal = ref<boolean>(false);
-
-  const isNewProjectRef = ref<boolean>(true);
-  const prevProjectIdRef = ref<number | null>(null);
-  const projectNameRef = ref<string>('');
-  const projectGoalRef = ref<string>('');
-  const projectCustomerRef = ref<string>('');
-  const projectThemeSourceIdRef = ref<number | null>(null);
-  const projectDurationRef = ref<ProjectDuration>(ProjectDuration.FallSemester);
-  const projectDifficultyRef = ref<ProjectDifficulty>(ProjectDifficulty.Low);
-  const skillsToBeFormed = ref<string>('');
-  const projectExpectedResultRef = ref<string>('');
-  const projectDescriptionRef = ref<string>('');
-  const specialtyListRef = ref<SelectedSpecialty<number | string>[]>([]);
-  const additionalSpecialtyListRef = ref<SelectedSpecialty<number | string>[]>(
-    [],
+  const { mentorSpecialties, projectDepartment } = useProjectProposalInfo(
+    projectProposalFormValue,
+    specialtyListQuery.data,
   );
-  const skillListRef = ref<EditedSkill[]>([]);
-  const teamRef = ref<TeamMember[]>([]);
-  const sharedRoleList: MemberRole[] = [MemberRole.CoMentor];
-  const currentUserRoleList: MemberRole[] = [MemberRole.Mentor];
 
-  if (currentProjectProposalComputed.value) {
-    fillFromProjectProposal(currentProjectProposalComputed.value);
-  } else {
-    if (teamRef.value.length === 0) teamRef.value = initTeam();
-    teamRef.value = initTeam();
-  }
+  const currentProjectProposalComputed = computed(() =>
+    getCurrentProjectProposal(Number(projectId.value), [
+      ...(userProjectProposalListQuery.data.value || []),
+      ...(instituteProjectProposalsQuery.data.value || []),
+    ]),
+  );
 
   const currentProjectProposalState = computed<
     ProjectProposalStateId | undefined
   >(() => currentProjectProposalComputed.value?.state.id);
 
-  const canUserEdit = computed(() =>
+  const isUserJobDeveloper = computed(() =>
     Boolean(
       currentProjectProposalComputed?.value?.supervisors
         .find(
@@ -771,79 +274,129 @@
     ),
   );
 
-  const isEditableProposalComputed = computed(
+  const canUserEdit = computed(
     () =>
       !currentProjectProposalState.value ||
-      (canUserEdit.value &&
+      (isUserJobDeveloper.value &&
         [ProjectProposalStateId.Draft].includes(
           currentProjectProposalState.value,
         )),
   );
 
-  const disableAll = computed(
+  const isLoading = computed(
     () =>
       createProjectProposalMutation.isLoading.value ||
       updateProjectProposalMutation.isLoading.value ||
       deleteProjectProposalMutation.isLoading.value ||
-      userProjectProposalList.isFetching.value ||
+      userProjectProposalListQuery.isFetching.value ||
       instituteProjectProposalsQuery.isFetching.value ||
-      !isEditableProposalComputed.value,
+      supervisorListQuery.isFetching.value ||
+      projectSkillsQuery.isFetching.value ||
+      specialtyListQuery.isFetching.value ||
+      themeSourcesQuery.isFetching.value ||
+      prevUserProjectsQuery.isFetching.value,
   );
 
-  const projectMentorComputed = computed<TeamMember | undefined>(() =>
-    teamRef.value.find((member) => member.role === MemberRole.Mentor),
-  );
-  const projectDepartmentComputed = computed(
-    () => projectMentorComputed.value?.memberData?.department,
-  );
   const projectJobDeveloperComputed = computed(
     () =>
       currentProjectProposalComputed.value?.supervisors.find((member) =>
         member.roles.find((role) => role.id === MemberRole.JobDeveloper),
-      )?.supervisor || profileData?.value,
-  );
-  const specialtiesOfMentorDepartmentComputed = computed(
-    () =>
-      specialtyList.data.value?.filter(
-        (specialty) =>
-          specialty.department?.id === projectDepartmentComputed.value?.id,
-      ) || [],
-  );
-  const prevProjectsMultiselectItems = computed<
-    MultiselectObjectItem<number>[]
-  >(
-    () =>
-      prevUserProjects.data.value?.map((project) => ({
-        label: `${project.date_start} ${project.title}`,
-        value: project.id,
-      })) || [],
-  );
-  const themeSourcesMultiselectItems = computed<
-    MultiselectObjectItem<number>[]
-  >(
-    () =>
-      themeSources.data.value?.map((source) => ({
-        label: source.name,
-        value: source.id,
-      })) || [],
-  );
-  const currentYear = new Date(Date.now()).getFullYear();
-
-  watch(
-    () => projectDepartmentComputed.value?.id,
-    (departmentId, prevDepartmentId) => {
-      if (!prevDepartmentId) return;
-      if (departmentId === prevDepartmentId) return;
-      specialtyListRef.value = [];
-    },
+      )?.supervisor.fio || profileData?.value?.fio,
   );
 
   watch(
-    () => isNewProjectRef.value,
-    (isNewProject) => {
-      if (isNewProject) prevProjectIdRef.value = null;
+    () => currentProjectProposalComputed.value,
+    (currentProjectProposal, prevCurrentProjectProposal) => {
+      if (currentProjectProposal?.id === prevCurrentProjectProposal?.id) return;
+      if (!currentProjectProposal) return;
+      fillFromProjectProposal(currentProjectProposal);
     },
+    { deep: true, immediate: true },
   );
+
+  function validateProjectProposal(): string | undefined {
+    const {
+      projectName,
+      projectGoal,
+      projectExpectedResult,
+      skillsToBeFormed,
+      projectDescription,
+      specialtyList,
+      additionalSpecialtyList,
+    } = projectProposalFormValue.value;
+
+    if (!projectName) {
+      return 'Введите название проекта';
+    }
+    if (!projectGoal) {
+      return 'Введите цель проекта';
+    }
+    if (!projectDepartment.value) {
+      return 'Подразделение наставника проекта не найдено, выберите другого наставника, или обратитесь в службу поддержки';
+    }
+    if (!projectExpectedResult) {
+      return 'Введите ожидаемый результат проекта';
+    }
+    if (!skillsToBeFormed) {
+      return 'Введите формируемые в результате проекта навыки студентов';
+    }
+    if (!projectDescription) {
+      return 'Введите описание проекта';
+    }
+    if (mentorSpecialties.value.length > 0 && specialtyList.length === 0) {
+      return 'Выберите основные специальности участников проекта';
+    }
+    if (
+      mentorSpecialties.value.length === 0 &&
+      additionalSpecialtyList.length === 0
+    ) {
+      return 'Выберите приглашённые специальности участников проекта';
+    }
+
+    return undefined;
+  }
+
+  function setProjectProposalFormValue(
+    formValue: Partial<ProjectProposalFormValue>,
+  ): void {
+    projectProposalFormValue.value = {
+      ...projectProposalFormValue.value,
+      ...formValue,
+    };
+  }
+
+  function fillFromProjectProposal(projectProposal: CreatedProjectProposal) {
+    setProjectProposalFormValue({
+      prevProjectId: projectProposal.prevProjectId,
+      isNewProject: !projectProposal.prevProjectId,
+      projectName: projectProposal.title,
+      projectGoal: projectProposal.goal,
+      projectCustomer: projectProposal.customer,
+      projectThemeSourceId: projectProposal.theme_source?.id || null,
+      projectDifficulty: projectProposal.difficulty,
+      projectExpectedResult: projectProposal.product_result,
+      skillsToBeFormed: projectProposal.study_result,
+      projectDescription: projectProposal.description,
+      skillList: projectProposal.skills,
+      projectDuration: projectDurationFromDate({
+        start: projectProposal.date_start,
+        end: projectProposal.date_end,
+      }),
+      specialtyList: mapSpecialtyList(
+        projectProposal.project_specialities,
+        SpecialtyPriority.High,
+      ),
+      additionalSpecialtyList: mapSpecialtyList(
+        projectProposal.project_specialities,
+        SpecialtyPriority.Low,
+      ),
+      team: mapProjectProposalTeam(
+        projectProposal.supervisors,
+        projectProposalFormValue.value.sharedRoleList,
+        projectProposalFormValue.value.currentUserRoleList,
+      ),
+    });
+  }
 
   function initTeam() {
     const userData = profileData?.value;
@@ -860,97 +413,8 @@
     ];
   }
 
-  function validateProjectProposal(): string | undefined {
-    if (!projectNameRef.value) {
-      return 'Введите название проекта';
-    }
-    if (!projectGoalRef.value) {
-      return 'Введите цель проекта';
-    }
-    if (!projectDepartmentComputed.value) {
-      return 'Подразделение наставника проекта не найдено, выберите другого наставника, или обратитесь в службу поддержки';
-    }
-    if (!projectExpectedResultRef.value) {
-      return 'Введите ожидаемый результат проекта';
-    }
-    if (!skillsToBeFormed.value) {
-      return 'Введите формируемые в результате проекта навыки студентов';
-    }
-    if (!projectDescriptionRef.value) {
-      return 'Введите описание проекта';
-    }
-    if (
-      specialtiesOfMentorDepartmentComputed.value.length > 0 &&
-      specialtyListRef.value.length === 0
-    ) {
-      return 'Выберите основные специальности участников проекта';
-    }
-    if (
-      specialtiesOfMentorDepartmentComputed.value.length === 0 &&
-      additionalSpecialtyListRef.value.length === 0
-    ) {
-      return 'Выберите приглашённые специальности участников проекта';
-    }
-
-    return undefined;
-  }
-
-  function collectProjectProposal(
-    projectProposalState: ProjectProposalStateId,
-  ): NewProjectProposal {
-    const projectDate = calcProjectDate(projectDurationRef.value);
-
-    const supervisors: ProjectProposalTeamMember[] = teamRef.value
-      .filter((member) => member.memberData && member.role)
-      .map((member) => ({
-        supervisor_id: member.memberData!.id,
-        role_ids: [member.role!],
-      }));
-
-    const specialities: ProjectProposalSpecialty[] = [
-      ...additionalSpecialtyListRef.value.map((specialty) => ({
-        course: specialty.course,
-        specialitiy_id: specialty.specialty_id,
-        priority: SpecialtyPriority.Low,
-      })),
-      ...specialtyListRef.value.map((specialty) => ({
-        course: specialty.course,
-        specialitiy_id: specialty.specialty_id,
-        priority: SpecialtyPriority.High,
-      })),
-    ];
-
-    const skillIds: number[] = skillListRef.value
-      .filter((skill) => !skill.isNew)
-      .map((skill) => skill.id);
-
-    const newSkills: string[] = skillListRef.value
-      .filter((skill) => skill.isNew)
-      .map((skill) => skill.name);
-
-    return {
-      title: projectNameRef.value,
-      goal: projectGoalRef.value,
-      customer: projectCustomerRef.value,
-      theme_source_id: projectThemeSourceIdRef.value ?? null,
-      prev_project_id: prevProjectIdRef.value,
-      difficulty: projectDifficultyRef.value,
-      department_id: projectDepartmentComputed.value!.id,
-      supervisors,
-      product_result: projectExpectedResultRef.value,
-      specialities,
-      skill_ids: skillIds,
-      new_skills: newSkills,
-      date_start: projectDate.start,
-      date_end: projectDate.end,
-      description: projectDescriptionRef.value,
-      state_id: projectProposalState,
-      places: 0,
-      type_id: ProjectTypeName.Applied,
-      study_result: skillsToBeFormed.value,
-      additional_inf: 'additional_inf',
-      requirements: 'requirements',
-    };
+  function clearAllFields() {
+    projectProposalFormValue.value = { ...defaultProjectProposalFormValue };
   }
 
   function sendProjectProposal(projectProposalState: ProjectProposalStateId) {
@@ -964,7 +428,11 @@
       return;
     }
 
-    const projectProposal = collectProjectProposal(projectProposalState);
+    const projectProposal = collectProjectProposal(
+      projectProposalFormValue.value,
+      projectProposalState,
+      projectDepartment.value!.id,
+    );
     const id = currentProjectProposalComputed.value?.id;
 
     if (id) {
@@ -983,185 +451,6 @@
         onSuccess: isDraft ? onSuccessCreateDraft : onSuccessCreateForReview,
       });
     }
-  }
-
-  function getCurrentProjectProposal(
-    currentProjectId: number,
-    CreatedProjectProposalList?: CreatedProjectProposal[],
-  ): CreatedProjectProposal | undefined {
-    return CreatedProjectProposalList?.find(
-      (proposal) => Number(proposal.id) === currentProjectId,
-    );
-  }
-
-  function projectDurationFromDate(isoDate: {
-    start: string;
-    end: string;
-  }): ProjectDuration {
-    const dateStart = DateTime.fromISO(isoDate.start);
-    const dateEnd = DateTime.fromISO(isoDate.end);
-
-    const startMonth = dateStart.month;
-    const endMonth = dateEnd.month;
-
-    if (startMonth === 9 && endMonth === 12)
-      return ProjectDuration.FallSemester;
-    if (startMonth === 2 && endMonth === 5)
-      return ProjectDuration.SpringSemester;
-
-    return ProjectDuration.FullYear;
-  }
-
-  function calcProjectDate(duration: ProjectDuration): {
-    start: string;
-    end: string;
-  } {
-    const currentYear = new Date(Date.now()).getFullYear();
-
-    const fallStartDate = DateTime.fromObject({
-      year: currentYear,
-      month: 9,
-      day: 1,
-    });
-    const fallEndDate = DateTime.fromObject({
-      year: currentYear,
-      month: 12,
-      day: 30,
-    });
-
-    const springStartDate = DateTime.fromObject({
-      year: currentYear + 1,
-      month: 2,
-      day: 1,
-    });
-    const springEndDate = DateTime.fromObject({
-      year: currentYear + 1,
-      month: 5,
-      day: 30,
-    });
-
-    let dateStart = '';
-    let dateEnd = '';
-    switch (duration) {
-      case ProjectDuration.SpringSemester:
-        dateStart = springStartDate.toISODate();
-        dateEnd = springEndDate.toISODate();
-        break;
-      case ProjectDuration.FallSemester:
-        dateStart = fallStartDate.toISODate();
-        dateEnd = fallEndDate.toISODate();
-        break;
-      case ProjectDuration.FullYear:
-        dateStart = fallStartDate.toISODate();
-        dateEnd = springEndDate.toISODate();
-        break;
-    }
-
-    return {
-      start: dateStart,
-      end: dateEnd,
-    };
-  }
-
-  function fillFromProjectProposal(projectProposal: CreatedProjectProposal) {
-    prevProjectIdRef.value = projectProposal.prevProjectId;
-    isNewProjectRef.value = !projectProposal.prevProjectId;
-    projectNameRef.value = projectProposal.title;
-    projectGoalRef.value = projectProposal.goal;
-    projectCustomerRef.value = projectProposal.customer;
-    projectThemeSourceIdRef.value = projectProposal.theme_source?.id || null;
-    projectDifficultyRef.value = projectProposal.difficulty;
-    projectExpectedResultRef.value = projectProposal.product_result;
-    skillsToBeFormed.value = projectProposal.study_result;
-    projectDescriptionRef.value = projectProposal.description;
-    skillListRef.value = projectProposal.skills;
-    projectDurationRef.value = projectDurationFromDate({
-      start: projectProposal.date_start,
-      end: projectProposal.date_end,
-    });
-
-    specialtyListRef.value = mapSpecialtyList(
-      projectProposal.project_specialities,
-      SpecialtyPriority.High,
-    );
-
-    additionalSpecialtyListRef.value = mapSpecialtyList(
-      projectProposal.project_specialities,
-      SpecialtyPriority.Low,
-    );
-
-    teamRef.value = mapProjectProposalTeam(
-      projectProposal.supervisors,
-      sharedRoleList,
-      currentUserRoleList,
-    );
-
-    function mapSpecialtyList(
-      projectSpecialities: SpecialtyGroup[],
-      priority: SpecialtyPriority,
-    ): SelectedSpecialty<number | string>[] {
-      return projectSpecialities
-        .filter((specialty) => specialty.priority === priority)
-        .map((specialty) => ({
-          course: specialty.course,
-          id: specialty.id,
-          name: specialtyFullName(specialty.speciality.name, specialty.course),
-          specialty_id: specialty.speciality.id,
-        }));
-    }
-
-    function mapProjectProposalTeam(
-      supervisors: ProjectSupervisor[],
-      sharedRoleList: MemberRole[],
-      currentUserRoleList: MemberRole[],
-    ): Required<TeamMember>[] {
-      const projectProposalTeam: Required<TeamMember>[] = supervisors
-        .filter(({ roles }) => {
-          return (
-            roles.filter((role) =>
-              [...sharedRoleList, ...currentUserRoleList].includes(role.id),
-            ).length > 0
-          );
-        })
-        .map<Required<TeamMember>>(({ roles, supervisor }) => {
-          // фильтруем только нужные роли
-          let acceptedRoles = roles
-            .map((role) => role.id)
-            .filter((role) =>
-              [...sharedRoleList, ...currentUserRoleList].includes(role),
-            );
-
-          acceptedRoles = sortByRolePriority(acceptedRoles, (role) => role);
-
-          return {
-            role: acceptedRoles[0],
-            isCurrentUser: Boolean(
-              acceptedRoles.find((role) => role === MemberRole.Mentor),
-            ),
-            memberData: supervisor,
-          };
-        });
-
-      // сортируем команду по ролям
-      return sortByRolePriority(projectProposalTeam, (member) => member.role);
-    }
-  }
-
-  function clearAllFields() {
-    isNewProjectRef.value = false;
-    projectNameRef.value = '';
-    projectGoalRef.value = '';
-    projectCustomerRef.value = '';
-    projectThemeSourceIdRef.value = null;
-    projectDifficultyRef.value = ProjectDifficulty.Low;
-    projectExpectedResultRef.value = '';
-    skillsToBeFormed.value = '';
-    projectDescriptionRef.value = '';
-    specialtyListRef.value = [];
-    additionalSpecialtyListRef.value = [];
-    skillListRef.value = [];
-    projectDurationRef.value = ProjectDuration.FallSemester;
-    teamRef.value = initTeam();
   }
 
   function onCreateDraft() {
@@ -1277,8 +566,6 @@
   }
 
   function onSuccessCreateForReview() {
-    clearAllFields();
-
     const title = 'Заявка успешно отправлена, вернуться в личный кабинет?';
     const agreeButtonTitle = 'вернуться в личный кабинет';
     const disagreeButtonTitle = 'создать новую заявку';
@@ -1290,6 +577,7 @@
 
     function disagree() {
       modalsStore.openConfirmModal();
+      clearAllFields();
       router.push(toProjectProposalCreateRoute());
     }
 
@@ -1335,25 +623,6 @@
     );
   }
 
-  function onSuccessGetUserProjectProposalList(
-    projectProposalList: CreatedProjectProposal[],
-  ) {
-    const currentProjectProposal = getCurrentProjectProposal(
-      Number(projectId.value),
-      projectProposalList,
-    );
-    if (currentProjectProposal) {
-      fillFromProjectProposal(currentProjectProposal);
-    } else {
-      if (teamRef.value.length === 0) teamRef.value = initTeam();
-    }
-  }
-
-  function onErrorGetUserProjectProposalList(error: unknown) {
-    teamRef.value = initTeam();
-    onError(error);
-  }
-
   function onError(error: unknown) {
     toast.error('Ошибка: ' + String(error));
   }
@@ -1380,104 +649,10 @@
     }
   }
 
-  .radio-buttons-label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-    justify-self: flex-start;
-  }
-
   .actions {
     display: flex;
     gap: 0.9375rem;
     justify-content: flex-end;
     margin-top: 1.5rem;
-  }
-
-  .small-textarea {
-    min-height: 8.375rem;
-  }
-
-  .large-textarea {
-    min-height: 21.25rem;
-  }
-
-  .project-type-section {
-    display: grid;
-    grid-template-columns: 3fr 4fr;
-    gap: 1rem;
-  }
-
-  .institute-input {
-    margin-bottom: 1.5rem;
-  }
-
-  .project-team-section {
-    display: grid;
-    grid-template-columns: 4fr 1fr 3fr;
-    column-gap: 1.5rem;
-
-    & > *:nth-child(1) {
-      grid-column: 1;
-    }
-
-    & > *:nth-child(2) {
-      grid-column: 1;
-    }
-
-    & > *:nth-child(3) {
-      grid-column: 1 / -1;
-    }
-  }
-
-  .project-data-section {
-    display: grid;
-    grid-template-columns: 4fr 1fr 3fr;
-    gap: 1.5rem;
-
-    & > *:nth-child(1) {
-      grid-column: 1;
-    }
-
-    & > *:nth-child(2) {
-      grid-column: 1;
-    }
-
-    & > *:nth-child(3) {
-      grid-column: 1;
-    }
-
-    & > *:nth-child(4) {
-      grid-column: 1;
-    }
-
-    & > *:nth-child(5) {
-      grid-row: 1;
-      grid-column: 3;
-    }
-
-    & > *:nth-child(6) {
-      grid-row: 2;
-      grid-column: 3;
-    }
-  }
-
-  .project-results-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.875rem;
-
-    & > *:nth-child(1) {
-      grid-column: 1;
-    }
-
-    & > *:nth-child(2) {
-      grid-column: 2;
-    }
-
-    & > *:nth-child(3) {
-      grid-row: 2;
-      grid-column: 1 / -1;
-    }
   }
 </style>
