@@ -1,11 +1,8 @@
 <template>
   <PageLayout>
-    <RouterLink
-      :class="$style['back-link']"
-      :to="{ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS }"
-    >
+    <button :class="$style['back-link']" @click="navigateBack">
       &lt;&nbsp;&nbsp;К списку заявок
-    </RouterLink>
+    </button>
     <header :class="$style.header">
       <h1 class="page-title">
         <template v-if="isLoading">Загрузка...</template>
@@ -64,14 +61,13 @@
       </BaseButton>
 
       <BaseButton
-        is="router-link"
         v-if="
           !canUserEdit ||
           userProjectProposalListQuery.isFetching.value ||
           instituteProjectProposalsQuery.isFetching.value
         "
-        :to="{ name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS }"
         variant="outlined"
+        @click="navigateBack"
       >
         Вернуться к заявкам
       </BaseButton>
@@ -141,7 +137,7 @@
 <script setup lang="ts">
   import { computed, ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useRoute, useRouter, RouterLink } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
   import { isSupervisor } from '@/helpers/typeCheck';
@@ -183,6 +179,7 @@
     ProjectDuration,
     ProjectProposalFormValue,
   } from '@/models/ProjectProposalForm';
+  import { useNavigateBack } from '@/hooks/useRoutes';
 
   useWatchAuthorization();
 
@@ -193,6 +190,9 @@
   const modalsStore = useModalsStore();
   const { profileData, isInstDirector } = storeToRefs(authStore);
   const projectId = computed(() => route.params.id);
+  const navigateBack = useNavigateBack({
+    name: RouteNames.SUPERVISOR_PROJECT_PROPOSALS,
+  });
 
   const defaultProjectProposalFormValue: ProjectProposalFormValue = {
     isNewProject: true,
@@ -643,6 +643,9 @@
     color: var(--text-color-2);
     text-decoration: none;
     text-transform: uppercase;
+    cursor: pointer;
+    background: transparent;
+    border: none;
 
     &:hover {
       text-decoration: underline;
