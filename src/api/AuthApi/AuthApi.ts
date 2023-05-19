@@ -13,7 +13,7 @@ import {
 
 export default class AuthApi implements AuthApiType {
   async auth(): Promise<void> {
-    const isMockAuth = process.env.VITE_MOCK_AUTH;
+    const isMockAuth = import.meta.env.VITE_MOCK_AUTH;
     if (!isMockAuth || isMockAuth === 'false') {
       const data: { url: string } = await baseKyInstance
         .get('campus_auth')
@@ -35,7 +35,7 @@ export default class AuthApi implements AuthApiType {
   }
 
   async logout(): Promise<void> {
-    const isMockAuth = process.env.VITE_MOCK_AUTH;
+    const isMockAuth = import.meta.env.VITE_MOCK_AUTH;
     if (!isMockAuth || isMockAuth === 'false') {
       await baseKyInstance.get('campus_out');
       return;

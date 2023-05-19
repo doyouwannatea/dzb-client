@@ -1,5 +1,5 @@
 export const sleep = (time: number) => {
-  if (process.env.VITE_TEST === 'true') return Promise.resolve();
+  if (import.meta.env.VITE_TEST === 'true') return Promise.resolve();
   return new Promise((res) => setTimeout(res, time));
 };
 

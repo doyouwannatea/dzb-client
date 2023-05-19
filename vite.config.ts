@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
 import { join } from 'path';
@@ -6,16 +7,10 @@ import { defineConfig, loadEnv } from 'vite';
 // https://vitejs.dev/config/
 export default ({ mode }) => {
   const env = loadEnv(mode, process.cwd());
-  const defineEnv: Record<string, string> = {};
-
-  for (const key in env) {
-    defineEnv[`process.env.${key}`] = JSON.stringify(env[key]);
-  }
 
   process.env = { ...process.env, ...env };
 
   return defineConfig({
-    define: { ...defineEnv },
     plugins: [vue(), svgLoader()],
     resolve: {
       alias: {
@@ -38,6 +33,11 @@ export default ({ mode }) => {
     },
     server: {
       host: true,
+      port: 3000,
+    },
+    test: {
+      globals: true,
+      environment: 'jsdom',
     },
   });
 };
