@@ -38,6 +38,7 @@
       >
         <BaseRadioButton
           v-model="projectProposalForm.isNewProject"
+          data-test-id="isNewProjectRadioButton"
           :value="true"
           :disabled="!isEditable"
         >
@@ -45,6 +46,7 @@
         </BaseRadioButton>
         <BaseRadioButton
           v-model="projectProposalForm.isNewProject"
+          data-test-id="isOldProjectRadioButton"
           :value="false"
           :disabled="!isEditable"
         >
@@ -57,6 +59,7 @@
       <BaseLabel is="div" label="Выберите проект, который хотите продолжить">
         <VMultiselect
           v-model="projectProposalForm.prevProjectId"
+          data-test-id="prevProject"
           class="multiselect"
           :placeholder="
             props.isLoading
@@ -95,6 +98,7 @@
       <BaseLabel label="Название проекта" required>
         <BaseTextarea
           v-model="projectProposalForm.projectName"
+          data-test-id="projectName"
           :disabled="!isEditable"
           :class="$style['small-textarea']"
           placeholder="Например, платформа для размещения вузовских олимпиад"
@@ -107,6 +111,7 @@
       <BaseLabel label="Цель проекта" required>
         <BaseTextarea
           v-model="projectProposalForm.projectGoal"
+          data-test-id="projectGoal"
           :disabled="!isEditable"
           :class="$style['small-textarea']"
           placeholder="Например, создать платформу (страничку) для рекламы олимпиад"
@@ -119,6 +124,7 @@
       <BaseLabel label="Заказчик">
         <BaseInput
           v-model="projectProposalForm.projectCustomer"
+          data-test-id="projectCustomer"
           :disabled="!isEditable"
           placeholder="ЦЭО, Лукьянов Н.Д."
         />
@@ -139,6 +145,7 @@
         <template #default>
           <VMultiselect
             v-model="projectProposalForm.projectThemeSourceId"
+            data-test-id="projectThemeSource"
             class="multiselect"
             :disabled="!isEditable"
             :placeholder="
@@ -166,6 +173,7 @@
       >
         <BaseRadioButton
           v-model="projectProposalForm.projectDuration"
+          data-test-id="projectDurationFallRadioButton"
           :disabled="!isEditable"
           :value="ProjectDuration.FallSemester"
         >
@@ -173,6 +181,7 @@
         </BaseRadioButton>
         <BaseRadioButton
           v-model="projectProposalForm.projectDuration"
+          data-test-id="projectDurationSpringRadioButton"
           :disabled="!isEditable"
           :value="ProjectDuration.SpringSemester"
         >
@@ -180,6 +189,7 @@
         </BaseRadioButton>
         <BaseRadioButton
           v-model="projectProposalForm.projectDuration"
+          data-test-id="projectDurationFullYearRadioButton"
           :disabled="!isEditable"
           :value="ProjectDuration.FullYear"
         >
@@ -197,6 +207,7 @@
       >
         <BaseRadioButton
           v-model="projectProposalForm.projectDifficulty"
+          data-test-id="projectDifficultyLowRadioButton"
           :disabled="!isEditable"
           :value="ProjectDifficulty.Low"
         >
@@ -204,6 +215,7 @@
         </BaseRadioButton>
         <BaseRadioButton
           v-model="projectProposalForm.projectDifficulty"
+          data-test-id="projectDifficultyMediumRadioButton"
           :disabled="!isEditable"
           :value="ProjectDifficulty.Medium"
         >
@@ -211,6 +223,7 @@
         </BaseRadioButton>
         <BaseRadioButton
           v-model="projectProposalForm.projectDifficulty"
+          data-test-id="projectDifficultyHighRadioButton"
           :disabled="!isEditable"
           :value="ProjectDifficulty.High"
         >
@@ -246,6 +259,7 @@
             :model-value="
               props.isLoading ? undefined : props.projectJobDeveloper
             "
+            data-test-id="projectJobDeveloper"
             :placeholder="props.isLoading ? 'Загрузка проектной заявки...' : ''"
             disabled
           />
@@ -276,6 +290,7 @@
                 ? 'Подразделение наставника не установлено'
                 : 'Выберите наставника проекта'
             "
+            data-test-id="projectDepartment"
             disabled
           />
         </template>
@@ -290,6 +305,7 @@
         :role-list="projectProposalFormValue.sharedRoleList"
         :current-user-role-list="projectProposalFormValue.currentUserRoleList"
         :disable-all="!isEditable"
+        data-test-id="teamComponent"
       >
         <template #add-button>
           <template v-if="props.isLoading">
@@ -314,6 +330,7 @@
       <BaseLabel required label="Ожидаемый результат">
         <BaseTextarea
           v-model="projectProposalForm.projectExpectedResult"
+          data-test-id="projectExpectedResult"
           :disabled="!isEditable"
           :class="$style['small-textarea']"
           placeholder="Создать платформу (страничку) для рекламы олимпиад"
@@ -326,6 +343,7 @@
       <BaseLabel required label="Формируемые навыки">
         <BaseTextarea
           v-model="projectProposalForm.skillsToBeFormed"
+          data-test-id="skillsToBeFormed"
           :disabled="!isEditable"
           :class="$style['small-textarea']"
           placeholder="Например, знание основ верстки  и дизайна веб-страниц"
@@ -338,6 +356,7 @@
       <BaseLabel required label="Описание проекта">
         <BaseTextarea
           v-model="projectProposalForm.projectDescription"
+          data-test-id="projectDescription"
           :disabled="!isEditable"
           :class="$style['large-textarea']"
           placeholder="Опишите идею своего проекта"
@@ -350,6 +369,7 @@
     <FormSection
       tag="5"
       title="Направления (специальности), участников проекта"
+      data-test-id="specialtyListSection"
     >
       <!-- <Project specialties> -->
       <p
@@ -403,6 +423,7 @@
       tag="6"
       title="Приглашённые направления (специальности), участников проекта"
       divider
+      data-test-id="additionalSpecialtyListSection"
     >
       <!-- <Project specialties> -->
       <p
@@ -439,7 +460,11 @@
       <!-- </Project specialties> -->
     </FormSection>
 
-    <FormSection tag="7" title="Навыки, которые необходимы на проекте">
+    <FormSection
+      tag="7"
+      title="Навыки, которые необходимы на проекте"
+      data-test-id="skillListSection"
+    >
       <!-- <Project skills> -->
       <p
         v-if="
