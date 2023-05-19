@@ -1,5 +1,6 @@
-import { useRouter } from 'vue-router';
+import { useRouter, RouteLocationRaw } from 'vue-router';
 import { useCheckRole } from './useCheckRole';
+import { hasHistory } from '@/helpers/history';
 
 export const useUserNavigationRoutes = () => {
   const router = useRouter();
@@ -43,4 +44,16 @@ export const useMobileNavigationRoutes = () => {
     ...mainRoutes,
     ...mobileRoutes.filter((route) => !route.meta.type?.includes('main-nav')),
   ];
+};
+
+export const useNavigateBack = (to: RouteLocationRaw): (() => void) => {
+  const router = useRouter();
+
+  return () => {
+    if (hasHistory()) {
+      router.back();
+      return;
+    }
+    router.push(to);
+  };
 };
