@@ -38,6 +38,10 @@ export default ({ mode }) => {
     test: {
       globals: true,
       environment: 'jsdom',
+      coverage: {
+        provider: 'c8',
+        all: true,
+      },
     },
   });
 };
