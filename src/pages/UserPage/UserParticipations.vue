@@ -221,8 +221,8 @@
           content?.priority !== ParticipationPriority.AutoWithApplication &&
           content?.priority !== ParticipationPriority.AutoWithoutApplication,
       ),
+      (item) => item.order,
       'ASC',
-      'order',
     );
     editableAutoParticipationListRef.value = editableParticipationList.filter(
       ({ content }) =>
