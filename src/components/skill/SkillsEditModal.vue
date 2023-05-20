@@ -150,7 +150,7 @@
   import { ref, computed, watch } from 'vue';
   import searchIconUrl from '@/assets/icons/search.svg?url';
   import { Skill } from '@/models/Project';
-  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
   import { stringIncludes, stringsAreEqual } from '@/helpers/string';
   import { Tag } from '@/models/Tag';
 

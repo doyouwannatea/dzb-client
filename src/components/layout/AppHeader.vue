@@ -27,7 +27,7 @@
   import AppNavigation from './AppNavigation.vue';
   import HeaderUserActions from '../user/HeaderUserActions.vue';
   import DeadlineTimerNavigation from '@/components/layout/DeadlineTimerNavigation.vue';
-  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
   import { useUserTimer } from '@/hooks/useUserTimer';
   import { ContainerSize } from '@/models/BaseContainer';
 

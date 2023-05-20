@@ -28,7 +28,7 @@
 <script setup lang="ts">
   import { computed, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
-  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
   // components
   import ProjectMobileDetails from './ProjectMobileDetails.vue';
   import ProjectHistoryModal from '@/components/project/ProjectHistoryModal.vue';

@@ -66,7 +66,7 @@
   import BaseInput from '@/components/ui/BaseInput.vue';
   import BaseTextarea from '@/components/ui/BaseTextarea.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
-  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
 
   const isSmallDevice = useSmallDevice();
 </script>

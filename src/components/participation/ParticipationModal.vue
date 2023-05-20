@@ -167,7 +167,7 @@
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { isCandidate } from '@/helpers/typeCheck';
-  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
   // components
   import BaseModal from '../ui/BaseModal.vue';
   import BaseInput from '../ui/BaseInput.vue';

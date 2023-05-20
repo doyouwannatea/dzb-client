@@ -47,7 +47,7 @@
 <script setup lang="ts">
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 
-  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
   import { RouteNames } from '@/router/types/route-names';
   // components
   import ProjectSearch from '@/components/project/ProjectSearch.vue';

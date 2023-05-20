@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
-  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
   import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
   import { useUserTimer } from '@/hooks/useUserTimer';
   import SidebarContainer from '@/components/layout/SidebarContainer.vue';

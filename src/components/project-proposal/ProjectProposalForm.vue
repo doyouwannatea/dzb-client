@@ -510,7 +510,7 @@
   import BaseButton from '@/components/ui/BaseButton.vue';
   import SkillsEditModal from '@/components/skill/SkillsEditModal.vue';
   import BaseTooltip from '@/components/ui/BaseTooltip.vue';
-  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
   import SpecialtyEditModal from '@/components/specialty/SpecialtyEditModal.vue';
   import { Specialty } from '@/models/Specialty';
   import { MultiselectObjectItem } from '@/models/VMultiselect';
