@@ -167,18 +167,18 @@
   import { useDeleteProjectProposalMutation } from '@/api/SupervisorApi/hooks/useDeleteProjectProposalMutation';
   import { useGetInstituteProjectProposalsQuery } from '@/api/InstituteDirectorApi/hooks/useGetInstituteProjectProposalsQuery';
   import ProjectProposalForm from '@/components/project-proposal/ProjectProposalForm.vue';
-  import { useProjectProposalInfo } from '@/hooks/projectProposalForm';
+  import { useProjectProposalMetaData } from '@/hooks/useProjectProposalMetaData';
   import {
     collectProjectProposal,
     getCurrentProjectProposal,
     mapProjectProposalTeam,
     mapSpecialtyList,
     projectDurationFromDate,
-  } from '@/helpers/projectProposalForm';
+  } from '@/helpers/project-proposal-form';
   import {
     ProjectDuration,
     ProjectProposalFormValue,
-  } from '@/models/ProjectProposalForm';
+  } from '@/models/components/ProjectProposalForm';
   import { useNavigateBack } from '@/hooks/useRoutes';
   import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
 
@@ -239,7 +239,7 @@
   const deleteProjectProposalMutation = useDeleteProjectProposalMutation({
     onError,
   });
-  const { mentorSpecialties, projectDepartment } = useProjectProposalInfo(
+  const { mentorSpecialties, projectDepartment } = useProjectProposalMetaData(
     projectProposalFormValue,
     specialtyListQuery.data,
   );

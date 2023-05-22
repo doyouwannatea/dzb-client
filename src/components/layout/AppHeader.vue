@@ -29,7 +29,7 @@
   import DeadlineTimerNavigation from '@/components/layout/DeadlineTimerNavigation.vue';
   import { useSmallDevice } from '@/hooks/useBreakpoints';
   import { useUserTimer } from '@/hooks/useUserTimer';
-  import { ContainerSize } from '@/models/BaseContainer';
+  import { ContainerSize } from '@/models/components/BaseContainer';
 
   const isSmallDevice = useSmallDevice();
   const time = useUserTimer();

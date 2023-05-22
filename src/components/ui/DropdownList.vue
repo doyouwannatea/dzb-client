@@ -32,7 +32,7 @@
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
   import BaseDropdown, { Position } from './BaseDropdown.vue';
-  import { DropdownItem } from '@/models/DropdownItem';
+  import { DropdownItem } from '@/models/components/DropdownItem';
 
   type Props = {
     isOpen: boolean;

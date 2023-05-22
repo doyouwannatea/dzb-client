@@ -3,7 +3,7 @@ import ProjectProposalForm from '../ProjectProposalForm.vue';
 import {
   ProjectDuration,
   ProjectProposalFormValue,
-} from '@/models/ProjectProposalForm';
+} from '@/models/components/ProjectProposalForm';
 import { MemberRole } from '@/models/ProjectProposal';
 import { ProjectDifficulty } from '@/models/ProjectDifficulty';
 import {

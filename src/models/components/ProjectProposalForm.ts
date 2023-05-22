@@ -1,8 +1,8 @@
 import { TeamMember } from '@/components/project/ProjectTeamCollect.vue';
 import { EditedSkill } from '@/components/skill/SkillsEditModal.vue';
-import { ProjectDifficulty } from './ProjectDifficulty';
-import { MemberRole } from './ProjectProposal';
-import { SelectedSpecialty } from './Specialty';
+import { ProjectDifficulty } from '../ProjectDifficulty';
+import { MemberRole } from '../ProjectProposal';
+import { SelectedSpecialty } from '../Specialty';
 
 export const enum ProjectDuration {
   SpringSemester = 1,

@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
   import { toRefs } from '@vueuse/core';
-  import { ContainerSize } from '@/models/BaseContainer';
+  import { ContainerSize } from '@/models/components/BaseContainer';
 
   type Props = { size?: ContainerSize };
 

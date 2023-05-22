@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { TeamMember } from '@/components/project/ProjectTeamCollect.vue';
 import { ProjectTypeName, ProjectSupervisor } from '@/models/Project';
 import {
@@ -13,13 +14,13 @@ import {
   SpecialtyGroup,
   SpecialtyPriority,
 } from '@/models/Specialty';
-import { DateTime } from 'luxon';
 import { sortByRolePriority } from './project-member-role';
 import { specialtyFullName } from './specialty';
 import {
   ProjectDuration,
   ProjectProposalFormValue,
-} from '@/models/ProjectProposalForm';
+} from '@/models/components/ProjectProposalForm';
+import { DateRange } from '@/models/Date';
 
 export function collectProjectProposal(
   formValue: ProjectProposalFormValue,
@@ -42,7 +43,7 @@ export function collectProjectProposal(
     specialtyList,
     team,
   } = formValue;
-  const projectDate = calcProjectDate(projectDuration);
+  const projectDate = projectDateFromDuration(projectDuration);
 
   const supervisors: ProjectProposalTeamMember[] = team
     .filter((member) => member.memberData && member.role)
@@ -97,10 +98,7 @@ export function collectProjectProposal(
   };
 }
 
-export function calcProjectDate(duration: ProjectDuration): {
-  start: string;
-  end: string;
-} {
+export function projectDateFromDuration(duration: ProjectDuration): DateRange {
   const currentYear = new Date(Date.now()).getFullYear();
 
   const fallStartDate = DateTime.fromObject({
@@ -149,10 +147,7 @@ export function calcProjectDate(duration: ProjectDuration): {
 }
 
 export function projectDurationFromDate(
-  isoDate: {
-    start: string;
-    end: string;
-  },
+  isoDate: DateRange,
   format = 'dd.MM.yyyy',
 ): ProjectDuration {
   const dateStart = DateTime.fromFormat(isoDate.start, format);

@@ -51,7 +51,7 @@
   import { isEqual } from 'lodash';
   import ProjectRoleSelect from './ProjectRoleSelect.vue';
   import { Supervisor } from '@/models/Supervisor';
-  import { MultiselectObjectItem } from '@/models/VMultiselect';
+  import { MultiselectObjectItem } from '@/models/components/VMultiselect';
   import { MemberRole, MemberRoleText } from '@/models/ProjectProposal';
   import BaseButton from '../ui/BaseButton.vue';
   import DeleteButton from '../ui/DeleteButton.vue';

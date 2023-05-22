@@ -1,21 +1,21 @@
-import { ProjectDuration } from '@/models/ProjectProposalForm';
+import { ProjectDuration } from '@/models/components/ProjectProposalForm';
 import {
-  calcProjectDate,
+  projectDateFromDuration,
   projectDurationFromDate,
-} from '../projectProposalForm';
+} from '../project-proposal-form';
 
-describe('projectProposalForm.ts', () => {
-  it('calcProjectDate()', () => {
+describe('project-proposal-form.ts', () => {
+  it('projectDateFromDuration()', () => {
     const currentYear = new Date(Date.now()).getFullYear();
-    expect(calcProjectDate(ProjectDuration.FallSemester)).toEqual({
+    expect(projectDateFromDuration(ProjectDuration.FallSemester)).toEqual({
       start: `${currentYear}-09-01`,
       end: `${currentYear}-12-30`,
     });
-    expect(calcProjectDate(ProjectDuration.SpringSemester)).toEqual({
+    expect(projectDateFromDuration(ProjectDuration.SpringSemester)).toEqual({
       start: `${currentYear + 1}-02-01`,
       end: `${currentYear + 1}-05-30`,
     });
-    expect(calcProjectDate(ProjectDuration.FullYear)).toEqual({
+    expect(projectDateFromDuration(ProjectDuration.FullYear)).toEqual({
       start: `${currentYear}-09-01`,
       end: `${currentYear + 1}-05-30`,
     });

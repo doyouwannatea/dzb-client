@@ -18,7 +18,7 @@
   import { useMobileNavigationRoutes } from '@/hooks/useRoutes';
   import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
   import BaseContainer from '@/components/ui/BaseContainer.vue';
-  import { ContainerSize } from '@/models/BaseContainer';
+  import { ContainerSize } from '@/models/components/BaseContainer';
 
   const mobileRoutes = useMobileNavigationRoutes();
 

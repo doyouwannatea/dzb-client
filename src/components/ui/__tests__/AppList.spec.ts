@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { AppListItemType } from '@/models/AppList';
+import { AppListItemType } from '@/models/components/AppList';
 import AppList from '../AppList.vue';
 
 describe('AppList.vue', () => {

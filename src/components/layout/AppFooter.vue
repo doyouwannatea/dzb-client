@@ -110,7 +110,7 @@
   // components
   import AppLogo from '../ui/AppLogo.vue';
   import BaseContainer from '../ui/BaseContainer.vue';
-  import { ContainerSize } from '@/models/BaseContainer';
+  import { ContainerSize } from '@/models/components/BaseContainer';
 
   const authStore = useAuthStore();
   const mainRoutes = useMainNavigationRoutes();

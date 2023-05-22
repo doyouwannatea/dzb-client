@@ -43,7 +43,7 @@
   import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
   import { useDesktop } from '@/hooks/useBreakpoints';
-  import { AppListItemType } from '@/models/AppList';
+  import { AppListItemType } from '@/models/components/AppList';
 
   const isDesktop = useDesktop();
   const authStore = useAuthStore();

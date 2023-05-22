@@ -513,16 +513,16 @@
   import { useSmallDevice } from '@/hooks/useBreakpoints';
   import SpecialtyEditModal from '@/components/specialty/SpecialtyEditModal.vue';
   import { Specialty } from '@/models/Specialty';
-  import { MultiselectObjectItem } from '@/models/VMultiselect';
+  import { MultiselectObjectItem } from '@/models/components/VMultiselect';
   import { ProjectDifficulty } from '@/models/ProjectDifficulty';
   import { Supervisor } from '@/models/Supervisor';
   import { Tag } from '@/models/Tag';
-  import { useProjectProposalInfo } from '@/hooks/projectProposalForm';
+  import { useProjectProposalMetaData } from '@/hooks/useProjectProposalMetaData';
   import { toRefs } from '@vueuse/core';
   import {
     ProjectDuration,
     ProjectProposalFormValue,
-  } from '@/models/ProjectProposalForm';
+  } from '@/models/components/ProjectProposalForm';
 
   type Props = {
     projectProposalFormValue: ProjectProposalFormValue;
@@ -569,7 +569,7 @@
   const isEditable = computed(() => !props.isLoading && props.canUserEdit);
 
   const { mentorSpecialties, projectDepartment, projectMentor } =
-    useProjectProposalInfo(projectProposalFormValue, specialtyList);
+    useProjectProposalMetaData(projectProposalFormValue, specialtyList);
 
   const prevProjectsMultiselectItems = computed<
     MultiselectObjectItem<number>[]

@@ -28,7 +28,7 @@
   import { RouterLink } from 'vue-router';
   import { hasHistory } from '@/helpers/history';
   import { RouteNames } from '@/router/types/route-names';
-  import { Breadcrumb } from '@/models/BaseBreadcrumbs';
+  import { Breadcrumb } from '@/models/components/BaseBreadcrumbs';
 
   interface Props {
     breadcrumbs: Breadcrumb[];

@@ -29,7 +29,7 @@
   import BaseContainer from '../ui/BaseContainer.vue';
   import BottomNavigationBar from './mobile/BottomNavigationBar.vue';
   import { useSmallDevice } from '@/hooks/useBreakpoints';
-  import { ContainerSize } from '@/models/BaseContainer';
+  import { ContainerSize } from '@/models/components/BaseContainer';
 
   const isSmallDevice = useSmallDevice();
 </script>

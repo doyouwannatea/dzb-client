@@ -4,9 +4,9 @@ import { Department } from '@/models/Department';
 import { MemberRole } from '@/models/ProjectProposal';
 import { Specialty } from '@/models/Specialty';
 import { MaybeRef, get } from '@vueuse/core';
-import { ProjectProposalFormValue } from '@/models/ProjectProposalForm';
+import { ProjectProposalFormValue } from '@/models/components/ProjectProposalForm';
 
-export function useProjectProposalInfo(
+export function useProjectProposalMetaData(
   formValue: MaybeRef<ProjectProposalFormValue>,
   specialties?: MaybeRef<Specialty<number>[] | undefined>,
 ) {
