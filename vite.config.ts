@@ -42,6 +42,9 @@ export default ({ mode }) => {
         provider: 'c8',
         all: true,
       },
+      typecheck: {
+        checker: 'vue-tsc',
+      },
     },
   });
 };
