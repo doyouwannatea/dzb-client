@@ -29,9 +29,6 @@ describe('DropdownList.vue', () => {
         props: {
           itemList,
           isOpen: true,
-          'onUpdate:isOpen': async (isOpen: any) => {
-            await wrapper.setProps({ isOpen });
-          },
         },
         global: { stubs: ['router-link'] },
       });
