@@ -11,6 +11,12 @@ export interface Skill extends Tag {
   skillCategory?: Tag;
 }
 
+export const SkillKeys: Record<keyof Skill, keyof Skill> = {
+  id: 'id',
+  name: 'name',
+  skillCategory: 'skillCategory',
+};
+
 export const enum ProjectTypeName {
   Applied = 1,
   Scientific = 2,
