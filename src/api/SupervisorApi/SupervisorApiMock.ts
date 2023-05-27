@@ -16,7 +16,7 @@ import SupervisorApiType, {
 export default class SupervisorApiMock implements SupervisorApiType {
   async getProposalsTime(): Promise<[string, string]> {
     return Promise.all([
-      delayRes(new Date(Date.now() + 10000).toISOString(), 1000),
+      delayRes(new Date(Date.now() - 10000).toISOString(), 1000),
       delayRes(new Date(Date.now() + 200000000).toISOString(), 1000),
     ]);
   }
