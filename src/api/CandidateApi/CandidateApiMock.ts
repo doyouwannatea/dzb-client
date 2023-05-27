@@ -46,7 +46,7 @@ export default class CandidateApiMock implements CandidateApiType {
 
   async getParticipationsTime(): Promise<[string, string]> {
     return Promise.all([
-      delayRes(new Date(Date.now() + 10000).toISOString(), 1000),
+      delayRes(new Date(Date.now() - 10000).toISOString(), 1000),
       delayRes(new Date(Date.now() + 100000000).toISOString(), 1000),
     ]);
   }
