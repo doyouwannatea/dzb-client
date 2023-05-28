@@ -125,7 +125,7 @@
     ParticipationWithProject,
   } from '@/models/Participation';
   import { immutableArraySort } from '@/helpers/object';
-  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
   import cursorIconUrl from '@/assets/icons/cursor.svg?url';
   // components
   import ParticipationCard from '@/components/participation/ParticipationCard.vue';
@@ -221,8 +221,8 @@
           content?.priority !== ParticipationPriority.AutoWithApplication &&
           content?.priority !== ParticipationPriority.AutoWithoutApplication,
       ),
+      (item) => item.order,
       'ASC',
-      'order',
     );
     editableAutoParticipationListRef.value = editableParticipationList.filter(
       ({ content }) =>

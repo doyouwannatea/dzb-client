@@ -64,6 +64,7 @@
   // генерирует видимые ссылки пагинации
   const pages = computed(() => {
     const pages = [1];
+    if (totalPages.value <= 1) return pages;
 
     for (let i = startPage.value + 1; i <= endPage.value - 1; i++) {
       pages.push(i);

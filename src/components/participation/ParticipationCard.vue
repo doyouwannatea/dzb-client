@@ -44,7 +44,7 @@
   import { toProjectRoute } from '@/router/utils/routes';
   import { Participation, ParticipationPriority } from '@/models/Participation';
   import { Project } from '@/models/Project';
-  import { useMobile } from '@/helpers/breakpoints';
+  import { useMobile } from '@/hooks/useBreakpoints';
   // components
   import BasePanel from '../ui/BasePanel.vue';
   import ParticipationCardBadge from './ParticipationCardBadge.vue';

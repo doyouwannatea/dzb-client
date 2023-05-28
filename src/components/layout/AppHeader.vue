@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <BaseContainer class="container" size="lg">
+    <BaseContainer class="container" :size="ContainerSize.lg">
       <RouterLink
         class="logo clear-link align-self-center"
         :to="{ name: RouteNames.HOME }"
@@ -27,8 +27,9 @@
   import AppNavigation from './AppNavigation.vue';
   import HeaderUserActions from '../user/HeaderUserActions.vue';
   import DeadlineTimerNavigation from '@/components/layout/DeadlineTimerNavigation.vue';
-  import { useSmallDevice } from '@/helpers/breakpoints';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
   import { useUserTimer } from '@/hooks/useUserTimer';
+  import { ContainerSize } from '@/models/components/BaseContainer';
 
   const isSmallDevice = useSmallDevice();
   const time = useUserTimer();

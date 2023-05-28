@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
-  import { useInstituteProposalsInfo } from '@/hooks/useInstituteProposalsInfo';
+  import { useInstituteProposalsMetaData } from '@/hooks/useInstituteProposalsMetaData';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { ProjectProposalStateId } from '@/models/ProjectProposal';
 
@@ -19,7 +19,7 @@
   const { isInstDirector, intituteProjectsQuota } = storeToRefs(authStore);
 
   const { proposalsCount, approvedProjectsLimitExceeded, isLoading } =
-    useInstituteProposalsInfo({
+    useInstituteProposalsMetaData({
       enabled: isInstDirector,
     });
 </script>

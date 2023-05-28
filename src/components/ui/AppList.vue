@@ -1,8 +1,8 @@
 <template>
-  <ul :class="['info-list', `gap-${rowGap}`]">
+  <ul :class="['info-list', `gap-${props.rowGap}`]">
     <slot>
       <template
-        v-for="{ title, content, bold, wide } in items"
+        v-for="{ title, content, bold, wide } in props.items"
         :key="title + content"
       >
         <AppListItem :bold="bold" :wide="wide">
@@ -18,17 +18,10 @@
 
 <script setup lang="ts">
   import { withDefaults } from 'vue';
-  // components
   import AppListItem from './AppListItem.vue';
+  import { AppListItemType } from '@/models/components/AppList';
 
-  export interface AppListItemType {
-    title: string;
-    content?: string;
-    wide?: boolean;
-    bold?: boolean;
-  }
-
-  withDefaults(
+  const props = withDefaults(
     defineProps<{
       items?: AppListItemType[];
       rowGap?: 'm' | 'l';

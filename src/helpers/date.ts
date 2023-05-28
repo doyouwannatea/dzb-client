@@ -1,3 +1,8 @@
-export function isValidDate(dateString: string): boolean {
-  return !isNaN(Date.parse(dateString));
+import { DateTime } from 'luxon';
+
+export function isValidDate(
+  dateString: string,
+  format = 'yyyy-MM-dd',
+): boolean {
+  return DateTime.fromFormat(dateString, format).isValid;
 }

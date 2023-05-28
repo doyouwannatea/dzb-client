@@ -9,14 +9,14 @@
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
-  import { useInstituteProposalsInfo } from '@/hooks/useInstituteProposalsInfo';
+  import { useInstituteProposalsMetaData } from '@/hooks/useInstituteProposalsMetaData';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { ProjectProposalStateId } from '@/models/ProjectProposal';
 
   const authStore = useAuthStore();
   const { isInstDirector } = storeToRefs(authStore);
 
-  const { proposalsCount } = useInstituteProposalsInfo({
+  const { proposalsCount } = useInstituteProposalsMetaData({
     enabled: isInstDirector,
   });
 </script>

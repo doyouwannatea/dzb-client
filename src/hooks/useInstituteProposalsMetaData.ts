@@ -15,7 +15,7 @@ export type UseInstituteProposalsInfoReturn = {
   isLoading: ComputedRef<boolean>;
 };
 
-export function useInstituteProposalsInfo(
+export function useInstituteProposalsMetaData(
   options?: UseGetInstituteProjectProposalsQueryOptions,
 ): UseInstituteProposalsInfoReturn {
   const authStore = useAuthStore();

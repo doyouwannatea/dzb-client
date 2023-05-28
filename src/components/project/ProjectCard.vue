@@ -76,7 +76,11 @@
   import { Project } from '@/models/Project';
   import { StateClass } from '@/models/ProjectState';
   import { toProjectRoute } from '@/router/utils/routes';
-  import { useSmallDevice, useDesktop, useMobile } from '@/helpers/breakpoints';
+  import {
+    useSmallDevice,
+    useDesktop,
+    useMobile,
+  } from '@/hooks/useBreakpoints';
   // components
   import ProjectStatus from './ProjectStatus.vue';
   import TagList from '../ui/TagList.vue';

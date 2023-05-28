@@ -1,40 +1,38 @@
 <template>
-  <UseFocusTrap v-if="props.isShow">
-    <div class="modal-background">
-      <section ref="modalRef" :class="['modal', props.size]">
-        <!-- CLOSE BUTTON -->
-        <button class="close-btn" @click="emit('close')">
-          <img :src="closeIconUrl" alt="close button" class="close-icon" />
-        </button>
-        <!-- CLOSE BUTTON -->
+  <div v-if="props.isShow" ref="modalBackgroundRef" class="modal-background">
+    <section ref="modalRef" :class="['modal', props.size]">
+      <!-- CLOSE BUTTON -->
+      <button class="close-btn" @click="emit('close')">
+        <img :src="closeIconUrl" alt="close button" class="close-icon" />
+      </button>
+      <!-- CLOSE BUTTON -->
 
-        <!-- HEADER -->
-        <header v-if="$slots['header']" class="modal-header">
-          <slot name="header"></slot>
-        </header>
-        <!-- HEADER -->
+      <!-- HEADER -->
+      <header v-if="$slots['header']" class="modal-header">
+        <slot name="header"></slot>
+      </header>
+      <!-- HEADER -->
 
-        <!-- MAIN CONTENT -->
-        <div class="modal-content">
-          <slot name="default"></slot>
-        </div>
-        <!-- MAIN CONTENT -->
+      <!-- MAIN CONTENT -->
+      <div class="modal-content">
+        <slot name="default"></slot>
+      </div>
+      <!-- MAIN CONTENT -->
 
-        <!-- ACTIONS -->
-        <footer v-if="$slots['actions']" class="modal-actions">
-          <slot name="actions"></slot>
-        </footer>
-        <!-- ACTIONS -->
-      </section>
-    </div>
-  </UseFocusTrap>
+      <!-- ACTIONS -->
+      <footer v-if="$slots['actions']" class="modal-actions">
+        <slot name="actions"></slot>
+      </footer>
+      <!-- ACTIONS -->
+    </section>
+  </div>
 </template>
 
 <script setup lang="ts">
-  import { ref, watch, withDefaults } from 'vue';
+  import { nextTick, ref, watch, withDefaults } from 'vue';
+  import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
   import { onClickOutside } from '@vueuse/core';
   import closeIconUrl from '@/assets/icons/close.svg?url';
-  import { UseFocusTrap } from '@vueuse/integrations/useFocusTrap/component';
   import { disableScroll, enableScroll } from '@/helpers/dom';
 
   export type Props = { isShow: boolean; size?: 's' | 'm' };
@@ -46,17 +44,33 @@
     size: 's',
   });
 
+  const modalBackgroundRef = ref<HTMLDivElement | undefined>(undefined);
+  const { activate, deactivate } = useFocusTrap(modalBackgroundRef, {
+    immediate: true,
+  });
   const modalRef = ref<HTMLElement | null>(null);
 
   onClickOutside(modalRef, () => emit('close'));
   watch(
     () => props.isShow,
-    (isShow) => {
-      if (isShow) disableScroll();
-      else enableScroll();
+    async (isShow) => {
+      if (isShow) await onShow();
+      else await onHide();
     },
     { immediate: true },
   );
+
+  async function onShow() {
+    disableScroll();
+    await nextTick();
+    activate();
+  }
+
+  async function onHide() {
+    enableScroll();
+    await nextTick();
+    deactivate();
+  }
 </script>
 
 <style lang="scss" scoped>

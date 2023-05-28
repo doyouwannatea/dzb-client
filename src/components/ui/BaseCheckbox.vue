@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
+  import { computed } from 'vue';
 
   type Props = {
     modelValue?: unknown[];
@@ -24,14 +24,8 @@
 
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
-
-  const checked = ref(false);
-
-  watch(
-    () => props.modelValue,
-    () => (checked.value = includesValue()),
-    { immediate: true },
-  );
+  const checked = computed(includesValue);
+  defineExpose({ checked });
 
   function onChange(e: Event) {
     const target = e.target as HTMLInputElement;

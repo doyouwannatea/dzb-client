@@ -12,11 +12,15 @@ import { projectApi } from '../ProjectApi';
 import { sharedApi } from '../SharedApi';
 import { Project } from '@/models/Project';
 import { filterValidParticipations } from './utils/participations';
+import { formatProjectDate } from '@/helpers/project';
 
 export default class CandidateApi implements CandidateApiType {
   async getActiveProject(): Promise<Project | undefined> {
     try {
-      return await baseKyInstance.get('api/activeProject').json();
+      const project: Project = await baseKyInstance
+        .get('api/activeProject')
+        .json();
+      return formatProjectDate(project);
     } catch (error) {
       return undefined;
     }
@@ -24,7 +28,10 @@ export default class CandidateApi implements CandidateApiType {
 
   async getArchiveProjectList(): Promise<Project[]> {
     try {
-      return await baseKyInstance.get('api/arhiveProjects').json();
+      const projectList: Project[] = await baseKyInstance
+        .get('api/arhiveProjects')
+        .json();
+      return projectList.map(formatProjectDate);
     } catch (error) {
       return [];
     }

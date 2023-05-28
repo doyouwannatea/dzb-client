@@ -127,7 +127,7 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import { capitalizeFirstLetter } from '@/helpers/string';
-  import { SkillKeys } from '@/values/models-keys';
+  import { SkillKeys } from '@/models/Project';
   import {
     useProjectFilters,
     ACCEPTED_PROJECT_STATES,

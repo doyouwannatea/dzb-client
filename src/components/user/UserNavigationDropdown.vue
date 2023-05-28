@@ -3,7 +3,7 @@
     :handle-node="props.handleNode"
     :is-open="props.isOpen"
     :item-list="items"
-    @close="emit('close')"
+    @update:is-open="(value) => emit('update:isOpen', value)"
   />
 </template>
 
@@ -11,8 +11,9 @@
   import { watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
+  import { DropdownItem } from '@/models/components/DropdownItem';
   // components
-  import DropdownList, { DropdownItem } from '../ui/DropdownList.vue';
+  import DropdownList from '../ui/DropdownList.vue';
   import { useLogoutWithModalMutation } from '@/api/AuthApi/hooks/useLogoutWithModalMutation';
 
   type Props = {
@@ -20,7 +21,7 @@
     handleNode: HTMLElement;
   };
   type Emits = {
-    (e: 'close'): void;
+    (e: 'update:isOpen', isOpen: boolean): void;
   };
 
   const props = defineProps<Props>();
@@ -32,7 +33,7 @@
 
   watch(
     () => route.path,
-    () => emit('close'),
+    () => emit('update:isOpen', false),
   );
 
   const items = routes.map<DropdownItem>((route) => ({
