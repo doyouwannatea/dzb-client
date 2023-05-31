@@ -14,7 +14,8 @@
     "useDefineForClassFields": true,
     "skipLibCheck": true,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@styles/*": ["src/styles/*"]
     },
     "types": ["vitest/globals"]
   },

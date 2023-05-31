@@ -1,5 +1,6 @@
 <template>
   <div class="badge">
+    <!-- @slot Контент внутри значка -->
     <slot></slot>
   </div>
 </template>
@@ -11,6 +12,7 @@
 
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 0.625rem 2rem;
     font-size: 1rem;
     font-weight: 600;

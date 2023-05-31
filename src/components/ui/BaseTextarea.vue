@@ -30,13 +30,31 @@
     computed,
   } from 'vue';
 
+  export type TextareaResize = 'horizontal' | 'vertical' | 'both' | 'none';
+
   interface Props extends TextareaHTMLAttributes {
+    /**
+     * Значение инпута
+     */
     modelValue?: string;
+    /**
+     * Заголовок над инпутом
+     * @deprecated используйте компонент <BaseLabel />
+     */
     label?: string;
-    resize?: 'horizontal' | 'vertical' | 'both' | 'none';
+    /**
+     * Растягивание поля ввода по X/Y
+     */
+    resize?: TextareaResize;
   }
 
   interface Emits {
+    /**
+     * Обновление строчки modelValue
+     *
+     * @event update:modelValue
+     * @property {string} value новая строчка
+     */
     (e: 'update:modelValue', value: string): void;
   }
 

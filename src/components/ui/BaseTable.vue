@@ -2,6 +2,7 @@
   <BasePanel class="panel">
     <table>
       <tr>
+        <!-- @slot Заголовки таблицы -->
         <slot
           v-for="(header, index) in $props.headers"
           v-bind="{ header, index }"
@@ -11,6 +12,7 @@
           <th>{{ header }}</th>
         </slot>
       </tr>
+      <!-- @slot Строчки таблицы -->
       <slot
         v-for="({ data: row, key }, rowIndex) in rows"
         v-bind="{ row, key, index: rowIndex }"
@@ -34,7 +36,13 @@
   export type RowData = { key?: string; data: ColumnData[] };
 
   interface Props {
+    /**
+     * Список заголовков таблицы
+     */
     headers: string[];
+    /**
+     * Строчки таблицы
+     */
     rows: RowData[];
   }
 

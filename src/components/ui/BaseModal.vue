@@ -9,18 +9,21 @@
 
       <!-- HEADER -->
       <header v-if="$slots['header']" class="modal-header">
+        <!-- @slot Верхняя секция модального окна -->
         <slot name="header"></slot>
       </header>
       <!-- HEADER -->
 
       <!-- MAIN CONTENT -->
       <div class="modal-content">
+        <!-- @slot Контентная секция модального окна -->
         <slot name="default"></slot>
       </div>
       <!-- MAIN CONTENT -->
 
       <!-- ACTIONS -->
       <footer v-if="$slots['actions']" class="modal-actions">
+        <!-- @slot Нижняя секция модального окна -->
         <slot name="actions"></slot>
       </footer>
       <!-- ACTIONS -->
@@ -35,8 +38,25 @@
   import closeIconUrl from '@/assets/icons/close.svg?url';
   import { disableScroll, enableScroll } from '@/helpers/dom';
 
-  export type Props = { isShow: boolean; size?: 's' | 'm' };
-  export type Emits = { (e: 'close'): void };
+  export type ModalSize = 's' | 'm';
+  export type Props = {
+    /**
+     * Влияет на отображение модального окна
+     */
+    isShow: boolean;
+    /**
+     * Размер модального окна
+     */
+    size?: ModalSize;
+  };
+  export type Emits = {
+    /**
+     * Событие при нажатии на кнопку "закрыть"
+     *
+     * @event close
+     */
+    (e: 'close'): void;
+  };
 
   const emit = defineEmits<Emits>();
   const props = withDefaults(defineProps<Props>(), {

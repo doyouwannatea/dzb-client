@@ -18,13 +18,32 @@
   import { Ref, InputHTMLAttributes, withDefaults } from 'vue';
 
   interface Props extends InputHTMLAttributes {
+    /**
+     * Значение инпута
+     */
     modelValue?: string;
+    /**
+     * Путь до файла с картинкой. Картинка отображается в правой части инпута
+     */
     icon?: string;
+    /**
+     * Заголовок над инпутом
+     * @deprecated используйте компонент <BaseLabel />
+     */
     label?: string;
+    /**
+     * Ссылка на HTML-элемент тега <input />
+     */
     inputRef?: Ref<HTMLInputElement | null>;
   }
 
   interface Emits {
+    /**
+     * Обновление строчки modelValue
+     *
+     * @event update:modelValue
+     * @property {string} value новая строчка
+     */
     (e: 'update:modelValue', value: string): void;
   }
 
