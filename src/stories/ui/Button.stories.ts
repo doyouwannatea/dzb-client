@@ -38,8 +38,6 @@ const meta: Meta<typeof BaseButton> = {
       control: 'select',
       options: isPropVariants,
     },
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     default: {
       type: 'string',
     },
@@ -50,48 +48,38 @@ export default meta;
 
 type Story = StoryObj<typeof BaseButton>;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 export const Default: Story = { args: { default: 'Кнопка' } };
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 export const Primary: Story = {
   ...Default,
   args: { ...Default.args, variant: 'primary' },
 };
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+
 export const InlineLink: Story = {
   ...Default,
   args: { ...Default.args, variant: 'inline-link' },
 };
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+
 export const Link: Story = {
   ...Default,
   args: { ...Default.args, variant: 'link' },
 };
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+
 export const Outlined: Story = {
   ...Default,
   args: { ...Default.args, variant: 'outlined' },
 };
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+
 export const Tag: Story = {
   ...Default,
   args: { ...Default.args, variant: 'tag' },
 };
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+
 export const TagOutlined: Story = {
   ...Default,
   args: { ...Default.args, variant: 'tag-outlined' },
 };
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+
 export const Disabled: Story = {
   ...Default,
   args: { ...Default.args, disabled: true },

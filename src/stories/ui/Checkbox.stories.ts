@@ -6,8 +6,6 @@ const meta: Meta<typeof BaseCheckbox> = {
   component: BaseCheckbox,
   tags: ['autodocs'],
   argTypes: {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     default: {
       type: 'string',
     },
@@ -27,8 +25,6 @@ type Story = StoryObj<typeof BaseCheckbox>;
 export const Default: Story = {
   args: {
     value: 1,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     default: 'Один',
     modelValue: [],
   },
@@ -55,8 +51,6 @@ export const Default: Story = {
 };
 
 export const MultipleButtons: Story = {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   args: { value: 1, default: 'Один', modelValue: [] },
   render: (args) => ({
     components: { BaseCheckbox },

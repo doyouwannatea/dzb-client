@@ -53,7 +53,5 @@ export default meta;
 type Story = StoryObj<typeof BaseBreadcrumbs>;
 
 export const Default: Story = {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   args: { breadcrumbs: breadcrumbsPropExampleValue },
 };

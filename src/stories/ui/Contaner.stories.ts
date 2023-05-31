@@ -12,8 +12,6 @@ const meta: Meta<typeof BaseContainer> = {
       control: 'select',
       options: sizePropVariants,
     },
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     default: {
       type: 'string',
     },
@@ -23,6 +21,4 @@ const meta: Meta<typeof BaseContainer> = {
 export default meta;
 type Story = StoryObj<typeof BaseContainer>;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 export const Default: Story = { args: { default: 'Контент' } };

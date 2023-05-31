@@ -27,8 +27,6 @@ type Story = StoryObj<typeof BaseTooltip>;
 
 export const Default: Story = {
   args: {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     default: 'Текст для которого нужно дополнительное описание',
     message: 'Описание для текста',
   },

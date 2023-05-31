@@ -6,8 +6,6 @@ const meta: Meta<typeof BaseRadioButton> = {
   component: BaseRadioButton,
   tags: ['autodocs'],
   argTypes: {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     default: {
       type: 'string',
     },
@@ -18,12 +16,8 @@ export default meta;
 type Story = StoryObj<typeof BaseRadioButton>;
 
 export const Default: Story = {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   args: {
     value: 1,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     default: 'Один',
     modelValue: null,
   },
@@ -50,8 +44,6 @@ export const Default: Story = {
 };
 
 export const MultipleButtons: Story = {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   args: { value: 1, default: 'Один', modelValue: null },
   render: (args) => ({
     components: { BaseRadioButton },

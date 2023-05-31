@@ -14,6 +14,4 @@ const meta: Meta<typeof BaseBadge> = {
 export default meta;
 type Story = StoryObj<typeof BaseBadge>;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 export const Default: Story = { args: { default: 'badge' } };

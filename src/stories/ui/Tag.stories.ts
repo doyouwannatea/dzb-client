@@ -12,8 +12,6 @@ const meta: Meta<typeof BaseTag> = {
       options: variantPropVariants,
     },
   },
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   args: { default: 'Tag' },
 };
 
