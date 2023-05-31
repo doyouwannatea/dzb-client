@@ -22,8 +22,10 @@
   // components
   import ProjectTeamCounter from './ProjectTeamCounter.vue';
 
-  const props =
-    defineProps<{ places: number; difficulty: ProjectDifficulty }>();
+  const props = defineProps<{
+    places: number;
+    difficulty: ProjectDifficulty;
+  }>();
   const difficultyText = DifficultyText[props.difficulty];
 </script>
 

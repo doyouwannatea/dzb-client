@@ -31,6 +31,9 @@
   import { Breadcrumb } from '@/models/components/BaseBreadcrumbs';
 
   interface Props {
+    /**
+     * Навигационная цепочка, путь от некоего начального элемента (корня файловой системы, главной страницы сайта и т. п.) до текущей страницы
+     */
     breadcrumbs: Breadcrumb[];
   }
 
