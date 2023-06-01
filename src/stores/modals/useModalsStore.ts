@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
 import Cookies from 'js-cookie';
+import { defineStore } from 'pinia';
 import { Project } from '@/models/Project';
 import { useAuthStore } from '../auth/useAuthStore';
 import { useProjectsStore } from '../projects/useProjectsStore';

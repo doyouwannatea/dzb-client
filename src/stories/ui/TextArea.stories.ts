@@ -1,5 +1,5 @@
-import { ref, watchEffect } from 'vue';
 import { Meta, StoryObj } from '@storybook/vue3';
+import { ref, watchEffect } from 'vue';
 import BaseTextarea, { TextareaResize } from '@/components/ui/BaseTextarea.vue';
 
 const resizePropVariants: TextareaResize[] = [

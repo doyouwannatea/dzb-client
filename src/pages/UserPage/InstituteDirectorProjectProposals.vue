@@ -32,19 +32,19 @@
   import { computed, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { useRouter } from 'vue-router';
-  import LoadingParticipationsList from './LoadingParticipationsList.vue';
-  import BaseStub from '@/components/ui/BaseStub.vue';
-  import BasePagination from '@/components/ui/BasePagination.vue';
-  import { usePaginatedList } from '@/hooks/usePaginatedList';
   import InstituteDirectorProjectProposalCard from '@/components/project-proposal/InstituteDirectorProjectProposalCard.vue';
+  import BasePagination from '@/components/ui/BasePagination.vue';
+  import BaseStub from '@/components/ui/BaseStub.vue';
+  import { useGetInstituteProjectProposalsQuery } from '@/api/InstituteDirectorApi/hooks/useGetInstituteProjectProposalsQuery';
+  import { usePaginatedList } from '@/hooks/usePaginatedList';
+  import { RouteNames } from '@/router/types/route-names';
   import {
     FilterByToProjectProposalStateId,
     FilterInstituteProjectProposalsBy,
     toInstituteProjectProposals,
   } from '@/router/utils/routes';
-  import { RouteNames } from '@/router/types/route-names';
   import { ProjectProposalStateId } from '@/models/ProjectProposal';
-  import { useGetInstituteProjectProposalsQuery } from '@/api/InstituteDirectorApi/hooks/useGetInstituteProjectProposalsQuery';
+  import LoadingParticipationsList from './LoadingParticipationsList.vue';
 
   const router = useRouter();
   const route = useRoute();

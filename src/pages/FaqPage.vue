@@ -143,8 +143,8 @@
 </template>
 
 <script setup lang="ts">
-  import PageLayout from '@/components/layout/PageLayout.vue';
   import QuestionAccordion from '../components/ui/accordion/QuestionAccordion.vue';
+  import PageLayout from '@/components/layout/PageLayout.vue';
   import ContactForm from '@/components/layout/contact/ContactForm.vue';
   import { RouteNames } from '@/router/types/route-names';
 </script>

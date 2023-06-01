@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/vue3';
 import BaseButton, {
-  Variant,
   Case,
   Color,
   Is,
+  Variant,
 } from '@/components/ui/BaseButton.vue';
 
 const variantPropVariants: Variant[] = [

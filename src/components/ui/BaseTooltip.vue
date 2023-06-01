@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
   import questionIconUrl from '@/assets/icons/question.svg?url';
+
   export type TooltipPositionY = 'top' | 'bottom';
   export type TooltipPositionX = 'left' | 'right';
   type Props = {

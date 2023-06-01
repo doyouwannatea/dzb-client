@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
-import DropdownList from '../DropdownList.vue';
 import { DropdownItem } from '@/models/components/DropdownItem';
+import DropdownList from '../DropdownList.vue';
 
 describe('DropdownList.vue', () => {
   describe(':props', () => {

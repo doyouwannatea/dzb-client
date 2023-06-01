@@ -11,13 +11,13 @@
 
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
-  import AuthModal from './components/layout/AuthModal.vue';
-  import ParticipationModal from './components/participation/ParticipationModal.vue';
-  import ParticipationSuccessModal from './components/participation/ParticipationSuccessModal.vue';
   import ProjectFeedbackModal from './components/feedback/ProjectFeedbackModal.vue';
   import ToUpButton from './components/ui/ToUpButton.vue';
-  import AlertModal from './components/layout/AlertModal.vue';
-  import ConfirmModal from './components/layout/ConfirmModal.vue';
+  import AlertModal from '@/components/layout/AlertModal.vue';
+  import AuthModal from '@/components/layout/AuthModal.vue';
+  import ConfirmModal from '@/components/layout/ConfirmModal.vue';
+  import ParticipationModal from '@/components/participation/ParticipationModal.vue';
+  import ParticipationSuccessModal from '@/components/participation/ParticipationSuccessModal.vue';
   import { useGetUserInfoQuery } from './api/AuthApi/hooks/useGetUserInfoQuery';
 
   useGetUserInfoQuery();

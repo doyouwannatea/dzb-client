@@ -28,12 +28,11 @@
 <script setup lang="ts">
   import { computed, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
-  import { useSmallDevice } from '@/hooks/useBreakpoints';
-  // components
-  import ProjectMobileDetails from './ProjectMobileDetails.vue';
   import ProjectHistoryModal from '@/components/project/ProjectHistoryModal.vue';
-  import ProjectDesktopDetails from './ProjectDesktopDetails.vue';
   import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
+  import ProjectDesktopDetails from './ProjectDesktopDetails.vue';
+  import ProjectMobileDetails from './ProjectMobileDetails.vue';
 
   const isSmallDevice = useSmallDevice();
   const showHistoryModal = ref(false);

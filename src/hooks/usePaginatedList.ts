@@ -1,5 +1,5 @@
-import { ComputedRef, computed } from 'vue';
 import { MaybeRef, get } from '@vueuse/core';
+import { ComputedRef, computed } from 'vue';
 
 export function usePaginatedList<T>(
   list: MaybeRef<T[] | undefined>,

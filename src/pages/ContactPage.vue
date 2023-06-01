@@ -171,8 +171,8 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted } from 'vue';
   import DG from '2gis-maps';
+  import { onMounted } from 'vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
   import ContactForm from '@/components/layout/contact/ContactForm.vue';
 

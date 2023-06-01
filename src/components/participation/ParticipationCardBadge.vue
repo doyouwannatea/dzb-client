@@ -18,12 +18,12 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import BaseBadge from '@/components/ui/BaseBadge.vue';
+  import { isAutoParticipation } from '@/api/CandidateApi/utils/participations';
+  import { intToRoman } from '@/helpers/string';
   import {
     ParticipationPriority,
     ParticipationPriorityText,
   } from '@/models/Participation';
-  import { intToRoman } from '@/helpers/string';
-  import { isAutoParticipation } from '@/api/CandidateApi/utils/participations';
 
   type Props = {
     priority: ParticipationPriority;

@@ -135,39 +135,32 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
+  import { computed, ref, watch } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
-  import { isSupervisor } from '@/helpers/typeCheck';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import {
-    MemberRole,
-    CreatedProjectProposal,
-    ProjectProposalStateId,
-  } from '@/models/ProjectProposal';
-  import PageLayout from '@/components/layout/PageLayout.vue';
-  import BaseButton from '@/components/ui/BaseButton.vue';
-  import { SpecialtyPriority } from '@/models/Specialty';
-  import { ProjectDifficulty } from '@/models/ProjectDifficulty';
-  import { RouteNames } from '@/router/types/route-names';
   import { useToast } from 'vue-toastification';
-  import { ProjectStateID } from '@/models/ProjectState';
-  import { toProjectProposalCreateRoute } from '@/router/utils/routes';
+  import PageLayout from '@/components/layout/PageLayout.vue';
+  import ProjectProposalForm from '@/components/project-proposal/ProjectProposalForm.vue';
   import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
-  import { useGetProjectProposalListQuery } from '@/api/SupervisorApi/hooks/useGetProjectProposalListQuery';
+  import BaseButton from '@/components/ui/BaseButton.vue';
+  import {
+    ProjectDuration,
+    ProjectProposalFormValue,
+  } from '@/models/components/ProjectProposalForm';
+  import { useGetInstituteProjectProposalsQuery } from '@/api/InstituteDirectorApi/hooks/useGetInstituteProjectProposalsQuery';
+  import { useGetProjectSkillsQuery } from '@/api/ProjectApi/hooks/useGetAllProjectTagsQuery';
+  import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
+  import { useGetAllSupervisorsQuery } from '@/api/SharedApi/hooks/useGetAllSupervisorsQuery';
+  import { useGetUserProjectsQuery } from '@/api/SharedApi/hooks/useGetUserProjectsQuery';
   import { useCreateProjectProposalMutation } from '@/api/SupervisorApi/hooks/useCreateProjectProposalMutation';
+  import { useDeleteProjectProposalMutation } from '@/api/SupervisorApi/hooks/useDeleteProjectProposalMutation';
+  import { useGetProjectProposalListQuery } from '@/api/SupervisorApi/hooks/useGetProjectProposalListQuery';
   import { useGetSpecialtiesQuery } from '@/api/SupervisorApi/hooks/useGetSpecialtiesQuery';
   import { useGetThemeSourcesQuery } from '@/api/SupervisorApi/hooks/useGetThemeSourcesQuery';
   import { useUpdateProjectProposalMutation } from '@/api/SupervisorApi/hooks/useUpdateProjectProposalMutation';
-  import { useGetAllSupervisorsQuery } from '@/api/SharedApi/hooks/useGetAllSupervisorsQuery';
-  import { useGetUserProjectsQuery } from '@/api/SharedApi/hooks/useGetUserProjectsQuery';
-  import { useGetProjectSkillsQuery } from '@/api/ProjectApi/hooks/useGetAllProjectTagsQuery';
-  import { useDeleteProjectProposalMutation } from '@/api/SupervisorApi/hooks/useDeleteProjectProposalMutation';
-  import { useGetInstituteProjectProposalsQuery } from '@/api/InstituteDirectorApi/hooks/useGetInstituteProjectProposalsQuery';
-  import ProjectProposalForm from '@/components/project-proposal/ProjectProposalForm.vue';
   import { useProjectProposalMetaData } from '@/hooks/useProjectProposalMetaData';
+  import { useNavigateBack } from '@/hooks/useRoutes';
+  import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
   import {
     collectProjectProposal,
     getCurrentProjectProposal,
@@ -175,12 +168,19 @@
     mapSpecialtyList,
     projectDurationFromDate,
   } from '@/helpers/project-proposal-form';
+  import { isSupervisor } from '@/helpers/typeCheck';
+  import { RouteNames } from '@/router/types/route-names';
+  import { toProjectProposalCreateRoute } from '@/router/utils/routes';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { ProjectDifficulty } from '@/models/ProjectDifficulty';
   import {
-    ProjectDuration,
-    ProjectProposalFormValue,
-  } from '@/models/components/ProjectProposalForm';
-  import { useNavigateBack } from '@/hooks/useRoutes';
-  import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
+    CreatedProjectProposal,
+    MemberRole,
+    ProjectProposalStateId,
+  } from '@/models/ProjectProposal';
+  import { ProjectStateID } from '@/models/ProjectState';
+  import { SpecialtyPriority } from '@/models/Specialty';
 
   useWatchAuthorization();
 

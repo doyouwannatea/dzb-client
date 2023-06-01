@@ -1,7 +1,7 @@
-import { ref, watchEffect } from 'vue';
 import { Meta, StoryObj } from '@storybook/vue3';
-import BaseModal, { ModalSize } from '@/components/ui/BaseModal.vue';
+import { ref, watchEffect } from 'vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseModal, { ModalSize } from '@/components/ui/BaseModal.vue';
 
 const sizePropVariants: ModalSize[] = ['m', 's'];
 

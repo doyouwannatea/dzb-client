@@ -1,11 +1,11 @@
+import { isEqual } from 'lodash';
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { isEqual } from 'lodash';
 import { locationQueryToProjectFilters } from '@/helpers/location-query';
-import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-import { ProjectFilters } from '@/models/Project';
 import { isEmptyObject } from '@/helpers/object';
 import { RouteNames } from '@/router/types/route-names';
+import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+import { ProjectFilters } from '@/models/Project';
 import { ProjectStateID } from '@/models/ProjectState';
 
 export const ACCEPTED_PROJECT_STATES = [

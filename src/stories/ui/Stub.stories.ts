@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/vue3';
-import BaseStub from '@/components/ui/BaseStub.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseStub from '@/components/ui/BaseStub.vue';
 
 const meta: Meta<typeof BaseStub> = {
   component: BaseStub,

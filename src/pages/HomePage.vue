@@ -45,22 +45,20 @@
 </template>
 
 <script setup lang="ts">
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-
-  import { useSmallDevice } from '@/hooks/useBreakpoints';
-  import { RouteNames } from '@/router/types/route-names';
-  // components
+  import ProjectListFilterModal from '../components/project/ProjectListFilterModal.vue';
+  import PageLayout from '@/components/layout/PageLayout.vue';
+  import SidebarContainer from '@/components/layout/SidebarContainer.vue';
+  import OpenProjectFilterModalButton from '@/components/project/OpenProjectFilterModalButton.vue';
+  import ProjectList from '@/components/project/ProjectList.vue';
+  import ProjectListFilter from '@/components/project/ProjectListFilter.vue';
   import ProjectSearch from '@/components/project/ProjectSearch.vue';
   import ProjectSearchBadStub from '@/components/project/ProjectSearchBadStub.vue';
-  import SidebarContainer from '@/components/layout/SidebarContainer.vue';
-  import ProjectListFilter from '@/components/project/ProjectListFilter.vue';
-  import ProjectList from '@/components/project/ProjectList.vue';
   import BasePagination from '@/components/ui/BasePagination.vue';
-  import PageLayout from '@/components/layout/PageLayout.vue';
-  import OpenProjectFilterModalButton from '@/components/project/OpenProjectFilterModalButton.vue';
-  import ProjectListFilterModal from '../components/project/ProjectListFilterModal.vue';
   import { useGetProjectListWithFiltersQuery } from '@/api/ProjectApi/hooks/useGetProjectListWithFiltersQuery';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
   import { useWatchProjectQueries } from '@/hooks/useProjectFilters';
+  import { RouteNames } from '@/router/types/route-names';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 
   useWatchProjectQueries(RouteNames.HOME);
 

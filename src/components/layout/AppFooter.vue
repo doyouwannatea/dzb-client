@@ -101,16 +101,15 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import { RouteNames } from '@/router/types/route-names';
+  import { ContainerSize } from '@/models/components/BaseContainer';
   import {
     useMainNavigationRoutes,
     useRoledUserNavigationRoutes,
   } from '@/hooks/useRoutes';
+  import { RouteNames } from '@/router/types/route-names';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
-  // components
   import AppLogo from '../ui/AppLogo.vue';
   import BaseContainer from '../ui/BaseContainer.vue';
-  import { ContainerSize } from '@/models/components/BaseContainer';
 
   const authStore = useAuthStore();
   const mainRoutes = useMainNavigationRoutes();

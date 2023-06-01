@@ -147,26 +147,24 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, watch } from 'vue';
-  import searchIconUrl from '@/assets/icons/search.svg?url';
-  import { Skill } from '@/models/Project';
+  import { computed, ref, watch } from 'vue';
   import { useSmallDevice } from '@/hooks/useBreakpoints';
   import { stringIncludes, stringsAreEqual } from '@/helpers/string';
+  import { Skill } from '@/models/Project';
   import { Tag } from '@/models/Tag';
-
-  // components
-  import BaseModal from '../ui/BaseModal.vue';
+  import searchIconUrl from '@/assets/icons/search.svg?url';
   import BaseButton from '../ui/BaseButton.vue';
-  import TagList from '../ui/TagList.vue';
   import BaseInput from '../ui/BaseInput.vue';
-  import ScrollablePanel from '../ui/ScrollablePanel.vue';
-  import BaseLabel from '../ui/label/BaseLabel.vue';
+  import BaseModal from '../ui/BaseModal.vue';
   import BaseTextarea from '../ui/BaseTextarea.vue';
   import BaseTooltip from '../ui/BaseTooltip.vue';
+  import ScrollablePanel from '../ui/ScrollablePanel.vue';
+  import TagList from '../ui/TagList.vue';
   import ClickableGroupedList, {
     ListItem,
   } from '../ui/clickable-grouped-list/ClickableGroupedList.vue';
   import ClickableGroupedListLabel from '../ui/clickable-grouped-list/ClickableGroupedListLabel.vue';
+  import BaseLabel from '../ui/label/BaseLabel.vue';
 
   export type EditedSkill = Skill & { isNew?: boolean };
 

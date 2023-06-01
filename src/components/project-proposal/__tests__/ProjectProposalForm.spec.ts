@@ -1,11 +1,8 @@
 import { mount } from '@vue/test-utils';
-import ProjectProposalForm from '../ProjectProposalForm.vue';
 import {
   ProjectDuration,
   ProjectProposalFormValue,
 } from '@/models/components/ProjectProposalForm';
-import { MemberRole } from '@/models/ProjectProposal';
-import { ProjectDifficulty } from '@/models/ProjectDifficulty';
 import {
   getDropdownValue,
   getInput,
@@ -13,6 +10,9 @@ import {
   getRadioButton,
   getRadioButtonValue,
 } from '@/helpers/tests';
+import { ProjectDifficulty } from '@/models/ProjectDifficulty';
+import { MemberRole } from '@/models/ProjectProposal';
+import ProjectProposalForm from '../ProjectProposalForm.vue';
 
 describe('ProjectProposalForm.vue', () => {
   beforeAll(() => {

@@ -1,12 +1,12 @@
 import { DownloadProgress } from 'ky';
+import { Candidate } from '@/models/Candidate';
 import type {
   Project,
   ProjectFilters,
-  ProjectType,
   ProjectTags,
+  ProjectType,
 } from '@/models/Project';
 import { ProjectState } from '@/models/ProjectState';
-import { Candidate } from '@/models/Candidate';
 
 export interface ProjectListResponse {
   data: Project[];

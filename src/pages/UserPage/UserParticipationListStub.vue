@@ -13,10 +13,9 @@
 </template>
 
 <script setup lang="ts">
-  import { RouteNames } from '@/router/types/route-names';
-  // components
-  import BaseStub from '@/components/ui/BaseStub.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
+  import BaseStub from '@/components/ui/BaseStub.vue';
+  import { RouteNames } from '@/router/types/route-names';
 
   const title = 'Ни одной заявки :(';
   const subtitle =

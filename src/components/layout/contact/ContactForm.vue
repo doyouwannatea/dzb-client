@@ -60,13 +60,13 @@
 </template>
 
 <script setup lang="ts">
-  import { RouterLink } from 'vue-router';
-  import { RouteNames } from '@/router/types/route-names';
   import VMultiselect from '@vueform/multiselect';
+  import { RouterLink } from 'vue-router';
+  import BaseButton from '@/components/ui/BaseButton.vue';
   import BaseInput from '@/components/ui/BaseInput.vue';
   import BaseTextarea from '@/components/ui/BaseTextarea.vue';
-  import BaseButton from '@/components/ui/BaseButton.vue';
   import { useSmallDevice } from '@/hooks/useBreakpoints';
+  import { RouteNames } from '@/router/types/route-names';
 
   const isSmallDevice = useSmallDevice();
 </script>

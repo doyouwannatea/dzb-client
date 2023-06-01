@@ -30,10 +30,10 @@
 </template>
 
 <script setup lang="ts">
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
   import { computed } from 'vue';
   import { isEmptyObject } from '@/helpers/object';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 
   const modalsStore = useModalsStore();
   const projectStore = useProjectsStore();

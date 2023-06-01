@@ -1,8 +1,8 @@
-import { HarvestSettings } from '@/models/HarvestSetting';
-import SharedApiType from './SharedApiType';
 import { delayRes } from '@/helpers/promise';
+import { HarvestSettings } from '@/models/HarvestSetting';
 import { Supervisor } from '@/models/Supervisor';
 import { supervisorList } from '@/models/mock/supervisor';
+import SharedApiType from './SharedApiType';
 
 export default class SharedApiMock implements SharedApiType {
   async getHarvestSettings(): Promise<HarvestSettings> {

@@ -1,5 +1,5 @@
 import 'pinia';
-import { router } from '@/router';
+import { router } from '@/router/';
 
 declare module 'pinia' {
   export interface PiniaCustomProperties {

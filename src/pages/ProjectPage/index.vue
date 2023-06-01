@@ -39,13 +39,12 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import { RouterView, useRoute } from 'vue-router';
-  import { RouteNames } from '@/router/types/route-names';
-  // components
   import PageLayout from '@/components/layout/PageLayout.vue';
-  import BaseBreadcrumbs from '@/components/ui/BaseBreadcrumbs.vue';
   import ProjectTabs from '@/components/project/ProjectTabs.vue';
+  import BaseBreadcrumbs from '@/components/ui/BaseBreadcrumbs.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
   import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
+  import { RouteNames } from '@/router/types/route-names';
 
   const route = useRoute();
 

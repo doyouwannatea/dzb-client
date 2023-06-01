@@ -1,14 +1,13 @@
 import { delayRes, sleep } from '@/helpers/promise';
-import { themeSources } from '@/models/mock/project-proposal';
-import { specialties } from '@/models/mock/specialties';
+import { Project } from '@/models/Project';
 import {
   CreatedProjectProposal,
   NewProjectProposal,
 } from '@/models/ProjectProposal';
 import { Specialty } from '@/models/Specialty';
 import { Tag } from '@/models/Tag';
-
-import { Project } from '@/models/Project';
+import { themeSources } from '@/models/mock/project-proposal';
+import { specialties } from '@/models/mock/specialties';
 import SupervisorApiType, {
   UpdateProjectProposalData,
 } from './SupervisorApiType';

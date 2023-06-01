@@ -30,10 +30,9 @@
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
-  import userMockUrl from '@/assets/images/user-mock.png';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  // components
+  import userMockUrl from '@/assets/images/user-mock.png';
   import BaseModal from '../ui/BaseModal.vue';
 
   const modalsStore = useModalsStore();

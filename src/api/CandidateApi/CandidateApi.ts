@@ -1,18 +1,18 @@
+import { isValidDate } from '@/helpers/date';
+import { formatProjectDate } from '@/helpers/project';
 import {
   Participation,
-  ParticipationWithProject,
   ParticipationPriority,
+  ParticipationWithProject,
 } from '@/models/Participation';
+import { Project } from '@/models/Project';
+import { projectApi } from '../ProjectApi';
+import { sharedApi } from '../SharedApi';
 import { baseKyInstance } from '../baseKy';
 import CandidateApiType, {
   CreateProjectParticipationData,
 } from './CandidateApiType';
-import { isValidDate } from '@/helpers/date';
-import { projectApi } from '../ProjectApi';
-import { sharedApi } from '../SharedApi';
-import { Project } from '@/models/Project';
 import { filterValidParticipations } from './utils/participations';
-import { formatProjectDate } from '@/helpers/project';
 
 export default class CandidateApi implements CandidateApiType {
   async getActiveProject(): Promise<Project | undefined> {

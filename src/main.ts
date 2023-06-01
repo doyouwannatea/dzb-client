@@ -1,7 +1,7 @@
-import { createApp, markRaw } from 'vue';
 import { createPinia } from 'pinia';
+import { createApp, markRaw } from 'vue';
 import { VueQueryPlugin } from 'vue-query';
-import Toast, { PluginOptions, POSITION } from 'vue-toastification';
+import Toast, { POSITION, PluginOptions } from 'vue-toastification';
 import App from './App.vue';
 import { router } from './router';
 

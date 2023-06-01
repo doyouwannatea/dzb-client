@@ -1,20 +1,20 @@
 import { projectFiltersToSearchParams } from '@/helpers/location-query';
+import { formatProjectDate } from '@/helpers/project';
+import { compareString } from '@/helpers/string';
+import { Candidate } from '@/models/Candidate';
 import {
   Project,
   ProjectFilters,
-  ProjectType,
   ProjectTags,
+  ProjectType,
 } from '@/models/Project';
+import { ProjectState } from '@/models/ProjectState';
+import { Tag } from '@/models/Tag';
+import { baseKyInstance } from '../baseKy';
 import ProjectApiType, {
   OnDownloadProgress,
   ProjectListResponse,
 } from './ProjectApiType';
-import { ProjectState } from '@/models/ProjectState';
-import { formatProjectDate } from '@/helpers/project';
-import { baseKyInstance } from '../baseKy';
-import { Candidate } from '@/models/Candidate';
-import { compareString } from '@/helpers/string';
-import { Tag } from '@/models/Tag';
 
 export default class ProjectApi implements ProjectApiType {
   async getSingleProject(projectId: number): Promise<Project> {

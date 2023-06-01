@@ -1,9 +1,9 @@
+import { MaybeRef, get } from '@vueuse/core';
 import { computed } from 'vue';
 import { UseQueryOptions, useQuery } from 'vue-query';
-import { MaybeRef, get } from '@vueuse/core';
 import { projectApi } from '@/api/ProjectApi';
-import { Project } from '@/models/Project';
 import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
+import { Project } from '@/models/Project';
 
 type TQueryFnData = { project: Project; projectHistory: Project[] };
 

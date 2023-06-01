@@ -106,18 +106,17 @@
 </template>
 
 <script setup lang="ts">
-  import { DifficultyText } from '@/models/ProjectDifficulty';
-  import { Project } from '@/models/Project';
-  // components
+  import OpenFeedbackModalButton from '@/components/feedback/OpenFeedbackModalButton.vue';
+  import OpenParticipationModalButton from '@/components/participation/OpenParticipationModalButton.vue';
+  import ProjectStatus from '@/components/project/ProjectStatus.vue';
+  import ProjectTeamCounter from '@/components/project/ProjectTeamCounter.vue';
+  import AppList from '@/components/ui/AppList.vue';
+  import AppListItem from '@/components/ui/AppListItem.vue';
   import BasePanel from '@/components/ui/BasePanel.vue';
   import GridLayout from '@/components/ui/GridLayout.vue';
-  import AppList from '@/components/ui/AppList.vue';
-  import ProjectStatus from '@/components/project/ProjectStatus.vue';
-  import OpenParticipationModalButton from '@/components/participation/OpenParticipationModalButton.vue';
-  import OpenFeedbackModalButton from '@/components/feedback/OpenFeedbackModalButton.vue';
-  import AppListItem from '@/components/ui/AppListItem.vue';
   import TagList from '@/components/ui/TagList.vue';
-  import ProjectTeamCounter from '@/components/project/ProjectTeamCounter.vue';
+  import { Project } from '@/models/Project';
+  import { DifficultyText } from '@/models/ProjectDifficulty';
   import ProjectHistoryButton from './ProjectHistoryButton.vue';
 
   interface Props {

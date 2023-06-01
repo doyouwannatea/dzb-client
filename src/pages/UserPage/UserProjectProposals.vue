@@ -32,12 +32,12 @@
   import { computed } from 'vue';
   import { useRoute } from 'vue-router';
   import { useRouter } from 'vue-router';
-  import LoadingParticipationsList from './LoadingParticipationsList.vue';
-  import BaseStub from '@/components/ui/BaseStub.vue';
-  import BasePagination from '@/components/ui/BasePagination.vue';
-  import { usePaginatedList } from '@/hooks/usePaginatedList';
   import SupervisorProjectProposalCard from '@/components/project-proposal/SupervisorProjectProposalCard.vue';
+  import BasePagination from '@/components/ui/BasePagination.vue';
+  import BaseStub from '@/components/ui/BaseStub.vue';
   import { useGetProjectProposalListQuery } from '@/api/SupervisorApi/hooks/useGetProjectProposalListQuery';
+  import { usePaginatedList } from '@/hooks/usePaginatedList';
+  import LoadingParticipationsList from './LoadingParticipationsList.vue';
 
   const router = useRouter();
   const route = useRoute();

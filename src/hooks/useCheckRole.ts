@@ -1,5 +1,5 @@
-import { UserRoleKey } from '@/models/User';
 import { useAuthStore } from '@/stores/auth/useAuthStore';
+import { UserRoleKey } from '@/models/User';
 
 export const useCheckRole = (roles: UserRoleKey[] = []): boolean => {
   const authStore = useAuthStore();

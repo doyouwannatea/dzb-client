@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient, UseMutationOptions } from 'vue-query';
+import { UseMutationOptions, useMutation, useQueryClient } from 'vue-query';
+import { getSingleProjectQueryKey } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
 import { candidateApi } from '..';
 import CandidateApiType from '../CandidateApiType';
 import { USE_GET_PARTICIPATION_LIST_QUERY_KEY } from './useGetParticipationListQuery';
-import { getSingleProjectQueryKey } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
 
 type TData = Awaited<
   ReturnType<CandidateApiType['createProjectParticipation']>

@@ -48,11 +48,11 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
   import VMultiselect from '@vueform/multiselect';
+  import { ref } from 'vue';
+  import { MultiselectObjectItem } from '@/models/components/VMultiselect';
   import { MemberRole } from '@/models/ProjectProposal';
   import arrowIcon from '@/assets/icons/user-role-select-arrow.svg?raw';
-  import { MultiselectObjectItem } from '@/models/components/VMultiselect';
   import BaseLabel from '../ui/label/BaseLabel.vue';
 
   export type SelectOptions = {

@@ -1,6 +1,6 @@
-import { computed, Ref } from 'vue';
 import { useMediaQuery } from '@vueuse/core';
-import { tablet, mobile } from '@/values/breakpoints';
+import { Ref, computed } from 'vue';
+import { mobile, tablet } from '@/values/breakpoints';
 
 export const useDesktop = (): Ref<boolean> =>
   useMediaQuery(`(min-width: ${tablet})`);

@@ -1,7 +1,7 @@
 import {
   Participation,
-  ParticipationState,
   ParticipationPriority,
+  ParticipationState,
 } from '@/models/Participation';
 
 export function filterValidParticipations(

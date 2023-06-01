@@ -2,7 +2,7 @@ import { Candidate } from './Candidate';
 import { Participation } from './Participation';
 import { ProjectDifficulty } from './ProjectDifficulty';
 import { MemberRole } from './ProjectProposal';
-import { ProjectStateID, ProjectState } from './ProjectState';
+import { ProjectState, ProjectStateID } from './ProjectState';
 import { Specialty } from './Specialty';
 import { Supervisor } from './Supervisor';
 import { Tag } from './Tag';

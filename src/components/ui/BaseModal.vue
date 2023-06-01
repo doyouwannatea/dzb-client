@@ -32,11 +32,11 @@
 </template>
 
 <script setup lang="ts">
-  import { nextTick, ref, watch, withDefaults } from 'vue';
-  import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
   import { onClickOutside } from '@vueuse/core';
-  import closeIconUrl from '@/assets/icons/close.svg?url';
+  import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
+  import { nextTick, ref, watch, withDefaults } from 'vue';
   import { disableScroll, enableScroll } from '@/helpers/dom';
+  import closeIconUrl from '@/assets/icons/close.svg?url';
 
   export type ModalSize = 's' | 'm';
   export type Props = {

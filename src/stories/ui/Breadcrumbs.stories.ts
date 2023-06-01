@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/vue3';
 import { SBType } from '@storybook/csf';
+import { Meta, StoryObj } from '@storybook/vue3';
 import Breadcrumbs from '@/components/ui/BaseBreadcrumbs.vue';
 import BaseBreadcrumbs from '@/components/ui/BaseBreadcrumbs.vue';
 import { Breadcrumb } from '@/models/components/BaseBreadcrumbs';

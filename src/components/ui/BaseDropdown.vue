@@ -10,9 +10,9 @@
 </template>
 
 <script setup lang="ts">
+  import { onClickOutside } from '@vueuse/core';
   import { ref } from 'vue';
   import { isPartOfNode } from '@/helpers/dom';
-  import { onClickOutside } from '@vueuse/core';
   import BasePanel from './BasePanel.vue';
 
   export type Position = {

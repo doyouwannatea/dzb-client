@@ -125,26 +125,25 @@
 </template>
 
 <script setup lang="ts">
+  import VMultiselect from '@vueform/multiselect';
   import { computed } from 'vue';
-  import { capitalizeFirstLetter } from '@/helpers/string';
-  import { SkillKeys } from '@/models/Project';
+  import BaseButton from '@/components/ui/BaseButton.vue';
+  import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
+  import { useGetAllProjectStatesQuery } from '@/api/ProjectApi/hooks/useGetAllProjectStatesQuery';
+  import { useGetAllProjectTagsQuery } from '@/api/ProjectApi/hooks/useGetAllProjectTagsQuery';
+  import { useGetProjectListWithFiltersQuery } from '@/api/ProjectApi/hooks/useGetProjectListWithFiltersQuery';
   import {
-    useProjectFilters,
     ACCEPTED_PROJECT_STATES,
+    useProjectFilters,
   } from '@/hooks/useProjectFilters';
+  import { capitalizeFirstLetter } from '@/helpers/string';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { SkillKeys } from '@/models/Project';
   import {
     DifficultyText,
     ProjectDifficulty,
   } from '@/models/ProjectDifficulty';
-  // components
-  import VMultiselect from '@vueform/multiselect';
-  import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
-  import BaseButton from '@/components/ui/BaseButton.vue';
   import ProjectFilterAccordion from '../ui/accordion/ProjectFilterAccordion.vue';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { useGetAllProjectStatesQuery } from '@/api/ProjectApi/hooks/useGetAllProjectStatesQuery';
-  import { useGetAllProjectTagsQuery } from '@/api/ProjectApi/hooks/useGetAllProjectTagsQuery';
-  import { useGetProjectListWithFiltersQuery } from '@/api/ProjectApi/hooks/useGetProjectListWithFiltersQuery';
 
   const modalsStore = useModalsStore();
 

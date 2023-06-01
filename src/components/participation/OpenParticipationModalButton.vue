@@ -14,19 +14,18 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed } from 'vue';
-  import { Project } from '@/models/Project';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
-  // components
-  import { isExtraState, isRecruitingState } from '@/helpers/project';
-  import BaseButton, { Variant } from '../ui/BaseButton.vue';
-  import { useGetAbilitySendParticipationsMutation } from '@/api/CandidateApi/hooks/useGetAbilitySendParticipationsMutation';
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import { useToast } from 'vue-toastification';
-  import { AUTH_REQUIRED } from '@/values/error-messages';
-  import { useGetParticipationListQuery } from '@/api/CandidateApi/hooks/useGetParticipationListQuery';
   import { storeToRefs } from 'pinia';
+  import { computed } from 'vue';
+  import { useToast } from 'vue-toastification';
+  import { useGetAbilitySendParticipationsMutation } from '@/api/CandidateApi/hooks/useGetAbilitySendParticipationsMutation';
+  import { useGetParticipationListQuery } from '@/api/CandidateApi/hooks/useGetParticipationListQuery';
+  import { isExtraState, isRecruitingState } from '@/helpers/project';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import { Project } from '@/models/Project';
+  import { AUTH_REQUIRED } from '@/values/error-messages';
+  import BaseButton, { Variant } from '../ui/BaseButton.vue';
 
   type Props = { project: Project; variant?: Variant };
 

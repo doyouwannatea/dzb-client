@@ -41,14 +41,13 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
+  import { useMobile } from '@/hooks/useBreakpoints';
   import { toProjectRoute } from '@/router/utils/routes';
   import { Participation, ParticipationPriority } from '@/models/Participation';
   import { Project } from '@/models/Project';
-  import { useMobile } from '@/hooks/useBreakpoints';
-  // components
   import BasePanel from '../ui/BasePanel.vue';
-  import ParticipationCardBadge from './ParticipationCardBadge.vue';
   import DeleteButton from '../ui/DeleteButton.vue';
+  import ParticipationCardBadge from './ParticipationCardBadge.vue';
 
   const isMobile = useMobile();
 

@@ -37,13 +37,13 @@
 </template>
 
 <script setup lang="ts">
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { isCandidate, isSupervisor } from '@/helpers/typeCheck';
   import AppList from '@/components/ui/AppList.vue';
-  import BasePanel from '@/components/ui/BasePanel.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
-  import { useDesktop } from '@/hooks/useBreakpoints';
+  import BasePanel from '@/components/ui/BasePanel.vue';
   import { AppListItemType } from '@/models/components/AppList';
+  import { useDesktop } from '@/hooks/useBreakpoints';
+  import { isCandidate, isSupervisor } from '@/helpers/typeCheck';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
 
   const isDesktop = useDesktop();
   const authStore = useAuthStore();

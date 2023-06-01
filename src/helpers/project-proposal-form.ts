@@ -1,13 +1,18 @@
 import { DateTime } from 'luxon';
 import { TeamMember } from '@/components/project/ProjectTeamCollect.vue';
-import { ProjectTypeName, ProjectSupervisor } from '@/models/Project';
 import {
-  ProjectProposalStateId,
-  NewProjectProposal,
-  ProjectProposalTeamMember,
-  ProjectProposalSpecialty,
+  ProjectDuration,
+  ProjectProposalFormValue,
+} from '@/models/components/ProjectProposalForm';
+import { DateRange } from '@/models/Date';
+import { ProjectSupervisor, ProjectTypeName } from '@/models/Project';
+import {
   CreatedProjectProposal,
   MemberRole,
+  NewProjectProposal,
+  ProjectProposalSpecialty,
+  ProjectProposalStateId,
+  ProjectProposalTeamMember,
 } from '@/models/ProjectProposal';
 import {
   SelectedSpecialty,
@@ -16,11 +21,6 @@ import {
 } from '@/models/Specialty';
 import { sortByRolePriority } from './project-member-role';
 import { specialtyFullName } from './specialty';
-import {
-  ProjectDuration,
-  ProjectProposalFormValue,
-} from '@/models/components/ProjectProposalForm';
-import { DateRange } from '@/models/Date';
 
 export function collectProjectProposal(
   formValue: ProjectProposalFormValue,

@@ -1,5 +1,5 @@
-import { ref, watchEffect } from 'vue';
 import { Meta, StoryObj } from '@storybook/vue3';
+import { ref, watchEffect } from 'vue';
 import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
 
 const meta: Meta<typeof BaseCheckbox> = {

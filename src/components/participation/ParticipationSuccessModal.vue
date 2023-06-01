@@ -46,9 +46,8 @@
 <script setup lang="ts">
   import { RouteNames } from '@/router/types/route-names';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
-  // components
-  import BaseModal from '../ui/BaseModal.vue';
   import BaseButton from '../ui/BaseButton.vue';
+  import BaseModal from '../ui/BaseModal.vue';
 
   const modalsStore = useModalsStore();
 

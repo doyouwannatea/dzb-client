@@ -73,21 +73,20 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import { Project } from '@/models/Project';
-  import { StateClass } from '@/models/ProjectState';
-  import { toProjectRoute } from '@/router/utils/routes';
   import {
-    useSmallDevice,
     useDesktop,
     useMobile,
+    useSmallDevice,
   } from '@/hooks/useBreakpoints';
-  // components
-  import ProjectStatus from './ProjectStatus.vue';
-  import TagList from '../ui/TagList.vue';
-  import OpenParticipationModalButton from '../participation/OpenParticipationModalButton.vue';
+  import { toProjectRoute } from '@/router/utils/routes';
+  import { Project } from '@/models/Project';
+  import { StateClass } from '@/models/ProjectState';
   import OpenFeedbackModalButton from '../feedback/OpenFeedbackModalButton.vue';
+  import OpenParticipationModalButton from '../participation/OpenParticipationModalButton.vue';
   import BaseButton from '../ui/BaseButton.vue';
+  import TagList from '../ui/TagList.vue';
   import ProjectCardInfo from './ProjectCardInfo.vue';
+  import ProjectStatus from './ProjectStatus.vue';
 
   const props = defineProps<{ project: Project }>();
   const isSmallDevice = useSmallDevice();

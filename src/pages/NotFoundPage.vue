@@ -228,10 +228,9 @@
 </template>
 
 <script setup lang="ts">
-  import { RouteNames } from '@/router/types/route-names';
-  // components
   import PageLayout from '@/components/layout/PageLayout.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
+  import { RouteNames } from '@/router/types/route-names';
 </script>
 
 <style lang="scss" module>

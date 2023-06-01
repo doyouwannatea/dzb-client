@@ -1,15 +1,15 @@
 import { deepClone } from '@/helpers/object';
 import { delayRes, sleep } from '@/helpers/promise';
+import { UserCandidate, UserSupervisor } from '@/models/User';
 import { userCandidate } from '@/models/mock/candidate';
 import { userSupervisor } from '@/models/mock/supervisor';
-import { UserCandidate, UserSupervisor } from '@/models/User';
+import { AUTH_REQUIRED } from '@/values/error-messages';
 import AuthApiType from './AuthApiType';
 import {
   askForUserRole,
-  setUserRoleToCookies,
   getUserRoleFromCookies,
+  setUserRoleToCookies,
 } from './utils/askForUserRole';
-import { AUTH_REQUIRED } from '@/values/error-messages';
 import {
   deleteAuthTokenFromCookies,
   getAuthTokenFromCookies,

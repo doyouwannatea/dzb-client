@@ -18,8 +18,8 @@
 
 <script setup lang="ts">
   import { withDefaults } from 'vue';
-  import AppListItem from './AppListItem.vue';
   import { AppListItemType } from '@/models/components/AppList';
+  import AppListItem from './AppListItem.vue';
 
   const props = withDefaults(
     defineProps<{

@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted, ref, Transition } from 'vue';
+  import { Transition, onMounted, onUnmounted, ref } from 'vue';
 
   interface Props {
     opened?: boolean;

@@ -1,5 +1,5 @@
-import { ref, watch } from 'vue';
 import { debounce } from 'lodash';
+import { ref, watch } from 'vue';
 import { useProjectsStore } from '@/stores/projects/useProjectsStore';
 
 type Options = {

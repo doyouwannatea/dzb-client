@@ -1,5 +1,5 @@
-import { ref, watchEffect } from 'vue';
 import { Meta, StoryObj } from '@storybook/vue3';
+import { ref, watchEffect } from 'vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import checkedIconUrl from '@/assets/icons/checked.svg?url';
 

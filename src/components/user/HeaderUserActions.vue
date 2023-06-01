@@ -42,16 +42,15 @@
 
 <script setup lang="ts">
   import { computed, ref } from 'vue';
+  import { useToast } from 'vue-toastification';
+  import { useAuthMutation } from '@/api/AuthApi/hooks/useAuthMutation';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import arrowIconUrl from '@/assets/icons/dropdown-arrow.svg?url';
   import ringIconUrl from '@/assets/icons/ring.svg?url';
-  import userPictureUrl from '@/assets/icons/user-picture.svg?url';
   import userPictureGrayUrl from '@/assets/icons/user-picture-gray.svg?url';
-  // components
-  import UserNavigationDropdown from './UserNavigationDropdown.vue';
+  import userPictureUrl from '@/assets/icons/user-picture.svg?url';
   import BaseButton from '../ui/BaseButton.vue';
-  import { useAuthMutation } from '@/api/AuthApi/hooks/useAuthMutation';
-  import { useToast } from 'vue-toastification';
+  import UserNavigationDropdown from './UserNavigationDropdown.vue';
 
   const toast = useToast();
   const authMutation = useAuthMutation({ onError });

@@ -25,17 +25,16 @@
 </template>
 
 <script setup lang="ts">
-  import { useRoute, useRouter } from 'vue-router';
-  import { computed, watchEffect } from 'vue';
   import { DateTime } from 'luxon';
-  import { Participation } from '@/models/Participation';
-  import { canViewParticipations } from '@/helpers/project';
-  // components
+  import { computed, watchEffect } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
   import BasePanel from '@/components/ui/BasePanel.vue';
-  import ProjectParticipationListStub from './ProjectParticipationListStub.vue';
   import BaseTable, { RowData } from '@/components/ui/BaseTable.vue';
-  import { toProjectRoute } from '@/router/utils/routes';
   import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
+  import { canViewParticipations } from '@/helpers/project';
+  import { toProjectRoute } from '@/router/utils/routes';
+  import { Participation } from '@/models/Participation';
+  import ProjectParticipationListStub from './ProjectParticipationListStub.vue';
 
   const router = useRouter();
 

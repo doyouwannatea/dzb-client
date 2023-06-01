@@ -1,5 +1,5 @@
-import { useCheckRole } from '@/hooks/useCheckRole';
 import { NavigationGuard } from 'vue-router';
+import { useCheckRole } from '@/hooks/useCheckRole';
 import { RouteNames } from '../types/route-names';
 
 export const checkUserRole: NavigationGuard = (to, from, next) => {

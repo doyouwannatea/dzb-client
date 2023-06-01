@@ -102,9 +102,10 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, watch } from 'vue';
   import { uniqBy } from 'lodash';
-  import searchIconUrl from '@/assets/icons/search.svg?url';
+  import { computed, ref, watch } from 'vue';
+  import { specialtyFullName } from '@/helpers/specialty';
+  import { stringIncludes } from '@/helpers/string';
   import {
     SelectedSpecialty,
     Specialty,
@@ -112,15 +113,12 @@
     SpecialtyName,
   } from '@/models/Specialty';
   import { Tag } from '@/models/Tag';
-  import { stringIncludes } from '@/helpers/string';
-  import { specialtyFullName } from '@/helpers/specialty';
-
-  // components
-  import BaseModal from '../ui/BaseModal.vue';
+  import searchIconUrl from '@/assets/icons/search.svg?url';
   import BaseButton from '../ui/BaseButton.vue';
-  import TagList from '../ui/TagList.vue';
   import BaseInput from '../ui/BaseInput.vue';
+  import BaseModal from '../ui/BaseModal.vue';
   import ScrollablePanel from '../ui/ScrollablePanel.vue';
+  import TagList from '../ui/TagList.vue';
   import ClickableGroupedList, {
     GroupedList,
     ListItem,

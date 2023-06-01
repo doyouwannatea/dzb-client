@@ -29,9 +29,8 @@
   import { computed, ref, withDefaults } from 'vue';
   import { declOfNum } from '@/helpers/string';
   import { Tag } from '@/models/Tag';
-  // components
-  import BaseTag from './BaseTag.vue';
   import BaseButton from './BaseButton.vue';
+  import BaseTag from './BaseTag.vue';
 
   type Props = {
     tagList: Tag<number | string>[];

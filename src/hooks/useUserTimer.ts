@@ -1,8 +1,8 @@
-import { computed, ComputedRef } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useAuthStore } from '@/stores/auth/useAuthStore';
-import { useGetProposalsTimeQuery } from '@/api/SupervisorApi/hooks/useGetProposalsTimeQuery';
+import { ComputedRef, computed } from 'vue';
 import { useGetParticipationsTimeQuery } from '@/api/CandidateApi/hooks/useGetParticipationsTimeQuery';
+import { useGetProposalsTimeQuery } from '@/api/SupervisorApi/hooks/useGetProposalsTimeQuery';
+import { useAuthStore } from '@/stores/auth/useAuthStore';
 
 export function useUserTimer(): ComputedRef<string[] | undefined> {
   const authStore = useAuthStore();

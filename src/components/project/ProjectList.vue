@@ -15,9 +15,8 @@
 
 <script setup lang="ts">
   import type { Project } from '@/models/Project';
-  // components
-  import ProjectCard from './ProjectCard.vue';
   import BaseEmptyCard from '../ui/BaseEmptyCard.vue';
+  import ProjectCard from './ProjectCard.vue';
 
   interface Props {
     projectList?: Project[];
