@@ -1,5 +1,6 @@
-// Contact page
 import { RouteRecordRaw } from 'vue-router';
+// P.S. тут раньше были динамические импорты, т.е. "() => import('@/pages/ProjectPage/index.vue')", но они плохо работали на продакшене "projfair.istu.edu", так что было решено оставить обычные импорты для всего приложения
+// Contact page
 import ContactPage from '@/pages/ContactPage.vue';
 // Create project page
 import CreateProjectPage from '@/pages/CreateProjectPage.vue';
@@ -9,18 +10,17 @@ import FaqPage from '@/pages/FaqPage.vue';
 import HomePage from '@/pages/HomePage.vue';
 // 404 page
 import NotFoundPage from '@/pages/NotFoundPage.vue';
+// Project page
 import ProjectDetails from '@/pages/ProjectPage/ProjectDetails.vue';
 import ProjectParticipantsList from '@/pages/ProjectPage/ProjectParticipantsList.vue';
 import ProjectParticipationList from '@/pages/ProjectPage/ProjectParticipationList.vue';
-// P.S. тут раньше были динамические импорты, т.е. "() => import('@/pages/ProjectPage/index.vue')", но они плохо работали на продакшене "projfair.istu.edu", так что было решено оставить обычные импорты для всего приложения
-// Project page
 import ProjectPage from '@/pages/ProjectPage/index.vue';
+// User page
 import InstituteDirectorProjectProposals from '@/pages/UserPage/InstituteDirectorProjectProposals.vue';
 import UserParticipations from '@/pages/UserPage/UserParticipations.vue';
 import UserProfile from '@/pages/UserPage/UserProfile.vue';
 import UserProjectProposals from '@/pages/UserPage/UserProjectProposals.vue';
 import UserProjects from '@/pages/UserPage/UserProjects.vue';
-// User page
 import UserPage from '@/pages/UserPage/index.vue';
 import { RouteNames } from './types/route-names';
 import {
