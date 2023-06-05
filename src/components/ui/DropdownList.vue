@@ -35,12 +35,27 @@
   import BaseDropdown, { Position } from './BaseDropdown.vue';
 
   type Props = {
+    /**
+     * Выпадающее меню открыто / закрыто
+     */
     isOpen: boolean;
+    /**
+     * Список элементов выпадающего меню
+     */
     itemList: DropdownItem[];
+    /**
+     * HTML элемент относительно которого будет позиционироваться выпадающее меню
+     */
     handleNode?: HTMLElement;
+    /**
+     * Смещение относительно родителя
+     */
     position?: Position;
   };
   type Emits = {
+    /**
+     * Событие обновления isOpen
+     */
     (e: 'update:isOpen', isOpen: boolean): void;
   };
 

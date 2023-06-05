@@ -2,10 +2,12 @@
   <BasePanel class="panel">
     <ClosableAccordion animated class="question">
       <template #title>
+        <!-- @slot Слот для заголовка компонента -->
         <slot name="title"></slot>
       </template>
       <template #content>
         <div class="content">
+          <!-- @slot Слот контента компонента -->
           <slot name="content"></slot>
         </div>
       </template>

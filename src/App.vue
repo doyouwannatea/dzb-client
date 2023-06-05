@@ -5,11 +5,12 @@
   <ProjectFeedbackModal />
   <AlertModal />
   <ConfirmModal />
-  <ToUpButton />
+  <ToUpButton v-model:visible="toUpButtonVisible" />
   <RouterView></RouterView>
 </template>
 
 <script setup lang="ts">
+  import { ref } from 'vue';
   import { RouterView } from 'vue-router';
   import ProjectFeedbackModal from './components/feedback/ProjectFeedbackModal.vue';
   import ToUpButton from './components/ui/ToUpButton.vue';
@@ -21,4 +22,5 @@
   import { useGetUserInfoQuery } from './api/AuthApi/hooks/useGetUserInfoQuery';
 
   useGetUserInfoQuery();
+  const toUpButtonVisible = ref(false);
 </script>

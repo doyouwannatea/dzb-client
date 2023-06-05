@@ -1,5 +1,6 @@
 <template>
   <ul :class="['info-list', `gap-${props.rowGap}`]">
+    <!-- @slot Слот для тела <code>ul</code>, можно использовать если надо разместить кастомные элементы списка -->
     <slot>
       <template
         v-for="{ title, content, bold, wide } in props.items"
@@ -21,16 +22,23 @@
   import { AppListItemType } from '@/models/components/AppList';
   import AppListItem from './AppListItem.vue';
 
-  const props = withDefaults(
-    defineProps<{
-      items?: AppListItemType[];
-      rowGap?: 'm' | 'l';
-    }>(),
-    {
-      items: () => [],
-      rowGap: 'l',
-    },
-  );
+  export type RowGap = 'm' | 'l';
+
+  type Props = {
+    /**
+     * Массив элементов списка
+     */
+    items?: AppListItemType[];
+    /**
+     * Расстояние между элементами списка <br />
+     */
+    rowGap?: RowGap;
+  };
+
+  const props = withDefaults(defineProps<Props>(), {
+    items: () => [],
+    rowGap: 'l',
+  });
 </script>
 
 <style scoped>

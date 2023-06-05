@@ -26,6 +26,7 @@ const breadcrumbSBType: SBType = {
 };
 
 const meta: Meta<typeof BaseBreadcrumbs> = {
+  title: 'ui/BaseBreadcrumbs',
   component: Breadcrumbs,
   tags: ['autodocs'],
   argTypes: {

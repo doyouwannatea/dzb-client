@@ -4,6 +4,7 @@ import BaseTag, { TagVariant } from '@/components/ui/BaseTag.vue';
 const variantPropVariants: TagVariant[] = ['outlined', 'primary'];
 
 const meta: Meta<typeof BaseTag> = {
+  title: 'ui/BaseTag',
   component: BaseTag,
   tags: ['autodocs'],
   argTypes: {

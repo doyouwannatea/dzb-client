@@ -6,6 +6,7 @@ import BaseModal, { ModalSize } from '@/components/ui/BaseModal.vue';
 const sizePropVariants: ModalSize[] = ['m', 's'];
 
 const meta: Meta<typeof BaseModal> = {
+  title: 'ui/BaseModal',
   component: BaseModal,
   tags: ['autodocs'],
   argTypes: {

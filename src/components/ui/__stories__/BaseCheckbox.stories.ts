@@ -1,30 +1,38 @@
 import { Meta, StoryObj } from '@storybook/vue3';
 import { ref, watchEffect } from 'vue';
-import BaseRadioButton from '@/components/ui/BaseRadioButton.vue';
+import BaseCheckbox from '@/components/ui/BaseCheckbox.vue';
 
-const meta: Meta<typeof BaseRadioButton> = {
-  component: BaseRadioButton,
+const meta: Meta<typeof BaseCheckbox> = {
+  title: 'ui/BaseCheckbox',
+  component: BaseCheckbox,
   tags: ['autodocs'],
   argTypes: {
     default: {
       type: 'string',
     },
+    modelValue: {
+      table: {
+        type: {
+          detail: `unknown`,
+        },
+      },
+    },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof BaseRadioButton>;
+type Story = StoryObj<typeof BaseCheckbox>;
 
 export const Default: Story = {
   args: {
     value: 1,
     default: 'Один',
-    modelValue: null,
+    modelValue: [],
   },
   render: (args) => ({
-    components: { BaseRadioButton },
+    components: { BaseCheckbox },
     setup() {
-      const modelValue = ref<unknown>(args.modelValue);
+      const modelValue = ref<unknown[]>(args.modelValue || []);
       watchEffect(() => {
         const value = args.modelValue;
         if (value) modelValue.value = value;
@@ -32,42 +40,42 @@ export const Default: Story = {
       return { args, modelValue };
     },
     template: `
-      <BaseRadioButton
+      <BaseCheckbox
         v-bind="args"
         v-model="modelValue"
       >
         {{ args.default }}
-      </BaseRadioButton>
+      </BaseCheckbox>
       <p class="mt-2">modelValue: <b>{{ modelValue }}</b></p>
     `,
   }),
 };
 
 export const MultipleButtons: Story = {
-  args: { value: 1, default: 'Один', modelValue: null },
+  args: { value: 1, default: 'Один', modelValue: [] },
   render: (args) => ({
-    components: { BaseRadioButton },
+    components: { BaseCheckbox },
     setup() {
-      const modelValue = ref<unknown>(args.modelValue);
+      const modelValue = ref<unknown[]>(args.modelValue || []);
       return { args, modelValue };
     },
     template: `
-      <BaseRadioButton
+      <BaseCheckbox
         v-bind="args"
         :value="1"
         v-model="modelValue"
       >
         Один
-      </BaseRadioButton>
+      </BaseCheckbox>
 
-      <BaseRadioButton
+      <BaseCheckbox
         class="mt-1"
         v-bind="args"
         :value="2"
         v-model="modelValue"
       >
         Два
-      </BaseRadioButton>
+      </BaseCheckbox>
       <p class="mt-2">modelValue: <b>{{ modelValue }}</b></p>
     `,
   }),

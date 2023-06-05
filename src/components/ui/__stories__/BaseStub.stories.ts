@@ -3,6 +3,7 @@ import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseStub from '@/components/ui/BaseStub.vue';
 
 const meta: Meta<typeof BaseStub> = {
+  title: 'ui/BaseStub',
   component: BaseStub,
   tags: ['autodocs'],
   argTypes: {

@@ -55,7 +55,7 @@
   const toast = useToast();
   const authMutation = useAuthMutation({ onError });
   const authStore = useAuthStore();
-  const handleMenuNode = ref();
+  const handleMenuNode = ref<HTMLElement | undefined>(undefined);
   const isMenuOpen = ref(false);
 
   const fio = computed(() => {

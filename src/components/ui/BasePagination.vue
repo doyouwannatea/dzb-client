@@ -43,12 +43,27 @@
   import { computed, ref, watch } from 'vue';
 
   type Props = {
+    /**
+     * Текущая страница
+     */
     page: number;
+    /**
+     * Общее количество элементов для расчёта страниц пагинации
+     */
     totalItems: number;
+    /**
+     * Количество элементов на странице
+     */
     pageSize: number;
+    /**
+     * Максимальное количество видимых ссылок пагинации
+     */
     pagesVisible: number;
   };
   type Emits = {
+    /**
+     * Событие изменения страницы
+     */
     (event: 'update:page', page: number): void;
   };
 

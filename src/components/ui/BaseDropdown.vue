@@ -5,13 +5,14 @@
     :style="{ ...position }"
     class="dropdown"
   >
+    <!-- @slot Тело выпадающего меню -->
     <slot></slot>
   </BasePanel>
 </template>
 
 <script setup lang="ts">
   import { onClickOutside } from '@vueuse/core';
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import { isPartOfNode } from '@/helpers/dom';
   import BasePanel from './BasePanel.vue';
 
@@ -22,11 +23,23 @@
     bottom?: string;
   };
   type Props = {
+    /**
+     * Выпадающее меню открыто / закрыто
+     */
     isOpen: boolean;
+    /**
+     * HTML элемент относительно которого будет позиционироваться выпадающее меню
+     */
     handleNode?: HTMLElement;
+    /**
+     * Смещение относительно родителя
+     */
     position?: Position;
   };
   type Emits = {
+    /**
+     * Событие обновления isOpen
+     */
     (e: 'update:isOpen', isOpen: boolean): void;
   };
 
@@ -36,6 +49,16 @@
   });
   const emit = defineEmits<Emits>();
   const root = ref(null);
+
+  watch(
+    () => props.handleNode,
+    (handleNode, prevHandleNode) => {
+      if (!handleNode) return;
+      if (handleNode === prevHandleNode) return;
+      handleNode.style.position = 'relative';
+    },
+    { immediate: true },
+  );
 
   onClickOutside(root, (evt) => {
     if (isPartOfNode(evt.target as HTMLElement, props.handleNode)) return;

@@ -34,6 +34,9 @@
   import BaseButton from './BaseButton.vue';
 
   interface Props {
+    /**
+     * Кнопка вкл / выкл
+     */
     disabled?: boolean;
   }
 

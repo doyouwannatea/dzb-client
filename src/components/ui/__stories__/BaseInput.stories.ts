@@ -1,31 +1,20 @@
 import { Meta, StoryObj } from '@storybook/vue3';
 import { ref, watchEffect } from 'vue';
-import BaseTextarea, { TextareaResize } from '@/components/ui/BaseTextarea.vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
+import checkedIconUrl from '@/assets/icons/checked.svg?url';
 
-const resizePropVariants: TextareaResize[] = [
-  'both',
-  'horizontal',
-  'vertical',
-  'none',
-];
-
-const meta: Meta<typeof BaseTextarea> = {
-  component: BaseTextarea,
+const meta: Meta<typeof BaseInput> = {
+  title: 'ui/BaseInput',
+  component: BaseInput,
   tags: ['autodocs'],
-  argTypes: {
-    resize: {
-      control: 'select',
-      options: resizePropVariants,
-    },
-  },
 };
 
 export default meta;
-type Story = StoryObj<typeof BaseTextarea>;
+type Story = StoryObj<typeof BaseInput>;
 
 export const Default: Story = {
   render: (args) => ({
-    components: { BaseTextarea },
+    components: { BaseInput },
     setup() {
       const value = ref<string>(args.modelValue || '');
       watchEffect(() => {
@@ -36,9 +25,10 @@ export const Default: Story = {
     },
     template: `
     <div class="text-area">
-      <BaseTextarea v-bind="args" placeholder="Введите текст" v-model="value" />
+      <BaseInput v-bind="args" placeholder="Введите текст" v-model="value" />
       <div class="mt-2">modelValue: <b>{{ value }}</b></div>
     </div>
     `,
   }),
 };
+export const WithIcon: Story = { ...Default, args: { icon: checkedIconUrl } };

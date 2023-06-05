@@ -1,25 +1,40 @@
 <template>
   <transition name="btn">
-    <BaseButton v-if="visible" class="btn" @click="scroll" />
+    <BaseButton v-if="props.visible" class="btn" @click="scroll" />
   </transition>
 </template>
 
 <script setup lang="ts">
-  import { computed, onBeforeMount, onBeforeUnmount, ref } from 'vue';
+  import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
   import BaseButton from './BaseButton.vue';
 
-  const topOffset = 0;
-  const fromTop = ref<number | undefined>(undefined);
-  const visible = computed(
-    () => fromTop.value !== undefined && fromTop.value > topOffset,
-  );
+  type Props = {
+    /**
+     * Кнопка видна / не видна
+     */
+    visible: boolean;
+    /**
+     * Расстояние от верха страницы до места в котором кнопка начнёт отображаться
+     */
+    topOffset?: number;
+  };
+  type Emits = {
+    /**
+     * Событие обновляет props.visible. <br /> <i>Срабатывает во время скролла страницы.</i>
+     */
+    (event: 'update:visible', visible: boolean): void;
+  };
+
+  const props = withDefaults(defineProps<Props>(), { topOffset: 0 });
+  const emit = defineEmits<Emits>();
 
   function scroll() {
     window.scrollTo({ behavior: 'smooth', left: 0, top: 0 });
   }
 
   function onScroll() {
-    fromTop.value = Math.floor(scrollY);
+    const fromTop = Math.floor(scrollY);
+    emit('update:visible', fromTop !== undefined && fromTop > props.topOffset);
   }
 
   onBeforeMount(() => {

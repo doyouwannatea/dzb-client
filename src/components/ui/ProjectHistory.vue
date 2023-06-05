@@ -26,7 +26,13 @@
   }
 
   interface Props {
+    /**
+     * Список проектов для отображения
+     */
     projectList: Project[];
+    /**
+     * Текущий ID проекта. Выделяется среди остальных проектов
+     */
     currentProjectId: number;
   }
 

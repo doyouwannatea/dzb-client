@@ -6,6 +6,7 @@ import BaseEmptyCard, {
 const sizePropVariants: EmptyCardSize[] = ['s', 'm'];
 
 const meta: Meta<typeof BaseEmptyCard> = {
+  title: 'ui/BaseEmptyCard',
   component: BaseEmptyCard,
   tags: ['autodocs'],
   argTypes: {

@@ -20,6 +20,7 @@
       </BaseButton>
     </li>
     <li v-if="$slots['after-list']">
+      <!-- @slot Контент, который идёт сразу после списка, но является элементом списка -->
       <slot name="after-list"></slot>
     </li>
   </ul>
@@ -33,16 +34,41 @@
   import BaseTag from './BaseTag.vue';
 
   type Props = {
+    /**
+     * Список тегов
+     */
     tagList: Tag<number | string>[];
+    /**
+     * Показать все теги сразу
+     */
     showAll?: boolean;
+    /**
+     * Сколько тегов видно по умолчанию
+     */
     defaultVisible?: number;
+    /**
+     * Выключить теги
+     */
     disableAll?: boolean;
+    /**
+     * Делает теги удаляемыми. Используйте вместе с событием <code>delete</code>
+     */
     deletable?: boolean;
+    /**
+     * Вариант тега для отображения
+     */
     tagVariant?: 'primary' | 'outlined';
+    /**
+     * Склонение числительных для кнопки, которая отображает дополнительные теги<br>
+     * <i>Пример: показать 1 тег, 2 тега, 5 тегов</i>
+     */
     declOfNum?: [string, string, string];
   };
 
   type Emits = {
+    /**
+     * Событие удаления тега, если включена опция <code>deletable</code>
+     */
     (e: 'delete', tag: Tag<number | string>): void;
   };
 

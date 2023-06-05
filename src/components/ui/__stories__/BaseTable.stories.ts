@@ -10,6 +10,7 @@ const initialRows: RowData[] = [
 const initialHeaders: string[] = ['Номер', 'Имя', 'Фамилия', 'Группа'];
 
 const meta: Meta<typeof BaseTable> = {
+  title: 'ui/BaseTable',
   component: BaseTable,
   tags: ['autodocs'],
 };

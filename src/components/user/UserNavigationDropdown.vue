@@ -17,7 +17,7 @@
 
   type Props = {
     isOpen: boolean;
-    handleNode: HTMLElement;
+    handleNode?: HTMLElement;
   };
   type Emits = {
     (e: 'update:isOpen', isOpen: boolean): void;

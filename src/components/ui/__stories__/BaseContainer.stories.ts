@@ -5,6 +5,7 @@ import { ContainerSize } from '@/models/components/BaseContainer';
 const sizePropVariants: ContainerSize[] = [ContainerSize.lg, ContainerSize.md];
 
 const meta: Meta<typeof BaseContainer> = {
+  title: 'ui/BaseContainer',
   component: BaseContainer,
   tags: ['autodocs'],
   argTypes: {

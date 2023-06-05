@@ -19,6 +19,7 @@ const colorPropVariants: (Color | undefined)[] = ['red', 'white', undefined];
 const isPropVariants: Is[] = ['a', 'button', 'router-link'];
 
 const meta: Meta<typeof BaseButton> = {
+  title: 'ui/BaseButton',
   component: BaseButton,
   tags: ['autodocs'],
   argTypes: {

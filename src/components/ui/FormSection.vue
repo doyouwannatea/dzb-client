@@ -5,6 +5,7 @@
       <p class="title">{{ props.title }}</p>
     </div>
     <div v-bind="$attrs" class="content">
+      <!-- @slot Основной контент секции, отображается в правой колонке компонента -->
       <slot></slot>
     </div>
   </section>
@@ -19,7 +20,20 @@
 </script>
 
 <script setup lang="ts">
-  type Props = { tag: string; title: string; divider?: boolean };
+  type Props = {
+    /**
+     * Короткий тег секции, отображается сверху над заголовком
+     */
+    tag: string;
+    /**
+     * Заголовок секции, отображается слева от основного контента
+     */
+    title: string;
+    /**
+     * Опциональный разделитель под секцией
+     */
+    divider?: boolean;
+  };
 
   const props = withDefaults(defineProps<Props>(), {
     divider: false,

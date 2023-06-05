@@ -8,6 +8,7 @@ const posYPropVariants: TooltipPositionY[] = ['bottom', 'top'];
 const posXPropVariants: TooltipPositionX[] = ['left', 'right'];
 
 const meta: Meta<typeof BaseTooltip> = {
+  title: 'ui/BaseTooltip',
   component: BaseTooltip,
   tags: ['autodocs'],
   argTypes: {

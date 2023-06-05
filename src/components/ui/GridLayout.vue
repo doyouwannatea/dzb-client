@@ -3,21 +3,30 @@
     :class="[
       'row',
       {
-        mobile: !$props.cols || $props.cols === 1,
+        mobile: !props.cols || props.cols === 1,
       },
     ]"
     :style="{
-      gridTemplateColumns: gridTemplateCols($props.cols),
+      gridTemplateColumns: getGridTemplateColumns(props.cols),
     }"
   >
+    <!-- @slot Контент макета -->
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-  defineProps<{ cols?: number | string }>();
+  type Props = {
+    /**
+     * Размер и количество колонок макета:<br>
+     * <code>number</code>: количество одинаковых по размеру колонок.<br>
+     * <code>string</code>: соответствует значению из свойства <code>grid-template-columns</code>.
+     */
+    cols?: number | string;
+  };
+  const props = defineProps<Props>();
 
-  function gridTemplateCols(cols?: number | string): string {
+  function getGridTemplateColumns(cols?: number | string): string {
     if (!cols) return '';
     if (typeof cols === 'string') return cols;
 
