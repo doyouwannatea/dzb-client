@@ -4,7 +4,10 @@
     <slot></slot>
     <button class="btn">
       <img class="icon" :src="questionIconUrl" alt="«?»" />
-      <div :class="['tooltip-msg', props.positionY, props.positionX]">
+      <div
+        data-test-id="message"
+        :class="['tooltip-msg', props.positionY, props.positionX]"
+      >
         <!-- @slot Текст подсказки -->
         <slot name="message" :message="props.message">
           {{ props.message }}

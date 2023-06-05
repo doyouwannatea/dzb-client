@@ -29,12 +29,7 @@
   function getGridTemplateColumns(cols?: number | string): string {
     if (!cols) return '';
     if (typeof cols === 'string') return cols;
-
-    let gridTemplateColsStr = '';
-    for (let i = 0; i < cols; i++) {
-      gridTemplateColsStr += '1fr ';
-    }
-    return gridTemplateColsStr;
+    return '1fr '.repeat(cols).trim();
   }
 </script>
 

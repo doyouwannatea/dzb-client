@@ -1,7 +1,7 @@
 <template>
   <BasePanel class="panel">
     <table>
-      <tr>
+      <tr data-test-id="header">
         <!-- @slot Заголовки таблицы -->
         <slot
           v-for="(header, index) in $props.headers"
@@ -19,7 +19,7 @@
         :key="key || rowIndex"
         name="row"
       >
-        <tr>
+        <tr data-test-id="row">
           <td v-for="(column, columnIndex) in row" :key="columnIndex">
             {{ column }}
           </td>

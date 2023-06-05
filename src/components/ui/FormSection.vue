@@ -1,10 +1,10 @@
 <template>
   <section class="section" :class="{ divider: props.divider }">
     <div class="meta-info">
-      <div class="tag">{{ props.tag }}</div>
-      <p class="title">{{ props.title }}</p>
+      <div data-test-id="tag" class="tag">{{ props.tag }}</div>
+      <p data-test-id="title" class="title">{{ props.title }}</p>
     </div>
-    <div v-bind="$attrs" class="content">
+    <div data-test-id="content" v-bind="$attrs" class="content">
       <!-- @slot Основной контент секции, отображается в правой колонке компонента -->
       <slot></slot>
     </div>
