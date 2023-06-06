@@ -90,6 +90,9 @@
   });
 
   function onPageChange(page: number) {
-    router.push({ ...route, params: { page } });
+    router.push({
+      ...route,
+      params: { ...route.params, page },
+    });
   }
 </script>
