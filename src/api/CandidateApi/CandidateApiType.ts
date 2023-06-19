@@ -4,9 +4,11 @@ import {
   ParticipationWithProject,
 } from '@/models/Participation';
 import { Project } from '@/models/Project';
+import { ProjectStateID } from '@/models/ProjectState';
 
 export interface CreateProjectParticipationData {
   priority: ParticipationPriority;
+  projectStateId: ProjectStateID;
   projectId: number;
 }
 

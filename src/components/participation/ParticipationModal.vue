@@ -245,6 +245,7 @@
       createProjectParticipationMutation.mutate({
         priority: priorityValue.value,
         projectId: projectsStore.selectedProject.id,
+        projectStateId: projectsStore.selectedProject.state.id,
       });
       priorityValue.value = undefined;
     }

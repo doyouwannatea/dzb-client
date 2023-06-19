@@ -78,9 +78,12 @@ export default class CandidateApi implements CandidateApiType {
   async createProjectParticipation({
     priority,
     projectId,
+    projectStateId,
   }: CreateProjectParticipationData): Promise<void> {
     return baseKyInstance
-      .post(`api/participations/${projectId}`, { json: { priority } })
+      .post(`api/participations/${projectId}`, {
+        json: { priority, state_id: projectStateId },
+      })
       .json();
   }
 
