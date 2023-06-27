@@ -16,9 +16,9 @@
 </template>
 
 <script setup lang="ts">
-  import { useGetUserProjectsQuery } from '@/api/SharedApi/hooks/useGetUserProjectsQuery';
   import ProjectList from '@/components/project/ProjectList.vue';
   import BaseStub from '@/components/ui/BaseStub.vue';
+  import { useGetUserProjectsQuery } from '@/api/SharedApi/hooks/useGetUserProjectsQuery';
 
   const userProjects = useGetUserProjectsQuery();
 </script>

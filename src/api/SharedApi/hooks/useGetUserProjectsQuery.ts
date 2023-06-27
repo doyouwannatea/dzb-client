@@ -1,11 +1,11 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
-import { supervisorApi } from '@/api/SupervisorApi';
-import { isCandidate, isSupervisor } from '@/helpers/typeCheck';
-import { Project } from '@/models/Project';
-import { useAuthStore } from '@/stores/auth/useAuthStore';
-import { AUTH_REQUIRED } from '@/values/error-messages';
 import { candidateApi } from '@/api/CandidateApi';
+import { supervisorApi } from '@/api/SupervisorApi';
 import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
+import { isCandidate, isSupervisor } from '@/helpers/typeCheck';
+import { useAuthStore } from '@/stores/auth/useAuthStore';
+import { Project } from '@/models/Project';
+import { AUTH_REQUIRED } from '@/values/error-messages';
 
 type TQueryFnData = Project[];
 

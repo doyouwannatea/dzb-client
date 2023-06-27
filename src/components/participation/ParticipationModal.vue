@@ -157,28 +157,27 @@
 </template>
 
 <script setup lang="ts">
+  import { storeToRefs } from 'pinia';
   import { ref, watch } from 'vue';
-  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  import {
-    ParticipationPriorityText,
-    ParticipationPriority,
-  } from '@/models/Participation';
-  import checkedIconUrl from '@/assets/icons/checked.svg?url';
+  import { useToast } from 'vue-toastification';
+  import { useCreateProjectParticipationMutation } from '@/api/CandidateApi/hooks/useCreateProjectParticipationMutation';
+  import { useGetParticipationListQuery } from '@/api/CandidateApi/hooks/useGetParticipationListQuery';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
+  import { isCandidate } from '@/helpers/typeCheck';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
   import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { isCandidate } from '@/helpers/typeCheck';
-  import { useSmallDevice } from '@/hooks/useBreakpoints';
-  // components
-  import BaseModal from '../ui/BaseModal.vue';
-  import BaseInput from '../ui/BaseInput.vue';
-  import BaseTooltip from '../ui/BaseTooltip.vue';
-  import BaseRadioButton from '../ui/BaseRadioButton.vue';
+  import { useProjectsStore } from '@/stores/projects/useProjectsStore';
+  import {
+    ParticipationPriority,
+    ParticipationPriorityText,
+  } from '@/models/Participation';
+  import checkedIconUrl from '@/assets/icons/checked.svg?url';
   import BaseButton from '../ui/BaseButton.vue';
+  import BaseInput from '../ui/BaseInput.vue';
+  import BaseModal from '../ui/BaseModal.vue';
+  import BaseRadioButton from '../ui/BaseRadioButton.vue';
+  import BaseTooltip from '../ui/BaseTooltip.vue';
   import LabelRequiredIcon from '../ui/label/LabelRequiredIcon.vue';
-  import { useGetParticipationListQuery } from '@/api/CandidateApi/hooks/useGetParticipationListQuery';
-  import { useCreateProjectParticipationMutation } from '@/api/CandidateApi/hooks/useCreateProjectParticipationMutation';
-  import { useToast } from 'vue-toastification';
-  import { storeToRefs } from 'pinia';
 
   const toast = useToast();
   const projectsStore = useProjectsStore();
@@ -246,6 +245,7 @@
       createProjectParticipationMutation.mutate({
         priority: priorityValue.value,
         projectId: projectsStore.selectedProject.id,
+        projectStateId: projectsStore.selectedProject.state.id,
       });
       priorityValue.value = undefined;
     }

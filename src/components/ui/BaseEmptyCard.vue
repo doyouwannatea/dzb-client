@@ -3,8 +3,13 @@
 </template>
 
 <script setup lang="ts">
+  export type EmptyCardSize = 's' | 'm';
+
   interface Props {
-    size?: 's' | 'm';
+    /**
+     * Высота карточки
+     */
+    size?: EmptyCardSize;
   }
 
   const props = withDefaults(defineProps<Props>(), {

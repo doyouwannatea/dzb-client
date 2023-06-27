@@ -1,6 +1,6 @@
-import { useQuery, UseQueryOptions } from 'vue-query';
-import SupervisorApiType from '@/api/SupervisorApi/SupervisorApiType';
+import { UseQueryOptions, useQuery } from 'vue-query';
 import { supervisorApi } from '@/api/SupervisorApi';
+import SupervisorApiType from '@/api/SupervisorApi/SupervisorApiType';
 import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 
 type TQueryFnData = Awaited<

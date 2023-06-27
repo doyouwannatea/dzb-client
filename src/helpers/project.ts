@@ -1,15 +1,15 @@
+import { sharedApi } from '@/api/SharedApi';
 import { Candidate } from '@/models/Candidate';
 import { Project } from '@/models/Project';
 import { ProjectDifficulty } from '@/models/ProjectDifficulty';
-import { PROJECT_IDS, ProjectStateID } from '@/models/ProjectState';
-import { deepClone } from './object';
-import { formatDate } from './string';
 import {
   CreatedProjectProposal,
   PROJECT_PROPOSAL_IDS,
   ProjectProposalStateId,
 } from '@/models/ProjectProposal';
-import { sharedApi } from '@/api/SharedApi';
+import { PROJECT_IDS, ProjectStateID } from '@/models/ProjectState';
+import { deepClone } from './object';
+import { formatDate } from './string';
 
 export function formatProjectDate<T extends Project | CreatedProjectProposal>(
   project: T,

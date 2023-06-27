@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-  import BaseStub from '@/components/ui/BaseStub.vue';
   import OpenParticipationModalButton from '@/components/participation/OpenParticipationModalButton.vue';
+  import BaseStub from '@/components/ui/BaseStub.vue';
   import { Project } from '@/models/Project';
 
   type Props = {

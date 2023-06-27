@@ -23,12 +23,12 @@
 <script setup lang="ts">
   import { toRefs } from 'vue';
   import { RouterLink } from 'vue-router';
-  import { ProjectState } from '@/models/ProjectState';
-  import { RouteNames } from '@/router/types/route-names';
   import {
     canViewParticipants,
     canViewParticipations,
   } from '@/helpers/project';
+  import { RouteNames } from '@/router/types/route-names';
+  import { ProjectState } from '@/models/ProjectState';
 
   interface Props {
     projectState: ProjectState;

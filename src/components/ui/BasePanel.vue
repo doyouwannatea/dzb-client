@@ -1,5 +1,6 @@
 <template>
   <div class="panel">
+    <!-- @slot Контент внутри панели -->
     <slot></slot>
   </div>
 </template>

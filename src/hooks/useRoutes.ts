@@ -1,6 +1,6 @@
-import { useRouter, RouteLocationRaw } from 'vue-router';
-import { useCheckRole } from './useCheckRole';
+import { RouteLocationRaw, useRouter } from 'vue-router';
 import { hasHistory } from '@/helpers/history';
+import { useCheckRole } from './useCheckRole';
 
 export const useUserNavigationRoutes = () => {
   const router = useRouter();

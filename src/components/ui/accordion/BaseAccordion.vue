@@ -6,7 +6,9 @@
         class="title"
         @click="emits('update:opened', !props.opened)"
       >
+        <!-- @slot Слот для заголовка компонента -->
         <slot name="title"></slot>
+        <!-- @slot Слот для иконки компонента, по дефолту стоит стрелка -->
         <slot name="icon">
           <span class="icon"></span>
         </slot>
@@ -23,6 +25,7 @@
         ref="contentRef"
         :class="['content', { animated: props.animated }]"
       >
+        <!-- @slot Слот контента компонента -->
         <slot name="content"></slot>
       </div>
     </Transition>
@@ -30,13 +33,22 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted, ref, Transition } from 'vue';
+  import { Transition, onMounted, onUnmounted, ref } from 'vue';
 
   interface Props {
+    /**
+     * Компонент открыт / закрыт
+     */
     opened?: boolean;
+    /**
+     * Анимация вкл / выкл
+     */
     animated?: boolean;
   }
   interface Emits {
+    /**
+     * Событие обновляет props.opened при нажатии на заголовок компонента
+     */
     (e: 'update:opened', opened: boolean): void;
   }
 

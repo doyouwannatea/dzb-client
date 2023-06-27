@@ -1,7 +1,7 @@
-import { useMutation, useQueryClient, UseMutationOptions } from 'vue-query';
-import { USE_GET_PROJECT_PROPOSAL_LIST_QUERY_KEY } from './useGetProjectProposalListQuery';
-import SupervisorApiType from '@/api/SupervisorApi/SupervisorApiType';
+import { UseMutationOptions, useMutation, useQueryClient } from 'vue-query';
 import { supervisorApi } from '@/api/SupervisorApi';
+import SupervisorApiType from '@/api/SupervisorApi/SupervisorApiType';
+import { USE_GET_PROJECT_PROPOSAL_LIST_QUERY_KEY } from './useGetProjectProposalListQuery';
 
 type TData = Awaited<ReturnType<SupervisorApiType['deleteProjectProposal']>>;
 type TVariables = Parameters<SupervisorApiType['deleteProjectProposal']>[0];

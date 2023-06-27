@@ -9,5 +9,22 @@
   "arrowParens": "always",
   "printWidth": 80,
   "endOfLine": "auto",
-  "vueIndentScriptAndStyle": true
+  "vueIndentScriptAndStyle": true,
+  "importOrder": [
+    "^(.*/pages/.*)$",
+    "^(.*/components/.*)$",
+    "^(.*/api/.*)$",
+    "^(.*/hooks/.*)$",
+    "^(.*/helpers/.*)$",
+    "^(.*/router/.*)$",
+    "^(.*/stores/.*)$",
+    "^(.*/types/.*)$",
+    "^(.*/models/.*)$",
+    "^(.*/values/.*)$",
+    "^(.*/assets/.*)$",
+    "^(.*/styles/.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": false,
+  "importOrderSortSpecifiers": true
 }

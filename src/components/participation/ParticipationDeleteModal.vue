@@ -27,9 +27,8 @@
 
 <script setup lang="ts">
   import { Participation } from '@/models/Participation';
-  // components
-  import BaseModal from '../ui/BaseModal.vue';
   import BaseButton from '../ui/BaseButton.vue';
+  import BaseModal from '../ui/BaseModal.vue';
 
   type Props = {
     isShow: boolean;

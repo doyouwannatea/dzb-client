@@ -32,14 +32,14 @@
 
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
-  import { useSmallDevice } from '@/hooks/useBreakpoints';
-  import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
-  import { useUserTimer } from '@/hooks/useUserTimer';
-  import SidebarContainer from '@/components/layout/SidebarContainer.vue';
-  import UserNavigation from './UserNavigation.vue';
   import DeadlineTimer from '@/components/layout/DeadlineTimer.vue';
   import PageLayout from '@/components/layout/PageLayout.vue';
+  import SidebarContainer from '@/components/layout/SidebarContainer.vue';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
+  import { useUserTimer } from '@/hooks/useUserTimer';
+  import { useWatchAuthorization } from '@/hooks/useWatchAuthorization';
   import UserCreateProjectLink from './UserCreateProjectLink.vue';
+  import UserNavigation from './UserNavigation.vue';
 
   const isSmallDevice = useSmallDevice();
   const time = useUserTimer();

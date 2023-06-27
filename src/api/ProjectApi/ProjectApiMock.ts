@@ -1,16 +1,16 @@
 import { DownloadProgress } from 'ky';
+import { formatProjectDate } from '@/helpers/project';
+import { delayRes, sleep } from '@/helpers/promise';
+import { Candidate } from '@/models/Candidate';
 import type {
   Project,
   ProjectFilters,
   ProjectTags,
   ProjectType,
 } from '@/models/Project';
-import { projectListResponse, states, types } from '@/models/mock/project';
-import { delayRes, sleep } from '@/helpers/promise';
 import { ProjectState } from '@/models/ProjectState';
-import { formatProjectDate } from '@/helpers/project';
+import { projectListResponse, states, types } from '@/models/mock/project';
 import { skills } from '@/models/mock/project-skills';
-import { Candidate } from '@/models/Candidate';
 import { specialties } from '@/models/mock/specialties';
 import ProjectApiType, {
   OnDownloadProgress,

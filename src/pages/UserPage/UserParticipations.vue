@@ -116,32 +116,31 @@
 </template>
 
 <script setup lang="ts">
+  import { storeToRefs } from 'pinia';
+  import { computed, ref, watch } from 'vue';
+  import { useToast } from 'vue-toastification';
   import Draggable from 'vuedraggable';
-  import { ref, watch, computed } from 'vue';
-  import {
-    Participation,
-    ParticipationPriority,
-    ALL_PRIORITIES,
-    ParticipationWithProject,
-  } from '@/models/Participation';
-  import { immutableArraySort } from '@/helpers/object';
-  import { useSmallDevice } from '@/hooks/useBreakpoints';
-  import cursorIconUrl from '@/assets/icons/cursor.svg?url';
-  // components
-  import ParticipationCard from '@/components/participation/ParticipationCard.vue';
-  import UserParticipationListStub from './UserParticipationListStub.vue';
-  import BaseButton from '@/components/ui/BaseButton.vue';
-  import ParticipationDeleteModal from '@/components/participation/ParticipationDeleteModal.vue';
   import LoadingParticipationsList from '@/pages/UserPage/LoadingParticipationsList.vue';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import { isCandidate } from '@/helpers/typeCheck';
-  import { isAutoParticipation } from '@/api/CandidateApi/utils/participations';
+  import ParticipationCard from '@/components/participation/ParticipationCard.vue';
+  import ParticipationDeleteModal from '@/components/participation/ParticipationDeleteModal.vue';
+  import BaseButton from '@/components/ui/BaseButton.vue';
   import { useDeleteParticipationMutation } from '@/api/CandidateApi/hooks/useDeleteParticipationMutation';
   import { useGetParticipationListQuery } from '@/api/CandidateApi/hooks/useGetParticipationListQuery';
   import { useUpdateParticipationListMutation } from '@/api/CandidateApi/hooks/useUpdateParticipationListMutation';
-  import { useToast } from 'vue-toastification';
-  import { storeToRefs } from 'pinia';
+  import { isAutoParticipation } from '@/api/CandidateApi/utils/participations';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
+  import { immutableArraySort } from '@/helpers/object';
+  import { isCandidate } from '@/helpers/typeCheck';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import {
+    ALL_PRIORITIES,
+    Participation,
+    ParticipationPriority,
+    ParticipationWithProject,
+  } from '@/models/Participation';
+  import cursorIconUrl from '@/assets/icons/cursor.svg?url';
+  import UserParticipationListStub from './UserParticipationListStub.vue';
 
   type EditableListItem = {
     order: number;

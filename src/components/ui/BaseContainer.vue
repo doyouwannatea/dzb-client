@@ -3,6 +3,7 @@
     class="container"
     :style="{ maxWidth: `calc(${size}px + var(--side-padding) * 2)` }"
   >
+    <!-- @slot Контент контейнера -->
     <slot></slot>
   </div>
 </template>
@@ -11,7 +12,12 @@
   import { toRefs } from '@vueuse/core';
   import { ContainerSize } from '@/models/components/BaseContainer';
 
-  type Props = { size?: ContainerSize };
+  type Props = {
+    /**
+     * Размер контейнера
+     */
+    size?: ContainerSize;
+  };
 
   const props = withDefaults(defineProps<Props>(), { size: ContainerSize.lg });
   const { size } = toRefs(props);

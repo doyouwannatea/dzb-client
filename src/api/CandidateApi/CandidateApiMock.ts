@@ -1,26 +1,25 @@
 import { deepClone } from '@/helpers/object';
+import { formatProjectDate } from '@/helpers/project';
 import { delayRes } from '@/helpers/promise';
 import { isSupervisor } from '@/helpers/typeCheck';
-import { participationList } from '@/models/mock/participation';
-import { projectListResponse } from '@/models/mock/project';
 import {
-  ParticipationWithProject,
+  Participation,
   ParticipationPriority,
   ParticipationState,
-  Participation,
+  ParticipationWithProject,
 } from '@/models/Participation';
+import { Project } from '@/models/Project';
+import { ProjectStateID } from '@/models/ProjectState';
+import { archiveProjectIdList } from '@/models/mock/candidate';
+import { participationList } from '@/models/mock/participation';
+import { projectListResponse } from '@/models/mock/project';
 import { AUTH_REQUIRED } from '@/values/error-messages';
-
+import { authApi } from '../AuthApi';
+import { getAuthTokenFromCookies } from '../AuthApi/utils/authToken';
+import CandidateApi from './CandidateApi';
 import CandidateApiType, {
   CreateProjectParticipationData,
 } from './CandidateApiType';
-import CandidateApi from './CandidateApi';
-import { Project } from '@/models/Project';
-import { formatProjectDate } from '@/helpers/project';
-import { archiveProjectIdList } from '@/models/mock/candidate';
-import { ProjectStateID } from '@/models/ProjectState';
-import { getAuthTokenFromCookies } from '../AuthApi/utils/authToken';
-import { authApi } from '../AuthApi';
 import { filterValidParticipations } from './utils/participations';
 
 export default class CandidateApiMock implements CandidateApiType {

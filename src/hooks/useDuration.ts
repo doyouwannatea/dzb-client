@@ -1,5 +1,5 @@
-import { ref, watchEffect, onUnmounted } from 'vue';
 import { Duration } from 'luxon';
+import { onUnmounted, ref, watchEffect } from 'vue';
 import { declOfNum } from '@/helpers/string';
 
 export const useDuration = (start: Date, deadline: Date) => {

@@ -19,12 +19,11 @@
 </template>
 
 <script setup lang="ts">
-  import { watch, ref } from 'vue';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { ref, watch } from 'vue';
   import { getRandomIntInclusive } from '@/helpers/number';
-  // components
-  import BaseModal from '../ui/BaseModal.vue';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
   import BaseButton from '../ui/BaseButton.vue';
+  import BaseModal from '../ui/BaseModal.vue';
 
   const modalsStore = useModalsStore();
   const buttonTextVariants = ['Понятно', 'Ясно', 'Хорошо', 'Закрыть'];

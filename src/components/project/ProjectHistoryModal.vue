@@ -20,7 +20,6 @@
 
 <script setup lang="ts">
   import { Project } from '@/models/Project';
-  // components
   import BaseModal, {
     Emits as BaseModalEmits,
     Props as BaseModalProps,

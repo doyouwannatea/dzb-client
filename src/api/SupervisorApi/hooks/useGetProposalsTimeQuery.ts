@@ -1,7 +1,7 @@
 import { UseQueryOptions, useQuery } from 'vue-query';
+import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 import { supervisorApi } from '..';
 import SupervisorApiType from '../SupervisorApiType';
-import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 
 type TQueryFnData = Awaited<ReturnType<SupervisorApiType['getProposalsTime']>>;
 

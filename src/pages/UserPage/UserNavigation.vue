@@ -63,11 +63,11 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
+  import IntituteProjectsQuota from '@/components/project-proposal/IntituteProjectsQuota.vue';
   import SimpleAccordion from '@/components/ui/accordion/SimpleAccordion.vue';
+  import { useLogoutWithModalMutation } from '@/api/AuthApi/hooks/useLogoutWithModalMutation';
   import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
   import { RouteNames } from '@/router/types/route-names';
-  import { useLogoutWithModalMutation } from '@/api/AuthApi/hooks/useLogoutWithModalMutation';
-  import IntituteProjectsQuota from '@/components/project-proposal/IntituteProjectsQuota.vue';
   import OnReviewProposalsLabel from './OnReviewProposalsLabel.vue';
 
   type Props = { variant: 'desktop' | 'mobile' };

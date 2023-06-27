@@ -123,22 +123,22 @@
 
 <script setup lang="ts">
   import { computed, ref } from 'vue';
+  import { useToast } from 'vue-toastification';
   import BaseButton from '@/components/ui/BaseButton.vue';
+  import { useDeleteProjectProposalMutation } from '@/api/SupervisorApi/hooks/useDeleteProjectProposalMutation';
+  import { useUpdateProjectProposalMutation } from '@/api/SupervisorApi/hooks/useUpdateProjectProposalMutation';
   import { toProjectProposalCreateRoute } from '@/router/utils/routes';
+  import { useAuthStore } from '@/stores/auth/useAuthStore';
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
   import {
     CreatedProjectProposal,
     MemberRole,
     ProjectProposalStateId,
   } from '@/models/ProjectProposal';
-  import { useAuthStore } from '@/stores/auth/useAuthStore';
-  import penIcon from '@/assets/icons/pen.svg?raw';
   import accentQuestionIcon from '@/assets/icons/accent-question-icon.svg?raw';
-  import ProjectProposalRejectionReasonModal from './ProjectProposalRejectionReasonModal.vue';
-  import { useToast } from 'vue-toastification';
+  import penIcon from '@/assets/icons/pen.svg?raw';
   import ProjectProposalCard from './ProjectProposalCard.vue';
-  import { useUpdateProjectProposalMutation } from '@/api/SupervisorApi/hooks/useUpdateProjectProposalMutation';
-  import { useDeleteProjectProposalMutation } from '@/api/SupervisorApi/hooks/useDeleteProjectProposalMutation';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import ProjectProposalRejectionReasonModal from './ProjectProposalRejectionReasonModal.vue';
 
   interface Props {
     projectProposal: CreatedProjectProposal;

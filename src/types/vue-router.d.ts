@@ -1,6 +1,6 @@
 import 'vue-router';
-import { UserRoleKey } from '@/models/User';
 import { RouteNames } from '@/router/types/route-names';
+import { UserRoleKey } from '@/models/User';
 
 type NavType = 'main-nav' | 'user-nav' | 'mobile-nav';
 

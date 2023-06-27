@@ -9,10 +9,9 @@
 </template>
 
 <script setup lang="ts">
-  import { useProjectFilters } from '@/hooks/useProjectFilters';
-  // components
-  import BaseStub from '@/components/ui/BaseStub.vue';
   import BaseButton from '@/components/ui/BaseButton.vue';
+  import BaseStub from '@/components/ui/BaseStub.vue';
+  import { useProjectFilters } from '@/hooks/useProjectFilters';
 
   const { clearFilter } = useProjectFilters();
 

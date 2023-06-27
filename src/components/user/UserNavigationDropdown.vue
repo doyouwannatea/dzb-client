@@ -10,15 +10,14 @@
 <script setup lang="ts">
   import { watch } from 'vue';
   import { useRoute } from 'vue-router';
-  import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
   import { DropdownItem } from '@/models/components/DropdownItem';
-  // components
-  import DropdownList from '../ui/DropdownList.vue';
   import { useLogoutWithModalMutation } from '@/api/AuthApi/hooks/useLogoutWithModalMutation';
+  import { useRoledUserNavigationRoutes } from '@/hooks/useRoutes';
+  import DropdownList from '../ui/DropdownList.vue';
 
   type Props = {
     isOpen: boolean;
-    handleNode: HTMLElement;
+    handleNode?: HTMLElement;
   };
   type Emits = {
     (e: 'update:isOpen', isOpen: boolean): void;

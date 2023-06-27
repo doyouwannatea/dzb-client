@@ -1,5 +1,5 @@
-import { ProjectFilters } from '@/models/Project';
 import { defineStore } from 'pinia';
+import { ProjectFilters } from '@/models/Project';
 import { DEFAULT_FILTERS, state } from './state';
 
 export const useProjectsStore = defineStore('projects', {

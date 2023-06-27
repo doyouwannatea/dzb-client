@@ -1,4 +1,4 @@
-import { LocationQueryValue, LocationQuery } from 'vue-router';
+import { LocationQuery, LocationQueryValue } from 'vue-router';
 import { ProjectFilters } from './Project';
 
 export type ProjectFiltersLocationQuery =

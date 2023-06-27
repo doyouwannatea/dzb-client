@@ -1,6 +1,6 @@
-import { useMutation, UseMutationOptions, useQueryClient } from 'vue-query';
-import AuthApiType from '../AuthApiType';
+import { UseMutationOptions, useMutation, useQueryClient } from 'vue-query';
 import { authApi } from '..';
+import AuthApiType from '../AuthApiType';
 
 type TData = Awaited<ReturnType<AuthApiType['logout']>>;
 

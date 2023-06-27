@@ -1,9 +1,14 @@
 <template>
   <div class="tooltip-container">
+    <!-- @slot Контент, в правом верхнем углу которого будет появляться подсказка -->
     <slot></slot>
     <button class="btn">
       <img class="icon" :src="questionIconUrl" alt="«?»" />
-      <div :class="['tooltip-msg', props.positionY, props.positionX]">
+      <div
+        data-test-id="message"
+        :class="['tooltip-msg', props.positionY, props.positionX]"
+      >
+        <!-- @slot Текст подсказки -->
         <slot name="message" :message="props.message">
           {{ props.message }}
         </slot>
@@ -14,10 +19,22 @@
 
 <script setup lang="ts">
   import questionIconUrl from '@/assets/icons/question.svg?url';
+
+  export type TooltipPositionY = 'top' | 'bottom';
+  export type TooltipPositionX = 'left' | 'right';
   type Props = {
+    /**
+     * Текст подсказки
+     */
     message?: string;
-    positionY?: 'top' | 'bottom';
-    positionX?: 'left' | 'right';
+    /**
+     * Позиция подсказки по Y относительно основного текста
+     */
+    positionY?: TooltipPositionY;
+    /**
+     * Позиция подсказки по X относительно основного текста
+     */
+    positionX?: TooltipPositionX;
   };
   const props = withDefaults(defineProps<Props>(), {
     message: '',

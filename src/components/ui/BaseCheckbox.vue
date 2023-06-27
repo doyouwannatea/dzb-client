@@ -8,6 +8,7 @@
       :value="value"
       @change="onChange"
     />
+    <!-- @slot Имя чекбокса -->
     <slot></slot>
   </label>
 </template>
@@ -16,11 +17,28 @@
   import { computed } from 'vue';
 
   type Props = {
+    /**
+     * Связанный с чекбоксами массив. Будет изменяться при переключении чекбоксов
+     */
     modelValue?: unknown[];
+    /**
+     * Значение, привязанное к чекбоксу
+     */
     value: unknown;
+    /**
+     * Чекбокс вкл / выкл
+     */
     disabled?: boolean;
   };
-  type Emits = { (e: 'update:modelValue', value: unknown): void };
+  type Emits = {
+    /**
+     * Обновление массива modelValue
+     *
+     * @event update:modelValue
+     * @property {unknown} value заменяет modelValue новым массивом с элементом чекбокса, или без него
+     */
+    (e: 'update:modelValue', value: unknown): void;
+  };
 
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();

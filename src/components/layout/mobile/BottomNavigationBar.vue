@@ -14,11 +14,11 @@
 </template>
 
 <script setup lang="ts">
-  import { RouterLink } from 'vue-router';
-  import { useMobileNavigationRoutes } from '@/hooks/useRoutes';
   import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
+  import { RouterLink } from 'vue-router';
   import BaseContainer from '@/components/ui/BaseContainer.vue';
   import { ContainerSize } from '@/models/components/BaseContainer';
+  import { useMobileNavigationRoutes } from '@/hooks/useRoutes';
 
   const mobileRoutes = useMobileNavigationRoutes();
 

@@ -1,18 +1,27 @@
 <template>
   <section class="panel">
+    <!-- @slot Заголовок -->
     <slot name="title">
       <h1 v-if="title" class="title">{{ title }}</h1>
     </slot>
+    <!-- @slot Подзаголовок -->
     <slot name="subtitle">
       <p v-if="subtitle" class="subtitle">{{ subtitle }}</p>
     </slot>
+    <!-- @slot Слот в нижней части компонента для контролов -->
     <slot name="button"></slot>
   </section>
 </template>
 
 <script setup lang="ts">
   type Props = {
+    /**
+     * Заголовок
+     */
     title?: string;
+    /**
+     * Подзаголовок
+     */
     subtitle?: string;
   };
   defineProps<Props>();

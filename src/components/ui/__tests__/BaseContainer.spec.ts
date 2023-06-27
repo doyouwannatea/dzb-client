@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
-import BaseContainer from '../BaseContainer.vue';
 import { ContainerSize } from '@/models/components/BaseContainer';
+import BaseContainer from '../BaseContainer.vue';
 
 describe('BaseContainer.vue', () => {
   it('компонент отображается', async () => {

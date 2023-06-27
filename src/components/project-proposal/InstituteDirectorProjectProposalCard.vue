@@ -57,21 +57,20 @@
   import { computed, ref } from 'vue';
   import { useToast } from 'vue-toastification';
   import BaseButton from '@/components/ui/BaseButton.vue';
+  import { useReviewProjectProposalMutation } from '@/api/InstituteDirectorApi/hooks/useReviewProjectProposalMutation';
+  import {
+    groupTeamByRoles,
+    sortByRolePriority,
+  } from '@/helpers/project-member-role';
+  import { toProjectProposalCreateRoute } from '@/router/utils/routes';
   import {
     CreatedProjectProposal,
     MemberRole,
     MemberRoleText,
     ProjectProposalStateId,
   } from '@/models/ProjectProposal';
-
   import ProjectProposalCard from './ProjectProposalCard.vue';
-  import {
-    groupTeamByRoles,
-    sortByRolePriority,
-  } from '@/helpers/project-member-role';
-  import { toProjectProposalCreateRoute } from '@/router/utils/routes';
   import ProjectProposalRejectionReasonEditModal from './ProjectProposalRejectionReasonEditModal.vue';
-  import { useReviewProjectProposalMutation } from '@/api/InstituteDirectorApi/hooks/useReviewProjectProposalMutation';
 
   interface Props {
     projectProposal: CreatedProjectProposal;

@@ -40,4 +40,11 @@ describe('BaseButton.vue', () => {
       }
     });
   });
+
+  it('при передаче disabled кнопка выключается', async () => {
+    const wrapper = shallowMount(BaseButton, {
+      props: { disabled: true },
+    });
+    expect(wrapper.find('button').element.disabled).toBeTruthy();
+  });
 });

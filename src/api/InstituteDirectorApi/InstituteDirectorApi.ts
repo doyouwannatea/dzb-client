@@ -1,9 +1,9 @@
+import { handleHttpError } from '@/helpers/error';
 import { CreatedProjectProposal } from '@/models/ProjectProposal';
 import { baseKyInstance } from '../baseKy';
 import InstituteDirectorApiType, {
   ReviewProjectProposalData,
 } from './InstituteDirectorApiType';
-import { handleHttpError } from '@/helpers/error';
 
 export default class InstituteDirectorApi implements InstituteDirectorApiType {
   async reviewProjectProposal(

@@ -19,15 +19,14 @@
 <script setup lang="ts">
   import { computed, watchEffect } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
-  import { compareString } from '@/helpers/string';
-  import { canViewParticipants } from '@/helpers/project';
-  import { Candidate } from '@/models/Candidate';
-  import { toProjectRoute } from '@/router/utils/routes';
-  // components
   import BasePanel from '@/components/ui/BasePanel.vue';
-  import BaseTable, { RowData } from '@/components/ui/BaseTable.vue';
   import BaseStub from '@/components/ui/BaseStub.vue';
+  import BaseTable, { RowData } from '@/components/ui/BaseTable.vue';
   import { useGetSingleProjectQuery } from '@/api/ProjectApi/hooks/useGetSingleProjectQuery';
+  import { canViewParticipants } from '@/helpers/project';
+  import { compareString } from '@/helpers/string';
+  import { toProjectRoute } from '@/router/utils/routes';
+  import { Candidate } from '@/models/Candidate';
 
   const router = useRouter();
 

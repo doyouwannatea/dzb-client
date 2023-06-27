@@ -1,11 +1,11 @@
+import { storeToRefs } from 'pinia';
 import { ComputedRef, computed } from 'vue';
-import { ProjectProposalStateId } from '@/models/ProjectProposal';
 import {
   UseGetInstituteProjectProposalsQueryOptions,
   useGetInstituteProjectProposalsQuery,
 } from '@/api/InstituteDirectorApi/hooks/useGetInstituteProjectProposalsQuery';
 import { useAuthStore } from '@/stores/auth/useAuthStore';
-import { storeToRefs } from 'pinia';
+import { ProjectProposalStateId } from '@/models/ProjectProposal';
 
 type ProposalsCount = Record<ProjectProposalStateId, number>;
 

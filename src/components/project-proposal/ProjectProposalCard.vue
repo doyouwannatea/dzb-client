@@ -37,9 +37,9 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
+  import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
   import BasePanel from '@/components/ui/BasePanel.vue';
   import { toProjectProposalCreateRoute } from '@/router/utils/routes';
-  import ProjectProposalStatus from '@/components/project/ProjectProposalStatus.vue';
   import { CreatedProjectProposal } from '@/models/ProjectProposal';
 
   interface Props {

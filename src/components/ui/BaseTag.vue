@@ -1,5 +1,6 @@
 <template>
   <span :class="['tag', props.variant, { disabled: props.disabled }]">
+    <!-- @slot Контент внутри тега -->
     <slot></slot>
     <button
       v-if="props.deletable"
@@ -12,12 +13,25 @@
 </template>
 
 <script setup lang="ts">
+  export type TagVariant = 'primary' | 'outlined';
   type Props = {
-    variant?: 'primary' | 'outlined';
+    /**
+     * Вариант тега
+     */
+    variant?: TagVariant;
+    /**
+     * Тег вкл / выкл
+     */
     disabled?: boolean;
+    /**
+     * Добавляет к компоненту кнопку удаления
+     */
     deletable?: boolean;
   };
   type Emits = {
+    /**
+     * Событие при нажатии на кнопку удаления
+     */
     (event: 'delete'): void;
   };
 

@@ -1,9 +1,9 @@
-import { UseQueryOptions, useQuery } from 'vue-query';
 import { MaybeRef, get } from '@vueuse/core';
+import { UseQueryOptions, useQuery } from 'vue-query';
 import { projectApi } from '@/api/ProjectApi';
+import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 import { ProjectFilters } from '@/models/Project';
 import ProjectApiType, { OnDownloadProgress } from '../ProjectApiType';
-import { DEFAULT_QUERY_STALE_TIME } from '@/api/baseKy';
 
 type TQueryFnData = Awaited<ReturnType<ProjectApiType['filterProjectList']>>;
 

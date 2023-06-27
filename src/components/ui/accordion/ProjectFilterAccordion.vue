@@ -1,10 +1,13 @@
 <template>
   <SimpleAccordion default-opened class="accordion">
     <template #title>
+      <!-- @slot Слот для заголовка компонента -->
       <slot name="title"></slot>
     </template>
     <template #content>
       <div class="content">
+        <!-- @slot Слот контента компонента -->
+
         <slot name="content"></slot>
       </div>
     </template>

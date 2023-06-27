@@ -1,27 +1,33 @@
 <template>
   <li :class="['info-list-item', { wide }]">
     <h2 class="info-list-title">
+      <!-- @slot Заголовок элемента -->
+
       <slot name="title"></slot>
     </h2>
     <span :class="['info-list-value', { bold }]">
-      <slot></slot>
+      <!-- @slot Контентная часть элемента -->
+      <slot name="default"></slot>
     </span>
   </li>
 </template>
 
 <script setup lang="ts">
-  import { withDefaults } from 'vue';
+  type Props = {
+    /**
+     * Делает элемент списка жирным
+     */
+    bold?: boolean;
+    /**
+     * Увеличивает место для контентной части элемента
+     */
+    wide?: boolean;
+  };
 
-  withDefaults(
-    defineProps<{
-      bold?: boolean;
-      wide?: boolean;
-    }>(),
-    {
-      bold: true,
-      wide: false,
-    },
-  );
+  withDefaults(defineProps<Props>(), {
+    bold: true,
+    wide: false,
+  });
 </script>
 
 <style lang="scss" scoped>

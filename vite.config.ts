@@ -1,8 +1,9 @@
 /// <reference types="vitest" />
 import vue from '@vitejs/plugin-vue';
-import svgLoader from 'vite-svg-loader';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import { join } from 'path';
 import { defineConfig, loadEnv } from 'vite';
+import svgLoader from 'vite-svg-loader';
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -11,7 +12,7 @@ export default ({ mode }) => {
   process.env = { ...process.env, ...env };
 
   return defineConfig({
-    plugins: [vue(), svgLoader()],
+    plugins: [vue(), svgLoader(), vueJsx()],
     resolve: {
       alias: {
         '@': join(__dirname, 'src'),

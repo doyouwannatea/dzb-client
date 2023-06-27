@@ -1,5 +1,5 @@
-import { isCandidate, isSupervisor } from '../typeCheck';
 import { UserCandidate, UserSupervisor } from '@/models/User';
+import { isCandidate, isSupervisor } from '../typeCheck';
 
 describe('typeCheck.ts', () => {
   it('isCandidate()', () => {

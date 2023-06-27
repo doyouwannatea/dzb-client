@@ -1,8 +1,8 @@
-import { ProjectFilters } from '@/models/Project';
-import { ProjectFiltersLocationQuery } from '@/models/LocationQuery';
 import { LocationQueryValue } from 'vue-router';
-import { toString } from './string';
+import { ProjectFiltersLocationQuery } from '@/models/LocationQuery';
+import { ProjectFilters } from '@/models/Project';
 import { ProjectDifficulty } from '@/models/ProjectDifficulty';
+import { toString } from './string';
 
 function locationQueryValueToNumber(
   queryValue: LocationQueryValue | LocationQueryValue[],

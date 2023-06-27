@@ -23,12 +23,11 @@
 </template>
 
 <script setup lang="ts">
-  import searchIconUrl from '@/assets/icons/search.svg?url';
+  import { storeToRefs } from 'pinia';
   import { useProjectSearch } from '@/hooks/useProjectSearch';
   import { useProjectsStore } from '@/stores/projects/useProjectsStore';
-  // components
+  import searchIconUrl from '@/assets/icons/search.svg?url';
   import BaseInput from '../ui/BaseInput.vue';
-  import { storeToRefs } from 'pinia';
 
   const projectStore = useProjectsStore();
   const { loadingProgress } = storeToRefs(projectStore);

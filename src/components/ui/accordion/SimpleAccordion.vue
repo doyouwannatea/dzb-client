@@ -1,9 +1,11 @@
 <template>
   <BaseAccordion v-model:opened="opened" :animated="animated">
     <template #title>
+      <!-- @slot Слот для заголовка компонента -->
       <slot name="title"></slot>
     </template>
     <template #content>
+      <!-- @slot Слот контента компонента -->
       <slot name="content"></slot>
     </template>
   </BaseAccordion>
@@ -14,13 +16,19 @@
   import BaseAccordion from './BaseAccordion.vue';
 
   interface Props {
-    defaultOpened?: boolean;
+    /**
+     * Анимация вкл / выкл
+     */
     animated?: boolean;
+    /**
+     * Открывать при монтировании компонента
+     */
+    defaultOpened?: boolean;
   }
 
   const props = withDefaults(defineProps<Props>(), {
-    defaultOpened: false,
     animated: false,
+    defaultOpened: false,
   });
   const opened = ref(props.defaultOpened);
 </script>

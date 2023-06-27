@@ -1,39 +1,32 @@
 import { RouteRecordRaw } from 'vue-router';
+// P.S. тут раньше были динамические импорты, т.е. "() => import('@/pages/ProjectPage/index.vue')", но они плохо работали на продакшене "projfair.istu.edu", так что было решено оставить обычные импорты для всего приложения
+// Contact page
+import ContactPage from '@/pages/ContactPage.vue';
+// Create project page
+import CreateProjectPage from '@/pages/CreateProjectPage.vue';
+// FAQ page
+import FaqPage from '@/pages/FaqPage.vue';
+// Home page
+import HomePage from '@/pages/HomePage.vue';
+// 404 page
+import NotFoundPage from '@/pages/NotFoundPage.vue';
+// Project page
+import ProjectDetails from '@/pages/ProjectPage/ProjectDetails.vue';
+import ProjectParticipantsList from '@/pages/ProjectPage/ProjectParticipantsList.vue';
+import ProjectParticipationList from '@/pages/ProjectPage/ProjectParticipationList.vue';
+import ProjectPage from '@/pages/ProjectPage/index.vue';
+// User page
+import InstituteDirectorProjectProposals from '@/pages/UserPage/InstituteDirectorProjectProposals.vue';
+import UserParticipations from '@/pages/UserPage/UserParticipations.vue';
+import UserProfile from '@/pages/UserPage/UserProfile.vue';
+import UserProjectProposals from '@/pages/UserPage/UserProjectProposals.vue';
+import UserProjects from '@/pages/UserPage/UserProjects.vue';
+import UserPage from '@/pages/UserPage/index.vue';
 import { RouteNames } from './types/route-names';
 import {
   FilterInstituteProjectProposalsBy,
   toInstituteProjectProposals,
 } from './utils/routes';
-
-// P.S. тут раньше были динамические импорты, т.е. "() => import('@/pages/ProjectPage/index.vue')", но они плохо работали на продакшене "projfair.istu.edu", так что было решено оставить обычные импорты для всего приложения
-// Project page
-import ProjectPage from '@/pages/ProjectPage/index.vue';
-import ProjectParticipationList from '@/pages/ProjectPage/ProjectParticipationList.vue';
-import ProjectParticipantsList from '@/pages/ProjectPage/ProjectParticipantsList.vue';
-import ProjectDetails from '@/pages/ProjectPage/ProjectDetails.vue';
-
-// User page
-import UserPage from '@/pages/UserPage/index.vue';
-import UserProfile from '@/pages/UserPage/UserProfile.vue';
-import UserProjects from '@/pages/UserPage/UserProjects.vue';
-import UserProjectProposals from '@/pages/UserPage/UserProjectProposals.vue';
-import InstituteDirectorProjectProposals from '@/pages/UserPage/InstituteDirectorProjectProposals.vue';
-import UserParticipations from '@/pages/UserPage/UserParticipations.vue';
-
-// Home page
-import HomePage from '@/pages/HomePage.vue';
-
-// FAQ page
-import FaqPage from '@/pages/FaqPage.vue';
-
-// Contact page
-import ContactPage from '@/pages/ContactPage.vue';
-
-// Create project page
-import CreateProjectPage from '@/pages/CreateProjectPage.vue';
-
-// 404 page
-import NotFoundPage from '@/pages/NotFoundPage.vue';
 
 export const routes: RouteRecordRaw[] = [
   {

@@ -1,6 +1,6 @@
-import AuthApiType from './AuthApiType';
-import { baseKyInstance } from '../baseKy';
 import { UserCandidate, UserSupervisor } from '@/models/User';
+import { baseKyInstance } from '../baseKy';
+import AuthApiType from './AuthApiType';
 import {
   askForUserRole,
   getUserRoleFromCookies,

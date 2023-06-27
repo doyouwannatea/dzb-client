@@ -1,10 +1,10 @@
-import { useMutation, UseMutationOptions } from 'vue-query';
-import { useAuthStore } from '@/stores/auth/useAuthStore';
-import { Project } from '@/models/Project';
-import { isCandidate } from '@/helpers/typeCheck';
+import { UseMutationOptions, useMutation } from 'vue-query';
 import { projectIncludesCandidateSpeciality } from '@/helpers/project';
-import { AUTH_REQUIRED } from '@/values/error-messages';
+import { isCandidate } from '@/helpers/typeCheck';
+import { useAuthStore } from '@/stores/auth/useAuthStore';
 import { ParticipationWithProject } from '@/models/Participation';
+import { Project } from '@/models/Project';
+import { AUTH_REQUIRED } from '@/values/error-messages';
 
 type TData = { participations?: ParticipationWithProject[]; project: Project };
 type TVariables = TData;

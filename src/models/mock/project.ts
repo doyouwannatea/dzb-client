@@ -2,10 +2,10 @@ import { ProjectListResponse } from '@/api/ProjectApi/ProjectApiType';
 import { ParticipationState } from '../Participation';
 import { Project, ProjectType } from '../Project';
 import { ProjectState, ProjectStateID } from '../ProjectState';
+import { State } from '../State';
 import { candidateList, userCandidate } from './candidate';
 import { skills } from './project-skills';
 import { projectSupervisorList } from './project-supervisor';
-import { State } from '../State';
 
 // состояния проектов вынесенные в переменные для переиспользования в "mockProjectList", используется в режиме отладки
 const recruitingState: ProjectState = {

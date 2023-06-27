@@ -1,10 +1,10 @@
+import { MaybeRef, get } from '@vueuse/core';
 import { computed } from 'vue';
 import { TeamMember } from '@/components/project/ProjectTeamCollect.vue';
+import { ProjectProposalFormValue } from '@/models/components/ProjectProposalForm';
 import { Department } from '@/models/Department';
 import { MemberRole } from '@/models/ProjectProposal';
 import { Specialty } from '@/models/Specialty';
-import { MaybeRef, get } from '@vueuse/core';
-import { ProjectProposalFormValue } from '@/models/components/ProjectProposalForm';
 
 export function useProjectProposalMetaData(
   formValue: MaybeRef<ProjectProposalFormValue>,

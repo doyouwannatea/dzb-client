@@ -47,14 +47,14 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref, watch } from 'vue';
   import { isEqual } from 'lodash';
-  import ProjectRoleSelect from './ProjectRoleSelect.vue';
-  import { Supervisor } from '@/models/Supervisor';
+  import { computed, ref, watch } from 'vue';
   import { MultiselectObjectItem } from '@/models/components/VMultiselect';
   import { MemberRole, MemberRoleText } from '@/models/ProjectProposal';
+  import { Supervisor } from '@/models/Supervisor';
   import BaseButton from '../ui/BaseButton.vue';
   import DeleteButton from '../ui/DeleteButton.vue';
+  import ProjectRoleSelect from './ProjectRoleSelect.vue';
 
   // TODO: isCurrentUser переименовать
   export type TeamMember = {

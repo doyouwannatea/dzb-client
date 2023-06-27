@@ -1,17 +1,17 @@
-import { baseKyInstance } from '../baseKy';
+import { isValidDate } from '@/helpers/date';
+import { formatProjectDate, isProject, isProposal } from '@/helpers/project';
+import { Project } from '@/models/Project';
 import {
   CreatedProjectProposal,
   NewProjectProposal,
 } from '@/models/ProjectProposal';
-import { Tag } from '@/models/Tag';
 import { Specialty } from '@/models/Specialty';
-import { Project } from '@/models/Project';
-import { formatProjectDate, isProject, isProposal } from '@/helpers/project';
+import { Tag } from '@/models/Tag';
+import { sharedApi } from '../SharedApi';
+import { baseKyInstance } from '../baseKy';
 import SupervisorApiType, {
   UpdateProjectProposalData,
 } from './SupervisorApiType';
-import { isValidDate } from '@/helpers/date';
-import { sharedApi } from '../SharedApi';
 
 export default class SupervisorApi implements SupervisorApiType {
   async getProposalsTime(): Promise<[string, string]> {

@@ -21,15 +21,15 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import { RouteNames } from '@/router/types/route-names';
-  import BaseContainer from '../ui/BaseContainer.vue';
-  import AppLogo from '../ui/AppLogo.vue';
-  import AppNavigation from './AppNavigation.vue';
-  import HeaderUserActions from '../user/HeaderUserActions.vue';
   import DeadlineTimerNavigation from '@/components/layout/DeadlineTimerNavigation.vue';
+  import { ContainerSize } from '@/models/components/BaseContainer';
   import { useSmallDevice } from '@/hooks/useBreakpoints';
   import { useUserTimer } from '@/hooks/useUserTimer';
-  import { ContainerSize } from '@/models/components/BaseContainer';
+  import { RouteNames } from '@/router/types/route-names';
+  import AppLogo from '../ui/AppLogo.vue';
+  import BaseContainer from '../ui/BaseContainer.vue';
+  import HeaderUserActions from '../user/HeaderUserActions.vue';
+  import AppNavigation from './AppNavigation.vue';
 
   const isSmallDevice = useSmallDevice();
   const time = useUserTimer();

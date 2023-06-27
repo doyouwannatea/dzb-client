@@ -26,11 +26,14 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
+  import { Breadcrumb } from '@/models/components/BaseBreadcrumbs';
   import { hasHistory } from '@/helpers/history';
   import { RouteNames } from '@/router/types/route-names';
-  import { Breadcrumb } from '@/models/components/BaseBreadcrumbs';
 
   interface Props {
+    /**
+     * Навигационная цепочка, путь от некоего начального элемента (корня файловой системы, главной страницы сайта и т. п.) до текущей страницы
+     */
     breadcrumbs: Breadcrumb[];
   }
 

@@ -10,11 +10,10 @@
 </template>
 
 <script lang="ts" setup>
-  import { Project } from '@/models/Project';
-  import { useModalsStore } from '@/stores/modals/useModalsStore';
   import { computed } from 'vue';
   import { useAuthStore } from '@/stores/auth/useAuthStore';
-  // components
+  import { useModalsStore } from '@/stores/modals/useModalsStore';
+  import { Project } from '@/models/Project';
   import BaseButton from '../ui/BaseButton.vue';
 
   type Props = { project: Project };

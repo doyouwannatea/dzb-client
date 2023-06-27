@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
-import BaseBreadcrumbs from '../BaseBreadcrumbs.vue';
 import { Breadcrumb } from '@/models/components/BaseBreadcrumbs';
+import BaseBreadcrumbs from '../BaseBreadcrumbs.vue';
 
 describe('BaseBreadcrumbs.vue', () => {
   it('компонент отображается', async () => {

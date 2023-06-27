@@ -496,33 +496,33 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, reactive, ref, watch } from 'vue';
-  import { Project, Skill } from '@/models/Project';
-  import BasePanel from '@/components/ui/BasePanel.vue';
-  import FormSection from '@/components/ui/FormSection.vue';
-  import ProjectTeamCollect from '@/components/project/ProjectTeamCollect.vue';
-  import BaseLabel from '@/components/ui/label/BaseLabel.vue';
-  import BaseRadioButton from '@/components/ui/BaseRadioButton.vue';
   import VMultiselect from '@vueform/multiselect';
-  import BaseTextarea from '@/components/ui/BaseTextarea.vue';
-  import BaseInput from '@/components/ui/BaseInput.vue';
-  import TagList from '@/components/ui/TagList.vue';
-  import BaseButton from '@/components/ui/BaseButton.vue';
-  import SkillsEditModal from '@/components/skill/SkillsEditModal.vue';
-  import BaseTooltip from '@/components/ui/BaseTooltip.vue';
-  import { useSmallDevice } from '@/hooks/useBreakpoints';
-  import SpecialtyEditModal from '@/components/specialty/SpecialtyEditModal.vue';
-  import { Specialty } from '@/models/Specialty';
-  import { MultiselectObjectItem } from '@/models/components/VMultiselect';
-  import { ProjectDifficulty } from '@/models/ProjectDifficulty';
-  import { Supervisor } from '@/models/Supervisor';
-  import { Tag } from '@/models/Tag';
-  import { useProjectProposalMetaData } from '@/hooks/useProjectProposalMetaData';
   import { toRefs } from '@vueuse/core';
+  import { computed, reactive, ref, watch } from 'vue';
+  import ProjectTeamCollect from '@/components/project/ProjectTeamCollect.vue';
+  import SkillsEditModal from '@/components/skill/SkillsEditModal.vue';
+  import SpecialtyEditModal from '@/components/specialty/SpecialtyEditModal.vue';
+  import BaseButton from '@/components/ui/BaseButton.vue';
+  import BaseInput from '@/components/ui/BaseInput.vue';
+  import BasePanel from '@/components/ui/BasePanel.vue';
+  import BaseRadioButton from '@/components/ui/BaseRadioButton.vue';
+  import BaseTextarea from '@/components/ui/BaseTextarea.vue';
+  import BaseTooltip from '@/components/ui/BaseTooltip.vue';
+  import FormSection from '@/components/ui/FormSection.vue';
+  import TagList from '@/components/ui/TagList.vue';
+  import BaseLabel from '@/components/ui/label/BaseLabel.vue';
   import {
     ProjectDuration,
     ProjectProposalFormValue,
   } from '@/models/components/ProjectProposalForm';
+  import { MultiselectObjectItem } from '@/models/components/VMultiselect';
+  import { useSmallDevice } from '@/hooks/useBreakpoints';
+  import { useProjectProposalMetaData } from '@/hooks/useProjectProposalMetaData';
+  import { Project, Skill } from '@/models/Project';
+  import { ProjectDifficulty } from '@/models/ProjectDifficulty';
+  import { Specialty } from '@/models/Specialty';
+  import { Supervisor } from '@/models/Supervisor';
+  import { Tag } from '@/models/Tag';
 
   type Props = {
     projectProposalFormValue: ProjectProposalFormValue;

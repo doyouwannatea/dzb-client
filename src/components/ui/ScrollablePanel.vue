@@ -4,9 +4,12 @@
     :style="{ height: props.disableScroll ? 'auto' : props.height }"
   >
     <header :class="$style.header">
+      <!-- @slot Статичная шапка панели -->
       <slot name="header"></slot>
     </header>
     <div :class="$style.content">
+      <!-- @slot Прокручиваемый контент панели -->
+
       <slot name="default"></slot>
     </div>
   </section>
@@ -14,7 +17,13 @@
 
 <script setup lang="ts">
   type Props = {
+    /**
+     * Скролл панели вкл / выкл
+     */
     disableScroll?: boolean;
+    /**
+     * Высота панели
+     */
     height?: string;
   };
 

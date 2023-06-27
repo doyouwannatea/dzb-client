@@ -1,4 +1,10 @@
 import { Project } from '@/models/Project';
+import { ProjectDifficulty } from '@/models/ProjectDifficulty';
+import {
+  CreatedProjectProposal,
+  ProjectProposalStateId,
+} from '@/models/ProjectProposal';
+import { ProjectStateID } from '@/models/ProjectState';
 import {
   canViewParticipants,
   canViewParticipations,
@@ -12,12 +18,6 @@ import {
   isProposal,
   isRecruitingState,
 } from '../project';
-import { ProjectDifficulty } from '@/models/ProjectDifficulty';
-import { ProjectStateID } from '@/models/ProjectState';
-import {
-  CreatedProjectProposal,
-  ProjectProposalStateId,
-} from '@/models/ProjectProposal';
 
 describe('project.ts', () => {
   it('formatProjectDate()', () => {

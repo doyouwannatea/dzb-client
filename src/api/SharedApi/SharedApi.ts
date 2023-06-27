@@ -1,7 +1,7 @@
 import { HarvestSettings } from '@/models/HarvestSetting';
-import SharedApiType from './SharedApiType';
-import { baseKyInstance } from '../baseKy';
 import { Supervisor } from '@/models/Supervisor';
+import { baseKyInstance } from '../baseKy';
+import SharedApiType from './SharedApiType';
 
 interface IsInSameInstitute {
   isSame: boolean;

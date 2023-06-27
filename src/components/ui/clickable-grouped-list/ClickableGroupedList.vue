@@ -47,11 +47,25 @@
   };
 
   type Props = {
+    /**
+     * Группированный список
+     */
     groupedList: GroupedList[];
+    /**
+     * Включает событие клика на элементах списка
+     */
     clickable?: boolean;
+    /**
+     * Количество одинаковых колонок
+     */
     cols?: string | number;
   };
   type Emits = {
+    /**
+     * Событие клика на элементы списка <br>
+     * Работает если включена опция <code>clickable</code> <br>
+     * В качестве <code>payload</code> принимает <code>value</code> элемента списка
+     */
     (event: 'item-click', payload: unknown): void;
   };
 
