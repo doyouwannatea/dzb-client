@@ -1,15 +1,31 @@
 <template>
   <label class="label">
     <p v-if="props.label" class="label-text">{{ props.label }}</p>
+    <p
+      v-if="$attrs.maxlength == props.modelValue.length"
+      class="label-full-text"
+    >
+      Вы достигли максимума по символам
+    </p>
     <textarea
       v-bind="$attrs"
       :value="props.modelValue"
-      :class="['input', { 'with-maxlength': isMaxLength }]"
-      :style="{ resize: props.resize }"
+      :class="[
+        'input',
+        { 'with-maxlength': isMaxLength },
+        { 'full-length': $attrs.maxlength == props.modelValue.length },
+      ]"
+      :style="{ resize: isMaxLength }"
       @input="onInput"
     >
     </textarea>
-    <span v-if="isMaxLength" class="maxlength">
+    <span
+      v-if="isMaxLength"
+      v-bind:class="[
+        'maxlength',
+        { 'full-length': $attrs.maxlength == props.modelValue.length },
+      ]"
+    >
       {{ props.modelValue.length || 0 }}/{{ $attrs.maxlength }}
     </span>
   </label>
@@ -102,6 +118,16 @@
     color: #fff;
   }
 
+  .label-full-text {
+    position: relative;
+    margin-top: -20px;
+    padding-bottom: 5px;
+    margin-right: 0.25rem;
+    font-size: 0.85rem;
+    text-align: end;
+    color: var(--red-color-1);
+  }
+
   .input {
     width: 100%;
     padding: 0.75rem 0.8rem;
@@ -134,5 +160,21 @@
 
   .input:focus-visible {
     border: 1px solid var(--accent-color-1);
+  }
+
+  .input.full-length {
+    margin-left: -1px;
+    margin-top: -4px;
+    border: 2px solid var(--red-color-1);
+  }
+
+  .maxlength.full-length {
+    color: var(--red-color-1);
+  }
+
+  @media (max-width: 1000px) {
+    .label-full-text {
+      margin-top: -10px;
+    }
   }
 </style>
