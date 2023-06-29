@@ -2,7 +2,7 @@
   <label class="label">
     <p v-if="props.label" class="label-text">{{ props.label }}</p>
     <p
-      v-if="$attrs.maxlength == props.modelValue.length"
+      v-if="isFullLength || $attrs.maxlength == props.modelValue.length"
       class="label-full-text"
     >
       Вы достигли максимума по символам
@@ -13,7 +13,10 @@
       :class="[
         'input',
         { 'with-maxlength': isMaxLength },
-        { 'full-length': $attrs.maxlength == props.modelValue.length },
+        {
+          'full-length':
+            isFullLength || $attrs.maxlength == props.modelValue.length,
+        },
       ]"
       :style="{ resize: isMaxLength }"
       @input="onInput"
@@ -23,7 +26,10 @@
       v-if="isMaxLength"
       v-bind:class="[
         'maxlength',
-        { 'full-length': $attrs.maxlength == props.modelValue.length },
+        {
+          'full-length':
+            isFullLength || $attrs.maxlength == props.modelValue.length,
+        },
       ]"
     >
       {{ props.modelValue.length || 0 }}/{{ $attrs.maxlength }}
@@ -63,6 +69,10 @@
      * Растягивание поля ввода по X/Y
      */
     resize?: TextareaResize;
+    /**
+     * Предупреждение о максимальном количестве символов
+     */
+    isFullLength?: boolean;
   }
 
   interface Emits {
@@ -79,6 +89,7 @@
     modelValue: '',
     label: undefined,
     resize: 'none',
+    isFullLength: false,
   });
   const emit = defineEmits<Emits>();
   const attrs = useAttrs();
@@ -115,7 +126,7 @@
     margin-bottom: 0.75rem;
     font-size: 1.125rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-color);
   }
 
   .label-full-text {
