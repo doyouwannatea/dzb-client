@@ -2,7 +2,7 @@
   <label class="label">
     <p v-if="props.label" class="label-text">{{ props.label }}</p>
     <p
-      v-if="isFullLength || $attrs.maxlength == props.modelValue.length"
+      v-if="alert || $attrs.maxlength == props.modelValue.length"
       class="label-full-text"
     >
       Вы достигли максимума по символам
@@ -14,8 +14,7 @@
         'input',
         { 'with-maxlength': isMaxLength },
         {
-          'full-length':
-            isFullLength || $attrs.maxlength == props.modelValue.length,
+          'full-length': alert || $attrs.maxlength == props.modelValue.length,
         },
       ]"
       :style="{ resize: isMaxLength }"
@@ -27,8 +26,7 @@
       v-bind:class="[
         'maxlength',
         {
-          'full-length':
-            isFullLength || $attrs.maxlength == props.modelValue.length,
+          'full-length': alert || $attrs.maxlength == props.modelValue.length,
         },
       ]"
     >
@@ -72,7 +70,7 @@
     /**
      * Предупреждение о максимальном количестве символов
      */
-    isFullLength?: boolean;
+    alert?: boolean;
   }
 
   interface Emits {
