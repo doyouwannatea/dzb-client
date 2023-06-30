@@ -1,10 +1,7 @@
 <template>
   <label class="label">
     <p v-if="props.label" class="label-text">{{ props.label }}</p>
-    <p
-      v-if="alert || $attrs.maxlength == props.modelValue.length"
-      class="label-full-text"
-    >
+    <p v-if="!isValid" class="label-full-text">
       Вы достигли максимума по символам
     </p>
     <textarea
@@ -12,25 +9,24 @@
       :value="props.modelValue"
       :class="[
         'input',
-        { 'with-maxlength': isMaxLength },
+        { 'with-maxlength': isValid },
         {
-          'full-length': alert || $attrs.maxlength == props.modelValue.length,
+          'lenght-limit': !isValid,
         },
       ]"
-      :style="{ resize: isMaxLength }"
+      :style="{ resize: isValid }"
       @input="onInput"
     >
     </textarea>
     <span
-      v-if="isMaxLength"
       v-bind:class="[
         'maxlength',
         {
-          'full-length': alert || $attrs.maxlength == props.modelValue.length,
+          'lenght-limit': !isValid,
         },
       ]"
     >
-      {{ props.modelValue.length || 0 }}/{{ $attrs.maxlength }}
+      {{ props.modelValue.length || 0 }}/{{ maxLength }}
     </span>
   </label>
 </template>
@@ -46,9 +42,9 @@
 <script setup lang="ts">
   import {
     TextareaHTMLAttributes,
-    withDefaults,
-    useAttrs,
     computed,
+    useAttrs,
+    withDefaults,
   } from 'vue';
 
   export type TextareaResize = 'horizontal' | 'vertical' | 'both' | 'none';
@@ -68,9 +64,9 @@
      */
     resize?: TextareaResize;
     /**
-     * Предупреждение о максимальном количестве символов
+     * Максимальное кол-во символов
      */
-    alert?: boolean;
+    maxLength?: number;
   }
 
   interface Emits {
@@ -85,22 +81,19 @@
 
   const props = withDefaults(defineProps<Props>(), {
     modelValue: '',
-    label: undefined,
+    label: '',
     resize: 'none',
-    isFullLength: false,
+    maxLength: 255,
   });
-  const emit = defineEmits<Emits>();
-  const attrs = useAttrs();
-  const isMaxLength = computed(
-    () =>
-      typeof attrs.maxlength === 'number' ||
-      typeof attrs.maxlength === 'string',
-  );
 
-  function onInput(e: Event) {
+  const isValid = computed(() => props.maxLength > props.modelValue.length);
+
+  const onInput = (e: Event) => {
     const target = e.target as HTMLInputElement;
     emit('update:modelValue', target.value);
-  }
+  };
+  const emit = defineEmits<Emits>();
+  const attrs = useAttrs();
 </script>
 
 <style scoped>
@@ -171,13 +164,13 @@
     border: 1px solid var(--accent-color-1);
   }
 
-  .input.full-length {
+  .input.lenght-limit {
     margin-left: -1px;
     margin-top: -4px;
     border: 2px solid var(--red-color-1);
   }
 
-  .maxlength.full-length {
+  .maxlength.lenght-limit {
     color: var(--red-color-1);
   }
 
