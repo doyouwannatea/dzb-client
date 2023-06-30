@@ -5,6 +5,7 @@
       Вы достигли максимума по символам
     </p>
     <textarea
+      v-bind:maxlength="props.maxLength"
       v-bind="$attrs"
       :value="props.modelValue"
       :class="[
