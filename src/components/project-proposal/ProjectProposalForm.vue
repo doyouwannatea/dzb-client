@@ -102,6 +102,7 @@
           :disabled="!isEditable"
           :class="$style['small-textarea']"
           placeholder="Например, платформа для размещения вузовских олимпиад"
+          :maxLength="255"
           resize="vertical"
         />
       </BaseLabel>
@@ -115,6 +116,7 @@
           :disabled="!isEditable"
           :class="$style['small-textarea']"
           placeholder="Например, создать платформу (страничку) для рекламы олимпиад"
+          :maxLength="255"
           resize="vertical"
         />
       </BaseLabel>
@@ -334,6 +336,7 @@
           :disabled="!isEditable"
           :class="$style['small-textarea']"
           placeholder="Создать платформу (страничку) для рекламы олимпиад"
+          :maxLength="1000"
           resize="vertical"
         />
       </BaseLabel>
@@ -347,6 +350,7 @@
           :disabled="!isEditable"
           :class="$style['small-textarea']"
           placeholder="Например, знание основ верстки  и дизайна веб-страниц"
+          :maxLength="1000"
           resize="vertical"
         />
       </BaseLabel>
@@ -360,6 +364,7 @@
           :disabled="!isEditable"
           :class="$style['large-textarea']"
           placeholder="Опишите идею своего проекта"
+          :maxLength="3000"
           resize="vertical"
         />
       </BaseLabel>

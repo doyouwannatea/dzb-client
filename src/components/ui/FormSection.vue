@@ -43,6 +43,7 @@
 <style lang="scss" scoped>
   .section {
     display: flex;
+    flex-direction: column;
     gap: 1.875rem;
     margin-bottom: 1.875rem;
   }
@@ -53,24 +54,26 @@
   }
 
   .meta-info {
-    width: 15.9375rem;
+    display: flex;
+    align-items: center;
+    min-width: 300px;
+    width: 50%;
   }
 
   .title {
     display: inline;
     font-size: 1.25rem;
     font-weight: 600;
-    line-height: 130%;
   }
 
   .tag {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 4.625rem;
-    height: 4.625rem;
-    margin-bottom: 1.125rem;
-    font-size: 2rem;
+    min-width: 4.625rem;
+    min-height: 4.625rem;
+    margin-right: 1.125rem;
+    font-size: 2.25rem;
     color: var(--accent-color-1);
     background: #f1f4fe;
     border-radius: 50%;
@@ -78,5 +81,12 @@
 
   .content {
     width: 100%;
+
+    @media (max-width: 450px) {
+      & {
+        display: flex;
+        flex-direction: column;
+      }
+    }
   }
 </style>

@@ -1,16 +1,33 @@
 <template>
   <label class="label">
     <p v-if="props.label" class="label-text">{{ props.label }}</p>
+    <p v-if="!isValid" class="label-full-text">
+      Вы достигли максимума по символам
+    </p>
     <textarea
+      v-bind:maxlength="props.maxLength"
       v-bind="$attrs"
       :value="props.modelValue"
-      :class="['input', { 'with-maxlength': isMaxLength }]"
-      :style="{ resize: props.resize }"
+      :class="[
+        'input',
+        { 'with-maxlength': isValid },
+        {
+          'lenght-limit': !isValid,
+        },
+      ]"
+      :style="{ resize: isValid }"
       @input="onInput"
     >
     </textarea>
-    <span v-if="isMaxLength" class="maxlength">
-      {{ props.modelValue.length || 0 }}/{{ $attrs.maxlength }}
+    <span
+      v-bind:class="[
+        'maxlength',
+        {
+          'lenght-limit': !isValid,
+        },
+      ]"
+    >
+      {{ props.modelValue.length || 0 }}/{{ maxLength }}
     </span>
   </label>
 </template>
@@ -26,9 +43,9 @@
 <script setup lang="ts">
   import {
     TextareaHTMLAttributes,
-    withDefaults,
-    useAttrs,
     computed,
+    useAttrs,
+    withDefaults,
   } from 'vue';
 
   export type TextareaResize = 'horizontal' | 'vertical' | 'both' | 'none';
@@ -47,6 +64,10 @@
      * Растягивание поля ввода по X/Y
      */
     resize?: TextareaResize;
+    /**
+     * Максимальное кол-во символов
+     */
+    maxLength?: number;
   }
 
   interface Emits {
@@ -61,21 +82,19 @@
 
   const props = withDefaults(defineProps<Props>(), {
     modelValue: '',
-    label: undefined,
+    label: '',
     resize: 'none',
+    maxLength: 255,
   });
-  const emit = defineEmits<Emits>();
-  const attrs = useAttrs();
-  const isMaxLength = computed(
-    () =>
-      typeof attrs.maxlength === 'number' ||
-      typeof attrs.maxlength === 'string',
-  );
 
-  function onInput(e: Event) {
+  const isValid = computed(() => props.maxLength > props.modelValue.length);
+
+  const onInput = (e: Event) => {
     const target = e.target as HTMLInputElement;
     emit('update:modelValue', target.value);
-  }
+  };
+  const emit = defineEmits<Emits>();
+  const attrs = useAttrs();
 </script>
 
 <style scoped>
@@ -99,7 +118,17 @@
     margin-bottom: 0.75rem;
     font-size: 1.125rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-color);
+  }
+
+  .label-full-text {
+    position: relative;
+    margin-top: -20px;
+    padding-bottom: 5px;
+    margin-right: 0.25rem;
+    font-size: 0.85rem;
+    text-align: end;
+    color: var(--red-color-1);
   }
 
   .input {
@@ -134,5 +163,21 @@
 
   .input:focus-visible {
     border: 1px solid var(--accent-color-1);
+  }
+
+  .input.lenght-limit {
+    margin-left: -1px;
+    margin-top: -4px;
+    border: 2px solid var(--red-color-1);
+  }
+
+  .maxlength.lenght-limit {
+    color: var(--red-color-1);
+  }
+
+  @media (max-width: 1000px) {
+    .label-full-text {
+      margin-top: -10px;
+    }
   }
 </style>

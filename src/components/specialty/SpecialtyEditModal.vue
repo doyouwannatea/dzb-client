@@ -191,11 +191,18 @@
         groupLabel: SpecialtyName[course],
       }));
 
+    const excludedSpecialties = ['АРб', 'РРб', 'ДСб', 'ГРб']; // бакалавры, имеющие 5 курс
+
     for (const specialty of props.sharedSpecialtyList) {
       for (const course of props.requiredСourses) {
-        // специальности включающие в себя «б» не имеют специалитета
-        if (specialty.name.includes('б') && course === SpecialtyCourse.Fifth)
+        // специальности включающие в себя «б» не имеют специалитета и бакалавры с 5-тью годами обучения
+        if (
+          specialty.name.includes('б') &&
+          !excludedSpecialties.includes(specialty.name) &&
+          course === SpecialtyCourse.Fifth
+        )
           continue;
+
         const groupIndex = groupedList.findIndex(
           (group) => group.id === course,
         );
